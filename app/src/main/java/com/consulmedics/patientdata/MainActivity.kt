@@ -14,8 +14,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
 import com.consulmedics.patientdata.models.Patient
 import com.google.android.material.navigation.NavigationView
-import com.identive.libs.SCard
-import com.identive.libs.WinDefs
+import com.consulmedics.patientdata.scardlib.SCard
+import com.consulmedics.patientdata.scardlib.WinDefs
 import java.io.IOException
 
 
@@ -76,7 +76,8 @@ class MainActivity : AppCompatActivity() {
 
 
         //val status = scard.USBRequestPermission(applicationContext)
-        scardLib.USBRequestPermission(applicationContext)
+        val sttus = scardLib.USBRequestPermission(applicationContext)
+        Log.e("USB_CONNECTION", sttus.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

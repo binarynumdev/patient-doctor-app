@@ -2,8 +2,8 @@ package com.consulmedics.patientdata
 
 import android.content.Context
 import com.consulmedics.patientdata.models.Patient
-import com.identive.libs.SCard
-import com.identive.libs.WinDefs
+import com.consulmedics.patientdata.scardlib.SCard
+import com.consulmedics.patientdata.scardlib.WinDefs
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
