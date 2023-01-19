@@ -37,13 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.appBarMain.fab.setOnClickListener { view ->
             run {
-                var patient: Patient = Patient()
-                patient.loadExample()
-                startActivity(Intent(this, NewPatientActivity::class.java).apply {
-                    // you can add values(if any) to pass to the next class or avoid using `.apply`
-                    putExtra("patient_data", patient)
-                })
-                /*
+
                 var status: Long = 0
                 if(!scardLib.initialized){
                     status = scardLib.SCardEstablishContext(baseContext)
@@ -58,10 +52,12 @@ class MainActivity : AppCompatActivity() {
                     status = scardLib.SCardConnect()
                     if(0L == status){
                         var patientData = scardLib.getPatientData()
+                        startActivity(Intent(this, NewPatientActivity::class.java).apply {
+                            // you can add values(if any) to pass to the next class or avoid using `.apply`
+                            putExtra("patient_data", patientData)
+                        })
                     }
                 }
-
-                 */
 
             }
         }
