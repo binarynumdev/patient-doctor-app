@@ -12,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
+import com.consulmedics.patientdata.models.Patient
 import com.google.android.material.navigation.NavigationView
 
 
@@ -53,6 +54,16 @@ class MainActivity : AppCompatActivity() {
                             putExtra("patient_data", patientData)
                         })
                     }
+                }
+                else{
+                    var patient: Patient = Patient()
+                    var pdata: String = "<?xml version=\"1.0\" encoding=\"ISO-8859-15\" standalone=\"yes\"?><vsdp:UC_PersoenlicheVersichertendatenXML CDM_VERSION=\"5.2.0\" xmlns:vsdp=\"http://ws.gematik.de/fa/vsdm/vsd/v5.2\"><vsdp:Versicherter><vsdp:Versicherten_ID>T115774582</vsdp:Versicherten_ID><vsdp:Person><vsdp:Geburtsdatum>19800713</vsdp:Geburtsdatum><vsdp:Vorname>Claudia</vsdp:Vorname><vsdp:Nachname>Burdack</vsdp:Nachname><vsdp:Geschlecht>W</vsdp:Geschlecht><vsdp:StrassenAdresse><vsdp:Postleitzahl>01187</vsdp:Postleitzahl><vsdp:Ort>Dresden</vsdp:Ort><vsdp:Land><vsdp:Wohnsitzlaendercode>D</vsdp:Wohnsitzlaendercode></vsdp:Land><vsdp:Strasse>Bayreuther Str.</vsdp:Strasse><vsdp:Hausnummer>30</vsdp:Hausnummer></vsdp:StrassenAdresse></vsdp:Person></vsdp:Versicherter></vsdp:UC_PersoenlicheVersichertendatenXML>"
+                    var vdata: String = "<?xml version=\"1.0\" encoding=\"ISO-8859-15\" standalone=\"yes\"?><vsda:UC_AllgemeineVersicherungsdatenXML CDM_VERSION=\"5.2.0\" xmlns:vsda=\"http://ws.gematik.de/fa/vsdm/vsd/v5.2\"><vsda:Versicherter><vsda:Versicherungsschutz><vsda:Beginn>20081002</vsda:Beginn><vsda:Kostentraeger><vsda:Kostentraegerkennung>104526376</vsda:Kostentraegerkennung><vsda:Kostentraegerlaendercode>D</vsda:Kostentraegerlaendercode><vsda:Name>VIACTIV Krankenkasse</vsda:Name><vsda:AbrechnenderKostentraeger><vsda:Kostentraegerkennung>104526376</vsda:Kostentraegerkennung><vsda:Kostentraegerlaendercode>D</vsda:Kostentraegerlaendercode><vsda:Name>VIACTIV Krankenkasse</vsda:Name></vsda:AbrechnenderKostentraeger></vsda:Kostentraeger></vsda:Versicherungsschutz><vsda:Zusatzinfos><vsda:ZusatzinfosGKV><vsda:Versichertenart>1</vsda:Versichertenart><vsda:Zusatzinfos_Abrechnung_GKV><vsda:WOP>98</vsda:WOP></vsda:Zusatzinfos_Abrechnung_GKV></vsda:ZusatzinfosGKV></vsda:Zusatzinfos></vsda:Versicherter></vsda:UC_AllgemeineVersicherungsdatenXML>"
+                    patient.loadFrom(pdata, vdata)
+                    startActivity(Intent(this, NewPatientActivity::class.java).apply {
+                        // you can add values(if any) to pass to the next class or avoid using `.apply`
+                        putExtra("patient_data", patient)
+                    })
                 }
 
             }
