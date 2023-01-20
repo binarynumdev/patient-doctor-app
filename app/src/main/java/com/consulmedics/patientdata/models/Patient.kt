@@ -36,7 +36,7 @@ class Patient : Serializable {
         }
     }
     fun loadFromXmlStr(xmlStr:String){
-
+        Log.e("XMLSTR", xmlStr)
         var factory = XmlPullParserFactory.newInstance()
         factory.isNamespaceAware = true
         val parser = factory.newPullParser()

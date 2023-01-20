@@ -29,7 +29,7 @@ class SCardExt{
             return status
         }
         else{
-            readers = deviceList.toArray() as Array<CharSequence>?;
+            readers = deviceList.toArray().map { s->s as CharSequence }.toTypedArray()
             initialized = true
             return status
         }
@@ -128,7 +128,7 @@ class SCardExt{
         System.arraycopy(transResult, 2, pdDataCompressed, 0, pdLength)
         val decompressed = toUnzippedByteArray(pdDataCompressed)
         val str = String(decompressed, StandardCharsets.UTF_8)
-        return rstr
+        return str
     }
 
     @Throws(IOException::class)
@@ -172,7 +172,7 @@ class SCardExt{
         val decompressed = toUnzippedByteArray(vdDataCompressed)
         val str = String(decompressed, StandardCharsets.UTF_8)
 
-        return rstr
+        return str
     }
     fun printBytes(data: ByteArray) {
         val result_escape = StringBuilder()
