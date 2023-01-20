@@ -12,11 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
-import com.consulmedics.patientdata.models.Patient
 import com.google.android.material.navigation.NavigationView
-import com.consulmedics.patientdata.scardlib.SCard
-import com.consulmedics.patientdata.scardlib.WinDefs
-import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
