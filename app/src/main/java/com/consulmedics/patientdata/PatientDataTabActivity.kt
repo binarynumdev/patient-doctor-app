@@ -6,10 +6,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import com.consulmedics.patientdata.ui.main.SectionsPagerAdapter
 import com.consulmedics.patientdata.databinding.ActivityPatientDataTabBinding
+import com.consulmedics.patientdata.models.Patient
 
 class PatientDataTabActivity : AppCompatActivity() {
 
@@ -20,8 +19,8 @@ class PatientDataTabActivity : AppCompatActivity() {
 
         binding = ActivityPatientDataTabBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        val patient: Patient = intent.getSerializableExtra("patient_data") as Patient
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, patient)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs

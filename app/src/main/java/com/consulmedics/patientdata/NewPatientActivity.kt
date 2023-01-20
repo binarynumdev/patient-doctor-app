@@ -16,18 +16,7 @@ class NewPatientActivity : AppCompatActivity() {
         val patient:Patient = intent.getSerializableExtra("patient_data") as Patient
         binding = ActivityNewPatientBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.editPatientID.setText(patient?.patientID)
-        binding.editFirstName.setText(patient?.firstName)
-        binding.editLastName.setText(patient?.lastName)
-        binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
-        val birthDateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-
-        binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
-        binding.editStreet.setText(patient?.street)
-        binding.editCity.setText(patient?.city)
-        binding.editPostalCode.setText(patient?.postCode)
-        binding.editHouseNumber.setText(patient?.houseNumber)
 
 
     }

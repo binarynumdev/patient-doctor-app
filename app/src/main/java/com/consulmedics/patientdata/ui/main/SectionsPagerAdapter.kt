@@ -5,22 +5,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.ui.fragments.PatientInsurranceDetailsFragment
+import com.consulmedics.patientdata.ui.fragments.PatientPersonalDetailsFragment
 
 private val TAB_TITLES = arrayOf(
-    R.string.tab_text_1,
-    R.string.tab_text_2
+    R.string.personal_details,
+    R.string.insurrance_details
 )
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
+class SectionsPagerAdapter(val context: Context, fm: FragmentManager, patient: Patient) :
     FragmentPagerAdapter(fm) {
-
+    val patient: Patient = patient;
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
+        if (position == 0){
+            return PatientPersonalDetailsFragment.newInstance(patient)
+        }
+        else{
+            return PatientInsurranceDetailsFragment.newInstance(patient)
+        }
         return PlaceholderFragment.newInstance(position + 1)
     }
 

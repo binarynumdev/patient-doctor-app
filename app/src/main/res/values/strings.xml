@@ -19,10 +19,15 @@
     <string name="house_number">House Number</string>
     <string name="gender">Gender</string>
     <string name="personal_details">Personal Details</string>
-    <string name="insurrance_details">InsurranceDetails</string>
+    <string name="insurrance_details">Insurrance Details</string>
     <string name="patient_id">Patient ID</string>
     <string name="title_activity_tab">TabActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_patient_data_tab">PatientDataTabActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="insurrance_number">Insurrance Number</string>
+    <string name="insurrane_name">Insurrance Name</string>
+    <string name="insurrance_status">Insurrance Status</string>
 </resources>
