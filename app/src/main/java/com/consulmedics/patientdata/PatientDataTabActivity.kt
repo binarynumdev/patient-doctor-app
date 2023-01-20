@@ -1,17 +1,22 @@
 package com.consulmedics.patientdata
 
+import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.graphics.pdf.PdfDocument.Page
 import android.graphics.pdf.PdfDocument.PageInfo
 import android.os.Bundle
-import android.text.Html
+import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.viewpager.widget.ViewPager
 import com.consulmedics.patientdata.databinding.ActivityPatientDataTabBinding
 import com.consulmedics.patientdata.models.Patient
@@ -20,7 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import java.io.File
 import java.io.FileOutputStream
-import java.util.UUID
+import java.util.*
 
 
 class PatientDataTabActivity : AppCompatActivity() {
@@ -41,9 +46,13 @@ class PatientDataTabActivity : AppCompatActivity() {
         val fab: FloatingActionButton = binding.fab
 
         fab.setOnClickListener { view ->
-            generatePDF()
+            run {
+                 generatePDF()
+            }
+
         }
     }
+
     fun generatePDF(){
 
         val file = File(getExternalFilesDir(null), "testfile${UUID.randomUUID().toString()}.pdf")
@@ -56,6 +65,8 @@ class PatientDataTabActivity : AppCompatActivity() {
         var title: Paint = Paint()
         var canvas:Canvas = page.canvas
 
+        paint.style = Paint.Style.STROKE
+        canvas.drawRect(Rect(50, 50, 620, 380), paint)
 
         // below line is used for adding typeface for
         // our text which we will be adding in our PDF file.
@@ -73,8 +84,19 @@ class PatientDataTabActivity : AppCompatActivity() {
         // the first parameter is our text, second parameter
         // is position from start, third parameter is position from top
         // and then we are passing our variable of paint which is title.
-        canvas.drawText("A portal for IT professionals.", 209F, 100F, title)
-        canvas.drawText("Geeks for Geeks", 209F, 80F, title)
+        canvas.drawText("1 Krankenkasse bzw. Kostenträger09812345678901234567890123", 60F, 60F, title)
+        canvas.drawText("2 AOK plus", 60F, 90F, title)
+        canvas.drawText("3 Name, Vorname des Versicherten", 60F, 120F, title)
+        canvas.drawText("4 Burdack, Swen", 60F, 150F, title)
+        canvas.drawText("5 Burdack, Swen", 60F, 180F, title)
+        canvas.drawText("6 Burdack, Swen", 60F, 210F, title)
+        canvas.drawText("7 Burdack, Swen", 60F, 240F, title)
+        canvas.drawText("8 Burdack, Swen", 60F, 270F, title)
+        canvas.drawText("9 Burdack, Swen", 60F, 300F, title)
+        canvas.drawText("10 Burdack, Swen", 60F, 330F, title)
+        canvas.drawText("11 Burdack, Swen", 60F, 360F, title)
+
+
         title.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL))
         title.setColor(ContextCompat.getColor(this, R.color.purple_200))
         title.textSize = 15F
@@ -88,7 +110,23 @@ class PatientDataTabActivity : AppCompatActivity() {
         document.finishPage(page)
         document.writeTo(fileOutput)
         document.close()
-        Log.e("PDF", file.path)
+        val intent = Intent()
+        intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+        val uriPdfPath =
+            FileProvider.getUriForFile(this, applicationContext.packageName + ".provider", file)
+        Log.d("pdfPath", "" + uriPdfPath);
+        val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
+        pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
+        pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
+        pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+        try {
+            startActivity(pdfOpenIntent)
+        } catch (activityNotFoundException: ActivityNotFoundException) {
+            Toast.makeText(this, "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
 }
