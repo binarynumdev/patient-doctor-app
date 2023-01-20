@@ -25,6 +25,7 @@ class NewPatientActivity : AppCompatActivity() {
         binding.editStreet.setText(patient?.street)
         binding.editCity.setText(patient?.city)
         binding.editPostalCode.setText(patient?.postCode)
+        binding.editHouseNumber.setText(patient?.houseNumber)
 
 
     }
