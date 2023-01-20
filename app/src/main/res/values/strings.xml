@@ -16,4 +16,12 @@
     <string name="street">Street</string>
     <string name="city">City</string>
     <string name="post_code">Post Code</string>
+    <string name="house_number">House Number</string>
+    <string name="gender">Gender</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="insurrance_details">InsurranceDetails</string>
+    <string name="patient_id">Patient ID</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
