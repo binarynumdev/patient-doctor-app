@@ -25,20 +25,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class PatientDataTabActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPatientDataTabBinding
+    private var patient: Patient? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityPatientDataTabBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val patient: Patient = intent.getSerializableExtra("patient_data") as Patient
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, patient)
+        patient = intent.getSerializableExtra("patient_data") as Patient
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, patient!!)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
@@ -66,7 +68,7 @@ class PatientDataTabActivity : AppCompatActivity() {
         var canvas:Canvas = page.canvas
 
         paint.style = Paint.Style.STROKE
-        canvas.drawRect(Rect(50, 50, 620, 380), paint)
+        canvas.drawRect(Rect(45, 45, 620, 380), paint)
 
         // below line is used for adding typeface for
         // our text which we will be adding in our PDF file.
@@ -84,17 +86,18 @@ class PatientDataTabActivity : AppCompatActivity() {
         // the first parameter is our text, second parameter
         // is position from start, third parameter is position from top
         // and then we are passing our variable of paint which is title.
-        canvas.drawText("1 Krankenkasse bzw. Kostenträger09812345678901234567890123", 60F, 60F, title)
-        canvas.drawText("2 AOK plus", 60F, 90F, title)
-        canvas.drawText("3 Name, Vorname des Versicherten", 60F, 120F, title)
-        canvas.drawText("4 Burdack, Swen", 60F, 150F, title)
-        canvas.drawText("5 Burdack, Swen", 60F, 180F, title)
-        canvas.drawText("6 Burdack, Swen", 60F, 210F, title)
-        canvas.drawText("7 Burdack, Swen", 60F, 240F, title)
-        canvas.drawText("8 Burdack, Swen", 60F, 270F, title)
-        canvas.drawText("9 Burdack, Swen", 60F, 300F, title)
-        canvas.drawText("10 Burdack, Swen", 60F, 330F, title)
-        canvas.drawText("11 Burdack, Swen", 60F, 360F, title)
+        val birthDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        canvas.drawText("1 Patient ID: ${patient?.patientID}", 60F, 60F, title)
+        canvas.drawText("2 Patient Name: ${patient?.firstName} ${patient?.lastName}", 60F, 90F, title)
+        canvas.drawText("3 Date Of Birth: ${birthDateFormat.format(patient?.birthDate)}", 60F, 120F, title)
+        canvas.drawText("4 Gender: ${patient?.gender}", 60F, 150F, title)
+        canvas.drawText("5 Street: ${patient?.street}", 60F, 180F, title)
+        canvas.drawText("6 City: ${patient?.city}", 60F, 210F, title)
+        canvas.drawText("7 Post Code: ${patient?.postCode}", 60F, 240F, title)
+        canvas.drawText("8 Insurance Number: ${patient?.insuranceNumber}", 60F, 270F, title)
+        canvas.drawText("9 Insurance Name: ${patient?.insuranceName}", 60F, 300F, title)
+        canvas.drawText("10 Insurance Status: ${patient?.insuranceStatus}", 60F, 330F, title)
+        canvas.drawText("11 -----------------", 60F, 360F, title)
 
 
         title.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL))
@@ -104,7 +107,7 @@ class PatientDataTabActivity : AppCompatActivity() {
         // below line is used for setting
         // our text to center of PDF.
         title.textAlign = Paint.Align.CENTER
-        canvas.drawText("This is sample document which we have created.", 396F, 560F, title)
+        canvas.drawText("This is sample document for our app.", 396F, 560F, title)
 
 
         document.finishPage(page)
