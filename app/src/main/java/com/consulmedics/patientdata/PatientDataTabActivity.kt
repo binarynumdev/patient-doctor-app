@@ -86,7 +86,7 @@ class PatientDataTabActivity : AppCompatActivity() {
         // the first parameter is our text, second parameter
         // is position from start, third parameter is position from top
         // and then we are passing our variable of paint which is title.
-        val birthDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val birthDateFormat = SimpleDateFormat("dd.MM.yyyy")
         canvas.drawText("1 Patient ID: ${patient?.patientID}", 60F, 60F, title)
         canvas.drawText("2 Patient Name: ${patient?.firstName} ${patient?.lastName}", 60F, 90F, title)
         canvas.drawText("3 Date Of Birth: ${birthDateFormat.format(patient?.birthDate)}", 60F, 120F, title)

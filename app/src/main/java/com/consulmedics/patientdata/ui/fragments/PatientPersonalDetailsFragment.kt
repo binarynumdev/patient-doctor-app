@@ -45,7 +45,7 @@ class PatientPersonalDetailsFragment : Fragment() {
         binding.editFirstName.setText(patient?.firstName)
         binding.editLastName.setText(patient?.lastName)
         binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
-        val birthDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val birthDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
 
         binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
