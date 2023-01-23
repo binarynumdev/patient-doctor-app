@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata
 
+import android.R
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
@@ -17,12 +18,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.consulmedics.patientdata.databinding.ActivityPatientDataTabBinding
 import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.ui.fragments.PatientInsurranceDetailsFragment
+import com.consulmedics.patientdata.ui.fragments.PatientPersonalDetailsFragment
 import com.consulmedics.patientdata.ui.main.SectionsPagerAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -33,7 +38,7 @@ class PatientDataTabActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPatientDataTabBinding
     private var patient: Patient? = null
-
+    private val patientDB by lazy { PatientsDatabase.getDatabase(this).patientDao() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +58,40 @@ class PatientDataTabActivity : AppCompatActivity() {
             }
 
         }
+        val saveButton: FloatingActionButton = binding.savePatient
+        saveButton.setOnClickListener { view ->
+            run {
+                val personalFragment: PatientPersonalDetailsFragment? =
+                    supportFragmentManager.findFragmentByTag("android:switcher:" + binding.viewPager.id + ":" + 0) as PatientPersonalDetailsFragment
+                val insuranceFragment: PatientInsurranceDetailsFragment = supportFragmentManager.findFragmentByTag("android:switcher:" + binding.viewPager.id + ":" + 1) as PatientInsurranceDetailsFragment
+                var newPatient:Patient = Patient()
+                newPatient.patientID = personalFragment?.binding?.editPatientID?.text.toString()
+                Log.e("PatientID", personalFragment?.binding?.editPatientID?.text.toString())
+                newPatient.firstName = personalFragment?.binding?.editFirstName?.text.toString()
+                newPatient.lastName = personalFragment?.binding?.editLastName?.text.toString()
+                val formatter = SimpleDateFormat("dd.MM.yyyy")
+                var birthDate:Date  = formatter.parse(personalFragment?.binding?.editDateOfBirth?.text.toString())
+                newPatient.birthDate = birthDate
+//                newPatient.gender = personalFragment?.binding?.editFirstName?.text.toString()
+                newPatient.street = personalFragment?.binding?.editStreet?.text.toString()
+                newPatient.houseNumber = personalFragment?.binding?.editHouseNumber?.text.toString()
+                newPatient.city = personalFragment?.binding?.editCity?.text.toString()
+                newPatient.postCode = personalFragment?.binding?.editPostalCode?.text.toString()
+                newPatient.insuranceNumber = insuranceFragment?.binding?.editInsurranceNumber?.text.toString()
+                newPatient.insuranceName = insuranceFragment?.binding?.editInsurranceName?.text.toString()
+                newPatient.insuranceStatus = insuranceFragment?.binding?.editInsurranceStatus?.text.toString()
+                lifecycleScope.launch{
+                    patientDB.insertAll(newPatient)
+                    finish()
+                }
+
+
+            }
+        }
+    }
+
+    fun savePatient(){
+
     }
 
     fun generatePDF(){
@@ -80,7 +119,7 @@ class PatientDataTabActivity : AppCompatActivity() {
 
         // below line is sued for setting color
         // of our text inside our PDF file.
-        title.setColor(ContextCompat.getColor(this, R.color.purple_200))
+        title.setColor(ContextCompat.getColor(this, R.color.black))
 
         // below line is used to draw text in our PDF file.
         // the first parameter is our text, second parameter
@@ -101,7 +140,7 @@ class PatientDataTabActivity : AppCompatActivity() {
 
 
         title.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL))
-        title.setColor(ContextCompat.getColor(this, R.color.purple_200))
+        title.setColor(ContextCompat.getColor(this, R.color.black))
         title.textSize = 15F
 
         // below line is used for setting

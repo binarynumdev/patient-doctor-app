@@ -1,6 +1,8 @@
 package com.consulmedics.patientdata.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,13 +28,19 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var patient: Patient? = null
     private var param2: String? = null
     private var _binding: FragmentPatientPersonalDetailsBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             patient = it.getSerializable("patient") as Patient
         }
+    }
+    fun getFirstName(): String {
+        return _binding!!.editFirstName.text.toString()
+    }
+    fun getPatientID():String{
+        return _binding!!.editPatientID.text.toString()
     }
 
     override fun onCreateView(
@@ -41,6 +49,8 @@ class PatientPersonalDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPatientPersonalDetailsBinding.inflate(inflater, container, false)
+        if(_binding != null)
+            Log.e("INITFRAGMENT", "OK")
         binding.editPatientID.setText(patient?.patientID)
         binding.editFirstName.setText(patient?.firstName)
         binding.editLastName.setText(patient?.lastName)

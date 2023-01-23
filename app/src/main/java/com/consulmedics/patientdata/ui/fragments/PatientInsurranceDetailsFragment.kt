@@ -24,7 +24,7 @@ class PatientInsurranceDetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var patient: Patient? = null
     private var _binding: FragmentPatientInsurranceDetailsBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,33 +1,34 @@
 package com.consulmedics.patientdata.models
 
 import android.util.Log
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Date
-
-class Patient : Serializable {
-    var personalData:   String  = ""
-    var insuredData:    String  = ""
+@Entity
+data class Patient(
+    @PrimaryKey(autoGenerate = true) var uid: Int? = null
+): Serializable {
+    var patientID:      String? = ""
     var firstName:      String  = ""
     var lastName:       String  = ""
     var birthDate:      Date    = Date()
     var street:         String  = ""
     var city:           String  = ""
     var postCode:       String  = ""
-    var patientID:      String  = ""
     var gender:         String  = ""
     var houseNumber:    String  = ""
     var insuranceNumber:String  = ""
     var insuranceName:  String  = ""
     var insuranceStatus:String  = ""
+
+
+
     fun loadFrom(readPDResponse: String?, readVDResponse: String?) {
-        var factory = XmlPullParserFactory.newInstance()
-        factory.isNamespaceAware = true
-        val parser = factory.newPullParser()
-        parser.setInput(personalData.reader())
-        var eventType = parser.eventType
         if (readPDResponse != null) {
             loadFromXmlStr(readPDResponse)
         }
