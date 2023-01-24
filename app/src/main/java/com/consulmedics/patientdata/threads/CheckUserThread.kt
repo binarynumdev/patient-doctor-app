@@ -3,7 +3,8 @@ package com.consulmedics.patientdata.threads
 import android.content.Context
 import android.os.Environment.*
 import android.util.Log
-import com.consulmedics.patientdata.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.utils.AESEncyption
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.io.*
 
 class CheckUserThread(appContext: Context): Thread() {
@@ -18,7 +19,8 @@ class CheckUserThread(appContext: Context): Thread() {
                 dir.mkdirs();
                 certFile = File(dir,"userinfo.cert")
                 val fileOutPutStream = FileOutputStream(certFile)
-                fileOutPutStream.write("This is sample text".toByteArray())
+                val encrypted: String? = AESEncyption.encrypt("This is sample text")
+                fileOutPutStream.write(encrypted!!.toByteArray())
                 fileOutPutStream.close()
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -33,7 +35,9 @@ class CheckUserThread(appContext: Context): Thread() {
             while ({ text = bufferedReader.readLine(); text }() != null) {
                 stringBuilder.append(text)
             }
-            Log.e(TAG_NAME, stringBuilder.toString())
+
+            val decrypted:String? = AESEncyption.decrypt(stringBuilder.toString())
+            Log.e(TAG_NAME, "$decrypted")
             fileInputStream.close()
         }
         super.run()

@@ -1,4 +1,4 @@
-package com.consulmedics.patientdata
+package com.consulmedics.patientdata.utils
 
 object AppConstants {
     const val TAG_NAME: String = "Consulmedics Patient Data"
