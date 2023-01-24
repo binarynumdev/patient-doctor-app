@@ -1,15 +1,21 @@
 package com.consulmedics.patientdata.threads
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Environment.*
 import android.util.Log
+import com.consulmedics.patientdata.MainActivity
+import com.consulmedics.patientdata.ui.login.RegisterActivity
 import com.consulmedics.patientdata.utils.AESEncyption
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.io.*
 
 class CheckUserThread(appContext: Context): Thread() {
+    private var aContext:Context = appContext
     private var certFile:File = File(getExternalStorageDirectory(),"Consulmedics/userinfo.cert")
     public override fun run() {
+        var isUserIDExsist:Boolean = false
         if(!certFile.exists()){
 
             Log.e(TAG_NAME, "No Certificate File")
@@ -37,9 +43,30 @@ class CheckUserThread(appContext: Context): Thread() {
             }
 
             val decrypted:String? = AESEncyption.decrypt(stringBuilder.toString())
-            Log.e(TAG_NAME, "$decrypted")
+
             fileInputStream.close()
+            if(decrypted != null){
+                val userInfo: List<String> = decrypted!!.split("@")
+                if(userInfo.count() == 2){
+                    val userID: String = userInfo[0]
+                    val deviceID: String = userInfo[1]
+                    if(userID != "" && deviceID != ""){
+                        Log.e(TAG_NAME, "UserID:$userID , DeviceID:$deviceID")
+                        isUserIDExsist = true
+                    }
+                }
+            }
         }
-        super.run()
+        if(isUserIDExsist){
+            val i = Intent(aContext, MainActivity::class.java)
+            i.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            aContext.startActivity(i)
+        }
+        else{
+            val i = Intent(aContext, RegisterActivity::class.java)
+            i.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            aContext.startActivity(i)
+        }
+
     }
 }
