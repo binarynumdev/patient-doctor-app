@@ -64,24 +64,30 @@ class PatientDataTabActivity : AppCompatActivity() {
                 val personalFragment: PatientPersonalDetailsFragment? =
                     supportFragmentManager.findFragmentByTag("android:switcher:" + binding.viewPager.id + ":" + 0) as PatientPersonalDetailsFragment
                 val insuranceFragment: PatientInsurranceDetailsFragment = supportFragmentManager.findFragmentByTag("android:switcher:" + binding.viewPager.id + ":" + 1) as PatientInsurranceDetailsFragment
-                var newPatient:Patient = Patient()
-                newPatient.patientID = personalFragment?.binding?.editPatientID?.text.toString()
+                //var newPatient:Patient = Patient()
+                patient!!.patientID = personalFragment?.binding?.editPatientID?.text.toString()
                 Log.e("PatientID", personalFragment?.binding?.editPatientID?.text.toString())
-                newPatient.firstName = personalFragment?.binding?.editFirstName?.text.toString()
-                newPatient.lastName = personalFragment?.binding?.editLastName?.text.toString()
+                patient!!.firstName = personalFragment?.binding?.editFirstName?.text.toString()
+                patient!!.lastName = personalFragment?.binding?.editLastName?.text.toString()
                 val formatter = SimpleDateFormat("dd.MM.yyyy")
                 var birthDate:Date  = formatter.parse(personalFragment?.binding?.editDateOfBirth?.text.toString())
-                newPatient.birthDate = birthDate
+                patient!!.birthDate = birthDate
 //                newPatient.gender = personalFragment?.binding?.editFirstName?.text.toString()
-                newPatient.street = personalFragment?.binding?.editStreet?.text.toString()
-                newPatient.houseNumber = personalFragment?.binding?.editHouseNumber?.text.toString()
-                newPatient.city = personalFragment?.binding?.editCity?.text.toString()
-                newPatient.postCode = personalFragment?.binding?.editPostalCode?.text.toString()
-                newPatient.insuranceNumber = insuranceFragment?.binding?.editInsurranceNumber?.text.toString()
-                newPatient.insuranceName = insuranceFragment?.binding?.editInsurranceName?.text.toString()
-                newPatient.insuranceStatus = insuranceFragment?.binding?.editInsurranceStatus?.text.toString()
+                patient!!.street = personalFragment?.binding?.editStreet?.text.toString()
+                patient!!.houseNumber = personalFragment?.binding?.editHouseNumber?.text.toString()
+                patient!!.city = personalFragment?.binding?.editCity?.text.toString()
+                patient!!.postCode = personalFragment?.binding?.editPostalCode?.text.toString()
+                patient!!.insuranceNumber = insuranceFragment?.binding?.editInsurranceNumber?.text.toString()
+                patient!!.insuranceName = insuranceFragment?.binding?.editInsurranceName?.text.toString()
+                patient!!.insuranceStatus = insuranceFragment?.binding?.editInsurranceStatus?.text.toString()
                 lifecycleScope.launch{
-                    patientDB.insertAll(newPatient)
+                    if(patient!!.uid != null){
+                        patientDB.updatePatient(patient!!)
+                    }
+                    else{
+                        patientDB.insertAll(patient!!)
+                    }
+                    //
                     finish()
                 }
 

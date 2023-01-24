@@ -1,18 +1,25 @@
 package com.consulmedics.patientdata.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.consulmedics.patientdata.PatientsDatabase
+import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.adapters.PatientAdapter
 import com.consulmedics.patientdata.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
+    private val patientDB by lazy { PatientsDatabase.getDatabase(this.requireContext()).patientDao() }
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -22,15 +29,18 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        var patientList = patientDB.getAll()
+        Log.e("PATIENT", patientList.count().toString())
+        var patientAdapter = PatientAdapter(requireContext(), R.layout.row_patient_item, patientList)
+        val patientListView:ListView = binding.patientList
+        patientListView.adapter = patientAdapter
+        patientListView.onItemClickListener = AdapterView.OnItemClickListener {
+            parent, view, position, id -> run{
+                val selectedItemText = parent.getItemAtPosition(position)
+                Log.e("CLICKED", "${selectedItemText}")
+            }
         }
         return root
     }
@@ -38,5 +48,12 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("RESULT", "UPDATE LIST VIEW")
     }
 }
