@@ -6,6 +6,9 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Environment.*
 import android.util.Log
 import com.consulmedics.patientdata.MainActivity
+import com.consulmedics.patientdata.NoUserIdActivity
+import com.consulmedics.patientdata.PatientsDatabase
+import com.consulmedics.patientdata.ui.login.LoginActivity
 import com.consulmedics.patientdata.ui.login.RegisterActivity
 import com.consulmedics.patientdata.utils.AESEncyption
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
@@ -63,9 +66,19 @@ class CheckUserThread(appContext: Context): Thread() {
             aContext.startActivity(i)
         }
         else{
-            val i = Intent(aContext, RegisterActivity::class.java)
-            i.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            aContext.startActivity(i)
+            val patientDB by lazy { PatientsDatabase.getDatabase(aContext).patientDao() }
+            val patientCount: Int = patientDB.getAll().count()
+            if(patientCount == 0){
+                val i = Intent(aContext, LoginActivity::class.java)
+                i.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                aContext.startActivity(i)
+            }
+            else{
+                val i = Intent(aContext, NoUserIdActivity::class.java)
+                i.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                aContext.startActivity(i)
+            }
+
         }
 
     }
