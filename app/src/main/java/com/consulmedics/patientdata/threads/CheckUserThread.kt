@@ -9,7 +9,7 @@ import com.consulmedics.patientdata.MainActivity
 import com.consulmedics.patientdata.NoUserIdActivity
 import com.consulmedics.patientdata.PatientsDatabase
 import com.consulmedics.patientdata.ui.login.LoginActivity
-import com.consulmedics.patientdata.ui.login.RegisterActivity
+import com.consulmedics.patientdata.ui.register.RegisterActivity
 import com.consulmedics.patientdata.utils.AESEncyption
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.io.*
