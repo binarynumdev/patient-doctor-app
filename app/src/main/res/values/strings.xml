@@ -44,4 +44,7 @@
     <string name="btn_next">Next</string>
     <string name="password_no_match">Password does not match. Please input correct password</string>
     <string name="login_successed">Login success.</string>
+    <string name="hint_userid">Please input User ID</string>
+    <string name="action_register">Register</string>
+    <string name="hint_device_id">Please input Device ID</string>
 </resources>
