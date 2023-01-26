@@ -42,4 +42,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="hint_password">Please input admin password</string>
     <string name="btn_next">Next</string>
+    <string name="password_no_match">Password does not match. Please input correct password</string>
+    <string name="login_successed">Login success.</string>
 </resources>
