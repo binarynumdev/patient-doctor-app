@@ -47,4 +47,6 @@
     <string name="hint_userid">Please input User ID</string>
     <string name="action_register">Register</string>
     <string name="hint_device_id">Please input Device ID</string>
+    <string name="missing_user_id">Please fill User ID field</string>
+    <string name="missing_device_id">Please fill Device ID field</string>
 </resources>
