@@ -2,12 +2,13 @@ package com.consulmedics.patientdata.utils
 
 import android.os.Environment
 import android.util.Log
+import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_PATH
 import java.io.*
 
 class AppUtils {
     companion object {
         fun checkUserID(): Boolean {
-            var certFile: File = File(Environment.getExternalStorageDirectory(),"Consulmedics/userinfo.cert")
+            var certFile: File = File(Environment.getExternalStorageDirectory(),CERT_FILE_PATH)
             var isUserIDExsist:Boolean = false
             if(certFile.exists()){
                 var fileInputStream = FileInputStream(certFile)
