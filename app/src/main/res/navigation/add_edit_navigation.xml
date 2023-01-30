@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_edit_navigation"
+    app:startDestination="@id/patientPersonalDetailsFragment">
+
+    <fragment
+        android:id="@+id/patientPersonalDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientPersonalDetailsFragment"
+        android:label="PatientPersonalDetailsFragment" >
+        <action
+            android:id="@+id/action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment"
+            app:destination="@id/patientInsurranceDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientInsurranceDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment"
+        android:label="PatientInsurranceDetailsFragment" />
+</navigation>

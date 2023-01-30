@@ -1,22 +1,14 @@
-package com.consulmedics.patientdata.ui.fragments
+package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.consulmedics.patientdata.R
-import com.consulmedics.patientdata.databinding.FragmentPatientDataTabBinding
+import androidx.fragment.app.Fragment
 import com.consulmedics.patientdata.databinding.FragmentPatientPersonalDetailsBinding
 import com.consulmedics.patientdata.models.Patient
 import java.text.SimpleDateFormat
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -51,18 +43,21 @@ class PatientPersonalDetailsFragment : Fragment() {
         _binding = FragmentPatientPersonalDetailsBinding.inflate(inflater, container, false)
         if(_binding != null)
             Log.e("INITFRAGMENT", "OK")
-        binding.editPatientID.setText(patient?.patientID)
-        binding.editFirstName.setText(patient?.firstName)
-        binding.editLastName.setText(patient?.lastName)
-        binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
-        val birthDateFormat = SimpleDateFormat("dd.MM.yyyy")
+        if(patient != null){
+            binding.editPatientID.setText(patient?.patientID)
+            binding.editFirstName.setText(patient?.firstName)
+            binding.editLastName.setText(patient?.lastName)
+            binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            val birthDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
 
-        binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
-        binding.editStreet.setText(patient?.street)
-        binding.editCity.setText(patient?.city)
-        binding.editPostalCode.setText(patient?.postCode)
-        binding.editHouseNumber.setText(patient?.houseNumber)
+            binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
+            binding.editStreet.setText(patient?.street)
+            binding.editCity.setText(patient?.city)
+            binding.editPostalCode.setText(patient?.postCode)
+            binding.editHouseNumber.setText(patient?.houseNumber)
+        }
+
         val root = binding.root
         return root
     }

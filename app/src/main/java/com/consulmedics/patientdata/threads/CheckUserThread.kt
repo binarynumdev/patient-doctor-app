@@ -3,17 +3,11 @@ package com.consulmedics.patientdata.threads
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.os.Environment.*
-import android.util.Log
-import com.consulmedics.patientdata.MainActivity
+import com.consulmedics.patientdata.activities.MainActivity
 import com.consulmedics.patientdata.NoUserIdActivity
 import com.consulmedics.patientdata.PatientsDatabase
 import com.consulmedics.patientdata.ui.login.LoginActivity
-import com.consulmedics.patientdata.ui.register.RegisterActivity
-import com.consulmedics.patientdata.utils.AESEncyption
-import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppUtils
-import java.io.*
 
 class CheckUserThread(appContext: Context): Thread() {
     private var aContext:Context = appContext

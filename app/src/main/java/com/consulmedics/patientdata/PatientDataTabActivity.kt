@@ -22,8 +22,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.consulmedics.patientdata.databinding.ActivityPatientDataTabBinding
 import com.consulmedics.patientdata.models.Patient
-import com.consulmedics.patientdata.ui.fragments.PatientInsurranceDetailsFragment
-import com.consulmedics.patientdata.ui.fragments.PatientPersonalDetailsFragment
+import com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment
+import com.consulmedics.patientdata.fragments.addeditpatient.PatientPersonalDetailsFragment
 import com.consulmedics.patientdata.ui.main.SectionsPagerAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
