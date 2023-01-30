@@ -17,6 +17,9 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.ConsulmedicsPatientData">
         <activity
+            android:name=".AddEditPatientActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminActivity"
             android:exported="false" />
         <activity

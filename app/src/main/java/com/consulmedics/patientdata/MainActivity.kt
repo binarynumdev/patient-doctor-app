@@ -42,7 +42,11 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.appBarMain.tabs
         tabs.setupWithViewPager(viewPager)
-
+        binding.appBarMain.fabCreateNewPatient.setOnClickListener{
+            val intent = Intent(this@MainActivity, AddEditPatientActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        }
         binding.appBarMain.fabReadCard.setOnClickListener { view ->
             run {
 

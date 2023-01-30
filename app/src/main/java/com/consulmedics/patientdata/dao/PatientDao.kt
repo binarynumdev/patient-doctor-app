@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.consulmedics.patientdata.models.Patient
 
@@ -10,7 +11,7 @@ interface PatientDao {
     @Delete
     fun delete(patient: Patient)
     @Query("select * from patient")
-    fun getAll(): List<Patient>
+    fun getAll(): LiveData<List<Patient>>
     @Update
     fun updatePatient(vararg  patient: Patient)
 }
