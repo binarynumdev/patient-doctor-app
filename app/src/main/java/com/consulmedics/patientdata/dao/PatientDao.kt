@@ -14,4 +14,6 @@ interface PatientDao {
     fun getAll(): LiveData<List<Patient>>
     @Update
     fun updatePatient(vararg  patient: Patient)
+    @Query("select * from patient")
+    fun getList(): List<Patient>
 }

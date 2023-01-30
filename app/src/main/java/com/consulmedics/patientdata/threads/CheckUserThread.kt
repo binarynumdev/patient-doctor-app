@@ -28,7 +28,7 @@ class CheckUserThread(appContext: Context): Thread() {
         }
         else{
             val patientDB by lazy { PatientsDatabase.getDatabase(aContext).patientDao() }
-            val patientCount: Int = patientDB.getAll().count()
+            val patientCount: Int = patientDB.getList().count()
             if(patientCount == 0){
                 val i = Intent(aContext, LoginActivity::class.java)
                 i.addFlags(FLAG_ACTIVITY_NEW_TASK)
