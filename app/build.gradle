@@ -91,5 +91,6 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
+    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
 
 }

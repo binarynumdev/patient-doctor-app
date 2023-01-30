@@ -12,9 +12,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager.widget.ViewPager
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
 import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.ui.main.MainPageAdapter
+import com.consulmedics.patientdata.ui.main.SectionsPagerAdapter
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,9 +36,14 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarMain.toolbar)
+        val sectionsPagerAdapter = MainPageAdapter(this, supportFragmentManager)
 
-        binding.appBarMain.fab.setOnClickListener { view ->
+        val viewPager: ViewPager = binding.appBarMain.contentMain.viewPager
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = binding.appBarMain.tabs
+        tabs.setupWithViewPager(viewPager)
+
+        binding.appBarMain.fabReadCard.setOnClickListener { view ->
             run {
 
                 var status: Long = 0
@@ -96,32 +105,22 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        val drawerLayout: DrawerLayout = binding.drawerLayout
+//        val navView: NavigationView = binding.navView
+//        val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+//        appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+//            ), drawerLayout
+//        )
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+//        navView.setupWithNavController(navController)
         val sttus = scardLib.USBRequestPermission(applicationContext)
         Log.e("USB_CONNECTION", sttus.toString())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

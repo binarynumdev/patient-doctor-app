@@ -49,4 +49,6 @@
     <string name="hint_device_id">Please input Device ID</string>
     <string name="missing_user_id">Please fill User ID field</string>
     <string name="missing_device_id">Please fill Device ID field</string>
+    <string name="patient_list">Patient List</string>
+    <string name="patient_search">Search Patients</string>
 </resources>
