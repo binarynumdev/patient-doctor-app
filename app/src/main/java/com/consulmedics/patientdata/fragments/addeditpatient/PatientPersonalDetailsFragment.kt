@@ -1,14 +1,26 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientPersonalDetailsBinding
 import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -20,65 +32,109 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var patient: Patient? = null
     private var param2: String? = null
     private var _binding: FragmentPatientPersonalDetailsBinding? = null
+    private val sharedViewModel: AddEditPatientViewModel by activityViewModels()
     val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            patient = it.getSerializable("patient") as Patient
+            patient = it.getSerializable("patient_data") as Patient
         }
-    }
-    fun getFirstName(): String {
-        return _binding!!.editFirstName.text.toString()
-    }
-    fun getPatientID():String{
-        return _binding!!.editPatientID.text.toString()
-    }
+        sharedViewModel.patientData.observe(this, Observer {
+            Log.e(TAG_NAME, "Shared Vide Model Data Changed")
+            binding.editPatientID.setText(patient?.patientID)
+            binding.editFirstName.setText(patient?.firstName)
+            binding.editLastName.setText(patient?.lastName)
+            binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
+            binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
+            binding.editStreet.setText(patient?.street)
+            binding.editCity.setText(patient?.city)
+            binding.editPostalCode.setText(patient?.postCode)
+            binding.editHouseNumber.setText(patient?.houseNumber)
+        })
 
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPatientPersonalDetailsBinding.inflate(inflater, container, false)
-        if(_binding != null)
-            Log.e("INITFRAGMENT", "OK")
-        if(patient != null){
-            binding.editPatientID.setText(patient?.patientID)
-            binding.editFirstName.setText(patient?.firstName)
-            binding.editLastName.setText(patient?.lastName)
-            binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
-            val birthDateFormat = SimpleDateFormat("dd.MM.yyyy")
+        patient?.let { sharedViewModel.setPatientData(it) }
+        _binding?.apply {
+            editPatientID.doAfterTextChanged {
+                sharedViewModel.setPatientID(it.toString())
+            }
+            editFirstName.doAfterTextChanged {
+                sharedViewModel.setFirstname(it.toString())
+            }
+            editLastName.doAfterTextChanged {
+                sharedViewModel.setLastname(it.toString())
+            }
+            editDateOfBirth.doAfterTextChanged {
+                sharedViewModel.setBirthDate(it.toString())
+            }
+            editStreet.doAfterTextChanged {
+                sharedViewModel.setStreet(it.toString())
+            }
+            editHouseNumber.doAfterTextChanged {
+                sharedViewModel.setHouseNumber(it.toString())
+            }
+            editCity.doAfterTextChanged {
+                sharedViewModel.setCity(it.toString())
+            }
+            editPostalCode.doAfterTextChanged {
+                sharedViewModel.setPostCode(it.toString())
+            }
+            editDateOfBirth.setOnClickListener{
+                var c = Calendar.getInstance()
+                if(sharedViewModel.patientData.value?.birthDate != null){
+                    c.time = sharedViewModel.patientData.value?.birthDate!!
+                }
+                var year = c.get(Calendar.YEAR)
+                var month = c.get(Calendar.MONTH)
+                var day = c.get(Calendar.DAY_OF_MONTH)
 
 
-            binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
-            binding.editStreet.setText(patient?.street)
-            binding.editCity.setText(patient?.city)
-            binding.editPostalCode.setText(patient?.postCode)
-            binding.editHouseNumber.setText(patient?.houseNumber)
+                DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
+
+                    Log.e(TAG_NAME, "$year $monthOfYear $dayOfMonth")
+                    c.set(Calendar.YEAR, year)
+                    c.set(Calendar.MONTH, monthOfYear)
+                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    sharedViewModel.patientData.value?.birthDate = c.time
+                    val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
+                    binding.editDateOfBirth.setText(birthDateFormat.format(c.time))
+                },year , month, day).show()
+            }
+            editGender.setOnClickListener {
+                val listItems =
+                    arrayOf(getString(R.string.male),getString(R.string.female))
+
+                MaterialAlertDialogBuilder(requireActivity())
+                    .setTitle(R.string.select_gender)
+                    .setSingleChoiceItems(listItems, when(editGender.text.toString().equals(getString(R.string.male))){true -> 0 false -> 1}){dialog, which ->
+                        sharedViewModel.setGender(when(which == 0) { true -> "F" false -> "W"})
+                        binding.editGender.setText( when(which == 1) { true -> "Femaile" false -> "Male"}  )
+                    }
+                    .setPositiveButton("Ok") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+            btnContinue.setOnClickListener {
+                if(sharedViewModel.patientData.value?.isValidate() == true){
+                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
+                }
+                else{
+                    Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
+                }
+            }
         }
-
         val root = binding.root
         return root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PatientPersonalDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: Patient) =
-            PatientPersonalDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    //putString(ARG_PARAM1, param1)
-                    putSerializable("patient", param1)
-                }
-            }
-    }
+
 }

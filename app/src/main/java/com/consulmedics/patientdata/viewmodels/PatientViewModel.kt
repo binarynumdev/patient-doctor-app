@@ -3,6 +3,7 @@ package com.consulmedics.patientdata.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.PatientsDatabase
 import com.consulmedics.patientdata.models.Patient
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 class PatientViewModel(application: Application) : AndroidViewModel(application)  {
     val allPatients : LiveData<List<Patient>>
     val repository : PatientRepository
-
+    val currentPatient: LiveData<Patient> = MutableLiveData<Patient>()
     // on below line we are initializing
     // our dao, repository and all notes
     init {

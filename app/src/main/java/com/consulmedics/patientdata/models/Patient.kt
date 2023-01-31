@@ -28,6 +28,37 @@ data class Patient(
 
 
 
+    fun isValidate(): Boolean{
+        if(patientID?.isEmpty() == true){
+            return false
+        }
+        if(firstName?.isEmpty() == true){
+            return false
+        }
+        if(lastName?.isEmpty() == true){
+            return false
+        }
+        if(street?.isEmpty() == true){
+            return false
+        }
+        if(houseNumber?.isEmpty() == true){
+            return false
+        }
+        if(city?.isEmpty() == true){
+            return false
+        }
+        if(postCode?.isEmpty() == true){
+            return false
+        }
+        if(birthDate == null){
+            return false
+        }
+        if(gender?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
     fun loadFrom(readPDResponse: String?, readVDResponse: String?) {
         if (readPDResponse != null) {
             loadFromXmlStr(readPDResponse)

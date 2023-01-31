@@ -22,14 +22,7 @@ class SectionsPagerAdapter(val context: Context, fm: FragmentManager, patient: P
     FragmentPagerAdapter(fm) {
     val patient: Patient = patient;
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        if (position == 0){
-            return PatientPersonalDetailsFragment.newInstance(patient)
-        }
-        else{
-            return PatientInsurranceDetailsFragment.newInstance(patient)
-        }
+
         return PlaceholderFragment.newInstance(position + 1)
     }
 
