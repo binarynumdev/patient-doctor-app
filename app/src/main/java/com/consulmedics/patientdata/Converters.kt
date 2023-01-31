@@ -15,12 +15,12 @@ class Converters {
         val formatter = SimpleDateFormat("yyyyMMdd")
         return formatter.parse(string)
     }
-
+    @TypeConverter
     fun stringToTime(timeStr: String): Date {
         val timeFormat = SimpleDateFormat("HH:mm")
         return timeFormat.parse(timeStr)
     }
-
+    @TypeConverter
     fun timeToString(date:Date): String{
         val timeFormat = SimpleDateFormat("HH:mm")
         return timeFormat.format(date)
