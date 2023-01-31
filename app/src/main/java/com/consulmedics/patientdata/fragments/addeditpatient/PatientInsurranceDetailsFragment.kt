@@ -9,6 +9,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientInsurranceDetailsBinding
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants
@@ -53,6 +55,9 @@ class PatientInsurranceDetailsFragment : Fragment() {
             }
             editInsurranceStatus.doAfterTextChanged {
                 sharedViewModel.setInsuranceStatus(it.toString())
+            }
+            btnContinue.setOnClickListener {
+                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientAdditionalDetailsFragment)
             }
         }
         return binding.root
