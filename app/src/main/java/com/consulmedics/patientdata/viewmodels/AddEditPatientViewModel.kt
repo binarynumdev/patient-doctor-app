@@ -75,17 +75,17 @@ class AddEditPatientViewModel: ViewModel() {
     private val _insuranceNumber = MutableLiveData<String>("")
     val insuranceNumber: LiveData<String> = _insuranceNumber;
     fun setInsuranceNumber(editValue: String){
-        _insuranceNumber.value = editValue
+        _patientData.value?.insuranceNumber = editValue
     }
     private val _insuranceName = MutableLiveData<String>("")
     val insuranceName: LiveData<String> = _insuranceName;
     fun setInsuranceName(editValue: String){
-        _insuranceName.value = editValue
+        _patientData.value?.insuranceName = editValue
     }
     private val _insuranceStatus = MutableLiveData<String>("")
     val insuranceStatus: LiveData<String> = _insuranceStatus;
     fun setInsuranceStatus(editValue: String){
-        _insuranceStatus.value = editValue
+        _patientData.value?.insuranceStatus = editValue
     }
 
     private val _patientData = MutableLiveData<Patient>()
