@@ -28,7 +28,7 @@ data class Patient(
 
 
 
-    fun isValidate(): Boolean{
+    fun isValidatePersonalDetails(): Boolean{
         if(patientID?.isEmpty() == true){
             return false
         }
