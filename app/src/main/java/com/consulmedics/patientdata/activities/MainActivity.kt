@@ -36,9 +36,10 @@ class MainActivity : AppCompatActivity() {
         val tabs: TabLayout = binding.appBarMain.tabs
         tabs.setupWithViewPager(viewPager)
         binding.appBarMain.fabCreateNewPatient.setOnClickListener{
-            val intent = Intent(this@MainActivity, AddEditPatientActivity::class.java)
-            startActivity(intent)
-            this.finish()
+            startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
+                // you can add values(if any) to pass to the next class or avoid using `.apply`
+                putExtra("patient_data", Patient())
+            })
         }
         binding.appBarMain.fabReadCard.setOnClickListener { view ->
             run {
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                             "\t</vsda:Versicherter>\n" +
                             "</vsda:UC_AllgemeineVersicherungsdatenXML>"
                     patient.loadFrom(pdata, vdata)
-                    startActivity(Intent(this, PatientDataTabActivity::class.java).apply {
+                    startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
                         // you can add values(if any) to pass to the next class or avoid using `.apply`
                         putExtra("patient_data", patient)
                     })
