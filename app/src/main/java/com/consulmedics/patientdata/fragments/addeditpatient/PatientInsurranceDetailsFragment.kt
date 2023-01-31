@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -47,6 +48,17 @@ class PatientInsurranceDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPatientInsurranceDetailsBinding.inflate(inflater, container, false)
+        _binding?.apply {
+            editInsurranceName.doAfterTextChanged {
+                sharedViewModel.setInsuranceName(it.toString())
+            }
+            editInsurranceNumber.doAfterTextChanged {
+                sharedViewModel.setInsuranceNumber(it.toString())
+            }
+            editInsurranceStatus.doAfterTextChanged {
+                sharedViewModel.setInsuranceStatus(it.toString())
+            }
+        }
         return binding.root
     }
 
