@@ -16,7 +16,7 @@ data class Patient(
     var patientID:      String? = ""
     var firstName:      String  = ""
     var lastName:       String  = ""
-    var birthDate:      Date    = Date()
+    var birthDate:      Date?    = null
     var street:         String  = ""
     var city:           String  = ""
     var postCode:       String  = ""
