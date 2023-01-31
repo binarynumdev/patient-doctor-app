@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "ea09a648292f663956d749c6a0ba602a",
+    "identityHash": "8beaa7f198bddaaf4df9fb2edf01cfdf",
     "entities": [
       {
         "tableName": "Patient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -115,6 +115,12 @@
             "columnName": "healthStatus",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "signature",
+            "columnName": "signature",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -130,7 +136,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea09a648292f663956d749c6a0ba602a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8beaa7f198bddaaf4df9fb2edf01cfdf')"
     ]
   }
 }

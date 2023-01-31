@@ -4,21 +4,26 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.drawToBitmap
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
-import com.consulmedics.patientdata.databinding.FragmentPatientInsurranceDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.github.gcacace.signaturepad.views.SignaturePad
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class PatientAdditionalDetailsFragment : Fragment() {
     private var _binding: FragmentPatientAdditionalDetailsBinding? = null
@@ -88,6 +93,40 @@ class PatientAdditionalDetailsFragment : Fragment() {
             }
             editHealthStatus.doAfterTextChanged {
                 sharedViewModel.setHealthStatus(it.toString())
+            }
+            signView.setOnClickListener {
+                val builder = AlertDialog.Builder(requireActivity())
+                val inflater = layoutInflater
+                val dialogLayout = inflater.inflate(R.layout.dialog_signature, null)
+                val signPad = dialogLayout.findViewById<SignaturePad>(R.id.signPad)
+
+                builder.setView(dialogLayout)
+                builder.setNegativeButton(R.string.cancel, null)
+                builder.setPositiveButton(
+                    R.string.ok,null)
+                builder.setNeutralButton(
+                    R.string.clear_sign, null
+                )
+
+                val alertDialog = builder.create()
+                alertDialog.setOnShowListener {dialog->
+                    val button: Button =
+                        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                    button.setOnClickListener(View.OnClickListener { // TODO Do something
+                        binding.signView.setImageBitmap(signPad.transparentSignatureBitmap)
+                        sharedViewModel.setSignature(signPad.signatureSvg)
+                        dialog.dismiss()
+                        Log.e(TAG_NAME, signPad.signatureSvg)
+                    })
+                    val clearButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+                    clearButton.setOnClickListener{
+                        signPad.clear()
+                    }
+                }
+                alertDialog.show()
+                val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+                val height = (resources.displayMetrics.heightPixels * 0.45).toInt()
+                alertDialog.getWindow()?.setLayout(width, height)
             }
 
         }

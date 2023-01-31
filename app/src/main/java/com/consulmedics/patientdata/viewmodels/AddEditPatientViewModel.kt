@@ -129,4 +129,10 @@ class AddEditPatientViewModel: ViewModel() {
     fun setTimeOfExam(editValue: String){
         _patientData.value?.timeOfExam = editValue
     }
+
+    fun setSignature(signatureSvg: String?) {
+        if (signatureSvg != null) {
+            _patientData.value?.signature = signatureSvg
+        }
+    }
 }

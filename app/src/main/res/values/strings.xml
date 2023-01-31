@@ -62,4 +62,7 @@
     <string name="diagnosis">Diagnosis</string>
     <string name="health_status">Health Status</string>
     <string name="hand_sign">Sign</string>
+    <string name="clear_sign">Clear</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

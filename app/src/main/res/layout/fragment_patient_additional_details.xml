@@ -115,13 +115,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/hand_sign" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName7"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_border">
+            <ImageView
+                android:id="@+id/signView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

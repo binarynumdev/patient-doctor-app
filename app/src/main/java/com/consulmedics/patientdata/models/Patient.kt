@@ -31,7 +31,7 @@ data class Patient(
     var killometers:    String  = ""
     var diagnosis:      String  = ""
     var healthStatus:   String  = ""
-
+    var signature:      String  = ""
 
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){
