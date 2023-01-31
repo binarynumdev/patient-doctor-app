@@ -75,7 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:ems="10"
-            android:inputType="textPersonName" />
+
+            android:inputType="numberDecimal" />
 
         <TextView
             android:id="@+id/textView8"
