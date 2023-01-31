@@ -115,7 +115,7 @@ class PatientPersonalDetailsFragment : Fragment() {
                 MaterialAlertDialogBuilder(requireActivity())
                     .setTitle(R.string.select_gender)
                     .setSingleChoiceItems(listItems, when(editGender.text.toString().equals(getString(R.string.male))){true -> 0 false -> 1}){dialog, which ->
-                        sharedViewModel.setGender(when(which == 0) { true -> "F" false -> "W"})
+                        sharedViewModel.setGender(when(which == 0) { true -> "M" false -> "W"})
                         binding.editGender.setText( when(which == 1) { true -> "Femaile" false -> "Male"}  )
                     }
                     .setPositiveButton("Ok") { dialog, which ->
