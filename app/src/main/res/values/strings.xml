@@ -55,4 +55,5 @@
     <string name="female">Female</string>
     <string name="select_gender">Select Gender</string>
     <string name="error_in_validate_personal_details_form">Please fill all fields for personal details.</string>
+    <string name="error_in_validate_insurance_details_form">Please fill all fields for insurance details</string>
 </resources>
