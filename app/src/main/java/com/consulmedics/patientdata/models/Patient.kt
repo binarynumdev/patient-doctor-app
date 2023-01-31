@@ -26,6 +26,13 @@ data class Patient(
     var insuranceName:  String  = ""
     var insuranceStatus:String  = ""
 
+    var dateofExam:     String  = ""
+    var timeOfExam:     String  = ""
+    var killometers:    String  = ""
+    var diagnosis:      String  = ""
+    var healthStatus:   String  = ""
+
+
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){
             return false
