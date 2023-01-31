@@ -42,16 +42,16 @@ class PatientPersonalDetailsFragment : Fragment() {
         }
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(TAG_NAME, "Shared Vide Model Data Changed")
-            binding.editPatientID.setText(patient?.patientID)
-            binding.editFirstName.setText(patient?.firstName)
-            binding.editLastName.setText(patient?.lastName)
-            binding.editGender.setText( when(patient?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
+            binding.editFirstName.setText(sharedViewModel.patientData.value?.firstName)
+            binding.editLastName.setText(sharedViewModel.patientData.value?.lastName)
+            binding.editGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
             val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
-            binding.editDateOfBirth.setText(birthDateFormat.format(patient?.birthDate))
-            binding.editStreet.setText(patient?.street)
-            binding.editCity.setText(patient?.city)
-            binding.editPostalCode.setText(patient?.postCode)
-            binding.editHouseNumber.setText(patient?.houseNumber)
+            binding.editDateOfBirth.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+            binding.editStreet.setText(sharedViewModel.patientData.value?.street)
+            binding.editCity.setText(sharedViewModel.patientData.value?.city)
+            binding.editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
+            binding.editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
         })
 
     }
