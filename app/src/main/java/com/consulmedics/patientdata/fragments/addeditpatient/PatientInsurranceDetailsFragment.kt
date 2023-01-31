@@ -25,15 +25,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class PatientInsurranceDetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var patient: Patient? = null
     private var _binding: FragmentPatientInsurranceDetailsBinding? = null
     val binding get() = _binding!!
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            patient = it.getSerializable(ARG_PARAM1) as Patient
-        }
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Insurance fragment")
             binding.editInsurranceName.setText(sharedViewModel.patientData.value?.insuranceName)
