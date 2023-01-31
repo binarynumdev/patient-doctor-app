@@ -124,7 +124,7 @@ class PatientPersonalDetailsFragment : Fragment() {
                     .show()
             }
             btnContinue.setOnClickListener {
-                if(sharedViewModel.patientData.value?.isValidate() == true){
+                if(sharedViewModel.patientData.value?.isValidatePersonalDetails() == true){
                     findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
                 }
                 else{
