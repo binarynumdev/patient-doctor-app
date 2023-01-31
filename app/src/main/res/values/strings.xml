@@ -51,4 +51,8 @@
     <string name="missing_device_id">Please fill Device ID field</string>
     <string name="patient_list">Patient List</string>
     <string name="patient_search">Search Patients</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="error_in_validate_personal_details_form">Please fill all fields for personal details.</string>
 </resources>
