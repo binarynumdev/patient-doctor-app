@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.caverock.androidsvg.SVG
+import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
 import com.consulmedics.patientdata.utils.AppConstants
@@ -52,7 +53,8 @@ class PatientSummaryFragment : Fragment() {
             binding.textInsuranceStatus.setText(sharedViewModel.patientData.value?.insuranceStatus)
             if(sharedViewModel.patientData.value?.dateofExam != null){
                 val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                binding.textDateOfExam.setText(birthDateFormat.format(sharedViewModel.patientData.value?.dateofExam))
+                val converters:Converters = Converters()
+                binding.textDateOfExam.setText(birthDateFormat.format(converters.stringToDate(sharedViewModel.patientData.value?.dateofExam)))
             }
             binding.textTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
             binding.textKillometers.setText(sharedViewModel.patientData.value?.killometers)
