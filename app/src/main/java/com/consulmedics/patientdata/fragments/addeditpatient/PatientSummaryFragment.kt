@@ -16,6 +16,7 @@ import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import java.text.SimpleDateFormat
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -38,6 +39,25 @@ class PatientSummaryFragment : Fragment() {
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
             binding.textFullName.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.lastName}")
+            if(!sharedViewModel.patientData.value?.gender.isNullOrEmpty()){
+                binding.textGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            }
+            if(sharedViewModel.patientData.value?.birthDate != null){
+                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                binding.textBirthDate.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+            }
+            binding.textFullAddress.setText("${sharedViewModel.patientData.value?.street} ${sharedViewModel.patientData.value?.houseNumber} ${sharedViewModel.patientData.value?.city} ${sharedViewModel.patientData.value?.postCode}")
+            binding.textInsuranceName.setText(sharedViewModel.patientData.value?.insuranceName)
+            binding.textInsuranceNumber.setText(sharedViewModel.patientData.value?.insuranceNumber)
+            binding.textInsuranceStatus.setText(sharedViewModel.patientData.value?.insuranceStatus)
+            if(sharedViewModel.patientData.value?.dateofExam != null){
+                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                binding.textDateOfExam.setText(birthDateFormat.format(sharedViewModel.patientData.value?.dateofExam))
+            }
+            binding.textTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
+            binding.textKillometers.setText(sharedViewModel.patientData.value?.killometers)
+            binding.textDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
+            binding.textHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
             sharedViewModel.patientData.value?.signature?.let { it1 ->
 
                 if(it1.isNotEmpty()){
