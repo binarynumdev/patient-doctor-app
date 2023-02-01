@@ -55,4 +55,14 @@
     <string name="female">Female</string>
     <string name="select_gender">Select Gender</string>
     <string name="error_in_validate_personal_details_form">Please fill all fields for personal details.</string>
+    <string name="error_in_validate_insurance_details_form">Please fill all fields for insurance details</string>
+    <string name="date_of_exam">Date of Examination</string>
+    <string name="time_of_exam">Time of Examination</string>
+    <string name="killometers">Killometers</string>
+    <string name="diagnosis">Diagnosis</string>
+    <string name="health_status">Health Status</string>
+    <string name="hand_sign">Sign</string>
+    <string name="clear_sign">Clear</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

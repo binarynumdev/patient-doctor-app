@@ -45,9 +45,13 @@ class PatientPersonalDetailsFragment : Fragment() {
             binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
             binding.editFirstName.setText(sharedViewModel.patientData.value?.firstName)
             binding.editLastName.setText(sharedViewModel.patientData.value?.lastName)
-            binding.editGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
-            val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
-            binding.editDateOfBirth.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+            if(!sharedViewModel.patientData.value?.gender.isNullOrEmpty()){
+                binding.editGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            }
+            if(sharedViewModel.patientData.value?.birthDate != null){
+                val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
+                binding.editDateOfBirth.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+            }
             binding.editStreet.setText(sharedViewModel.patientData.value?.street)
             binding.editCity.setText(sharedViewModel.patientData.value?.city)
             binding.editPostalCode.setText(sharedViewModel.patientData.value?.postCode)

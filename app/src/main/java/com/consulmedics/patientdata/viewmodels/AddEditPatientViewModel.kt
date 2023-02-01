@@ -109,4 +109,30 @@ class AddEditPatientViewModel: ViewModel() {
 //        patient?.insuranceNumber?.let { setInsuranceNumber(it) }
 //        patient?.insuranceStatus?.let { setInsuranceStatus(it) }
     }
+
+    fun setKillometer(editValue: String) {
+        _patientData.value?.killometers = editValue
+    }
+
+    fun setDiagnosis(editValue: String) {
+        _patientData.value?.diagnosis = editValue
+    }
+
+    fun setHealthStatus(editValue: String) {
+        _patientData.value?.healthStatus = editValue
+    }
+
+    fun setDateOfExam(editValue: String){
+        _patientData.value?.dateofExam = editValue
+    }
+
+    fun setTimeOfExam(editValue: String){
+        _patientData.value?.timeOfExam = editValue
+    }
+
+    fun setSignature(signatureSvg: String?) {
+        if (signatureSvg != null) {
+            _patientData.value?.signature = signatureSvg
+        }
+    }
 }
