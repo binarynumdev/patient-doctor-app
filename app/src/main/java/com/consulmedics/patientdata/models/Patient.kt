@@ -166,5 +166,27 @@ data class Patient(
         }
     }
 
+    fun isValidAdditionalDetails(): Boolean {
+        if(dateofExam?.isEmpty() == true){
+            return false
+        }
+        if(timeOfExam?.isEmpty() == true){
+            return false
+        }
+        if(killometers?.isEmpty() == true){
+            return false
+        }
+        if(diagnosis?.isEmpty() == true){
+            return false
+        }
+        if(healthStatus?.isEmpty() == true){
+            return false
+        }
+        if(signature?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
 
 }
