@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.drawToBitmap
 import androidx.core.widget.doAfterTextChanged
@@ -130,7 +131,13 @@ class PatientAdditionalDetailsFragment : Fragment() {
                 alertDialog.getWindow()?.setLayout(width, height)
             }
             btnNext.setOnClickListener {
-                findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientSummaryFragment)
+                if(sharedViewModel.patientData.value?.isValidAdditionalDetails() == true){
+                    findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientSummaryFragment)
+                }
+                else{
+                    Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
+                }
+
             }
 
         }
