@@ -1,8 +1,12 @@
 package com.consulmedics.patientdata.utils
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Environment
 import android.util.Log
+import com.caverock.androidsvg.SVG
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_PATH
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.io.*
 
 class AppUtils {
@@ -36,6 +40,24 @@ class AppUtils {
                 }
             }
             return isUserIDExsist
+        }
+
+        fun svgStringToBitmap(svgString: String): Bitmap {
+            val svg: SVG = SVG.getFromString(svgString)
+            val svgWidth = if (svg.documentWidth != -1f) svg.documentWidth else 500f
+            val svgHeight = if (svg.documentHeight != -1f) svg.documentHeight else 500f
+            Log.e(AppConstants.TAG_NAME,
+                "${svgWidth}:${svgHeight}:${svg.documentHeight}:${svg.documentWidth}:${svg.documentDescription}"
+            )
+            val newBM = Bitmap.createBitmap(
+                Math.ceil(svgWidth.toDouble()).toInt(),
+                Math.ceil(svgHeight.toDouble()).toInt(),
+                Bitmap.Config.ARGB_8888
+            )
+            val bmcanvas = Canvas(newBM)
+            bmcanvas.drawRGB(255, 255, 255)
+            svg.renderToCanvas(bmcanvas)
+            return newBM
         }
     }
 }

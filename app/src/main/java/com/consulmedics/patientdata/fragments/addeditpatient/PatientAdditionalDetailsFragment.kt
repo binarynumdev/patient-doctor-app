@@ -2,6 +2,7 @@ package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.github.gcacace.signaturepad.views.SignaturePad
 import java.text.SimpleDateFormat
@@ -32,20 +34,14 @@ class PatientAdditionalDetailsFragment : Fragment() {
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedViewModel.patientData.observe(this, Observer {
-            Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Additional fragment")
-            binding.editDateOfExam.setText(sharedViewModel.patientData.value?.dateofExam)
-            binding.editTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
-            binding.editKillometer.setText(sharedViewModel.patientData.value?.killometers)
-            binding.editDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
-            binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
-        })
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.e(AppConstants.TAG_NAME, "ONCREATVIEW")
         _binding = FragmentPatientAdditionalDetailsBinding.inflate(inflater, container, false)
         _binding?.apply {
             editDateOfExam.setOnClickListener {
@@ -115,9 +111,12 @@ class PatientAdditionalDetailsFragment : Fragment() {
                         (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
                     button.setOnClickListener(View.OnClickListener { // TODO Do something
                         binding.signView.setImageBitmap(signPad.transparentSignatureBitmap)
-                        sharedViewModel.setSignature(signPad.signatureSvg)
+                        val svgStr = signPad.signatureSvg
+                        val newBM: Bitmap = AppUtils.svgStringToBitmap(svgStr)
+                        binding.signView.setImageBitmap(newBM)
+                        sharedViewModel.setSignature(svgStr)
                         dialog.dismiss()
-                        Log.e(TAG_NAME, signPad.signatureSvg)
+                        Log.e(TAG_NAME, svgStr)
                     })
                     val clearButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
                     clearButton.setOnClickListener{
@@ -137,4 +136,23 @@ class PatientAdditionalDetailsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
+            Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Additional fragment")
+            binding.editDateOfExam.setText(sharedViewModel.patientData.value?.dateofExam)
+            binding.editTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
+            binding.editKillometer.setText(sharedViewModel.patientData.value?.killometers)
+            binding.editDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
+            binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
+            sharedViewModel.patientData.value?.signature?.let { it1 ->
+
+                if(it1.isNotEmpty()){
+                    val newBM:Bitmap = AppUtils.svgStringToBitmap(it1)
+                    binding.signView.setImageBitmap(newBM)
+                }
+
+            }
+        })
+    }
 }
