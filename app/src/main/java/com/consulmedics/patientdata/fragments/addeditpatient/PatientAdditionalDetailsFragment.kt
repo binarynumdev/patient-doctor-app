@@ -14,6 +14,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
@@ -127,6 +128,9 @@ class PatientAdditionalDetailsFragment : Fragment() {
                 val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
                 val height = (resources.displayMetrics.heightPixels * 0.45).toInt()
                 alertDialog.getWindow()?.setLayout(width, height)
+            }
+            btnNext.setOnClickListener {
+                findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientSummaryFragment)
             }
 
         }
