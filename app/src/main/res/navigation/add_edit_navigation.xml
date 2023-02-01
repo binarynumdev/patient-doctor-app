@@ -25,5 +25,14 @@
         android:id="@+id/patientAdditionalDetailsFragment"
         android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientAdditionalDetailsFragment"
         android:label="fragment_patient_additional_details"
-        tools:layout="@layout/fragment_patient_additional_details" />
+        tools:layout="@layout/fragment_patient_additional_details" >
+        <action
+            android:id="@+id/action_patientAdditionalDetailsFragment_to_patientSummaryFragment"
+            app:destination="@id/patientSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientSummaryFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientSummaryFragment"
+        android:label="fragment_patient_summary"
+        tools:layout="@layout/fragment_patient_summary" />
 </navigation>
