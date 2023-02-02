@@ -18,12 +18,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.Converters
+import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.github.gcacace.signaturepad.views.SignaturePad
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +34,9 @@ import java.util.*
 class PatientAdditionalDetailsFragment : Fragment() {
     private var _binding: FragmentPatientAdditionalDetailsBinding? = null
     val binding get() = _binding!!
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels()
+    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
+        AddEditPatientViewModelFactory(MyApplication.repository!!)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -147,7 +151,12 @@ class PatientAdditionalDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Additional fragment")
-            binding.editDateOfExam.setText(sharedViewModel.patientData.value?.dateofExam)
+            val converters: Converters = Converters()
+            val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+            if(!sharedViewModel.patientData.value?.dateofExam.isNullOrEmpty()){
+                binding.editDateOfExam.setText(birthDateFormat.format(converters.stringToDate(sharedViewModel.patientData.value?.dateofExam)))
+            }
+
             binding.editTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
             binding.editKillometer.setText(sharedViewModel.patientData.value?.killometers)
             binding.editDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)

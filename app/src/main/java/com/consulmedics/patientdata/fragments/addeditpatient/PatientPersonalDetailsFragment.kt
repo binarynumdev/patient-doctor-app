@@ -12,12 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientPersonalDetailsBinding
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +34,9 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var patient: Patient? = null
     private var param2: String? = null
     private var _binding: FragmentPatientPersonalDetailsBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels()
+    private val sharedViewModel: AddEditPatientViewModel by activityViewModels() {
+        AddEditPatientViewModelFactory(MyApplication.repository!!)
+    }
     val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {

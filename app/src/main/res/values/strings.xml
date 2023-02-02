@@ -66,4 +66,5 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="additional_details">Additional Details</string>
+    <string name="save">Save</string>
 </resources>

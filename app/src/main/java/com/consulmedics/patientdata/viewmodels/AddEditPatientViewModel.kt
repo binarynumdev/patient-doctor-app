@@ -1,13 +1,21 @@
 package com.consulmedics.patientdata.viewmodels
 
+import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.consulmedics.patientdata.PatientsDatabase
 import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.models.PatientRepository
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddEditPatientViewModel: ViewModel() {
+class AddEditPatientViewModel(private val repository: PatientRepository): ViewModel() {
 /*
 *     var patientID:      String? = ""
     var firstName:      String  = ""
@@ -133,6 +141,28 @@ class AddEditPatientViewModel: ViewModel() {
     fun setSignature(signatureSvg: String?) {
         if (signatureSvg != null) {
             _patientData.value?.signature = signatureSvg
+        }
+    }
+
+    fun updatePatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
+        repository.update(patient)
+    }
+
+
+    // on below line we are creating a new method for adding a new note to our database
+    // we are calling a method from our repository to add a new note.
+    fun insertPatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
+        repository.insert(patient)
+    }
+
+    fun savePatient(patient: Patient) {
+        if(patient.uid == null){
+            Log.e(TAG_NAME, "INSERT PATIENT")
+            insertPatient(patient)
+        }
+        else{
+            Log.e(TAG_NAME, "UPDATE PATIENT")
+            updatePatient(patient)
         }
     }
 }

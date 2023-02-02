@@ -12,11 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.caverock.androidsvg.SVG
 import com.consulmedics.patientdata.Converters
+import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
 
 
@@ -33,7 +35,9 @@ private const val ARG_PARAM2 = "param2"
 class PatientSummaryFragment : Fragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels()
+    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
+        AddEditPatientViewModelFactory(MyApplication.repository!!)
+    }
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +83,12 @@ class PatientSummaryFragment : Fragment() {
         Log.e(AppConstants.TAG_NAME, "ONCREATVIEW")
         // Inflate the layout for this fragment
         _binding = FragmentPatientSummaryBinding.inflate(inflater, container, false)
+        binding.btnSave.setOnClickListener {
+            sharedViewModel.patientData.value?.let { it1 ->
+                sharedViewModel.savePatient(it1)
+                activity?.finish()
+            }
+        }
         return binding.root
     }
 }
