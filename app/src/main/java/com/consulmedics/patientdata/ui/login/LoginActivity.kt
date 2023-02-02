@@ -1,21 +1,11 @@
 package com.consulmedics.patientdata.ui.login
 
-import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.Toast
-import com.consulmedics.patientdata.AdminActivity
-import com.consulmedics.patientdata.NoUserIdActivity
+import com.consulmedics.patientdata.activities.AdminActivity
 import com.consulmedics.patientdata.databinding.ActivityLoginBinding
 
 import com.consulmedics.patientdata.R

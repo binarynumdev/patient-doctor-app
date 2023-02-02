@@ -16,7 +16,7 @@ data class Patient(
     var patientID:      String? = ""
     var firstName:      String  = ""
     var lastName:       String  = ""
-    var birthDate:      Date    = Date()
+    var birthDate:      Date?    = null
     var street:         String  = ""
     var city:           String  = ""
     var postCode:       String  = ""
@@ -26,7 +26,57 @@ data class Patient(
     var insuranceName:  String  = ""
     var insuranceStatus:String  = ""
 
+    var dateofExam:     String  = ""
+    var timeOfExam:     String  = ""
+    var killometers:    String  = ""
+    var diagnosis:      String  = ""
+    var healthStatus:   String  = ""
+    var signature:      String  = ""
 
+    fun isValidInsuranceDetails():Boolean{
+        if(insuranceName?.isEmpty() == true){
+            return false
+        }
+        if(insuranceNumber?.isEmpty() == true){
+            return false
+        }
+        if(insuranceStatus?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
+
+    fun isValidatePersonalDetails(): Boolean{
+        if(patientID?.isEmpty() == true){
+            return false
+        }
+        if(firstName?.isEmpty() == true){
+            return false
+        }
+        if(lastName?.isEmpty() == true){
+            return false
+        }
+        if(street?.isEmpty() == true){
+            return false
+        }
+        if(houseNumber?.isEmpty() == true){
+            return false
+        }
+        if(city?.isEmpty() == true){
+            return false
+        }
+        if(postCode?.isEmpty() == true){
+            return false
+        }
+        if(birthDate == null){
+            return false
+        }
+        if(gender?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
 
     fun loadFrom(readPDResponse: String?, readVDResponse: String?) {
         if (readPDResponse != null) {
@@ -114,6 +164,28 @@ data class Patient(
             }
             eventType = parser.next()
         }
+    }
+
+    fun isValidAdditionalDetails(): Boolean {
+        if(dateofExam?.isEmpty() == true){
+            return false
+        }
+        if(timeOfExam?.isEmpty() == true){
+            return false
+        }
+        if(killometers?.isEmpty() == true){
+            return false
+        }
+        if(diagnosis?.isEmpty() == true){
+            return false
+        }
+        if(healthStatus?.isEmpty() == true){
+            return false
+        }
+        if(signature?.isEmpty() == true){
+            return false
+        }
+        return true
     }
 
 

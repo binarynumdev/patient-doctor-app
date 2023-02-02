@@ -1,23 +1,16 @@
-package com.consulmedics.patientdata
+package com.consulmedics.patientdata.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager.widget.ViewPager
+import com.consulmedics.patientdata.PatientDataTabActivity
+import com.consulmedics.patientdata.SCardExt
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.ui.main.MainPageAdapter
-import com.consulmedics.patientdata.ui.main.SectionsPagerAdapter
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 
 
@@ -42,7 +35,12 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.appBarMain.tabs
         tabs.setupWithViewPager(viewPager)
-
+        binding.appBarMain.fabCreateNewPatient.setOnClickListener{
+            startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
+                // you can add values(if any) to pass to the next class or avoid using `.apply`
+                putExtra("patient_data", Patient())
+            })
+        }
         binding.appBarMain.fabReadCard.setOnClickListener { view ->
             run {
 
@@ -97,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                             "\t</vsda:Versicherter>\n" +
                             "</vsda:UC_AllgemeineVersicherungsdatenXML>"
                     patient.loadFrom(pdata, vdata)
-                    startActivity(Intent(this, PatientDataTabActivity::class.java).apply {
+                    startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
                         // you can add values(if any) to pass to the next class or avoid using `.apply`
                         putExtra("patient_data", patient)
                     })

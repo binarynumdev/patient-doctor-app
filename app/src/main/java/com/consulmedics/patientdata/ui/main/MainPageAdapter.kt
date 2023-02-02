@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.consulmedics.patientdata.R
-import com.consulmedics.patientdata.models.Patient
-import com.consulmedics.patientdata.ui.fragments.PatientInsurranceDetailsFragment
-import com.consulmedics.patientdata.ui.fragments.PatientPersonalDetailsFragment
+
 private val TAB_TITLES = arrayOf(
     R.string.patient_list,
     R.string.patient_search

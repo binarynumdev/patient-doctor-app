@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -34,8 +33,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toStartOf="@+id/textView11"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -44,8 +45,10 @@
             android:id="@+id/editLastName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView11"
             app:layout_constraintTop_toTopOf="@+id/editFirstName" />
@@ -63,8 +66,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:focusable="false"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -82,9 +89,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:ems="10"
+            android:background="@drawable/round_corder_edit_text"
 
+            android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toStartOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -113,8 +122,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toEndOf="@+id/textView18"
             app:layout_constraintEnd_toStartOf="@+id/editPostalCode"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +135,10 @@
             android:id="@+id/editPostalCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView19"
             app:layout_constraintTop_toTopOf="@+id/editCity" />
@@ -142,13 +155,14 @@
             android:id="@+id/editHouseNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintBottom_toTopOf="@+id/textView19"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toTopOf="@+id/editStreet" />
 
         <TextView
             android:id="@+id/textView3"
@@ -162,8 +176,10 @@
             android:id="@+id/editPatientID"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -175,17 +191,34 @@
             android:text="@string/gender"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/editLastName"
-            app:layout_constraintTop_toBottomOf="@+id/editLastName" />
+            app:layout_constraintTop_toBottomOf="@+id/editLastName"
+            />
 
         <EditText
             android:id="@+id/editGender"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_corder_edit_text"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:focusable="false"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:padding="@dimen/appbar_padding_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+
+            />
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="@string/btn_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editCity" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

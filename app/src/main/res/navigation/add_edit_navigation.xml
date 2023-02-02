@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_edit_navigation"
+    app:startDestination="@id/patientPersonalDetailsFragment">
+
+    <fragment
+        android:id="@+id/patientPersonalDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientPersonalDetailsFragment"
+        android:label="PatientPersonalDetailsFragment" >
+        <action
+            android:id="@+id/action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment"
+            app:destination="@id/patientInsurranceDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientInsurranceDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment"
+        android:label="PatientInsurranceDetailsFragment" >
+        <action
+            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientAdditionalDetailsFragment"
+            app:destination="@id/patientAdditionalDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientAdditionalDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientAdditionalDetailsFragment"
+        android:label="fragment_patient_additional_details"
+        tools:layout="@layout/fragment_patient_additional_details" >
+        <action
+            android:id="@+id/action_patientAdditionalDetailsFragment_to_patientSummaryFragment"
+            app:destination="@id/patientSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientSummaryFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientSummaryFragment"
+        android:label="fragment_patient_summary"
+        tools:layout="@layout/fragment_patient_summary" />
+</navigation>

@@ -31,17 +31,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        var patientList = patientDB.getAll()
-        Log.e("PATIENT", patientList.count().toString())
-        var patientAdapter = PatientAdapter(requireContext(), R.layout.row_patient_item, patientList)
-        val patientListView:ListView = binding.patientList
-        patientListView.adapter = patientAdapter
-        patientListView.onItemClickListener = AdapterView.OnItemClickListener {
-            parent, view, position, id -> run{
-                val selectedItemText = parent.getItemAtPosition(position)
-                Log.e("CLICKED", "${selectedItemText}")
-            }
-        }
+
         return root
     }
 

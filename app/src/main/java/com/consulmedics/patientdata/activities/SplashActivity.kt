@@ -1,4 +1,4 @@
-package com.consulmedics.patientdata
+package com.consulmedics.patientdata.activities
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.utils.AppConstants.PERMISSION_REQUEST_CODE
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.threads.CheckUserThread

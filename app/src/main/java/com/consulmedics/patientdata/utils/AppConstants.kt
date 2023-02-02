@@ -7,4 +7,5 @@ object AppConstants {
     const val CERT_FILE_PATH: String = "Consulmedics/userinfo.cert";
     const val CERT_FILE_FOLDER: String = "/Consulmedics"
     const val CERT_FILE_NAME: String = "userinfo.cert"
+    const val DISPLAY_DATE_FORMAT: String = "dd.MM.yyyy"
 }
