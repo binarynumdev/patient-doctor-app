@@ -37,6 +37,7 @@ class PatientAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         var currentPatient = allPatients.get(position)
+        currentPatient.decryptFields()
         holder.itemBinding.textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
         holder.itemBinding.textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
 
