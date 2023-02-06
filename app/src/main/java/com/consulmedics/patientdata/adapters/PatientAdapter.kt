@@ -10,56 +10,52 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.MyApplication.Companion.patientDetailsActivityRequestCode
 import com.consulmedics.patientdata.PatientDataTabActivity
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.RowPatientItemBinding
 import com.consulmedics.patientdata.models.Patient
 class PatientAdapter(
     private val mContext: Context,
-    private val mLayoutResourceId: Int,
-
-    patients: List<Patient>
 ) :
-    ArrayAdapter<Patient>(mContext, mLayoutResourceId, patients) {
-    private val city: MutableList<Patient> = ArrayList(patients)
-    private var allCities: List<Patient> = ArrayList(patients)
-    private lateinit var _binding: RowPatientItemBinding
-    override fun getCount(): Int {
-        return city.size
+    RecyclerView.Adapter<PatientAdapter.ViewHolder>(){
+    private val allPatients = ArrayList<Patient>()
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // on below line we are creating an initializing all our
+        // variables which we have added in layout file.
+        val txtFulLName = itemView.findViewById<TextView>(R.id.textFullName)
     }
-    override fun getItem(position: Int): Patient {
-        return city[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        // inflating our layout file for each item of recycler view.
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.item_patient,
+            parent, false
+        )
+        return ViewHolder(itemView)
     }
-    override fun getItemId(position: Int): Long {
-        return city[position].uid!!.toLong()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // on below line we are setting data to item of recycler view.
+        holder.txtFulLName.setText("${allPatients.get(position).firstName} ${allPatients.get(position).lastName}")
+
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        _binding = RowPatientItemBinding.inflate(LayoutInflater.from(context))
-        var convertView = convertView
-        if (convertView == null) {
-            val inflater = (mContext as Activity).layoutInflater
-            convertView = _binding.root
-        }
-        try {
-            val patient: Patient = getItem(position)
-            patient.patientID?.let { Log.e("PATIENTID", it) }
-            val patientIDView:TextView = _binding.textPatientID
-            patientIDView.text = patient.patientID
-            val patientNameView:TextView = _binding.textPatientName
-            patientNameView.text = patient.firstName + " "+ patient.lastName
-            val btnEditPatient: ImageButton = _binding.btnEdit
-            btnEditPatient.setOnClickListener{view->
-                run{
-                    Log.e("ONCLICK", "${patient.patientID}")
-                    var i1 = Intent(convertView!!.context, PatientDataTabActivity::class.java)
-                    i1.putExtra("patient_data", patient)
-                    (mContext as Activity).startActivityForResult(i1, patientDetailsActivityRequestCode)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return convertView!!
+    override fun getItemCount(): Int {
+        // on below line we are
+        // returning our list size.
+        return allPatients.size
+    }
+
+    // below method is use to update our list of notes.
+    fun updateList(newList: List<Patient>) {
+        // on below line we are clearing
+        // our notes array list
+        allPatients.clear()
+        // on below line we are adding a
+        // new list to our all notes list.
+        allPatients.addAll(newList)
+        // on below line we are calling notify data
+        // change method to notify our adapter.
+        notifyDataSetChanged()
     }
 }
