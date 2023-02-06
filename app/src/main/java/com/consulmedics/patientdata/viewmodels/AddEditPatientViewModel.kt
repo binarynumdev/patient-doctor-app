@@ -156,6 +156,7 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     }
 
     fun savePatient(patient: Patient) {
+        patient.encryptFields();
         if(patient.uid == null){
             Log.e(TAG_NAME, "INSERT PATIENT")
             insertPatient(patient)
