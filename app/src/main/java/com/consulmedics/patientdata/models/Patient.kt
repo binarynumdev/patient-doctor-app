@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.consulmedics.patientdata.utils.AESEncyption
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.Serializable
@@ -186,6 +187,36 @@ data class Patient(
             return false
         }
         return true
+    }
+
+    fun encryptFields() {
+        /*
+        var street:         String  = ""
+        var city:           String  = ""
+        var postCode:       String  = ""
+        var gender:         String  = ""
+        var houseNumber:    String  = ""
+        var insuranceNumber:String  = ""
+        var insuranceName:  String  = ""
+        var insuranceStatus:String  = ""
+
+        var dateofExam:     String  = ""
+        var timeOfExam:     String  = ""
+        var killometers:    String  = ""
+        var diagnosis:      String  = ""
+        var healthStatus:   String  = ""
+        var signature:      String  = ""
+        *
+        */
+        patientID = AESEncyption.encrypt(patientID!!).toString();
+        street = AESEncyption.encrypt(street).toString();
+        city = AESEncyption.encrypt(city).toString();
+        postCode = AESEncyption.encrypt(postCode).toString();
+        gender = AESEncyption.encrypt(gender).toString();
+        houseNumber = AESEncyption.encrypt(houseNumber).toString();
+        insuranceNumber = AESEncyption.encrypt(insuranceNumber).toString();
+        insuranceName = AESEncyption.encrypt(insuranceName).toString();
+        insuranceStatus = AESEncyption.encrypt(insuranceStatus).toString();
     }
 
 
