@@ -19,6 +19,7 @@
         <activity
             android:name=".activities.AddEditPatientActivity"
             android:screenOrientation="landscape"
+
             android:exported="false" />
         <activity
             android:name=".activities.AdminActivity"
