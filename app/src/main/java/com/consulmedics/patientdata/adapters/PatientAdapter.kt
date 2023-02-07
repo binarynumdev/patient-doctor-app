@@ -18,7 +18,9 @@ import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ItemPatientBinding
 import com.consulmedics.patientdata.databinding.RowPatientItemBinding
 import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import java.text.SimpleDateFormat
 
 class PatientAdapter(
     private val mContext: Context,
@@ -40,7 +42,14 @@ class PatientAdapter(
         currentPatient.decryptFields()
         holder.itemBinding.textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
         holder.itemBinding.textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
-
+        holder.itemBinding.textPatientID.setText(currentPatient.patientID)
+        if(currentPatient.birthDate != null){
+            val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+            holder.itemBinding.textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
+        }
+        if(!currentPatient.gender.isNullOrEmpty()){
+            holder.itemBinding.textGender.setText( when(currentPatient.gender == "W") { true -> "Femaile" false -> "Male"}  )
+        }
     }
 
     override fun getItemCount(): Int {
