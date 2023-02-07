@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.consulmedics.patientdata.utils.AESEncyption
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.Serializable
@@ -217,6 +218,24 @@ data class Patient(
         insuranceNumber = AESEncyption.encrypt(insuranceNumber).toString();
         insuranceName = AESEncyption.encrypt(insuranceName).toString();
         insuranceStatus = AESEncyption.encrypt(insuranceStatus).toString();
+    }
+
+    fun decryptFields() {
+        try {
+            patientID = AESEncyption.decrypt(patientID!!).toString().trim();
+            street = AESEncyption.decrypt(street).toString().trim();
+            city = AESEncyption.decrypt(city).toString().trim();
+            postCode = AESEncyption.decrypt(postCode).toString().trim();
+            gender = AESEncyption.decrypt(gender).toString().trim();
+            houseNumber = AESEncyption.decrypt(houseNumber).toString().trim();
+            insuranceNumber = AESEncyption.decrypt(insuranceNumber).toString().trim();
+            insuranceName = AESEncyption.decrypt(insuranceName).toString().trim();
+            insuranceStatus = AESEncyption.decrypt(insuranceStatus).toString().trim();
+        }
+        catch (e: Exception){
+            Log.e(TAG_NAME, e.toString())
+        }
+
     }
 
 
