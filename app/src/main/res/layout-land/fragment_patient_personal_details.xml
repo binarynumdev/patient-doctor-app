@@ -257,7 +257,7 @@
 
         <EditText
             android:id="@+id/editPatientPhoneNumber"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" />
@@ -270,7 +270,7 @@
 
         <EditText
             android:id="@+id/editPatientNamePractice"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" />
