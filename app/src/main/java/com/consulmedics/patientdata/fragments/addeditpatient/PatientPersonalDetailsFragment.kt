@@ -46,15 +46,22 @@ class PatientPersonalDetailsFragment : Fragment() {
         }
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(TAG_NAME, "Shared Vide Model Data Changed")
-            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
+//            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
             binding.editFirstName.setText(sharedViewModel.patientData.value?.firstName)
             binding.editLastName.setText(sharedViewModel.patientData.value?.lastName)
             if(!sharedViewModel.patientData.value?.gender.isNullOrEmpty()){
-                binding.editGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+//                binding.editGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
+                if(sharedViewModel.patientData.value?.gender == "W"){
+                    binding.radioFemale.isChecked = true
+                }
+                else{
+                    binding.radioMale.isChecked = true
+                }
             }
             if(sharedViewModel.patientData.value?.birthDate != null){
                 val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
-                binding.editDateOfBirth.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+//                binding.editDateOfBirth.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+                binding.editBirthMonth.setText("${sharedViewModel.patientData.value?.birthDate?.year}")
             }
             binding.editStreet.setText(sharedViewModel.patientData.value?.street)
             binding.editCity.setText(sharedViewModel.patientData.value?.city)
@@ -71,18 +78,14 @@ class PatientPersonalDetailsFragment : Fragment() {
         _binding = FragmentPatientPersonalDetailsBinding.inflate(inflater, container, false)
         patient?.let { sharedViewModel.setPatientData(it) }
         _binding?.apply {
-            editPatientID.doAfterTextChanged {
-                sharedViewModel.setPatientID(it.toString())
-            }
+
             editFirstName.doAfterTextChanged {
                 sharedViewModel.setFirstname(it.toString())
             }
             editLastName.doAfterTextChanged {
                 sharedViewModel.setLastname(it.toString())
             }
-            editDateOfBirth.doAfterTextChanged {
-                sharedViewModel.setBirthDate(it.toString())
-            }
+
             editStreet.doAfterTextChanged {
                 sharedViewModel.setStreet(it.toString())
             }
@@ -95,42 +98,7 @@ class PatientPersonalDetailsFragment : Fragment() {
             editPostalCode.doAfterTextChanged {
                 sharedViewModel.setPostCode(it.toString())
             }
-            editDateOfBirth.setOnClickListener{
-                var c = Calendar.getInstance()
-                if(sharedViewModel.patientData.value?.birthDate != null){
-                    c.time = sharedViewModel.patientData.value?.birthDate!!
-                }
-                var year = c.get(Calendar.YEAR)
-                var month = c.get(Calendar.MONTH)
-                var day = c.get(Calendar.DAY_OF_MONTH)
 
-
-                DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
-
-                    Log.e(TAG_NAME, "$year $monthOfYear $dayOfMonth")
-                    c.set(Calendar.YEAR, year)
-                    c.set(Calendar.MONTH, monthOfYear)
-                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    sharedViewModel.patientData.value?.birthDate = c.time
-                    val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
-                    binding.editDateOfBirth.setText(birthDateFormat.format(c.time))
-                },year , month, day).show()
-            }
-            editGender.setOnClickListener {
-                val listItems =
-                    arrayOf(getString(R.string.male),getString(R.string.female))
-
-                MaterialAlertDialogBuilder(requireActivity())
-                    .setTitle(R.string.select_gender)
-                    .setSingleChoiceItems(listItems, when(editGender.text.toString().equals(getString(R.string.male))){true -> 0 false -> 1}){dialog, which ->
-                        sharedViewModel.setGender(when(which == 0) { true -> "M" false -> "W"})
-                        binding.editGender.setText( when(which == 1) { true -> "Femaile" false -> "Male"}  )
-                    }
-                    .setPositiveButton("Ok") { dialog, which ->
-                        dialog.dismiss()
-                    }
-                    .show()
-            }
             btnContinue.setOnClickListener {
                 if(sharedViewModel.patientData.value?.isValidatePersonalDetails() == true){
                     findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
