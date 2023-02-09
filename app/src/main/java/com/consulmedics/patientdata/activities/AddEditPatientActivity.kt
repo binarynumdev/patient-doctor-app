@@ -22,8 +22,14 @@ class AddEditPatientActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
-        Log.e(TAG_NAME, "ONPAGECHANGED: ${destination.id == R.id.patientPersonalDetailsFragment}")
-        binding.patientStepIndicator.go(controller.graph.indexOf(destination), true)
+        var tabIndex: Int = 0
+        if(destination.id == R.id.patientPersonalDetailsFragment){
+            tabIndex = 0
+        }
+        else if (destination.id == R.id.patientInsurranceDetailsFragment){
+            tabIndex = 1
+        }
+        binding.patientStepIndicator.go(tabIndex, true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +48,13 @@ class AddEditPatientActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener (listener)
 
         var pageTitleList: List <String> = listOf<String>(
-            getString(R.string.personal_details),
+            getString(R.string.patient_data),
             getString(R.string.insurrance_details),
-            getString(R.string.insurrance_details),
-            getString(R.string.insurrance_details),
-            getString(R.string.insurrance_details))
+            getString(R.string.logistic_data),
+            getString(R.string.doctor_document),
+            getString(R.string.additional_details),
+            getString(R.string.receipts),
+            getString(R.string.sign_doctor))
         binding.patientStepIndicator.setSteps(pageTitleList)
     }
 
