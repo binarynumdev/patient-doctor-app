@@ -67,4 +67,14 @@
     <string name="cancel">Cancel</string>
     <string name="additional_details">Additional Details</string>
     <string name="save">Save</string>
+    <string name="patient_data">Patient Data</string>
+    <string name="logistic_data">Logistics Data</string>
+    <string name="doctor_document">Doctor Document</string>
+    <string name="receipts">Receipts</string>
+    <string name="sign_doctor">Sign Doctor</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="day">Day</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="name_practise">Name Practise</string>
 </resources>
