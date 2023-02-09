@@ -37,8 +37,14 @@
                     android:id="@+id/editLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
             <LinearLayout
@@ -56,6 +62,11 @@
                     android:id="@+id/editFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs"
                     android:ems="10"
                     android:inputType="textPersonName" />
             </LinearLayout>
@@ -94,7 +105,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,7 +129,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,7 +153,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
         </LinearLayout>
 
@@ -180,7 +206,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
             <LinearLayout
@@ -199,7 +230,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
         </LinearLayout>
@@ -225,7 +261,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
             <LinearLayout
@@ -244,7 +285,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/round_corder_edit_text"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
 
         </LinearLayout>
@@ -260,7 +306,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:background="@drawable/round_corder_edit_text"
+            android:paddingTop="@dimen/efab_ui_margin_xxs"
+            android:paddingRight="@dimen/appbar_padding_top"
+            android:paddingLeft="@dimen/appbar_padding_top"
+            android:paddingBottom="@dimen/efab_ui_margin_xxs" />
 
         <TextView
             android:id="@+id/textView40"
@@ -273,7 +324,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:background="@drawable/round_corder_edit_text"
+            android:paddingTop="@dimen/efab_ui_margin_xxs"
+            android:paddingRight="@dimen/appbar_padding_top"
+            android:paddingLeft="@dimen/appbar_padding_top"
+            android:paddingBottom="@dimen/efab_ui_margin_xxs" />
 
         <Button
             android:id="@+id/btnContinue"
