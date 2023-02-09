@@ -8,13 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.adapters.PatientAdapter
-import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
 import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
-import com.consulmedics.patientdata.ui.main.PlaceholderFragment
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
 
