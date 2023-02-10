@@ -35,6 +35,9 @@ data class Patient(
     var healthStatus:   String  = ""
     var signature:      String  = ""
 
+    var phoneNumber:    String  = ""
+    var practiceName:   String  = ""
+
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){
             return false

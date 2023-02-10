@@ -1,11 +1,13 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -20,7 +22,6 @@ import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +35,9 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var patient: Patient? = null
     private var param2: String? = null
     private var _binding: FragmentPatientPersonalDetailsBinding? = null
+    private var birthYear: Int? = null
+    private var birthMonth: Int = 0
+    private var birthDay: Int? = null
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels() {
         AddEditPatientViewModelFactory(MyApplication.repository!!)
     }
@@ -44,6 +48,7 @@ class PatientPersonalDetailsFragment : Fragment() {
         arguments?.let {
             patient = it.getSerializable("patient_data") as Patient
         }
+
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(TAG_NAME, "Shared Vide Model Data Changed")
 //            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
@@ -60,13 +65,21 @@ class PatientPersonalDetailsFragment : Fragment() {
             }
             if(sharedViewModel.patientData.value?.birthDate != null){
                 val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
-//                binding.editDateOfBirth.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
-                binding.editBirthMonth.setText("${sharedViewModel.patientData.value?.birthDate?.year}")
+                val cal = Calendar.getInstance()
+                cal.time = sharedViewModel.patientData.value?.birthDate
+                val year = cal[Calendar.YEAR]
+                val month = cal[Calendar.MONTH]
+                val day = cal[Calendar.DAY_OF_MONTH]
+                binding.editBirthDay.setText("${day}")
+                binding.editBirthYear.setText("${year}")
+                binding.editBirthMonth.setSelection(month)
             }
             binding.editStreet.setText(sharedViewModel.patientData.value?.street)
             binding.editCity.setText(sharedViewModel.patientData.value?.city)
             binding.editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
             binding.editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
+            binding.editPatientPhoneNumber.setText(sharedViewModel.patientData.value?.phoneNumber)
+            binding.editPatientNamePractice.setText(sharedViewModel.patientData.value?.practiceName)
         })
 
     }
@@ -77,6 +90,11 @@ class PatientPersonalDetailsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentPatientPersonalDetailsBinding.inflate(inflater, container, false)
         patient?.let { sharedViewModel.setPatientData(it) }
+        ArrayAdapter.createFromResource(requireContext(), R.array.month_array, android.R.layout.simple_spinner_dropdown_item).also {
+            adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.editBirthMonth.adapter = adapter
+        }
         _binding?.apply {
 
             editFirstName.doAfterTextChanged {
@@ -98,7 +116,36 @@ class PatientPersonalDetailsFragment : Fragment() {
             editPostalCode.doAfterTextChanged {
                 sharedViewModel.setPostCode(it.toString())
             }
+            editBirthMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
 
+                }
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    birthMonth = position
+                    updatePatientBirthDate()
+                }
+
+            }
+            editBirthDay.doAfterTextChanged {
+                birthDay = it.toString().toInt()
+                updatePatientBirthDate()
+            }
+            editBirthYear.doAfterTextChanged {
+                birthYear = it.toString().toInt()
+                updatePatientBirthDate()
+            }
+            radioMale.setOnClickListener{
+                sharedViewModel.patientData.value?.gender = "M"
+            }
+            radioFemale.setOnClickListener{
+                sharedViewModel.patientData.value?.gender = "W"
+            }
+            editPatientPhoneNumber.doAfterTextChanged {
+                sharedViewModel.patientData.value?.phoneNumber = it.toString()
+            }
+            editPatientNamePractice.doAfterTextChanged {
+                sharedViewModel.patientData.value?.practiceName = it.toString()
+            }
             btnContinue.setOnClickListener {
                 if(sharedViewModel.patientData.value?.isValidatePersonalDetails() == true){
                     findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
@@ -110,6 +157,18 @@ class PatientPersonalDetailsFragment : Fragment() {
         }
         val root = binding.root
         return root
+    }
+
+    private fun updatePatientBirthDate() {
+        if(birthYear != null  && birthDay != null){
+            val cal = Calendar.getInstance()
+            cal.time = sharedViewModel.patientData.value?.birthDate
+            cal[Calendar.YEAR] = birthYear!!
+            cal[Calendar.MONTH] = birthMonth
+            cal[Calendar.DAY_OF_MONTH] = birthDay!!
+            Log.e(TAG_NAME, cal.time.toString())
+            sharedViewModel.patientData.value?.birthDate = cal.time
+        }
     }
 
 
