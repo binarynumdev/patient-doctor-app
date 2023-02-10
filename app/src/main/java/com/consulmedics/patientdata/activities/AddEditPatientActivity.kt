@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.activities
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,12 +16,14 @@ import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.vinay.stepview.models.Step
 
 class AddEditPatientActivity : AppCompatActivity() {
     private var patient: Patient? = null
     private lateinit var binding: ActivityAddEditPatientBinding
 
     private lateinit var navController: NavController
+    private var pageTitleList: List <Step> = listOf ()
     private val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
         var tabIndex: Int = 0
         if(destination.id == R.id.patientPersonalDetailsFragment){
@@ -29,7 +32,23 @@ class AddEditPatientActivity : AppCompatActivity() {
         else if (destination.id == R.id.patientInsurranceDetailsFragment){
             tabIndex = 1
         }
-        binding.patientStepIndicator.go(tabIndex, true)
+        for (i in 0 until pageTitleList.count()){
+
+            if(i < tabIndex){
+                binding.patientStepIndicator.setStepState(Step.State.COMPLETED, i )
+                Log.e(TAG_NAME, "Complted STEP_${i}: ${i ==  tabIndex}: ${i < tabIndex}")
+            }
+            else if (i == tabIndex){
+                binding.patientStepIndicator.setStepState(Step.State.CURRENT, i )
+                Log.e(TAG_NAME, "Current STEP_${i}: ${i ==  tabIndex}: ${i < tabIndex}")
+            }
+            else{
+                binding.patientStepIndicator.setStepState(Step.State.NOT_COMPLETED, i )
+                Log.e(TAG_NAME, "Uncomplted STEP_${i}: ${i ==  tabIndex}: ${i < tabIndex}")
+            }
+        }
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,14 +66,26 @@ class AddEditPatientActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener (listener)
 
-        var pageTitleList: List <String> = listOf<String>(
-            getString(R.string.patient_data),
-            getString(R.string.insurrance_details),
-            getString(R.string.logistic_data),
-            getString(R.string.doctor_document),
-            getString(R.string.additional_details),
-            getString(R.string.receipts),
-            getString(R.string.sign_doctor))
+        binding.patientStepIndicator.apply {
+            setTextSize(20)
+            setNotCompletedStepTextColor(Color.DKGRAY)
+            setNotCompletedLineColor(Color.DKGRAY)
+
+            setCompletedLineColor(getColor(R.color.app_orange))
+            setCompletedStepTextColor(getColor(R.color.app_blue))
+
+
+            setCurrentStepTextColor(getColor(R.color.app_orange))
+            setReverse(false)
+        }
+        pageTitleList = listOf<Step>(
+            Step(getString(R.string.patient_data), Step.State.CURRENT),
+            Step(getString(R.string.insurrance_details)),
+            Step(getString(R.string.logistic_data)),
+            Step(getString(R.string.doctor_document)),
+            Step(getString(R.string.additional_details)),
+            Step(getString(R.string.receipts)),
+            Step(getString(R.string.sign_doctor)))
         binding.patientStepIndicator.setSteps(pageTitleList)
     }
 

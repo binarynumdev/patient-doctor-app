@@ -6,39 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".activities.AddEditPatientActivity"
     tools:ignore="MissingDefaultResource">
-    <com.shuhart.stepview.StepView
+
+    <com.vinay.stepview.VerticalStepView
         android:id="@+id/patient_step_indicator"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="8dp"
-        app:sv_selectedCircleColor="@color/design_default_color_primary"
-        app:sv_selectedTextColor="@color/design_default_color_primary"
-        app:sv_stepLineWidth="1dp"
-        app:sv_stepPadding="4dp"
-        app:sv_nextTextColor="@color/design_default_color_primary"
-        app:sv_nextStepLineColor="@color/design_default_color_primary"
-        app:sv_doneCircleColor="@color/design_default_color_primary"
-        app:sv_doneStepLineColor="@color/design_default_color_primary"
-        app:sv_doneCircleRadius="12dp"
-        app:sv_selectedCircleRadius="12dp"
-        app:sv_selectedStepNumberColor="@color/purple_200"
-        app:sv_stepViewStyle="@style/StepView"
-        app:sv_doneStepMarkColor="@color/purple_200"
-        app:sv_doneTextColor="@color/design_default_color_primary"
-        app:sv_stepNumberTextSize="12sp"
-        app:sv_animationType="Line"/>
+        android:background="@color/app_blue_200"
+        android:padding="8dp"/>
 
     <fragment
         android:id="@+id/nav_host_fragment_patient_flow"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/patient_step_indicator"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/patient_step_indicator"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
