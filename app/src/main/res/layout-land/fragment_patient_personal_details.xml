@@ -188,6 +188,7 @@
                 android:id="@+id/radioMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/male" />
 
             <RadioButton
@@ -195,6 +196,7 @@
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/female" />
         </RadioGroup>
 
