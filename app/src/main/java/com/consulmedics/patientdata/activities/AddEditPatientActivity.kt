@@ -62,8 +62,8 @@ class AddEditPatientActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         patient = intent.getSerializableExtra("patient_data") as Patient
         navController.setGraph(R.navigation.add_edit_navigation, intent.extras)
-//        val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener (listener)
 
         binding.patientStepIndicator.apply {
