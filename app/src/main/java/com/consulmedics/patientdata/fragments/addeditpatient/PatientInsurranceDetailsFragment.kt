@@ -24,6 +24,7 @@ import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.github.gcacace.signaturepad.views.SignaturePad
 import java.text.SimpleDateFormat
+import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -123,6 +124,19 @@ class PatientInsurranceDetailsFragment : Fragment() {
             binding.editInsurranceNumber.setText(sharedViewModel.patientData.value?.insuranceNumber)
             binding.editInsurranceStatus.setText(sharedViewModel.patientData.value?.insuranceStatus)
             binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
+            if(sharedViewModel.patientData.value?.birthDate != null){
+                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                val cal = Calendar.getInstance()
+                cal.time = sharedViewModel.patientData.value?.birthDate
+                val year = cal[Calendar.YEAR]
+                val month = cal[Calendar.MONTH]
+                val day = cal[Calendar.DAY_OF_MONTH]
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
+            }
+            else{
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} ")
+            }
+
             sharedViewModel.patientData.value?.signPatient?.let { it1 ->
 
                 if(it1.isNotEmpty()){
