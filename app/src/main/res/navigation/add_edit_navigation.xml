@@ -18,8 +18,8 @@
         android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment"
         android:label="PatientInsurranceDetailsFragment" >
         <action
-            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientAdditionalDetailsFragment"
-            app:destination="@id/patientAdditionalDetailsFragment" />
+            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment"
+            app:destination="@id/patientLogisticsDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientAdditionalDetailsFragment"
@@ -35,4 +35,13 @@
         android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientSummaryFragment"
         android:label="fragment_patient_summary"
         tools:layout="@layout/fragment_patient_summary" />
+    <fragment
+        android:id="@+id/patientLogisticsDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientLogisticsDetailsFragment"
+        android:label="fragment_patient_logistics_details"
+        tools:layout="@layout/fragment_patient_logistics_details" >
+        <action
+            android:id="@+id/action_patientLogisticsDetailsFragment_to_patientAdditionalDetailsFragment"
+            app:destination="@id/patientAdditionalDetailsFragment" />
+    </fragment>
 </navigation>

@@ -80,8 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/appbar_padding"
             android:text="@string/btn_next"
-            app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintTop_toTopOf="@+id/button" />
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="@+id/btnBack" />
 
         <TextView
             android:id="@+id/textView36"
@@ -128,7 +128,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"

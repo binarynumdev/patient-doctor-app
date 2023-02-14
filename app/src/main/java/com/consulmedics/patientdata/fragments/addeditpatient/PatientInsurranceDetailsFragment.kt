@@ -104,13 +104,17 @@ class PatientInsurranceDetailsFragment : Fragment() {
             }
             btnContinue.setOnClickListener {
                 if(sharedViewModel.patientData.value?.isValidInsuranceDetails() == true){
-                    findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientAdditionalDetailsFragment)
+                    findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment)
                 }
                 else{
                     Toast.makeText(context, R.string.error_in_validate_insurance_details_form, Toast.LENGTH_LONG).show()
                 }
 
             }
+            btnBack.setOnClickListener {
+                activity?.onBackPressed()
+            }
+
         }
         return binding.root
     }
