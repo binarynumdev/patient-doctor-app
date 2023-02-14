@@ -38,6 +38,33 @@ data class Patient(
     var phoneNumber:    String  = ""
     var practiceName:   String  = ""
 
+
+    var signPatient:    String  = ""
+    var startVisitDate: String  = ""
+    var startVisitTime: String  = ""
+    var startPoint:     String  = ""
+    var isSameAddAsPrev:    String  = "N"
+    var isAlreadyVisitedDuringThisShift:    String  = "N"
+
+
+    var dementia:       String   = "N"
+    var geriatrics:     String  = "N"
+    var infant:         String  = "N"
+    var fractures:      String  = "N"
+    var serverHandInjury:   String  = "N"
+    var thrombosis:     String   = "N"
+    var hypertension:   String  = "N"
+    var preHeartAttack: String = "N"
+    var pneumonia:      String = "N"
+    var divertikulitis: String = "N"
+
+    var medicals1:      String = ""
+    var medicals2:      String = ""
+    var medicals3:      String = ""
+
+
+
+
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){
             return false
