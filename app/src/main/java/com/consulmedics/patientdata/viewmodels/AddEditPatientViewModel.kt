@@ -144,6 +144,11 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         }
     }
 
+    fun setSignPatient(signatureSvg: String?){
+        if (signatureSvg != null) {
+            _patientData.value?.signPatient = signatureSvg
+        }
+    }
     fun updatePatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(patient)
     }

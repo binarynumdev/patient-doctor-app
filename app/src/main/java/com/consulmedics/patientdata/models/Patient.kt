@@ -43,8 +43,9 @@ data class Patient(
     var startVisitDate: String  = ""
     var startVisitTime: String  = ""
     var startPoint:     String  = ""
-    var isSameAddAsPrev:    String  = "N"
-    var isAlreadyVisitedDuringThisShift:    String  = "N"
+
+    var sameAddAsPrev:    String  = "N"
+    var alreadyVisitedDuringThisShift:    String  = "N"
 
 
     var dementia:       String   = "N"
