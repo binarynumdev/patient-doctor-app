@@ -41,7 +41,16 @@
         android:label="fragment_patient_logistics_details"
         tools:layout="@layout/fragment_patient_logistics_details" >
         <action
-            android:id="@+id/action_patientLogisticsDetailsFragment_to_patientAdditionalDetailsFragment"
+            android:id="@+id/action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment"
+            app:destination="@id/patientDoctorDocumentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientDoctorDocumentFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientDoctorDocumentFragment"
+        android:label="fragment_patient_doctor_document"
+        tools:layout="@layout/fragment_patient_doctor_document" >
+        <action
+            android:id="@+id/action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment"
             app:destination="@id/patientAdditionalDetailsFragment" />
     </fragment>
 </navigation>
