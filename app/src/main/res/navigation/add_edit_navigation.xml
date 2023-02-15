@@ -27,8 +27,8 @@
         android:label="fragment_patient_additional_details"
         tools:layout="@layout/fragment_patient_additional_details" >
         <action
-            android:id="@+id/action_patientAdditionalDetailsFragment_to_patientSummaryFragment"
-            app:destination="@id/patientSummaryFragment" />
+            android:id="@+id/action_patientAdditionalDetailsFragment_to_patientReceiptFragment"
+            app:destination="@id/patientReceiptFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientSummaryFragment"
@@ -52,5 +52,14 @@
         <action
             android:id="@+id/action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment"
             app:destination="@id/patientAdditionalDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientReceiptFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientReceiptFragment"
+        android:label="fragment_patient_receipt"
+        tools:layout="@layout/fragment_patient_receipt" >
+        <action
+            android:id="@+id/action_patientReceiptFragment_to_patientSummaryFragment"
+            app:destination="@id/patientSummaryFragment" />
     </fragment>
 </navigation>

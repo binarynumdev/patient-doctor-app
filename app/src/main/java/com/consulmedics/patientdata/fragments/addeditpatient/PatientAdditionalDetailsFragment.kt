@@ -54,7 +54,7 @@ class PatientAdditionalDetailsFragment : Fragment() {
 
             btnNext.setOnClickListener {
                 if(sharedViewModel.patientData.value?.isValidAdditionalDetails() == true){
-                    findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientSummaryFragment)
+                    findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientReceiptFragment)
                 }
                 else{
                     Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
