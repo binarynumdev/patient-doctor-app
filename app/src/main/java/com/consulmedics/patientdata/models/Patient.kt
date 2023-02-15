@@ -76,6 +76,10 @@ data class Patient(
         if(insuranceStatus?.isEmpty() == true){
             return false
         }
+        if(signPatient?.isEmpty() == true){
+            return false
+        }
+
         return true
     }
 

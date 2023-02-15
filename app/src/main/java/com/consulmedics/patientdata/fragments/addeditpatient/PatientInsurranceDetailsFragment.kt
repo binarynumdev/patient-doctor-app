@@ -103,7 +103,7 @@ class PatientInsurranceDetailsFragment : Fragment() {
                 alertDialog.getWindow()?.setLayout(width, height)
             }
             btnContinue.setOnClickListener {
-                if(sharedViewModel.patientData.value?.isValidInsuranceDetails() == true){
+                if(sharedViewModel.isValidInsuranceDetails() == true){
                     findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment)
                 }
                 else{

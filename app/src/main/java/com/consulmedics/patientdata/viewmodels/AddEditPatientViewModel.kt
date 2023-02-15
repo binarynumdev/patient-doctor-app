@@ -190,4 +190,8 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun isValidatePersonalDetails(): Boolean? {
         return _patientData.value?.isValidatePersonalDetails()
     }
+
+    fun isValidInsuranceDetails(): Boolean? {
+        return _patientData.value?.isValidInsuranceDetails()
+    }
 }
