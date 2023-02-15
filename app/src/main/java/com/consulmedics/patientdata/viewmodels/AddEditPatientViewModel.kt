@@ -218,4 +218,8 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun isValidLogisticDetails(): Boolean? {
         return _patientData.value?.isValidLogisticDetails()
     }
+
+    fun isValidDoctorDocument(): Boolean? {
+        return _patientData.value?.isValidDoctorDocument()
+    }
 }

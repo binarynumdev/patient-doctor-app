@@ -300,5 +300,15 @@ data class Patient(
         return true
     }
 
+    fun isValidDoctorDocument(): Boolean? {
+        if(diagnosis?.isEmpty() == true){
+            return false
+        }
+        if(healthStatus?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
 
 }
