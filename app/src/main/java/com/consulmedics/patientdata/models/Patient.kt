@@ -212,22 +212,34 @@ data class Patient(
     }
 
     fun isValidAdditionalDetails(): Boolean {
-        if(dateofExam?.isEmpty() == true){
+        if(dementia?.isEmpty() == true){
             return false
         }
-        if(timeOfExam?.isEmpty() == true){
+        if(geriatrics?.isEmpty() == true){
             return false
         }
-        if(killometers?.isEmpty() == true){
+        if(infant?.isEmpty() == true){
             return false
         }
-        if(diagnosis?.isEmpty() == true){
+        if(fractures?.isEmpty() == true){
             return false
         }
-        if(healthStatus?.isEmpty() == true){
+        if(serverHandInjury?.isEmpty() == true){
             return false
         }
-        if(signature?.isEmpty() == true){
+        if(thrombosis?.isEmpty() == true){
+            return false
+        }
+        if(hypertension?.isEmpty() == true){
+            return false
+        }
+        if(preHeartAttack?.isEmpty() == true){
+            return false
+        }
+        if(pneumonia?.isEmpty() == true){
+            return false
+        }
+        if(divertikulitis?.isEmpty() == true){
             return false
         }
         return true
