@@ -35,6 +35,9 @@ class AddEditPatientActivity : AppCompatActivity() {
         else if (destination.id == R.id.patientLogisticsDetailsFragment){
             tabIndex = 2
         }
+        else if (destination.id == R.id.patientDoctorDocumentFragment){
+            tabIndex = 3
+        }
         for (i in 0 until pageTitleList.count()){
 
             if(i < tabIndex){
