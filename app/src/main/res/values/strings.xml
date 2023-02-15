@@ -90,6 +90,16 @@
     <string name="time_of_visit">Time of Visit</string>
     <string name="error_in_validate_logistic_details">Please check all fields of logistic details.</string>
     <string name="error_in_valid_doctor_document">Please fill doctor document details.</string>
+    <string name="demenz">Demenz/eingeschrankte Kommunikationsfahikeit</string>
+    <string name="geriatrics">Geriatriche Patient</string>
+    <string name="infant">"Neugeborenes/Säugling/Kleinkind "</string>
+    <string name="fractures">Frakturen im Bereich der Extremitäten…</string>
+    <string name="server_head_injury">Server Head Injury</string>
+    <string name="thrombosis">Thrombosis</string>
+    <string name="hypertension">Hypertension Krise</string>
+    <string name="pre_heart_attack">Pre Heart Attack</string>
+    <string name="pneumonia">Pneumonia</string>
+    <string name="divertikulitis">Divertikulitis</string>
     <string-array name="month_array">
         <item>Jan</item>
         <item>Feb</item>

@@ -222,4 +222,44 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun isValidDoctorDocument(): Boolean? {
         return _patientData.value?.isValidDoctorDocument()
     }
+
+    fun setDementia(editValue: String) {
+        _patientData.value?.dementia = editValue
+    }
+
+    fun setGeriatrics(editValue: String) {
+        _patientData.value?.geriatrics = editValue
+    }
+
+    fun setInfant(editValue: String) {
+        _patientData.value?.infant = editValue
+    }
+
+    fun setFractures(editValue: String) {
+        _patientData.value?.fractures = editValue
+    }
+
+    fun setServeHead(editValue: String) {
+        _patientData.value?.serverHandInjury = editValue
+    }
+
+    fun setThrombosis(editValue: String) {
+        _patientData.value?.thrombosis = editValue
+    }
+
+    fun setHypertension(editValue: String) {
+        _patientData.value?.hypertension = editValue
+    }
+
+    fun setPreHeartAttack(editValue: String) {
+        _patientData.value?.preHeartAttack = editValue
+    }
+
+    fun setPneumonia(editValue: String) {
+        _patientData.value?.pneumonia = editValue
+    }
+
+    fun setDivertikulistis(editValue: String) {
+        _patientData.value?.divertikulitis = editValue
+    }
 }

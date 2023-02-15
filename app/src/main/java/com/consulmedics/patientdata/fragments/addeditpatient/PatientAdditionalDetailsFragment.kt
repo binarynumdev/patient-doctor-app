@@ -22,7 +22,9 @@ import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
+import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
@@ -49,90 +51,7 @@ class PatientAdditionalDetailsFragment : Fragment() {
         Log.e(AppConstants.TAG_NAME, "ONCREATVIEW")
         _binding = FragmentPatientAdditionalDetailsBinding.inflate(inflater, container, false)
         _binding?.apply {
-            editDateOfExam.setOnClickListener {
-                var c = Calendar.getInstance()
-                val converter: Converters = Converters()
-                if(!sharedViewModel.patientData.value?.dateofExam.isNullOrEmpty()){
-                    c.time = converter.stringToDate(sharedViewModel.patientData.value?.dateofExam!!)
-                }
-                var year = c.get(Calendar.YEAR)
-                var month = c.get(Calendar.MONTH)
-                var day = c.get(Calendar.DAY_OF_MONTH)
 
-
-                DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
-
-                    Log.e(AppConstants.TAG_NAME, "$year $monthOfYear $dayOfMonth")
-                    c.set(Calendar.YEAR, year)
-                    c.set(Calendar.MONTH, monthOfYear)
-                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    sharedViewModel.patientData.value?.dateofExam = converter.dateToString(c.time)!!
-                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                    binding.editDateOfExam.setText(birthDateFormat.format(c.time))
-                },year , month, day).show()
-            }
-            editTimeOfExam.setOnClickListener {
-                var c = Calendar.getInstance()
-                val converter: Converters = Converters()
-                if(!sharedViewModel.patientData.value?.timeOfExam.isNullOrEmpty()){
-                    c.time = converter.stringToTime(sharedViewModel.patientData.value?.timeOfExam!!)
-                }
-                val hourOfDay: Int = c.get(Calendar.HOUR_OF_DAY)
-                val minute: Int = c.get(Calendar.MINUTE)
-                TimePickerDialog(context,{ timePicker, hour, minute ->
-                        c.set(Calendar.HOUR_OF_DAY, hour)
-                        c.set(Calendar.MINUTE, minute)
-                        editTimeOfExam.setText(converter.timeToString(c.time))
-                        sharedViewModel.setTimeOfExam(converter.timeToString(c.time)!!)
-                    },
-                hourOfDay,minute,true).show()
-            }
-            editKillometer.doAfterTextChanged {
-                sharedViewModel.setKillometer(it.toString())
-            }
-            editDiagnosis.doAfterTextChanged {
-                sharedViewModel.setDiagnosis(it.toString())
-            }
-            editHealthStatus.doAfterTextChanged {
-                sharedViewModel.setHealthStatus(it.toString())
-            }
-            signView.setOnClickListener {
-                val builder = AlertDialog.Builder(requireActivity())
-                val inflater = layoutInflater
-                val dialogLayout = inflater.inflate(R.layout.dialog_signature, null)
-                val signPad = dialogLayout.findViewById<SignaturePad>(R.id.signPad)
-
-                builder.setView(dialogLayout)
-                builder.setNegativeButton(R.string.cancel, null)
-                builder.setPositiveButton(
-                    R.string.ok,null)
-                builder.setNeutralButton(
-                    R.string.clear_sign, null
-                )
-
-                val alertDialog = builder.create()
-                alertDialog.setOnShowListener {dialog->
-                    val button: Button =
-                        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
-                    button.setOnClickListener(View.OnClickListener { // TODO Do something
-                        binding.signView.setImageBitmap(signPad.transparentSignatureBitmap)
-                        val svgStr = signPad.signatureSvg
-                        val newBM: Bitmap = AppUtils.svgStringToBitmap(svgStr)
-                        binding.signView.setImageBitmap(newBM)
-                        sharedViewModel.setSignature(svgStr)
-                        dialog.dismiss()
-                        Log.e(TAG_NAME, svgStr)
-                    })
-                    val clearButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-                    clearButton.setOnClickListener{
-                        signPad.clear()
-                    }
-                }
-                alertDialog.show()
-                val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-                val height = (resources.displayMetrics.heightPixels * 0.45).toInt()
-                alertDialog.getWindow()?.setLayout(width, height)
-            }
             btnNext.setOnClickListener {
                 if(sharedViewModel.patientData.value?.isValidAdditionalDetails() == true){
                     findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientSummaryFragment)
@@ -140,9 +59,82 @@ class PatientAdditionalDetailsFragment : Fragment() {
                 else{
                     Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
                 }
-
             }
 
+
+            radioDemenzYes.setOnClickListener {
+                sharedViewModel.setDementia(YES_TEXT)
+            }
+            radioDemenzNo.setOnClickListener {
+                sharedViewModel.setDementia(NO_TEXT)
+            }
+
+            radioGeriatricsYes.setOnClickListener {
+                sharedViewModel.setGeriatrics(YES_TEXT)
+            }
+            radioGeriatricsNo.setOnClickListener {
+                sharedViewModel.setGeriatrics(NO_TEXT)
+            }
+
+            radioInfantYes.setOnClickListener {
+                sharedViewModel.setInfant(YES_TEXT)
+            }
+            radioInfantNo.setOnClickListener {
+                sharedViewModel.setInfant(NO_TEXT)
+            }
+
+            radioFracturesYes.setOnClickListener {
+                sharedViewModel.setFractures(YES_TEXT)
+            }
+            radioFracturesNo.setOnClickListener {
+                sharedViewModel.setFractures(NO_TEXT)
+            }
+
+            radioServerHeadYes.setOnClickListener {
+                sharedViewModel.setServeHead(YES_TEXT)
+            }
+            radioServerHeadNo.setOnClickListener {
+                sharedViewModel.setServeHead(NO_TEXT)
+            }
+
+            radioThrombosisYes.setOnClickListener {
+                sharedViewModel.setThrombosis(YES_TEXT)
+            }
+            radioThrombosisNo.setOnClickListener {
+                sharedViewModel.setThrombosis(NO_TEXT)
+            }
+
+            radioHypertensionYes.setOnClickListener {
+                sharedViewModel.setHypertension(YES_TEXT)
+            }
+            radioHypertensionNo.setOnClickListener {
+                sharedViewModel.setHypertension(NO_TEXT)
+            }
+
+            radioPreHeartAttackYes.setOnClickListener {
+                sharedViewModel.setPreHeartAttack(YES_TEXT)
+            }
+            radioPreHeartAttackNo.setOnClickListener {
+                sharedViewModel.setPreHeartAttack(NO_TEXT)
+            }
+
+            radioPneumoniaYes.setOnClickListener {
+                sharedViewModel.setPneumonia(YES_TEXT)
+            }
+            radioPneumoniaNo.setOnClickListener {
+                sharedViewModel.setPneumonia(NO_TEXT)
+            }
+
+            radioDivertikulitisYes.setOnClickListener {
+                sharedViewModel.setDivertikulistis(YES_TEXT)
+            }
+            radioDivertikulitisNo.setOnClickListener {
+                sharedViewModel.setDivertikulistis(NO_TEXT)
+            }
+
+            btnBack.setOnClickListener {
+                activity?.onBackPressed()
+            }
         }
         return binding.root
     }
@@ -151,24 +143,97 @@ class PatientAdditionalDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Additional fragment")
-            val converters: Converters = Converters()
-            val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-            if(!sharedViewModel.patientData.value?.dateofExam.isNullOrEmpty()){
-                binding.editDateOfExam.setText(birthDateFormat.format(converters.stringToDate(sharedViewModel.patientData.value?.dateofExam)))
+            if(sharedViewModel.patientData.value?.birthDate != null){
+                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                val cal = Calendar.getInstance()
+                cal.time = sharedViewModel.patientData.value?.birthDate
+                val year = cal[Calendar.YEAR]
+                val month = cal[Calendar.MONTH]
+                val day = cal[Calendar.DAY_OF_MONTH]
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
+            }
+            else{
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} ")
             }
 
-            binding.editTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
-            binding.editKillometer.setText(sharedViewModel.patientData.value?.killometers)
-            binding.editDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
-            binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
-            sharedViewModel.patientData.value?.signature?.let { it1 ->
 
-                if(it1.isNotEmpty()){
-                    val newBM:Bitmap = AppUtils.svgStringToBitmap(it1)
-                    binding.signView.setImageBitmap(newBM)
-                }
 
+
+            if(sharedViewModel.patientData.value?.dementia == YES_TEXT){
+                binding.radioDemenzYes.isChecked = true
             }
+            else if (sharedViewModel.patientData.value?.dementia == NO_TEXT){
+                binding.radioDemenzNo.isChecked = true
+            }
+
+
+
+            if(sharedViewModel.patientData.value?.geriatrics == YES_TEXT){
+                binding.radioGeriatricsYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.geriatrics == NO_TEXT){
+                binding.radioGeriatricsNo.isChecked = true
+            }
+
+            if(sharedViewModel.patientData.value?.infant == YES_TEXT){
+                binding.radioInfantYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.infant == NO_TEXT){
+                binding.radioInfantNo.isChecked = true
+            }
+
+
+            if(sharedViewModel.patientData.value?.fractures == YES_TEXT){
+                binding.radioFracturesYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.fractures == NO_TEXT){
+                binding.radioFracturesNo.isChecked = true
+            }
+
+            if(sharedViewModel.patientData.value?.serverHandInjury == YES_TEXT){
+                binding.radioServerHeadYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.serverHandInjury == NO_TEXT){
+                binding.radioServerHeadNo.isChecked = true
+            }
+
+            if(sharedViewModel.patientData.value?.thrombosis == YES_TEXT){
+                binding.radioThrombosisYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.thrombosis == NO_TEXT){
+                binding.radioThrombosisNo.isChecked = true
+            }
+
+
+            if(sharedViewModel.patientData.value?.hypertension == YES_TEXT){
+                binding.radioHypertensionYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.hypertension == NO_TEXT){
+                binding.radioHypertensionNo.isChecked = true
+            }
+
+            if(sharedViewModel.patientData.value?.preHeartAttack == YES_TEXT){
+                binding.radioPreHeartAttackYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.preHeartAttack == NO_TEXT){
+                binding.radioPreHeartAttackNo.isChecked = true
+            }
+
+            if(sharedViewModel.patientData.value?.pneumonia == YES_TEXT){
+                binding.radioPneumoniaYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.pneumonia == NO_TEXT){
+                binding.radioPneumoniaNo.isChecked = true
+            }
+
+
+            if(sharedViewModel.patientData.value?.divertikulitis == YES_TEXT){
+                binding.radioDivertikulitisYes.isChecked = true
+            }
+            else if (sharedViewModel.patientData.value?.divertikulitis == NO_TEXT){
+                binding.radioDivertikulitisNo.isChecked = true
+            }
+
         })
     }
 }
