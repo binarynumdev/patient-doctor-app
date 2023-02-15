@@ -111,7 +111,7 @@ data class Patient(
         if(phoneNumber?.isEmpty() == true){
             return false
         }
-        if(practiceName?.isEmpty() == false){
+        if(practiceName?.isEmpty() == true){
             return  false
         }
         return true

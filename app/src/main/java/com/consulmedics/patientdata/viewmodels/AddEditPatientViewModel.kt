@@ -1,12 +1,10 @@
 package com.consulmedics.patientdata.viewmodels
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.consulmedics.patientdata.PatientsDatabase
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.models.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
@@ -51,9 +49,9 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
 
     private val _birthDate = MutableLiveData<String>("")
     val birthDate: LiveData<String> = _birthDate;
-    fun setBirthDate(editValue: String){
-        val formatter = SimpleDateFormat("dd.MM.yyyy")
-        _patientData.value?.birthDate = formatter.parse(editValue)
+    fun setBirthDate(editValue: Date){
+//        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        _patientData.value?.birthDate = editValue
     }
     private val _street = MutableLiveData<String>("")
     val street: LiveData<String> = _street;
@@ -138,6 +136,13 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         _patientData.value?.timeOfExam = editValue
     }
 
+    fun setDateOfVisit(editValue: String){
+        _patientData.value?.startVisitDate = editValue
+    }
+    fun setTimeOfVisit(editValue: String){
+        _patientData.value?.startVisitTime = editValue
+    }
+
     fun setSignature(signatureSvg: String?) {
         if (signatureSvg != null) {
             _patientData.value?.signature = signatureSvg
@@ -170,5 +175,19 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
             Log.e(TAG_NAME, "UPDATE PATIENT")
             updatePatient(patient)
         }
+    }
+
+    fun setPhoneNumber(editValue: String) {
+        _patientData.value?.phoneNumber = editValue
+
+    }
+
+    fun setPracticeName(editValue: String) {
+        _patientData.value?.practiceName = editValue
+
+    }
+
+    fun isValidatePersonalDetails(): Boolean? {
+        return _patientData.value?.isValidatePersonalDetails()
     }
 }

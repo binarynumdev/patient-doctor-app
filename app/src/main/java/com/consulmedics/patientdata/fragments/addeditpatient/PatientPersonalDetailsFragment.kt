@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
@@ -135,19 +134,20 @@ class PatientPersonalDetailsFragment : Fragment() {
                 updatePatientBirthDate()
             }
             radioMale.setOnClickListener{
-                sharedViewModel.patientData.value?.gender = "M"
+                sharedViewModel.setGender("M")
             }
             radioFemale.setOnClickListener{
-                sharedViewModel.patientData.value?.gender = "W"
+                sharedViewModel.setGender("W")
             }
+
             editPatientPhoneNumber.doAfterTextChanged {
-                sharedViewModel.patientData.value?.phoneNumber = it.toString()
+                sharedViewModel.setPhoneNumber(it.toString())
             }
             editPatientNamePractice.doAfterTextChanged {
-                sharedViewModel.patientData.value?.practiceName = it.toString()
+                sharedViewModel.setPracticeName(it.toString())
             }
             btnContinue.setOnClickListener {
-                if(sharedViewModel.patientData.value?.isValidatePersonalDetails() == true){
+                if(sharedViewModel.isValidatePersonalDetails() == true){
                     findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
                 }
                 else{
@@ -167,7 +167,8 @@ class PatientPersonalDetailsFragment : Fragment() {
             cal[Calendar.MONTH] = birthMonth
             cal[Calendar.DAY_OF_MONTH] = birthDay!!
             Log.e(TAG_NAME, cal.time.toString())
-            sharedViewModel.patientData.value?.birthDate = cal.time
+            sharedViewModel.setBirthDate(cal.time);
+//            sharedViewModel.patientData.value?.birthDate = cal.time
         }
     }
 
