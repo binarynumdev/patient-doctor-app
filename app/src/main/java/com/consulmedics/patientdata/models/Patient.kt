@@ -108,6 +108,12 @@ data class Patient(
         if(gender?.isEmpty() == true){
             return false
         }
+        if(phoneNumber?.isEmpty() == true){
+            return false
+        }
+        if(practiceName?.isEmpty() == false){
+            return  false
+        }
         return true
     }
 
