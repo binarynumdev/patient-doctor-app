@@ -194,4 +194,24 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun isValidInsuranceDetails(): Boolean? {
         return _patientData.value?.isValidInsuranceDetails()
     }
+
+    fun setStartVisitDate(dateToString: String) {
+        _patientData.value?.startVisitDate = dateToString
+    }
+
+    fun setStartVisitTime(timeToString: String) {
+        _patientData.value?.startVisitTime = timeToString
+    }
+
+    fun setStartPoint(s: String) {
+        _patientData.value?.startPoint = s
+    }
+
+    fun setCurrentAddressSame(s: String) {
+        _patientData.value?.sameAddAsPrev = s
+    }
+
+    fun setCurrentPatientAlreadyVisited(s: String) {
+        _patientData.value?.alreadyVisitedDuringThisShift = s
+    }
 }
