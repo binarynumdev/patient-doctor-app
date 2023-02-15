@@ -214,4 +214,8 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun setCurrentPatientAlreadyVisited(s: String) {
         _patientData.value?.alreadyVisitedDuringThisShift = s
     }
+
+    fun isValidLogisticDetails(): Boolean? {
+        return _patientData.value?.isValidLogisticDetails()
+    }
 }

@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.consulmedics.patientdata.utils.AESEncyption
+import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
+import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -42,22 +44,22 @@ data class Patient(
     var signPatient:    String  = ""
     var startVisitDate: String  = ""
     var startVisitTime: String  = ""
-    var startPoint:     String  = ""
+    var startPoint:     String  = PREV_PATIENT_TEXT
 
-    var sameAddAsPrev:    String  = "N"
-    var alreadyVisitedDuringThisShift:    String  = "N"
+    var sameAddAsPrev:    String  = NO_TEXT
+    var alreadyVisitedDuringThisShift:    String  = NO_TEXT
 
 
-    var dementia:       String   = "N"
-    var geriatrics:     String  = "N"
-    var infant:         String  = "N"
-    var fractures:      String  = "N"
-    var serverHandInjury:   String  = "N"
-    var thrombosis:     String   = "N"
-    var hypertension:   String  = "N"
-    var preHeartAttack: String = "N"
-    var pneumonia:      String = "N"
-    var divertikulitis: String = "N"
+    var dementia:       String   = NO_TEXT
+    var geriatrics:     String  = NO_TEXT
+    var infant:         String  = NO_TEXT
+    var fractures:      String  = NO_TEXT
+    var serverHandInjury:   String  = NO_TEXT
+    var thrombosis:     String   = NO_TEXT
+    var hypertension:   String  = NO_TEXT
+    var preHeartAttack: String = NO_TEXT
+    var pneumonia:      String = NO_TEXT
+    var divertikulitis: String = NO_TEXT
 
     var medicals1:      String = ""
     var medicals2:      String = ""
@@ -277,6 +279,25 @@ data class Patient(
             Log.e(TAG_NAME, e.toString())
         }
 
+    }
+
+    fun isValidLogisticDetails() : Boolean{
+        if(startVisitDate?.isEmpty() == true){
+            return false
+        }
+        if(startVisitTime?.isEmpty() == true){
+            return false
+        }
+        if(startPoint?.isEmpty() == true){
+            return false
+        }
+        if(sameAddAsPrev?.isEmpty() == true){
+            return false
+        }
+        if(alreadyVisitedDuringThisShift?.isEmpty() == true){
+            return false
+        }
+        return true
     }
 
 

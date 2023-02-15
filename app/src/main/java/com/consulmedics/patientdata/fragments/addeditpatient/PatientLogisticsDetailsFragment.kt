@@ -9,14 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientInsurranceDetailsBinding
 import com.consulmedics.patientdata.databinding.FragmentPatientLogisticsDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
+import com.consulmedics.patientdata.utils.AppConstants.HOTEL_TEXT
+import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
+import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
+import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
@@ -81,26 +87,31 @@ class PatientLogisticsDetailsFragment : Fragment() {
                     hourOfDay,minute,true).show()
             }
 
-            radioStartPointIsPrevPatient.setOnCheckedChangeListener { buttonView, isChecked ->
-                sharedViewModel.setStartPoint("PrevPatient");
+            radioStartPointIsPrevPatient.setOnClickListener {
+                sharedViewModel.setStartPoint(PREV_PATIENT_TEXT);
             }
-            radioStartPointIsHotel.setOnCheckedChangeListener { buttonView, isChecked ->
-                sharedViewModel.setStartPoint("Hotel")
+            radioStartPointIsHotel.setOnClickListener {
+                sharedViewModel.setStartPoint(HOTEL_TEXT)
             }
-            radioCurrentAddressSameNo.setOnCheckedChangeListener { buttonView, isChecked ->
-                sharedViewModel.setCurrentAddressSame("N")
+            radioCurrentAddressSameNo.setOnClickListener {
+                sharedViewModel.setCurrentAddressSame(NO_TEXT)
             }
-            radioCurrentAddressSameYes.setOnCheckedChangeListener { buttonView, isChecked ->
-                sharedViewModel.setCurrentAddressSame("Y")
+            radioCurrentAddressSameYes.setOnClickListener {
+                sharedViewModel.setCurrentAddressSame(YES_TEXT)
             }
-            radioCurrentPatientVisitThisShiftYes.setOnCheckedChangeListener{buttonView, isChecked ->
-                sharedViewModel.setCurrentPatientAlreadyVisited("Y")
+            radioCurrentPatientVisitThisShiftYes.setOnClickListener{
+                sharedViewModel.setCurrentPatientAlreadyVisited(YES_TEXT)
             }
-            radioCurrentPatientVisitThisShiftNo.setOnCheckedChangeListener { buttonView, isChecked ->
-                sharedViewModel.setCurrentPatientAlreadyVisited("N")
+            radioCurrentPatientVisitThisShiftNo.setOnClickListener {
+                sharedViewModel.setCurrentPatientAlreadyVisited(NO_TEXT)
             }
             btnNext.setOnClickListener {
-
+                if(sharedViewModel.isValidLogisticDetails() == true){
+                    findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
+                }
+                else{
+                    Toast.makeText(context, R.string.error_in_validate_logistic_details, Toast.LENGTH_LONG).show()
+                }
             }
             btnPrev.setOnClickListener {
                 activity?.onBackPressed()
@@ -129,19 +140,34 @@ class PatientLogisticsDetailsFragment : Fragment() {
             }
 
             binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
-            binding.editDateOfVisit.setText(birthDateFormat.format(converters.stringToDate(sharedViewModel.patientData.value?.startVisitDate)))
-            if(sharedViewModel.patientData.value?.startPoint == "Hotel"){
+            if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()) {
+                binding.editDateOfVisit.setText(
+                    birthDateFormat.format(
+                        converters.stringToDate(
+                            sharedViewModel.patientData.value?.startVisitDate
+                        )
+                    )
+                )
+            }
+            if(sharedViewModel.patientData.value?.startPoint == HOTEL_TEXT){
                 binding.radioStartPointIsHotel.isChecked = true
             }
             else{
                 binding.radioStartPointIsPrevPatient.isChecked = true
             }
 
-            if(sharedViewModel.patientData.value?.sameAddAsPrev == "Y"){
+            if(sharedViewModel.patientData.value?.sameAddAsPrev == YES_TEXT){
                 binding.radioCurrentAddressSameYes.isChecked = true
             }
             else{
                 binding.radioCurrentAddressSameNo.isChecked = true
+            }
+
+            if(sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == YES_TEXT){
+                binding.radioCurrentPatientVisitThisShiftYes.isChecked = true
+            }
+            else{
+                binding.radioCurrentPatientVisitThisShiftNo.isChecked = true
             }
         })
     }
