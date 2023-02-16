@@ -8,17 +8,112 @@
     android:padding="@dimen/appbar_padding"
     tools:ignore="MissingDefaultResource">
     <LinearLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/appbar_padding">
+        android:padding="@dimen/appbar_padding"
+        tools:context=".fragments.addeditpatient.PatientDoctorDocumentFragment"
+        tools:ignore="MissingDefaultResource">
+
+
+        <TextView
+            android:id="@+id/textPatientInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding"
+            android:text="@string/medicals_1" />
+
+        <EditText
+            android:id="@+id/editMedikament1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/round_corder_edit_text"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:padding="@dimen/appbar_padding_top" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:text="@string/medicals_2" />
+
+        <EditText
+            android:id="@+id/editMedikament2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/round_corder_edit_text"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:padding="@dimen/appbar_padding_top" />
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"
-            android:id="@+id/textPatientInfo"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:text="@string/medicals_3" />
 
+        <EditText
+            android:id="@+id/editMedikament3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/round_corder_edit_text"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:padding="@dimen/appbar_padding_top" />
+
+        <Button
+            android:id="@+id/btnPrintReceipt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding"
+            android:maxWidth="480dp"
+            android:text="@string/print_receipt"
+            app:icon="@android:drawable/ic_menu_save" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPrev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/back" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:layout_weight="1"
+                android:text="@string/btn_next" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </ScrollView>
