@@ -262,4 +262,16 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun setDivertikulistis(editValue: String) {
         _patientData.value?.divertikulitis = editValue
     }
+
+    fun setMedicals(i: Int, editValue: String) {
+        if(i == 1){
+            _patientData.value?.medicals1 = editValue
+        }
+        else if(i == 2){
+            _patientData.value?.medicals2 = editValue
+        }
+        else if(i == 3){
+            _patientData.value?.medicals3 = editValue
+        }
+    }
 }
