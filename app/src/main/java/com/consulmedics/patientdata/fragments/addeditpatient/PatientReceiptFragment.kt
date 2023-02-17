@@ -76,8 +76,8 @@ class PatientReceiptFragment : Fragment() {
 
             }
             btnNext.setOnClickListener {
-                if(sharedViewModel.isValidLogisticDetails() == true){
-//                    findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
+                if(sharedViewModel.isValidMedicalReceipt() == true){
+                    findNavController().navigate(R.id.action_patientReceiptFragment_to_patientSummaryFragment)
                 }
                 else{
                     Toast.makeText(context, R.string.error_in_validate_logistic_details, Toast.LENGTH_LONG).show()

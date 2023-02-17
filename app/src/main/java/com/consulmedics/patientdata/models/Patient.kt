@@ -322,5 +322,18 @@ data class Patient(
         return true
     }
 
+    fun isValidMedicalReceipt(): Boolean? {
+        if(medicals1?.isEmpty() == true){
+            return false
+        }
+        if(medicals2?.isEmpty() == true){
+            return false
+        }
+        if(medicals3?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
 
 }

@@ -279,4 +279,8 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     fun printReciept() : File?{
         return repository.generatePDF(_patientData.value)
     }
+
+    fun isValidMedicalReceipt(): Boolean? {
+        return _patientData.value?.isValidMedicalReceipt()
+    }
 }
