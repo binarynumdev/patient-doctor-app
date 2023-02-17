@@ -10,6 +10,7 @@ import com.consulmedics.patientdata.models.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -273,5 +274,9 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         else if(i == 3){
             _patientData.value?.medicals3 = editValue
         }
+    }
+
+    fun printReciept() : File?{
+        return repository.generatePDF(_patientData.value)
     }
 }
