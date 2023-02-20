@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -19,7 +21,9 @@ import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import com.github.gcacace.signaturepad.views.SignaturePad
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,27 +47,18 @@ class PatientSummaryFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
-            binding.textFullName.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.lastName}")
-            if(!sharedViewModel.patientData.value?.gender.isNullOrEmpty()){
-                binding.textGender.setText( when(sharedViewModel.patientData.value?.gender == "W") { true -> "Femaile" false -> "Male"}  )
-            }
             if(sharedViewModel.patientData.value?.birthDate != null){
                 val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                binding.textBirthDate.setText(birthDateFormat.format(sharedViewModel.patientData.value?.birthDate))
+                val cal = Calendar.getInstance()
+                cal.time = sharedViewModel.patientData.value?.birthDate
+                val year = cal[Calendar.YEAR]
+                val month = cal[Calendar.MONTH]
+                val day = cal[Calendar.DAY_OF_MONTH]
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
             }
-            binding.textFullAddress.setText("${sharedViewModel.patientData.value?.street} ${sharedViewModel.patientData.value?.houseNumber} ${sharedViewModel.patientData.value?.city} ${sharedViewModel.patientData.value?.postCode}")
-            binding.textInsuranceName.setText(sharedViewModel.patientData.value?.insuranceName)
-            binding.textInsuranceNumber.setText(sharedViewModel.patientData.value?.insuranceNumber)
-            binding.textInsuranceStatus.setText(sharedViewModel.patientData.value?.insuranceStatus)
-            if(sharedViewModel.patientData.value?.dateofExam != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val converters:Converters = Converters()
-                binding.textDateOfExam.setText(birthDateFormat.format(converters.stringToDate(sharedViewModel.patientData.value?.dateofExam)))
+            else{
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} ")
             }
-            binding.textTimeOfExam.setText(sharedViewModel.patientData.value?.timeOfExam)
-            binding.textKillometers.setText(sharedViewModel.patientData.value?.killometers)
-            binding.textDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
-            binding.textHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
             sharedViewModel.patientData.value?.signature?.let { it1 ->
 
                 if(it1.isNotEmpty()){
@@ -83,6 +78,43 @@ class PatientSummaryFragment : Fragment() {
         Log.e(AppConstants.TAG_NAME, "ONCREATVIEW")
         // Inflate the layout for this fragment
         _binding = FragmentPatientSummaryBinding.inflate(inflater, container, false)
+        binding.imageSignView.setOnClickListener {
+            val builder = AlertDialog.Builder(requireActivity())
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.dialog_signature, null)
+            val signPad = dialogLayout.findViewById<SignaturePad>(R.id.signPad)
+
+            builder.setView(dialogLayout)
+            builder.setNegativeButton(R.string.cancel, null)
+            builder.setPositiveButton(
+                R.string.ok,null)
+            builder.setNeutralButton(
+                R.string.clear_sign, null
+            )
+
+            val alertDialog = builder.create()
+            alertDialog.setOnShowListener {dialog->
+                val button: Button =
+                    (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                button.setOnClickListener(View.OnClickListener { // TODO Do something
+                    binding.imageSignView.setImageBitmap(signPad.transparentSignatureBitmap)
+                    val svgStr = signPad.signatureSvg
+                    val newBM: Bitmap = AppUtils.svgStringToBitmap(svgStr)
+                    binding.imageSignView.setImageBitmap(newBM)
+                    sharedViewModel.setSignature(svgStr)
+                    dialog.dismiss()
+                    Log.e(AppConstants.TAG_NAME, svgStr)
+                })
+                val clearButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+                clearButton.setOnClickListener{
+                    signPad.clear()
+                }
+            }
+            alertDialog.show()
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.45).toInt()
+            alertDialog.getWindow()?.setLayout(width, height)
+        }
         binding.btnSave.setOnClickListener {
             sharedViewModel.patientData.value?.let { it1 ->
                 sharedViewModel.savePatient(it1)

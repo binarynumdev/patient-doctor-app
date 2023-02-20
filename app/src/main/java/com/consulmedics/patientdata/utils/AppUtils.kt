@@ -59,5 +59,9 @@ class AppUtils {
             svg.renderToCanvas(bmcanvas)
             return newBM
         }
+
+        fun mmToPt(mm: Float): Float{
+            return  mm / 25.4F * 72
+        }
     }
 }

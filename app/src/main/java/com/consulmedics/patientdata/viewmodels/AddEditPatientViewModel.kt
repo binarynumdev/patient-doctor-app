@@ -1,17 +1,16 @@
 package com.consulmedics.patientdata.viewmodels
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.consulmedics.patientdata.PatientsDatabase
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.models.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,9 +50,9 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
 
     private val _birthDate = MutableLiveData<String>("")
     val birthDate: LiveData<String> = _birthDate;
-    fun setBirthDate(editValue: String){
-        val formatter = SimpleDateFormat("dd.MM.yyyy")
-        _patientData.value?.birthDate = formatter.parse(editValue)
+    fun setBirthDate(editValue: Date){
+//        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        _patientData.value?.birthDate = editValue
     }
     private val _street = MutableLiveData<String>("")
     val street: LiveData<String> = _street;
@@ -138,12 +137,24 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         _patientData.value?.timeOfExam = editValue
     }
 
+    fun setDateOfVisit(editValue: String){
+        _patientData.value?.startVisitDate = editValue
+    }
+    fun setTimeOfVisit(editValue: String){
+        _patientData.value?.startVisitTime = editValue
+    }
+
     fun setSignature(signatureSvg: String?) {
         if (signatureSvg != null) {
             _patientData.value?.signature = signatureSvg
         }
     }
 
+    fun setSignPatient(signatureSvg: String?){
+        if (signatureSvg != null) {
+            _patientData.value?.signPatient = signatureSvg
+        }
+    }
     fun updatePatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(patient)
     }
@@ -165,5 +176,111 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
             Log.e(TAG_NAME, "UPDATE PATIENT")
             updatePatient(patient)
         }
+    }
+
+    fun setPhoneNumber(editValue: String) {
+        _patientData.value?.phoneNumber = editValue
+
+    }
+
+    fun setPracticeName(editValue: String) {
+        _patientData.value?.practiceName = editValue
+
+    }
+
+    fun isValidatePersonalDetails(): Boolean? {
+        return _patientData.value?.isValidatePersonalDetails()
+    }
+
+    fun isValidInsuranceDetails(): Boolean? {
+        return _patientData.value?.isValidInsuranceDetails()
+    }
+
+    fun setStartVisitDate(dateToString: String) {
+        _patientData.value?.startVisitDate = dateToString
+    }
+
+    fun setStartVisitTime(timeToString: String) {
+        _patientData.value?.startVisitTime = timeToString
+    }
+
+    fun setStartPoint(s: String) {
+        _patientData.value?.startPoint = s
+    }
+
+    fun setCurrentAddressSame(s: String) {
+        _patientData.value?.sameAddAsPrev = s
+    }
+
+    fun setCurrentPatientAlreadyVisited(s: String) {
+        _patientData.value?.alreadyVisitedDuringThisShift = s
+    }
+
+    fun isValidLogisticDetails(): Boolean? {
+        return _patientData.value?.isValidLogisticDetails()
+    }
+
+    fun isValidDoctorDocument(): Boolean? {
+        return _patientData.value?.isValidDoctorDocument()
+    }
+
+    fun setDementia(editValue: String) {
+        _patientData.value?.dementia = editValue
+    }
+
+    fun setGeriatrics(editValue: String) {
+        _patientData.value?.geriatrics = editValue
+    }
+
+    fun setInfant(editValue: String) {
+        _patientData.value?.infant = editValue
+    }
+
+    fun setFractures(editValue: String) {
+        _patientData.value?.fractures = editValue
+    }
+
+    fun setServeHead(editValue: String) {
+        _patientData.value?.serverHandInjury = editValue
+    }
+
+    fun setThrombosis(editValue: String) {
+        _patientData.value?.thrombosis = editValue
+    }
+
+    fun setHypertension(editValue: String) {
+        _patientData.value?.hypertension = editValue
+    }
+
+    fun setPreHeartAttack(editValue: String) {
+        _patientData.value?.preHeartAttack = editValue
+    }
+
+    fun setPneumonia(editValue: String) {
+        _patientData.value?.pneumonia = editValue
+    }
+
+    fun setDivertikulistis(editValue: String) {
+        _patientData.value?.divertikulitis = editValue
+    }
+
+    fun setMedicals(i: Int, editValue: String) {
+        if(i == 1){
+            _patientData.value?.medicals1 = editValue
+        }
+        else if(i == 2){
+            _patientData.value?.medicals2 = editValue
+        }
+        else if(i == 3){
+            _patientData.value?.medicals3 = editValue
+        }
+    }
+
+    fun printReciept() : File?{
+        return repository.generatePDF(_patientData.value)
+    }
+
+    fun isValidMedicalReceipt(): Boolean? {
+        return _patientData.value?.isValidMedicalReceipt()
     }
 }

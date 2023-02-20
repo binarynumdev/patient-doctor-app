@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.consulmedics.patientdata.utils.AESEncyption
+import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
+import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -35,6 +37,37 @@ data class Patient(
     var healthStatus:   String  = ""
     var signature:      String  = ""
 
+    var phoneNumber:    String  = ""
+    var practiceName:   String  = ""
+
+
+    var signPatient:    String  = ""
+    var startVisitDate: String  = ""
+    var startVisitTime: String  = ""
+    var startPoint:     String  = PREV_PATIENT_TEXT
+
+    var sameAddAsPrev:    String  = NO_TEXT
+    var alreadyVisitedDuringThisShift:    String  = NO_TEXT
+
+
+    var dementia:       String   = NO_TEXT
+    var geriatrics:     String  = NO_TEXT
+    var infant:         String  = NO_TEXT
+    var fractures:      String  = NO_TEXT
+    var serverHandInjury:   String  = NO_TEXT
+    var thrombosis:     String   = NO_TEXT
+    var hypertension:   String  = NO_TEXT
+    var preHeartAttack: String = NO_TEXT
+    var pneumonia:      String = NO_TEXT
+    var divertikulitis: String = NO_TEXT
+
+    var medicals1:      String = ""
+    var medicals2:      String = ""
+    var medicals3:      String = ""
+
+
+
+
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){
             return false
@@ -45,6 +78,10 @@ data class Patient(
         if(insuranceStatus?.isEmpty() == true){
             return false
         }
+        if(signPatient?.isEmpty() == true){
+            return false
+        }
+
         return true
     }
 
@@ -76,6 +113,12 @@ data class Patient(
         }
         if(gender?.isEmpty() == true){
             return false
+        }
+        if(phoneNumber?.isEmpty() == true){
+            return false
+        }
+        if(practiceName?.isEmpty() == true){
+            return  false
         }
         return true
     }
@@ -169,22 +212,34 @@ data class Patient(
     }
 
     fun isValidAdditionalDetails(): Boolean {
-        if(dateofExam?.isEmpty() == true){
+        if(dementia?.isEmpty() == true){
             return false
         }
-        if(timeOfExam?.isEmpty() == true){
+        if(geriatrics?.isEmpty() == true){
             return false
         }
-        if(killometers?.isEmpty() == true){
+        if(infant?.isEmpty() == true){
             return false
         }
-        if(diagnosis?.isEmpty() == true){
+        if(fractures?.isEmpty() == true){
             return false
         }
-        if(healthStatus?.isEmpty() == true){
+        if(serverHandInjury?.isEmpty() == true){
             return false
         }
-        if(signature?.isEmpty() == true){
+        if(thrombosis?.isEmpty() == true){
+            return false
+        }
+        if(hypertension?.isEmpty() == true){
+            return false
+        }
+        if(preHeartAttack?.isEmpty() == true){
+            return false
+        }
+        if(pneumonia?.isEmpty() == true){
+            return false
+        }
+        if(divertikulitis?.isEmpty() == true){
             return false
         }
         return true
@@ -236,6 +291,48 @@ data class Patient(
             Log.e(TAG_NAME, e.toString())
         }
 
+    }
+
+    fun isValidLogisticDetails() : Boolean{
+        if(startVisitDate?.isEmpty() == true){
+            return false
+        }
+        if(startVisitTime?.isEmpty() == true){
+            return false
+        }
+        if(startPoint?.isEmpty() == true){
+            return false
+        }
+        if(sameAddAsPrev?.isEmpty() == true){
+            return false
+        }
+        if(alreadyVisitedDuringThisShift?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
+    fun isValidDoctorDocument(): Boolean? {
+        if(diagnosis?.isEmpty() == true){
+            return false
+        }
+        if(healthStatus?.isEmpty() == true){
+            return false
+        }
+        return true
+    }
+
+    fun isValidMedicalReceipt(): Boolean? {
+        if(medicals1?.isEmpty() == true){
+            return false
+        }
+        if(medicals2?.isEmpty() == true){
+            return false
+        }
+        if(medicals3?.isEmpty() == true){
+            return false
+        }
+        return true
     }
 
 

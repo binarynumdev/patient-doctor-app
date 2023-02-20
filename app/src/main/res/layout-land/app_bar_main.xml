@@ -42,32 +42,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:overlay_orientation="portrait"/>
+
         <com.nambimobile.widgets.efab.ExpandableFab
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/ui_margin_medium"
             android:layout_marginEnd="@dimen/ui_margin_medium"
             android:layout_marginRight="@dimen/ui_margin_medium"
-            app:efab_orientation="portrait"/>
+            android:layout_marginBottom="@dimen/ui_margin_medium"
+            android:background="@color/app_orange"
+            app:backgroundTint="@color/app_orange"
+            app:efab_orientation="portrait" />
+
         <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fabReadCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ui_margin_medium"
             android:layout_marginEnd="@dimen/ui_margin_medium"
             android:layout_marginRight="@dimen/ui_margin_medium"
+            android:layout_marginBottom="@dimen/ui_margin_medium"
+            app:backgroundTint="@color/app_orange"
             app:fab_orientation="portrait"
-            app:srcCompat="@mipmap/ic_card_read"
-            android:id="@+id/fabReadCard"/>
+            app:srcCompat="@mipmap/ic_card_read" />
+
         <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fabCreateNewPatient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ui_margin_medium"
             android:layout_marginEnd="@dimen/ui_margin_medium"
             android:layout_marginRight="@dimen/ui_margin_medium"
+            android:layout_marginBottom="@dimen/ui_margin_medium"
+            app:backgroundTint="@color/app_orange"
             app:fab_orientation="portrait"
-            app:srcCompat="@mipmap/ic_user_plus"
-            android:id="@+id/fabCreateNewPatient"/>
+            app:srcCompat="@mipmap/ic_user_plus" />
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

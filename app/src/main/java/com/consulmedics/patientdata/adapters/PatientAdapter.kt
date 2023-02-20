@@ -13,7 +13,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.MyApplication.Companion.patientDetailsActivityRequestCode
-import com.consulmedics.patientdata.PatientDataTabActivity
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ItemPatientBinding
 import com.consulmedics.patientdata.databinding.RowPatientItemBinding

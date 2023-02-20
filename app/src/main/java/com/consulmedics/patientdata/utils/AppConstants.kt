@@ -8,4 +8,9 @@ object AppConstants {
     const val CERT_FILE_FOLDER: String = "/Consulmedics"
     const val CERT_FILE_NAME: String = "userinfo.cert"
     const val DISPLAY_DATE_FORMAT: String = "dd.MM.yyyy"
+    const val PREV_PATIENT_TEXT : String = "PrevPatient"
+    const val HOTEL_TEXT: String = "Hotel"
+    const val YES_TEXT:String =  "Y"
+    const val NO_TEXT: String = "N"
+
 }

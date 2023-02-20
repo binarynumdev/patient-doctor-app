@@ -19,7 +19,7 @@ class MainPageAdapter (val context: Context, fm: FragmentManager) :
         if(position == 0){
             return PatientListFragment()
         }
-        return PlaceholderFragment.newInstance(position + 1)
+        return Fragment()
     }
 
 

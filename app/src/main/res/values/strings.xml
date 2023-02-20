@@ -67,4 +67,56 @@
     <string name="cancel">Cancel</string>
     <string name="additional_details">Additional Details</string>
     <string name="save">Save</string>
+    <string name="patient_data">Patient Data</string>
+    <string name="logistic_data">Logistics Data</string>
+    <string name="doctor_document">Doctor Document</string>
+    <string name="receipts">Receipts</string>
+    <string name="sign_doctor">Sign Doctor</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="day">Day</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="name_practise">Name Practise</string>
+    <string name="sign_patient">Sign Patient</string>
+    <string name="back">Back</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="start_point">What is the Start Point?</string>
+    <string name="previous_patient">Previous Patient</string>
+    <string name="hotel">Hotel</string>
+    <string name="is_same_address_as_previous_patient">Current address same as previous patient?</string>
+    <string name="current_patient_already_visited_during_this_shift">Current patient already visited during this shift?</string>
+    <string name="date_of_visit">Date Start of Visit</string>
+    <string name="time_of_visit">Time of Visit</string>
+    <string name="error_in_validate_logistic_details">Please check all fields of logistic details.</string>
+    <string name="error_in_valid_doctor_document">Please fill doctor document details.</string>
+    <string name="demenz">Demenz/eingeschrankte Kommunikationsfahikeit</string>
+    <string name="geriatrics">Geriatriche Patient</string>
+    <string name="infant">"Neugeborenes/Säugling/Kleinkind "</string>
+    <string name="fractures">Frakturen im Bereich der Extremitäten…</string>
+    <string name="server_head_injury">Server Head Injury</string>
+    <string name="thrombosis">Thrombosis</string>
+    <string name="hypertension">Hypertension Krise</string>
+    <string name="pre_heart_attack">Pre Heart Attack</string>
+    <string name="pneumonia">Pneumonia</string>
+    <string name="divertikulitis">Divertikulitis</string>
+    <string name="medicals_1">Medical 1</string>
+    <string name="medicals_2">Medicals 2</string>
+    <string name="medicals_3">Medicals 3</string>
+    <string name="print_receipt">Print Medical List for receipt</string>
+    <string name="doctor_sign">Doctor Sign</string>
+    <string-array name="month_array">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
 </resources>

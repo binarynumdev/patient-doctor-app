@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.viewpager.widget.ViewPager
-import com.consulmedics.patientdata.PatientDataTabActivity
 import com.consulmedics.patientdata.SCardExt
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
 import com.consulmedics.patientdata.models.Patient
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     status = scardLib.SCardConnect()
                     if(0L == status){
                         var patientData = scardLib.getPatientData()
-                        startActivity(Intent(this, PatientDataTabActivity::class.java).apply {
+                        startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
                             // you can add values(if any) to pass to the next class or avoid using `.apply`
                             putExtra("patient_data", patientData)
                         })

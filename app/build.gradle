@@ -95,5 +95,5 @@ dependencies {
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
     implementation 'com.github.gcacace:signature-pad:1.3.1'
     implementation 'com.caverock:androidsvg-aar:1.4'
-    implementation project(':stepview')
+    implementation 'com.github.vinaygopinath:StepView:2.0.1'
 }

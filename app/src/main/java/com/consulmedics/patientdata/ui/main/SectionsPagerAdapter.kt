@@ -23,7 +23,7 @@ class SectionsPagerAdapter(val context: Context, fm: FragmentManager, patient: P
     val patient: Patient = patient;
     override fun getItem(position: Int): Fragment {
 
-        return PlaceholderFragment.newInstance(position + 1)
+        return Fragment()
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
