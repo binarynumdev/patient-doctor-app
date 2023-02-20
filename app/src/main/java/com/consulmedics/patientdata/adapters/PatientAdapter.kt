@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat
 
 class PatientAdapter(
     private val mContext: Context,
+    val patientItemOnClickInterface: PatientItemClickInterface
 ) :
     RecyclerView.Adapter<PatientAdapter.ViewHolder>(){
     private val allPatients = ArrayList<Patient>()
@@ -39,16 +40,34 @@ class PatientAdapter(
         // on below line we are setting data to item of recycler view.
         var currentPatient = allPatients.get(position)
         currentPatient.decryptFields()
-        holder.itemBinding.textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
-        holder.itemBinding.textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
-        holder.itemBinding.textPatientID.setText(currentPatient.patientID)
-        if(currentPatient.birthDate != null){
-            val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-            holder.itemBinding.textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
+        holder.itemBinding.apply {
+            textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
+            textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
+            textPatientID.setText(currentPatient.patientID)
+
+            if(currentPatient.birthDate != null){
+                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
+            }
+            if(!currentPatient.gender.isNullOrEmpty()){
+                textGender.setText( when(currentPatient.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            }
+
+            btnEditPatient.setOnClickListener {
+                patientItemOnClickInterface.onPatientEditClick(currentPatient)
+            }
+
+            btnRemovePatient.setOnClickListener {
+                patientItemOnClickInterface.onPatientRemoveClick(currentPatient)
+            }
+
+            patientItem.setOnClickListener {
+                patientItemOnClickInterface.onPatientItemClick(currentPatient)
+            }
         }
-        if(!currentPatient.gender.isNullOrEmpty()){
-            holder.itemBinding.textGender.setText( when(currentPatient.gender == "W") { true -> "Femaile" false -> "Male"}  )
-        }
+
+
+
     }
 
     override fun getItemCount(): Int {
@@ -70,4 +89,10 @@ class PatientAdapter(
         // change method to notify our adapter.
         notifyDataSetChanged()
     }
+}
+
+interface PatientItemClickInterface{
+    fun onPatientRemoveClick(patient: Patient)
+    fun onPatientEditClick(patient: Patient)
+    fun onPatientItemClick(patient: Patient)
 }
