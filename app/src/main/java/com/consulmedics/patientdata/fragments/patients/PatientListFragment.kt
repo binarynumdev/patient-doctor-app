@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.consulmedics.patientdata.adapters.PatientAdapter
+import com.consulmedics.patientdata.adapters.PatientItemClickInterface
 import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
+import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
 
@@ -24,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PatientListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientListFragment : Fragment() {
+class PatientListFragment : Fragment(), PatientItemClickInterface {
 
     private  val viewModel: PatientViewModel by viewModels()
     private var _binding: FragmentPatientListBinding? = null
@@ -40,7 +42,7 @@ class PatientListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val patientAdapter = PatientAdapter(requireContext())
+        val patientAdapter = PatientAdapter(requireContext(), this)
         binding.listPatients.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = patientAdapter
@@ -49,6 +51,18 @@ class PatientListFragment : Fragment() {
             Log.e(TAG_NAME, "ONVIEWCREATED: ${it.count()}")
             patientAdapter.updateList(it)
         })
+    }
+
+    override fun onPatientRemoveClick(patient: Patient) {
+        Log.e(TAG_NAME, "Remove Event Handler")
+    }
+
+    override fun onPatientEditClick(patient: Patient) {
+        Log.e(TAG_NAME, "Edit Event Handler")
+    }
+
+    override fun onPatientItemClick(patient: Patient) {
+        Log.e(TAG_NAME, "View Event Handler")
     }
 
 }
