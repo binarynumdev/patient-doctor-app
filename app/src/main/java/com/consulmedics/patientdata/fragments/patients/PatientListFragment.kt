@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.fragments.patients
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.consulmedics.patientdata.activities.AddEditPatientActivity
 import com.consulmedics.patientdata.adapters.PatientAdapter
 import com.consulmedics.patientdata.adapters.PatientItemClickInterface
 import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
@@ -59,6 +61,10 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
 
     override fun onPatientEditClick(patient: Patient) {
         Log.e(TAG_NAME, "Edit Event Handler")
+
+        startActivity(Intent(requireContext(), AddEditPatientActivity::class.java).apply {
+            putExtra("patient_data", patient)
+        })
     }
 
     override fun onPatientItemClick(patient: Patient) {
