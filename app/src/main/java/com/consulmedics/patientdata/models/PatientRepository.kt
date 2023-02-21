@@ -72,6 +72,7 @@ class PatientRepository(private val patientDao: PatientDao)  {
             var page: PdfDocument.Page = document.startPage(pageInfo)
             var paint: Paint = Paint()
             var title: Paint = Paint()
+            var fieldTitle: Paint = Paint()
 
             var canvas: Canvas = page.canvas
             canvas.save();
@@ -93,38 +94,44 @@ class PatientRepository(private val patientDao: PatientDao)  {
 
             title.color = Color.RED
             title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL))
-            title.textSize = 6F
-            canvas.drawText("Insurance Name", mmToPt(lineLeft), mmToPt(firstLineY + spaceLineText), title)
+            title.textSize = 9F
+
+            fieldTitle.color = Color.RED
+            fieldTitle.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL))
+            fieldTitle.textSize = 6F
+
+
+            canvas.drawText("Insurance Name", mmToPt(lineLeft), mmToPt(firstLineY + spaceLineText ), fieldTitle)
 
             canvas.drawText(patient.insuranceName, mmToPt(lineLeft), mmToPt(firstLineY + 6.5F), title)
 
             canvas.drawLine(mmToPt(lineLeft) ,mmToPt(secondLineY),mmToPt(lineRight),mmToPt(secondLineY), redLinePaint)
-            canvas.drawText("Last Name, First Name of Patient", mmToPt(lineLeft), mmToPt(secondLineY + spaceLineText), title)
+            canvas.drawText("Last Name, First Name of Patient", mmToPt(lineLeft), mmToPt(secondLineY + spaceLineText ), fieldTitle)
             canvas.drawText("${patient.lastName} ${patient.firstName}", mmToPt(lineLeft), mmToPt(secondLineY + 6F), title)
             canvas.drawText("${patient.street} ${patient.houseNumber}", mmToPt(lineLeft), mmToPt(secondLineY + 10.5F), title)
             canvas.drawText("${patient.postCode} ${patient.city}", mmToPt(lineLeft), mmToPt(secondLineY + 15F), title)
 
 
 
-            canvas.drawText("geb.", mmToPt(48F), mmToPt(34F), title)
+            canvas.drawText("geb.", mmToPt(48F), mmToPt(34F  ), fieldTitle)
             val converters: Converters = Converters()
             converters.dateToFormatedString(patient.birthDate)
-                ?.let { canvas.drawText(it, mmToPt(54F), mmToPt(34F), title) }
+                ?.let { canvas.drawText(it, mmToPt(48F), mmToPt(34F + 5F), title) }
 
             canvas.drawLine(mmToPt(lineLeft) ,mmToPt(thirdLineY),mmToPt(lineRight),mmToPt(thirdLineY), redLinePaint)
-            canvas.drawText("Kassen-Nr", mmToPt(lineLeft), mmToPt(thirdLineY + spaceLineText), title)
+            canvas.drawText("Kassen-Nr", mmToPt(lineLeft), mmToPt(thirdLineY + spaceLineText  ), fieldTitle)
             canvas.drawText("${patient.insuranceNumber}", mmToPt(lineLeft), mmToPt(thirdLineY + 6.5F), title)
 
-            canvas.drawText("Versicherten-Nr", mmToPt(16F), mmToPt(thirdLineY + spaceLineText), title)
+            canvas.drawText("Versicherten-Nr", mmToPt(16F), mmToPt(thirdLineY + spaceLineText  ), fieldTitle)
             canvas.drawText("${patient.patientID}", mmToPt(16F), mmToPt(thirdLineY + 6.5F), title)
 
-            canvas.drawText("Status", mmToPt(43F), mmToPt(thirdLineY + spaceLineText), title)
+            canvas.drawText("Status", mmToPt(43F), mmToPt(thirdLineY + spaceLineText  ), fieldTitle)
             canvas.drawText("${patient.insuranceStatus}", mmToPt(43F), mmToPt(thirdLineY + 6.5F), title)
 
             canvas.drawLine(mmToPt(lineLeft) ,mmToPt(fourthLineY),mmToPt(lineRight),mmToPt(fourthLineY), redLinePaint)
-            canvas.drawText("Betriebsstatten-Nr", mmToPt(lineLeft), mmToPt(fourthLineY + spaceLineText), title)
-            canvas.drawText("Arzt-Nr", mmToPt(23F), mmToPt(fourthLineY + spaceLineText), title)
-            canvas.drawText("Datum-Nr", mmToPt(43F), mmToPt(fourthLineY + spaceLineText), title)
+            canvas.drawText("Betriebsstatten-Nr", mmToPt(lineLeft), mmToPt(fourthLineY + spaceLineText  ), fieldTitle)
+            canvas.drawText("Arzt-Nr", mmToPt(23F), mmToPt(fourthLineY + spaceLineText  ), fieldTitle)
+            canvas.drawText("Datum-Nr", mmToPt(43F), mmToPt(fourthLineY + spaceLineText  ), fieldTitle)
             canvas.drawText("${converters.dateToFormatedString(Date())}", mmToPt(43F), mmToPt(fourthLineY + 6.5F), title)
 
 
