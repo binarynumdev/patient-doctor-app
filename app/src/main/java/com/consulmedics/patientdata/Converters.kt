@@ -23,4 +23,9 @@ class Converters {
         val timeFormat = SimpleDateFormat("HH:mm")
         return timeFormat.format(date)
     }
+
+    fun dateToFormatedString(date: Date?): String?{
+        val timeFormat = SimpleDateFormat("dd.MM.yyyy")
+        return timeFormat.format(date)
+    }
 }
