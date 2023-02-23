@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.AddEditPatientActivity
 import com.consulmedics.patientdata.adapters.PatientAdapter
 import com.consulmedics.patientdata.adapters.PatientItemClickInterface
@@ -57,6 +60,20 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
 
     override fun onPatientRemoveClick(patient: Patient) {
         Log.e(TAG_NAME, "Remove Event Handler")
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.warning))
+        builder.setMessage(R.string.confirm_remove_patient)
+        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+//            Toast.makeText(requireContext(),
+//                android.R.string.yes, Toast.LENGTH_SHORT).show()
+            viewModel.deletePatient(patient)
+        }
+
+        builder.setNegativeButton(android.R.string.no) { dialog, which ->
+//            Toast.makeText(requireContext(),
+//                android.R.string.no, Toast.LENGTH_SHORT).show()
+        }
+        builder.show()
     }
 
     override fun onPatientEditClick(patient: Patient) {

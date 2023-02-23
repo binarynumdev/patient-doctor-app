@@ -41,18 +41,48 @@ class PatientAdapter(
         var currentPatient = allPatients.get(position)
         currentPatient.decryptFields()
         holder.itemBinding.apply {
-            textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
-            textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
-            textPatientID.setText(currentPatient.patientID)
+            if("${currentPatient.firstName} ${currentPatient.lastName}" != " "){
+                textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
+            }
+            else{
+                textFullName.setText(mContext.getString(R.string.no_full_name))
+            }
+
+            if("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}" != "   "){
+                textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
+            }
+            else{
+                textFullAddress.setText(mContext.getString(R.string.no_address))
+            }
+
+            if(currentPatient.patientID?.isNotEmpty() == true){
+                textPatientID.setText(currentPatient.patientID)
+            }
+            else{
+                textPatientID.setText(mContext.getString(R.string.no_patient_id))
+            }
+
 
             if(currentPatient.birthDate != null){
                 val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
                 textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
             }
-            if(!currentPatient.gender.isNullOrEmpty()){
-                textGender.setText( when(currentPatient.gender == "W") { true -> "Femaile" false -> "Male"}  )
+            else{
+                textBirthDate.setText(mContext.getString(R.string.no_birthdate))
             }
+            if(!currentPatient.gender.isNullOrEmpty()){
+                if(currentPatient.gender == "W"){
+                    textGender.setText( mContext.getString(R.string.female) )
+                }
+                else if (currentPatient.gender == "M"){
+                    textGender.setText( mContext.getString(R.string.male)  )
+                }
 
+
+            }
+            else{
+                textGender.setText( mContext.getString(R.string.no_gender) )
+            }
             btnEditPatient.setOnClickListener {
                 patientItemOnClickInterface.onPatientEditClick(currentPatient)
             }

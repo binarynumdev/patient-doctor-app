@@ -25,7 +25,7 @@ class PatientViewModel(application: Application) : AndroidViewModel(application)
 
     // on below line we are creating a new method for deleting a note. In this we are
     // calling a delete method from our repository to delete our note.
-    fun deleteNote (patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
+    fun deletePatient (patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(patient)
     }
 
