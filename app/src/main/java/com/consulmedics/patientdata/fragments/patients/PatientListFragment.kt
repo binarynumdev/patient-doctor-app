@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.AddEditPatientActivity
+import com.consulmedics.patientdata.activities.PatientDetailsActivity
 import com.consulmedics.patientdata.adapters.PatientAdapter
 import com.consulmedics.patientdata.adapters.PatientItemClickInterface
 import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
@@ -86,6 +87,9 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
 
     override fun onPatientItemClick(patient: Patient) {
         Log.e(TAG_NAME, "View Event Handler")
+        startActivity(Intent(requireContext(), PatientDetailsActivity::class.java).apply {
+            putExtra("patient_data", patient)
+        })
     }
 
 }
