@@ -126,12 +126,18 @@ class PatientPersonalDetailsFragment : Fragment() {
 
             }
             editBirthDay.doAfterTextChanged {
-                birthDay = it.toString().toInt()
-                updatePatientBirthDate()
+                if(it.toString().isNotEmpty()){
+                    birthDay = it.toString().toInt()
+                    updatePatientBirthDate()
+                }
+
             }
             editBirthYear.doAfterTextChanged {
-                birthYear = it.toString().toInt()
-                updatePatientBirthDate()
+                if(it.toString().isNotEmpty()){
+                    birthYear = it.toString().toInt()
+                    updatePatientBirthDate()
+                }
+
             }
             radioMale.setOnClickListener{
                 sharedViewModel.setGender("M")
