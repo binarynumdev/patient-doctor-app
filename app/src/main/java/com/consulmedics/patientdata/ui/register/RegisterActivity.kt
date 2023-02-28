@@ -10,6 +10,7 @@ import com.consulmedics.patientdata.activities.AdminActivity
 import com.consulmedics.patientdata.databinding.ActivityRegisterBinding
 
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.activities.MainActivity
 import com.consulmedics.patientdata.utils.AESEncyption
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_FOLDER
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_NAME
@@ -60,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
                 var isUserIDExsist:Boolean = false
                 isUserIDExsist = AppUtils.checkUserID()
                 if(isUserIDExsist){
-                    val i = Intent(applicationContext, AdminActivity::class.java)
+                    val i = Intent(applicationContext, MainActivity::class.java)
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(i)
                 }
