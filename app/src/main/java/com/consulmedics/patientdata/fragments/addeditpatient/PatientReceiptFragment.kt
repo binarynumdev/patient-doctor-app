@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
@@ -25,6 +27,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.utils.AppConstants.MAX_LEN_MEDICALS
+import com.consulmedics.patientdata.utils.AppConstants.MAX_LINE_MEDICALS
+import com.consulmedics.patientdata.utils.AppUtils
 
 class PatientReceiptFragment : Fragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
@@ -46,11 +51,47 @@ class PatientReceiptFragment : Fragment() {
             editMedikament1.doAfterTextChanged {
                 sharedViewModel.setMedicals(1, it.toString())
             }
+            editMedikament1.doOnTextChanged { text, start, count, after ->
+                if(editMedikament1.lineCount > MAX_LINE_MEDICALS){
+                    editMedikament1.getText().delete(editMedikament1.getSelectionEnd() - 1,editMedikament1.getSelectionStart());
+                    Toast.makeText(context,R.string.edit_max_line_error, Toast.LENGTH_LONG).show();
+                }
+                if (text != null) {
+                    if(text.length > MAX_LEN_MEDICALS){
+                        editMedikament1.getText().delete(editMedikament1.getSelectionEnd() - 1,editMedikament1.getSelectionStart());
+                        Toast.makeText(context,R.string.edit_max_letters_error, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
             editMedikament2.doAfterTextChanged {
                 sharedViewModel.setMedicals(2, it.toString())
             }
+            editMedikament2.doOnTextChanged { text, start, count, after ->
+                if(editMedikament2.lineCount > MAX_LINE_MEDICALS){
+                    editMedikament2.getText().delete(editMedikament2.getSelectionEnd() - 1,editMedikament2.getSelectionStart());
+                    Toast.makeText(context,R.string.edit_max_line_error, Toast.LENGTH_LONG).show();
+                }
+                if (text != null) {
+                    if(text.length > MAX_LEN_MEDICALS){
+                        editMedikament2.getText().delete(editMedikament2.getSelectionEnd() - 1,editMedikament2.getSelectionStart());
+                        Toast.makeText(context,R.string.edit_max_letters_error, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
             editMedikament3.doAfterTextChanged {
                 sharedViewModel.setMedicals(3, it.toString())
+            }
+            editMedikament3.doOnTextChanged { text, start, count, after ->
+                if(editMedikament2.lineCount > MAX_LINE_MEDICALS){
+                    editMedikament3.getText().delete(editMedikament3.getSelectionEnd() - 1,editMedikament3.getSelectionStart());
+                    Toast.makeText(context,R.string.edit_max_line_error, Toast.LENGTH_LONG).show();
+                }
+                if (text != null) {
+                    if(text.length > MAX_LEN_MEDICALS){
+                        editMedikament3.getText().delete(editMedikament3.getSelectionEnd() - 1,editMedikament3.getSelectionStart());
+                        Toast.makeText(context,R.string.edit_max_letters_error, Toast.LENGTH_LONG).show();
+                    }
+                }
             }
             btnPrintReceipt.setOnClickListener {
                 var pdfFile = sharedViewModel.printReciept()
