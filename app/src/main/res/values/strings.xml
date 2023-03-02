@@ -105,6 +105,8 @@
     <string name="medicals_3">Medicals 3</string>
     <string name="print_receipt">Print Medical List for receipt</string>
     <string name="doctor_sign">Doctor Sign</string>
+    <string name="edit_max_line_error">Max 3 line is allowed in this field.</string>
+    <string name="print_insurance">Print Insurance Details</string>
     <string-array name="month_array">
         <item>Jan</item>
         <item>Feb</item>
