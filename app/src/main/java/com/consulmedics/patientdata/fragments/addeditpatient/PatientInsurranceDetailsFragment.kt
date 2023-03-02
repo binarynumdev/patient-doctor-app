@@ -121,7 +121,7 @@ class PatientInsurranceDetailsFragment : Fragment() {
             }
 
             btnPrintInsuranceDetails.setOnClickListener {
-                var pdfFile = sharedViewModel.printReciept()
+                var pdfFile = sharedViewModel.printInsurance()
                 if(pdfFile != null){
                     val intent = Intent()
                     intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION

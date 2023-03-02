@@ -39,7 +39,7 @@ class PatientRepository(private val patientDao: PatientDao)  {
         patientDao.updatePatient(patient)
     }
 
-    fun generatePDF(patient: Patient?): File?{
+    fun generateInsurnacePDF(patient: Patient?): File?{
 
         if(patient != null){
             val file = File(Environment.getExternalStorageDirectory(), "Patient Receipt ${patient.patientID} ${Date().time}.pdf")
