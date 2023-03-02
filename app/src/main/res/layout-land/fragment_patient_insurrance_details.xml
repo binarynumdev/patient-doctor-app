@@ -145,6 +145,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/btnPrintInsuranceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:text="@string/print_insurance"
+            app:layout_constraintStart_toEndOf="@+id/btnContinue"
+            app:layout_constraintTop_toTopOf="@+id/btnContinue" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
