@@ -1,11 +1,28 @@
 package com.consulmedics.patientdata
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.core.widget.doAfterTextChanged
+import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
+import com.consulmedics.patientdata.databinding.ActivityNoUserIdBinding
+import com.consulmedics.patientdata.ui.login.LoginActivity
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 
 class NoUserIdActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityNoUserIdBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_no_user_id)
+        binding = ActivityNoUserIdBinding.inflate(layoutInflater)
+        binding.apply {
+            btnAdminLogin.setOnClickListener {
+                Log.e(TAG_NAME, "GO TO ADMIN");
+                val i = Intent(applicationContext, LoginActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(i)
+            }
+        }
+        setContentView(binding.root)
     }
 }
