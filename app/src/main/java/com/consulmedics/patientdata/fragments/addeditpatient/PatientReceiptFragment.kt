@@ -52,49 +52,22 @@ class PatientReceiptFragment : Fragment() {
                 sharedViewModel.setMedicals(1, it.toString())
             }
             editMedikament1.doOnTextChanged { text, start, count, after ->
-                if(editMedikament1.lineCount > MAX_LINE_MEDICALS){
-                    editMedikament1.getText().delete(editMedikament1.getSelectionEnd() - 1,editMedikament1.getSelectionStart());
-                    Toast.makeText(context,R.string.edit_max_line_error, Toast.LENGTH_LONG).show();
-                }
-                if (text != null) {
-                    if(text.length > MAX_LEN_MEDICALS){
-                        editMedikament1.getText().delete(editMedikament1.getSelectionEnd() - 1,editMedikament1.getSelectionStart());
-                        Toast.makeText(context,R.string.edit_max_letters_error, Toast.LENGTH_LONG).show();
-                    }
-                }
+                AppUtils.validateMaxLineMaxLetterForEditText(editMedikament1, text, requireContext());
             }
             editMedikament2.doAfterTextChanged {
                 sharedViewModel.setMedicals(2, it.toString())
             }
             editMedikament2.doOnTextChanged { text, start, count, after ->
-                if(editMedikament2.lineCount > MAX_LINE_MEDICALS){
-                    editMedikament2.getText().delete(editMedikament2.getSelectionEnd() - 1,editMedikament2.getSelectionStart());
-                    Toast.makeText(context,R.string.edit_max_line_error, Toast.LENGTH_LONG).show();
-                }
-                if (text != null) {
-                    if(text.length > MAX_LEN_MEDICALS){
-                        editMedikament2.getText().delete(editMedikament2.getSelectionEnd() - 1,editMedikament2.getSelectionStart());
-                        Toast.makeText(context,R.string.edit_max_letters_error, Toast.LENGTH_LONG).show();
-                    }
-                }
+                AppUtils.validateMaxLineMaxLetterForEditText(editMedikament2, text, requireContext());
             }
             editMedikament3.doAfterTextChanged {
                 sharedViewModel.setMedicals(3, it.toString())
             }
             editMedikament3.doOnTextChanged { text, start, count, after ->
-                if(editMedikament2.lineCount > MAX_LINE_MEDICALS){
-                    editMedikament3.getText().delete(editMedikament3.getSelectionEnd() - 1,editMedikament3.getSelectionStart());
-                    Toast.makeText(context,R.string.edit_max_line_error, Toast.LENGTH_LONG).show();
-                }
-                if (text != null) {
-                    if(text.length > MAX_LEN_MEDICALS){
-                        editMedikament3.getText().delete(editMedikament3.getSelectionEnd() - 1,editMedikament3.getSelectionStart());
-                        Toast.makeText(context,R.string.edit_max_letters_error, Toast.LENGTH_LONG).show();
-                    }
-                }
+                AppUtils.validateMaxLineMaxLetterForEditText(editMedikament3, text, requireContext());
             }
             btnPrintReceipt.setOnClickListener {
-                var pdfFile = sharedViewModel.printReciept()
+                var pdfFile = sharedViewModel.printReceipt()
                 if(pdfFile != null){
                     val intent = Intent()
                     intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
