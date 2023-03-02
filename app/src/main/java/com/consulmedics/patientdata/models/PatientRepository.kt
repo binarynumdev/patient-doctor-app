@@ -7,6 +7,9 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.os.Environment
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import com.consulmedics.patientdata.Converters
@@ -39,10 +42,109 @@ class PatientRepository(private val patientDao: PatientDao)  {
         patientDao.updatePatient(patient)
     }
 
-    fun generatePDF(patient: Patient?): File?{
-
+    fun generateReceiptPDF(patient: Patient?): File?{
         if(patient != null){
             val file = File(Environment.getExternalStorageDirectory(), "Patient Receipt ${patient.patientID} ${Date().time}.pdf")
+            val fileOutput = FileOutputStream(file)
+            val paperWidth: Float = 82F
+            val paperHeight: Float = 52F
+            val rectCornerX: Float = -14.1F
+            val rectCornerY: Float = 16.1F
+            val rectCornerRight: Float = 65.1F
+            val rectCornerBottom: Float = 66.1F
+            val lineLeft: Float = -13.1F
+            val lineRight: Float = 65F
+            val firstLineY: Float = 1F + 16.1F
+            val fifthLineY: Float = 48F + 16.1F
+            val spaceFromLine: Float = 1F
+            var document: PdfDocument = PdfDocument()
+            var pageInfo: PdfDocument.PageInfo = PdfDocument.PageInfo.Builder( mmToPt(paperHeight).toInt(),mmToPt(paperWidth).toInt(), 1).create();
+            var page: PdfDocument.Page = document.startPage(pageInfo)
+            var paint: Paint = Paint()
+            var title: Paint = Paint()
+
+            var canvas: Canvas = page.canvas
+            canvas.save();
+            canvas.rotate(90F, (canvas.width / 2).toFloat(),
+                (canvas.height / 2).toFloat()
+            );
+            paint.style = Paint.Style.STROKE
+
+            canvas.drawRect(Rect(mmToPt(rectCornerX).toInt(), mmToPt(rectCornerY).toInt(), mmToPt(rectCornerRight).toInt(), mmToPt(rectCornerBottom).toInt()), paint)
+            var redLinePaint: Paint = Paint()
+            redLinePaint.style = Paint.Style.STROKE
+            redLinePaint.color = Color.RED
+            redLinePaint.strokeWidth = 0.3F
+            canvas.drawLine(mmToPt(lineLeft) ,mmToPt(firstLineY),mmToPt(lineRight),mmToPt(firstLineY), redLinePaint)
+
+            canvas.drawRect(Rect(mmToPt(rectCornerX).toInt(), mmToPt(rectCornerY).toInt(), mmToPt(rectCornerRight).toInt(), mmToPt(rectCornerBottom).toInt()), paint)
+            canvas.drawLine(mmToPt(lineLeft) ,mmToPt(firstLineY),mmToPt(lineRight),mmToPt(firstLineY), redLinePaint)
+            canvas.drawLine(mmToPt(lineLeft) ,mmToPt(fifthLineY),mmToPt(lineRight),mmToPt(fifthLineY), redLinePaint)
+            val secondLineY2: Float = firstLineY + 15.6F
+            val thirdLineY2: Float = secondLineY2 + 15.6F
+            canvas.drawLine(mmToPt(lineLeft) ,mmToPt(secondLineY2),mmToPt(lineRight),mmToPt(secondLineY2), redLinePaint)
+            canvas.drawLine(mmToPt(lineLeft) ,mmToPt(thirdLineY2),mmToPt(lineRight),mmToPt(thirdLineY2), redLinePaint)
+
+
+            title.color = Color.RED
+            title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL))
+            title.textSize = 14.5F
+
+
+            val mTextPaint = TextPaint()
+            mTextPaint.set(title)
+
+
+            // print medicals text
+            printMedicals(patient.medicals1, mTextPaint,canvas,lineLeft, firstLineY + spaceFromLine)
+            printMedicals(patient.medicals2, mTextPaint,canvas,lineLeft, secondLineY2 + spaceFromLine)
+            printMedicals(patient.medicals3, mTextPaint,canvas,lineLeft, thirdLineY2 + spaceFromLine)
+
+            // end medicals text
+
+            canvas.restore();
+
+            document.finishPage(page)
+            document.writeTo(fileOutput)
+            document.close()
+            return file
+        }
+        else{
+            return  null
+        }
+    }
+
+    private fun printMedicals(textMedicals: String, mTextPaint: TextPaint, canvas: Canvas, lineLeft: Float, lineTop: Float) {
+
+
+        canvas.save()
+        var printText = textMedicals
+        if(textMedicals.split('\n').count() == 1 || textMedicals == ""){
+            canvas.translate(mmToPt(lineLeft), mmToPt(lineTop + 4F  ))
+            if(textMedicals == ""){
+                printText = "XXXXXXXXXXXXXXXXXXX"
+            }
+        }
+        else{
+            canvas.translate(mmToPt(lineLeft), mmToPt(lineTop  ))
+        }
+        var mTextLayout = StaticLayout(
+            printText,
+            mTextPaint,
+            mmToPt(79F).toInt(),
+            Layout.Alignment.ALIGN_NORMAL,
+            1.0f,
+            0.0f,
+            false
+        )
+        mTextLayout.draw(canvas)
+        canvas.restore()
+    }
+
+    fun generateInsurnacePDF(patient: Patient?): File?{
+
+        if(patient != null){
+            val file = File(Environment.getExternalStorageDirectory(), "Patient Insurance ${patient.patientID} ${Date().time}.pdf")
             val fileOutput = FileOutputStream(file)
 
 

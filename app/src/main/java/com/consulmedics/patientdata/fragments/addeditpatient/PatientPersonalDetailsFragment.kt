@@ -168,7 +168,7 @@ class PatientPersonalDetailsFragment : Fragment() {
     private fun updatePatientBirthDate() {
         if(birthYear != null  && birthDay != null){
             val cal = Calendar.getInstance()
-            cal.time = sharedViewModel.patientData.value?.birthDate
+//            cal.time = sharedViewModel.patientData.value?.birthDate
             cal[Calendar.YEAR] = birthYear!!
             cal[Calendar.MONTH] = birthMonth
             cal[Calendar.DAY_OF_MONTH] = birthDay!!

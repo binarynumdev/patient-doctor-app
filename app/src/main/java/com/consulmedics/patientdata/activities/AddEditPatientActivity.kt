@@ -44,6 +44,9 @@ class AddEditPatientActivity : AppCompatActivity() {
         else if (destination.id == R.id.patientReceiptFragment){
             tabIndex = 5
         }
+        else if (destination.id == R.id.patientSummaryFragment){
+            tabIndex = 6
+        }
         for (i in 0 until pageTitleList.count()){
 
             if(i < tabIndex){

@@ -12,5 +12,8 @@ object AppConstants {
     const val HOTEL_TEXT: String = "Hotel"
     const val YES_TEXT:String =  "Y"
     const val NO_TEXT: String = "N"
+    const val MAX_LINE_MEDICALS: Int = 2
+    const val MAX_LEN_MEDICALS: Int = 46
+    const val MAX_LEN_PER_LINE: Int = 23
 
 }

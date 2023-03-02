@@ -1,7 +1,11 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
+import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -113,6 +118,29 @@ class PatientInsurranceDetailsFragment : Fragment() {
             }
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
+            }
+
+            btnPrintInsuranceDetails.setOnClickListener {
+                var pdfFile = sharedViewModel.printInsurance()
+                if(pdfFile != null){
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                    val uriPdfPath =
+                        FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
+                    Log.d("pdfPath", "" + uriPdfPath);
+                    val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
+                    pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
+                    pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
+                    pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+                    try {
+                        startActivity(pdfOpenIntent)
+                    } catch (activityNotFoundException: ActivityNotFoundException) {
+                        Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
             }
 
         }

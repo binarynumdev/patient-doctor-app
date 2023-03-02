@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
@@ -25,6 +27,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.utils.AppConstants.MAX_LEN_MEDICALS
+import com.consulmedics.patientdata.utils.AppConstants.MAX_LINE_MEDICALS
+import com.consulmedics.patientdata.utils.AppUtils
 
 class PatientReceiptFragment : Fragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
@@ -46,14 +51,23 @@ class PatientReceiptFragment : Fragment() {
             editMedikament1.doAfterTextChanged {
                 sharedViewModel.setMedicals(1, it.toString())
             }
+            editMedikament1.doOnTextChanged { text, start, count, after ->
+                AppUtils.validateMaxLineMaxLetterForEditText(editMedikament1, text, requireContext());
+            }
             editMedikament2.doAfterTextChanged {
                 sharedViewModel.setMedicals(2, it.toString())
+            }
+            editMedikament2.doOnTextChanged { text, start, count, after ->
+                AppUtils.validateMaxLineMaxLetterForEditText(editMedikament2, text, requireContext());
             }
             editMedikament3.doAfterTextChanged {
                 sharedViewModel.setMedicals(3, it.toString())
             }
+            editMedikament3.doOnTextChanged { text, start, count, after ->
+                AppUtils.validateMaxLineMaxLetterForEditText(editMedikament3, text, requireContext());
+            }
             btnPrintReceipt.setOnClickListener {
-                var pdfFile = sharedViewModel.printReciept()
+                var pdfFile = sharedViewModel.printReceipt()
                 if(pdfFile != null){
                     val intent = Intent()
                     intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
