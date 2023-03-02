@@ -42,7 +42,7 @@ class PatientRepository(private val patientDao: PatientDao)  {
     fun generateInsurnacePDF(patient: Patient?): File?{
 
         if(patient != null){
-            val file = File(Environment.getExternalStorageDirectory(), "Patient Receipt ${patient.patientID} ${Date().time}.pdf")
+            val file = File(Environment.getExternalStorageDirectory(), "Patient Insurance ${patient.patientID} ${Date().time}.pdf")
             val fileOutput = FileOutputStream(file)
 
 
