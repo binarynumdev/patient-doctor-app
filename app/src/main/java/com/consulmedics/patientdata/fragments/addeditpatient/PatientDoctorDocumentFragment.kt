@@ -57,6 +57,12 @@ class PatientDoctorDocumentFragment : Fragment() {
                     Toast.makeText(context, R.string.error_in_valid_doctor_document, Toast.LENGTH_LONG).show()
                 }
             }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
+            }
         }
         return binding.root
     }
