@@ -108,12 +108,7 @@ class PatientInsurranceDetailsFragment : Fragment() {
                 alertDialog.getWindow()?.setLayout(width, height)
             }
             btnContinue.setOnClickListener {
-                if(sharedViewModel.isValidInsuranceDetails() == true){
-                    findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment)
-                }
-                else{
-                    Toast.makeText(context, R.string.error_in_validate_insurance_details_form, Toast.LENGTH_LONG).show()
-                }
+                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment)
 
             }
             btnBack.setOnClickListener {

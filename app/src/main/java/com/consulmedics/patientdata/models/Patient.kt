@@ -69,57 +69,57 @@ data class Patient(
 
 
     fun isValidInsuranceDetails():Boolean{
-//        if(insuranceName?.isEmpty() == true){
-//            return false
-//        }
-//        if(insuranceNumber?.isEmpty() == true){
-//            return false
-//        }
-//        if(insuranceStatus?.isEmpty() == true){
-//            return false
-//        }
-//        if(signPatient?.isEmpty() == true){
-//            return false
-//        }
+        if(insuranceName?.isEmpty() == true){
+            return false
+        }
+        if(insuranceNumber?.isEmpty() == true){
+            return false
+        }
+        if(insuranceStatus?.isEmpty() == true){
+            return false
+        }
+        if(signPatient?.isEmpty() == true){
+            return false
+        }
 
         return true
     }
 
 
     fun isValidatePersonalDetails(): Boolean{
-//        if(patientID?.isEmpty() == true){
-//            return false
-//        }
-//        if(firstName?.isEmpty() == true){
-//            return false
-//        }
-//        if(lastName?.isEmpty() == true){
-//            return false
-//        }
-//        if(street?.isEmpty() == true){
-//            return false
-//        }
-//        if(houseNumber?.isEmpty() == true){
-//            return false
-//        }
-//        if(city?.isEmpty() == true){
-//            return false
-//        }
-//        if(postCode?.isEmpty() == true){
-//            return false
-//        }
-//        if(birthDate == null){
-//            return false
-//        }
-//        if(gender?.isEmpty() == true){
-//            return false
-//        }
-//        if(phoneNumber?.isEmpty() == true){
-//            return false
-//        }
-//        if(practiceName?.isEmpty() == true){
-//            return  false
-//        }
+        if(patientID?.isEmpty() == true){
+            return false
+        }
+        if(firstName?.isEmpty() == true){
+            return false
+        }
+        if(lastName?.isEmpty() == true){
+            return false
+        }
+        if(street?.isEmpty() == true){
+            return false
+        }
+        if(houseNumber?.isEmpty() == true){
+            return false
+        }
+        if(city?.isEmpty() == true){
+            return false
+        }
+        if(postCode?.isEmpty() == true){
+            return false
+        }
+        if(birthDate == null){
+            return false
+        }
+        if(gender?.isEmpty() == true){
+            return false
+        }
+        if(phoneNumber?.isEmpty() == true){
+            return false
+        }
+        if(practiceName?.isEmpty() == true){
+            return  false
+        }
         return true
     }
 
@@ -212,36 +212,36 @@ data class Patient(
     }
 
     fun isValidAdditionalDetails(): Boolean {
-//        if(dementia?.isEmpty() == true){
-//            return false
-//        }
-//        if(geriatrics?.isEmpty() == true){
-//            return false
-//        }
-//        if(infant?.isEmpty() == true){
-//            return false
-//        }
-//        if(fractures?.isEmpty() == true){
-//            return false
-//        }
-//        if(serverHandInjury?.isEmpty() == true){
-//            return false
-//        }
-//        if(thrombosis?.isEmpty() == true){
-//            return false
-//        }
-//        if(hypertension?.isEmpty() == true){
-//            return false
-//        }
-//        if(preHeartAttack?.isEmpty() == true){
-//            return false
-//        }
-//        if(pneumonia?.isEmpty() == true){
-//            return false
-//        }
-//        if(divertikulitis?.isEmpty() == true){
-//            return false
-//        }
+        if(dementia?.isEmpty() == true){
+            return false
+        }
+        if(geriatrics?.isEmpty() == true){
+            return false
+        }
+        if(infant?.isEmpty() == true){
+            return false
+        }
+        if(fractures?.isEmpty() == true){
+            return false
+        }
+        if(serverHandInjury?.isEmpty() == true){
+            return false
+        }
+        if(thrombosis?.isEmpty() == true){
+            return false
+        }
+        if(hypertension?.isEmpty() == true){
+            return false
+        }
+        if(preHeartAttack?.isEmpty() == true){
+            return false
+        }
+        if(pneumonia?.isEmpty() == true){
+            return false
+        }
+        if(divertikulitis?.isEmpty() == true){
+            return false
+        }
         return true
     }
 
@@ -294,44 +294,44 @@ data class Patient(
     }
 
     fun isValidLogisticDetails() : Boolean{
-//        if(startVisitDate?.isEmpty() == true){
-//            return false
-//        }
-//        if(startVisitTime?.isEmpty() == true){
-//            return false
-//        }
-//        if(startPoint?.isEmpty() == true){
-//            return false
-//        }
-//        if(sameAddAsPrev?.isEmpty() == true){
-//            return false
-//        }
-//        if(alreadyVisitedDuringThisShift?.isEmpty() == true){
-//            return false
-//        }
+        if(startVisitDate?.isEmpty() == true){
+            return false
+        }
+        if(startVisitTime?.isEmpty() == true){
+            return false
+        }
+        if(startPoint?.isEmpty() == true){
+            return false
+        }
+        if(sameAddAsPrev?.isEmpty() == true){
+            return false
+        }
+        if(alreadyVisitedDuringThisShift?.isEmpty() == true){
+            return false
+        }
         return true
     }
 
     fun isValidDoctorDocument(): Boolean? {
-//        if(diagnosis?.isEmpty() == true){
-//            return false
-//        }
-//        if(healthStatus?.isEmpty() == true){
-//            return false
-//        }
+        if(diagnosis?.isEmpty() == true){
+            return false
+        }
+        if(healthStatus?.isEmpty() == true){
+            return false
+        }
         return true
     }
 
     fun isValidMedicalReceipt(): Boolean? {
-//        if(medicals1?.isEmpty() == true){
-//            return false
-//        }
-//        if(medicals2?.isEmpty() == true){
-//            return false
-//        }
-//        if(medicals3?.isEmpty() == true){
-//            return false
-//        }
+        if(medicals1?.isEmpty() == true){
+            return false
+        }
+        if(medicals2?.isEmpty() == true){
+            return false
+        }
+        if(medicals3?.isEmpty() == true){
+            return false
+        }
         return true
     }
 

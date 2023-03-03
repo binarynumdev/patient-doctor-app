@@ -106,12 +106,7 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 sharedViewModel.setCurrentPatientAlreadyVisited(NO_TEXT)
             }
             btnNext.setOnClickListener {
-                if(sharedViewModel.isValidLogisticDetails() == true){
-                    findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
-                }
-                else{
-                    Toast.makeText(context, R.string.error_in_validate_logistic_details, Toast.LENGTH_LONG).show()
-                }
+                findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
             }
             btnPrev.setOnClickListener {
                 activity?.onBackPressed()

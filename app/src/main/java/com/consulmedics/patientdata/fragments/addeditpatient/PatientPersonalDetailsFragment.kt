@@ -153,12 +153,7 @@ class PatientPersonalDetailsFragment : Fragment() {
                 sharedViewModel.setPracticeName(it.toString())
             }
             btnContinue.setOnClickListener {
-                if(sharedViewModel.isValidatePersonalDetails() == true){
-                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
-                }
-                else{
-                    Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
-                }
+                findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
             }
             btnSave.setOnClickListener {
                 sharedViewModel.patientData.value?.let { it1 ->
