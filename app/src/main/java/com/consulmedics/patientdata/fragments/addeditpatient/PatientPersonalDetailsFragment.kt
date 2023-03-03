@@ -160,6 +160,12 @@ class PatientPersonalDetailsFragment : Fragment() {
                     Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
                 }
             }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
+            }
         }
         val root = binding.root
         return root
