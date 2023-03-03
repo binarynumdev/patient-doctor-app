@@ -133,10 +133,10 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 val year = cal[Calendar.YEAR]
                 val month = cal[Calendar.MONTH]
                 val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
             }
             else{
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.firstName} ${sharedViewModel.patientData.value?.firstName} ")
+                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
             }
 
             binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
