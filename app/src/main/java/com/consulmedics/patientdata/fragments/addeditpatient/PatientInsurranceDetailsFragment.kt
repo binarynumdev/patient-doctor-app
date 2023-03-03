@@ -119,6 +119,12 @@ class PatientInsurranceDetailsFragment : Fragment() {
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
+            }
 
             btnPrintInsuranceDetails.setOnClickListener {
                 var pdfFile = sharedViewModel.printInsurance()

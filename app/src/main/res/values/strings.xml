@@ -106,7 +106,7 @@
     <string name="print_receipt">Print Medical List for receipt</string>
     <string name="doctor_sign">Doctor Sign</string>
     <string name="edit_max_line_error">Max 3 line is allowed in this field.</string>
-    <string name="print_insurance">Print Insurance Details</string>
+    <string name="print_insurance">Print Patient Label</string>
     <string name="edit_max_letters_error">Max length is 100 character is allowed.</string>
     <string name="no_gender">No Gender</string>
     <string name="no_birthdate">No Birth Date</string>

@@ -154,6 +154,15 @@
             app:layout_constraintStart_toEndOf="@+id/btnContinue"
             app:layout_constraintTop_toTopOf="@+id/btnContinue" />
 
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/appbar_padding"
+            android:text="@string/save"
+            app:layout_constraintStart_toEndOf="@+id/btnPrintInsuranceDetails"
+            app:layout_constraintTop_toTopOf="@+id/btnPrintInsuranceDetails" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
