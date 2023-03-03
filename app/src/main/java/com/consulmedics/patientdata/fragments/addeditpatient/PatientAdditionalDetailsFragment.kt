@@ -135,6 +135,12 @@ class PatientAdditionalDetailsFragment : Fragment() {
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
+            }
         }
         return binding.root
     }
