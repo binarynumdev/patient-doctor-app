@@ -83,6 +83,13 @@ class PatientAdapter(
             else{
                 textGender.setText( mContext.getString(R.string.no_gender) )
             }
+
+            if(currentPatient.isFullyValidated()){
+                textIsFinished.setText(R.string.completed)
+            }
+            else{
+                textIsFinished.setText(R.string.incompleted)
+            }
             btnEditPatient.setOnClickListener {
                 patientItemOnClickInterface.onPatientEditClick(currentPatient)
             }

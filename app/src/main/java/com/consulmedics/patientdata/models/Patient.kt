@@ -335,5 +335,11 @@ data class Patient(
         return true
     }
 
+    fun isFullyValidated(): Boolean {
+        if(isValidMedicalReceipt() == true && isValidatePersonalDetails() && isValidAdditionalDetails() && isValidLogisticDetails() && isValidDoctorDocument() == true && isValidMedicalReceipt() == true)
+            return true
+        return false
+    }
+
 
 }
