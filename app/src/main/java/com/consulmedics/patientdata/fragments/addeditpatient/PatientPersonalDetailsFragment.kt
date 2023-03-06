@@ -161,6 +161,9 @@ class PatientPersonalDetailsFragment : Fragment() {
                     activity?.finish()
                 }
             }
+            btnCancel.setOnClickListener {
+                requireActivity().finish()
+            }
         }
         val root = binding.root
         return root

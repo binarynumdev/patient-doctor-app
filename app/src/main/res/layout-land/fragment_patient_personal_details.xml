@@ -356,14 +356,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnContinue"
+                android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/appbar_padding"
-                android:text="@string/btn_next" />
+                android:text="@string/cancel" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -371,12 +371,17 @@
                 android:layout_weight="1" />
 
             <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_next" />
+
+            <Button
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_marginTop="@dimen/appbar_padding"
-                android:text="@string/go_to_home" />
+                android:text="@string/finish" />
         </LinearLayout>
 
     </LinearLayout>
