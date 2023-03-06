@@ -3,6 +3,7 @@ package com.consulmedics.patientdata.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
@@ -86,9 +87,13 @@ class PatientAdapter(
 
             if(currentPatient.isFullyValidated()){
                 textIsFinished.setText(R.string.completed)
+                textIsFinished.setTextColor(Color.GREEN)
+                statusColoredBorder.setBackgroundColor(Color.GREEN)
             }
             else{
+                textIsFinished.setTextColor(Color.RED)
                 textIsFinished.setText(R.string.incompleted)
+                statusColoredBorder.setBackgroundColor(Color.RED)
             }
             btnEditPatient.setOnClickListener {
                 patientItemOnClickInterface.onPatientEditClick(currentPatient)
