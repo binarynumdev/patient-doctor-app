@@ -90,7 +90,7 @@ class PatientReceiptFragment : Fragment() {
 
             }
             btnNext.setOnClickListener {
-                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment)
+                findNavController().navigate(R.id.action_patientReceiptFragment_to_patientSummaryFragment)
             }
             btnPrev.setOnClickListener {
                 activity?.onBackPressed()

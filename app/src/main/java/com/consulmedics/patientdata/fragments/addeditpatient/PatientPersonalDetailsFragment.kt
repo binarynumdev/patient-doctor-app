@@ -153,7 +153,7 @@ class PatientPersonalDetailsFragment : Fragment() {
                 sharedViewModel.setPracticeName(it.toString())
             }
             btnContinue.setOnClickListener {
-                findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
+                findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
             }
             btnSave.setOnClickListener {
                 sharedViewModel.patientData.value?.let { it1 ->

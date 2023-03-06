@@ -121,7 +121,7 @@ class PatientSummaryFragment : Fragment() {
                 activity?.finish()
             }
         }
-        binding.btnSave.setOnClickListener {
+        binding.btnPrev.setOnClickListener {
             activity?.onBackPressed()
         }
         return binding.root
