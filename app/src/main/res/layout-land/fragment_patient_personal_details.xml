@@ -354,8 +354,8 @@
             android:paddingBottom="@dimen/efab_ui_margin_xxs" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
@@ -365,14 +365,18 @@
                 android:layout_marginTop="@dimen/appbar_padding"
                 android:text="@string/btn_next" />
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_marginTop="@dimen/appbar_padding"
-                android:layout_weight="1"
-                android:text="@string/save" />
+                android:text="@string/go_to_home" />
         </LinearLayout>
 
     </LinearLayout>

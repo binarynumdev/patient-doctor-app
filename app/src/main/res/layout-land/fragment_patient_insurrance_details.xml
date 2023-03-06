@@ -158,9 +158,8 @@
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/appbar_padding"
-            android:text="@string/save"
-            app:layout_constraintStart_toEndOf="@+id/btnPrintInsuranceDetails"
+            android:text="@string/go_to_home"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnPrintInsuranceDetails" />
 
 

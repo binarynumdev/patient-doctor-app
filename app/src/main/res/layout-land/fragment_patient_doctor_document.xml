@@ -67,7 +67,7 @@
             android:padding="@dimen/appbar_padding_top" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/appbar_padding"
             android:orientation="horizontal">
@@ -76,7 +76,6 @@
                 android:id="@+id/btnPrev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/back" />
 
             <Button
@@ -84,16 +83,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_weight="1"
                 android:text="@string/btn_next" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_weight="1"
-                android:text="@string/save" />
+                android:text="@string/go_to_home" />
         </LinearLayout>
 
     </LinearLayout>
