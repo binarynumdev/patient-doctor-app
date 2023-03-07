@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/additional_details"
-            android:textSize="20sp"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_big"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textFullName"
             app:layout_constraintTop_toBottomOf="@+id/textView30" />
@@ -32,6 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/doctor_sign"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView32"
             app:layout_constraintTop_toBottomOf="@+id/textHealthStatus" />
@@ -65,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:text="@string/back" />
+                android:text="@string/back"
+                android:textSize="@dimen/text_size_middle" />
 
             <Button
                 android:id="@+id/btnSave"
@@ -74,6 +78,7 @@
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_marginTop="16dp"
                 android:text="@string/save"
+                android:textSize="@dimen/text_size_middle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
