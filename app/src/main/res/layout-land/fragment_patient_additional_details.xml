@@ -23,405 +23,335 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/demenz"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
+
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/demenz"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioDemenzYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioDemenzNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioDemenzYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/geriatrics"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioDemenzNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/geriatrics"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioGeriatricsYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioGeriatricsNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioGeriatricsYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/infant"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioGeriatricsNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/infant"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioInfantYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioInfantNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioInfantYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/fractures"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioInfantNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/fractures"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioFracturesYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioFracturesNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioFracturesYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/server_head_injury"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioFracturesNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/server_head_injury"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioServerHeadYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioServerHeadNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioServerHeadYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/thrombosis"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioServerHeadNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/thrombosis"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioThrombosisYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioThrombosisNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioThrombosisYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/hypertension"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioThrombosisNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/hypertension"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioHypertensionYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioHypertensionNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioHypertensionYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/pre_heart_attack"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioHypertensionNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/pre_heart_attack"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioPreHeartAttackYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioPreHeartAttackNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioPreHeartAttackYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/pneumonia"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioPreHeartAttackNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/pneumonia"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioPneumoniaYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioPneumoniaNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/radioPneumoniaYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/divertikulitis"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
-                <RadioButton
-                    android:id="@+id/radioPneumoniaNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/divertikulitis"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radioDivertikulitisYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioDivertikulitisNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioDivertikulitisYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
-
-                <RadioButton
-                    android:id="@+id/radioDivertikulitisNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-        </LinearLayout>
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
