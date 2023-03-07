@@ -19,6 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/insurrane_name"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPatientInfo" />
 
@@ -29,6 +31,7 @@
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -39,6 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/insurrance_status"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editPatientID" />
 
@@ -49,6 +54,7 @@
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/insurrance_number"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editInsurranceName" />
 
@@ -70,6 +78,7 @@
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -80,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/appbar_padding"
             android:text="@string/btn_next"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
             app:layout_constraintTop_toTopOf="@+id/btnBack" />
 
@@ -89,6 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/patient_id"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editInsurranceNumber" />
 
@@ -99,6 +111,7 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView36" />
@@ -109,6 +122,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/sign_patient"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editInsurranceStatus" />
 
@@ -133,6 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/back"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
@@ -141,16 +157,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnPrintInsuranceDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:text="@string/print_insurance"
+            android:textSize="@dimen/text_size_middle"
+            app:layout_constraintBottom_toBottomOf="@+id/btnContinue"
             app:layout_constraintStart_toEndOf="@+id/btnContinue"
             app:layout_constraintTop_toTopOf="@+id/btnContinue" />
 
@@ -159,8 +178,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/go_to_home"
+            android:textSize="@dimen/text_size_middle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnPrintInsuranceDetails" />
+            app:layout_constraintTop_toTopOf="@+id/btnContinue" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
