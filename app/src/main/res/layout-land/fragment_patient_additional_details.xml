@@ -12,12 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/textPatientInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +34,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/demenz" />
+                android:text="@string/demenz"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -45,7 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioDemenzNo"
@@ -53,7 +58,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -68,7 +74,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/geriatrics" />
+                android:text="@string/geriatrics"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -81,7 +89,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioGeriatricsNo"
@@ -89,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -104,7 +114,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/infant" />
+                android:text="@string/infant"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -117,7 +129,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioInfantNo"
@@ -125,7 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -140,7 +154,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/fractures" />
+                android:text="@string/fractures"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -153,7 +169,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioFracturesNo"
@@ -161,7 +178,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -176,7 +194,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/server_head_injury" />
+                android:text="@string/server_head_injury"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -189,7 +209,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioServerHeadNo"
@@ -197,7 +218,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -212,7 +234,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/thrombosis" />
+                android:text="@string/thrombosis"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -225,7 +249,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioThrombosisNo"
@@ -233,7 +258,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -248,7 +274,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/hypertension" />
+                android:text="@string/hypertension"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -261,7 +289,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioHypertensionNo"
@@ -269,7 +298,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -284,7 +314,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pre_heart_attack" />
+                android:text="@string/pre_heart_attack"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -297,7 +329,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioPreHeartAttackNo"
@@ -305,7 +338,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -320,7 +354,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pneumonia" />
+                android:text="@string/pneumonia"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -333,7 +369,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioPneumoniaNo"
@@ -341,7 +378,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -356,7 +394,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/divertikulitis" />
+                android:text="@string/divertikulitis"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -369,7 +409,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
-                    android:text="@string/yes" />
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <RadioButton
                     android:id="@+id/radioDivertikulitisNo"
@@ -377,7 +418,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/appbar_padding"
                     android:layout_weight="1"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
         </LinearLayout>
 
@@ -391,14 +433,16 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/back" />
+                android:text="@string/back"
+                android:textSize="@dimen/text_size_middle" />
 
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/btn_next" />
+                android:text="@string/btn_next"
+                android:textSize="@dimen/text_size_middle" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -410,7 +454,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/go_to_home" />
+                android:text="@string/go_to_home"
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
     </LinearLayout>
