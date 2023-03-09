@@ -22,6 +22,7 @@ import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.HOTEL_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
@@ -59,7 +60,7 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 var day = c.get(Calendar.DAY_OF_MONTH)
 
 
-                DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
+                var datePicker = DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
 
                     Log.e(AppConstants.TAG_NAME, "$year $monthOfYear $dayOfMonth")
                     c.set(Calendar.YEAR, year)
@@ -68,7 +69,17 @@ class PatientLogisticsDetailsFragment : Fragment() {
                     sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
                     val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
                     binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
-                },year , month, day).show()
+                },year , month, day)
+                var layoutParams = datePicker.window?.attributes
+                if (layoutParams != null) {
+                    Log.e(TAG_NAME, "Apply new size to datepicker")
+                    layoutParams.width = layoutParams.width * 2
+                    layoutParams.height =layoutParams.height * 2
+                    datePicker.window?.setLayout(layoutParams.width, layoutParams.height)
+//                    datePicker.window?.attributes = layoutParams
+                }
+
+                datePicker.show()
             }
             editTimeOfVisit.setOnClickListener {
                 var c = Calendar.getInstance()

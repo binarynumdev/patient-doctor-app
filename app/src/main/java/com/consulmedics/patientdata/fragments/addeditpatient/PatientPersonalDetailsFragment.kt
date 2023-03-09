@@ -164,6 +164,15 @@ class PatientPersonalDetailsFragment : Fragment() {
             btnCancel.setOnClickListener {
                 requireActivity().finish()
             }
+            btnReadCard.setOnClickListener {
+                val cardReadResult = sharedViewModel.loadPatientFromCard(requireContext())
+                if(cardReadResult){
+
+                }
+                else{
+                    Toast.makeText(requireContext(), R.string.no_card_reader, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
         val root = binding.root
         return root

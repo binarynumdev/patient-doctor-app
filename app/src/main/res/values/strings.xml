@@ -123,6 +123,7 @@
     <string name="go_to_home">Go To Home</string>
     <string name="finish">Finish</string>
     <string name="read_card">Read Card</string>
+    <string name="no_card_reader">Please check card reader is connected or card is inserted.</string>
     <string-array name="month_array">
         <item>Jan</item>
         <item>Feb</item>

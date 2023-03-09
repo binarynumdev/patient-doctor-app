@@ -1,17 +1,18 @@
 package com.consulmedics.patientdata.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.consulmedics.patientdata.SCardExt
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.models.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEditPatientViewModel(private val repository: PatientRepository): ViewModel() {
@@ -30,7 +31,15 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     var insuranceStatus:String  = ""
 * */
     private val _patientID = MutableLiveData<String>("")
+    val scardLib = SCardExt()
+
     val patientID: LiveData<String> = _patientID;
+
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isFinished = MutableLiveData<Boolean>(false)
+    val isFinished: LiveData<Boolean> = _isFinished
     fun setPatientID(editValue: String){
 //        _patientID.value = editValue
         _patientData.value?.patientID = editValue
@@ -167,6 +176,7 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     }
 
     fun savePatient(patient: Patient) {
+        _isLoading.value = true
         patient.encryptFields();
         if(patient.uid == null){
             Log.e(TAG_NAME, "INSERT PATIENT")
@@ -176,6 +186,8 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
             Log.e(TAG_NAME, "UPDATE PATIENT")
             updatePatient(patient)
         }
+        _isLoading.value = false
+        _isFinished.value = true
     }
 
     fun setPhoneNumber(editValue: String) {
@@ -286,5 +298,31 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
 
     fun isValidMedicalReceipt(): Boolean? {
         return _patientData.value?.isValidMedicalReceipt()
+    }
+
+    fun loadPatientFromCard(_context: Context): Boolean {
+        var status: Long = 0
+        if(!scardLib.initialized){
+            status = scardLib.SCardEstablishContext(_context)
+            if(0L != status){
+                return false
+            }
+            else{
+                scardLib.SCardListReaders(_context)
+            }
+        }
+        if(scardLib.initialized){
+            status = scardLib.SCardConnect()
+            if(0L == status){
+                var patientData = scardLib.getPatientData()
+                _patientData.value = patientData
+                return true
+            }
+            else{
+                return false
+            }
+        }
+
+        return false
     }
 }

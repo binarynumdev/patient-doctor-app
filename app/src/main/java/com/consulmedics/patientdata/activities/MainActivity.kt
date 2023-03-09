@@ -13,7 +13,7 @@ import com.consulmedics.patientdata.ui.main.MainPageAdapter
 import com.google.android.material.tabs.TabLayout
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
 
 
