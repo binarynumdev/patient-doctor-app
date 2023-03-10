@@ -50,11 +50,12 @@ class PatientDoctorDocumentFragment : Fragment() {
                 activity?.onBackPressed()
             }
             btnNext.setOnClickListener {
-                if(sharedViewModel.isValidDoctorDocument() == true){
-                    findNavController().navigate(R.id.action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment)
-                }
-                else{
-                    Toast.makeText(context, R.string.error_in_valid_doctor_document, Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment)
+            }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
                 }
             }
         }

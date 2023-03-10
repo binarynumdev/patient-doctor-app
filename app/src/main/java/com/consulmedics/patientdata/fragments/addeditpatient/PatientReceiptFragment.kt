@@ -90,15 +90,16 @@ class PatientReceiptFragment : Fragment() {
 
             }
             btnNext.setOnClickListener {
-                if(sharedViewModel.isValidMedicalReceipt() == true){
-                    findNavController().navigate(R.id.action_patientReceiptFragment_to_patientSummaryFragment)
-                }
-                else{
-                    Toast.makeText(context, R.string.error_in_validate_logistic_details, Toast.LENGTH_LONG).show()
-                }
+                findNavController().navigate(R.id.action_patientReceiptFragment_to_patientSummaryFragment)
             }
             btnPrev.setOnClickListener {
                 activity?.onBackPressed()
+            }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
             }
         }
         return binding.root

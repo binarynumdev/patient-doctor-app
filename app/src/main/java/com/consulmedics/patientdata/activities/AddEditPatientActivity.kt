@@ -18,7 +18,7 @@ import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.vinay.stepview.models.Step
 
-class AddEditPatientActivity : AppCompatActivity() {
+class AddEditPatientActivity : BaseActivity() {
     private var patient: Patient? = null
     private lateinit var binding: ActivityAddEditPatientBinding
 

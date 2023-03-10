@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +46,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/date_of_visit" />
+                    android:text="@string/date_of_visit"
+                    android:textColor="?attr/editTextColor"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <EditText
                     android:id="@+id/editDateOfVisit"
@@ -56,7 +59,8 @@
                     android:cursorVisible="false"
                     android:ems="10"
                     android:focusable="false"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/text_size_middle" />
             </LinearLayout>
 
             <LinearLayout
@@ -71,7 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/time_of_visit" />
+                    android:text="@string/time_of_visit"
+                    android:textColor="?attr/editTextColor"
+                    android:textSize="@dimen/text_size_middle" />
 
                 <EditText
                     android:id="@+id/editTimeOfVisit"
@@ -82,7 +88,8 @@
                     android:cursorVisible="false"
                     android:ems="10"
                     android:focusable="false"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/text_size_middle" />
             </LinearLayout>
 
         </LinearLayout>
@@ -92,7 +99,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/start_point" />
+            android:text="@string/start_point"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -103,14 +112,16 @@
                 android:id="@+id/radioStartPointIsPrevPatient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/previous_patient" />
+                android:text="@string/previous_patient"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioButton
                 android:id="@+id/radioStartPointIsHotel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/hotel" />
+                android:text="@string/hotel"
+                android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
 
         <TextView
@@ -118,7 +129,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/is_same_address_as_previous_patient" />
+            android:text="@string/is_same_address_as_previous_patient"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -130,7 +143,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/yes" />
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioButton
                 android:id="@+id/radioCurrentAddressSameNo"
@@ -138,7 +152,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
-                android:text="@string/no" />
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
 
         <TextView
@@ -146,7 +161,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/current_patient_already_visited_during_this_shift" />
+            android:text="@string/current_patient_already_visited_during_this_shift"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -157,18 +174,20 @@
                 android:id="@+id/radioCurrentPatientVisitThisShiftYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yes" />
+                android:text="@string/yes"
+                android:textSize="@dimen/text_size_middle" />
 
             <RadioButton
                 android:id="@+id/radioCurrentPatientVisitThisShiftNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/no" />
+                android:text="@string/no"
+                android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/appbar_padding"
             android:orientation="horizontal">
@@ -177,16 +196,29 @@
                 android:id="@+id/btnPrev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back" />
+                android:text="@string/back"
+                android:textSize="@dimen/text_size_middle" />
 
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_weight="1"
-                android:text="@string/btn_next" />
+                android:text="@string/btn_next"
+                android:textSize="@dimen/text_size_middle" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/go_to_home"
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
     </LinearLayout>

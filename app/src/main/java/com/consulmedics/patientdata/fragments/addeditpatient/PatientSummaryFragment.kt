@@ -47,27 +47,32 @@ class PatientSummaryFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
-            if(sharedViewModel.patientData.value?.birthDate != null){
+            if(it.birthDate != null){
                 val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
                 val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
+                cal.time = it.birthDate
                 val year = cal[Calendar.YEAR]
                 val month = cal[Calendar.MONTH]
                 val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
+                binding.textPatientInfo.setText("${it.lastName} ${it.firstName} $day, ${month + 1}, $year")
             }
             else{
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
+                binding.textPatientInfo.setText("${it.lastName} ${it.firstName} ")
             }
-            sharedViewModel.patientData.value?.signature?.let { it1 ->
 
-                if(it1.isNotEmpty()){
-                    val newBM:Bitmap = AppUtils.svgStringToBitmap(it1)
+                if(it.signature.isNotEmpty()){
+                    val newBM:Bitmap = AppUtils.svgStringToBitmap(it.signature)
                     binding.imageSignView.setImageBitmap(newBM)
                 }
 
-            }
 
+        })
+        sharedViewModel.isLoading.observe(this,{
+
+        })
+        sharedViewModel.isFinished.observe(this, {
+            if(it)
+                activity?.finish()
         })
     }
 
@@ -118,8 +123,11 @@ class PatientSummaryFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             sharedViewModel.patientData.value?.let { it1 ->
                 sharedViewModel.savePatient(it1)
-                activity?.finish()
+//                activity?.finish()
             }
+        }
+        binding.btnPrev.setOnClickListener {
+            activity?.onBackPressed()
         }
         return binding.root
     }

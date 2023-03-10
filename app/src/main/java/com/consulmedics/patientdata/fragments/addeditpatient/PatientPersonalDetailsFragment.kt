@@ -153,11 +153,24 @@ class PatientPersonalDetailsFragment : Fragment() {
                 sharedViewModel.setPracticeName(it.toString())
             }
             btnContinue.setOnClickListener {
-                if(sharedViewModel.isValidatePersonalDetails() == true){
-                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
+                findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
+            }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
+            }
+            btnCancel.setOnClickListener {
+                requireActivity().finish()
+            }
+            btnReadCard.setOnClickListener {
+                val cardReadResult = sharedViewModel.loadPatientFromCard(requireContext())
+                if(cardReadResult){
+
                 }
                 else{
-                    Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), R.string.no_card_reader, Toast.LENGTH_SHORT).show()
                 }
             }
         }

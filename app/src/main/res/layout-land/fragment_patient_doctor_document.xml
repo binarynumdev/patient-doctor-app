@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding"
-            android:text="@string/diagnosis" />
+            android:text="@string/diagnosis"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <EditText
             android:id="@+id/editDiagnosis"
@@ -45,14 +48,18 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:padding="@dimen/appbar_padding_top" />
+            android:padding="@dimen/appbar_padding_top"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/health_status" />
+            android:text="@string/health_status"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <EditText
             android:id="@+id/editHealthStatus"
@@ -64,10 +71,12 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:padding="@dimen/appbar_padding_top" />
+            android:padding="@dimen/appbar_padding_top"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/appbar_padding"
             android:orientation="horizontal">
@@ -76,16 +85,29 @@
                 android:id="@+id/btnPrev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back" />
+                android:text="@string/back"
+                android:textSize="@dimen/text_size_middle" />
 
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_weight="1"
-                android:text="@string/btn_next" />
+                android:text="@string/btn_next"
+                android:textSize="@dimen/text_size_middle" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/go_to_home"
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
     </LinearLayout>

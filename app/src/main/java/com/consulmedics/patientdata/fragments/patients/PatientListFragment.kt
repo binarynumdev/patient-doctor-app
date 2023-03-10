@@ -2,6 +2,8 @@ package com.consulmedics.patientdata.fragments.patients
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,8 +14,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.AddEditPatientActivity
+import com.consulmedics.patientdata.activities.BaseActivity
 import com.consulmedics.patientdata.activities.PatientDetailsActivity
 import com.consulmedics.patientdata.adapters.PatientAdapter
 import com.consulmedics.patientdata.adapters.PatientItemClickInterface
@@ -21,6 +26,9 @@ import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
 import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +44,7 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
 
     private  val viewModel: PatientViewModel by viewModels()
     private var _binding: FragmentPatientListBinding? = null
+    lateinit var mainActivity: BaseActivity
     val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +52,7 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPatientListBinding.inflate(inflater, container, false)
+        mainActivity = requireActivity() as BaseActivity
         return binding.root
     }
 
@@ -52,11 +62,30 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
         binding.listPatients.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = patientAdapter
+
         }
-        viewModel.allPatients.observe(viewLifecycleOwner, Observer {
-            Log.e(TAG_NAME, "ONVIEWCREATED: ${it.count()}")
-            patientAdapter.updateList(it)
-        })
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.allPatients.observe(viewLifecycleOwner, Observer {
+                mainActivity.showLoadingSpinner("Loading", "Please wait while loading patients.")
+                Thread(Runnable {
+                    // Do background task
+                    it.forEach {
+                        it.decryptFields()
+                    }
+
+
+                    // Update UI on the main thread
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.post {
+                        patientAdapter.updateList(it)
+                        mainActivity.hideLoadingSpinner()
+                    }
+                }).start()
+
+
+            })
+        }
+
     }
 
     override fun onPatientRemoveClick(patient: Patient) {

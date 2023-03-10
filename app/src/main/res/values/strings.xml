@@ -106,7 +106,7 @@
     <string name="print_receipt">Print Medical List for receipt</string>
     <string name="doctor_sign">Doctor Sign</string>
     <string name="edit_max_line_error">Max 3 line is allowed in this field.</string>
-    <string name="print_insurance">Print Insurance Details</string>
+    <string name="print_insurance">Print Patient Label</string>
     <string name="edit_max_letters_error">Max length is 100 character is allowed.</string>
     <string name="no_gender">No Gender</string>
     <string name="no_birthdate">No Birth Date</string>
@@ -118,6 +118,12 @@
     <string name="no_user_certificate_error">You removed user certificate file, Please conntact to admin to use this app continue.</string>
     <string name="go_to_admin">Go To Admin</string>
     <string name="edit_max_letter_per_line_error">Max letters per line is allowed only 23 letters</string>
+    <string name="completed">Completed</string>
+    <string name="incompleted">Incompleted</string>
+    <string name="go_to_home">Go To Home</string>
+    <string name="finish">Finish</string>
+    <string name="read_card">Read Card</string>
+    <string name="no_card_reader">Please check card reader is connected or card is inserted.</string>
     <string-array name="month_array">
         <item>Jan</item>
         <item>Feb</item>

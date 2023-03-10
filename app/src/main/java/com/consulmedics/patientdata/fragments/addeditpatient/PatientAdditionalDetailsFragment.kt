@@ -53,12 +53,7 @@ class PatientAdditionalDetailsFragment : Fragment() {
         _binding?.apply {
 
             btnNext.setOnClickListener {
-                if(sharedViewModel.patientData.value?.isValidAdditionalDetails() == true){
-                    findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientReceiptFragment)
-                }
-                else{
-                    Toast.makeText(context, R.string.error_in_validate_personal_details_form, Toast.LENGTH_LONG).show()
-                }
+                findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientReceiptFragment)
             }
 
 
@@ -134,6 +129,12 @@ class PatientAdditionalDetailsFragment : Fragment() {
 
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
+            }
+            btnSave.setOnClickListener {
+                sharedViewModel.patientData.value?.let { it1 ->
+                    sharedViewModel.savePatient(it1)
+                    activity?.finish()
+                }
             }
         }
         return binding.root

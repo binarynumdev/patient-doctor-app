@@ -3,6 +3,8 @@ package com.consulmedics.patientdata.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.opengl.Visibility
 import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,63 +41,81 @@ class PatientAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // on below line we are setting data to item of recycler view.
         var currentPatient = allPatients.get(position)
-        currentPatient.decryptFields()
-        holder.itemBinding.apply {
-            if("${currentPatient.firstName} ${currentPatient.lastName}" != " "){
-                textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
-            }
-            else{
-                textFullName.setText(mContext.getString(R.string.no_full_name))
-            }
 
-            if("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}" != "   "){
-                textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
-            }
-            else{
-                textFullAddress.setText(mContext.getString(R.string.no_address))
-            }
+        holder.itemBinding.loadingProgressBar.visibility = View.GONE
+        holder.itemBinding.patientItemLayout.visibility = View.VISIBLE
+        holder.itemView.post {
 
-            if(currentPatient.patientID?.isNotEmpty() == true){
-                textPatientID.setText(currentPatient.patientID)
-            }
-            else{
-                textPatientID.setText(mContext.getString(R.string.no_patient_id))
-            }
-
-
-            if(currentPatient.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
-            }
-            else{
-                textBirthDate.setText(mContext.getString(R.string.no_birthdate))
-            }
-            if(!currentPatient.gender.isNullOrEmpty()){
-                if(currentPatient.gender == "W"){
-                    textGender.setText( mContext.getString(R.string.female) )
+//            currentPatient.decryptFields()
+            holder.itemBinding.apply {
+                if("${currentPatient.firstName} ${currentPatient.lastName}" != " "){
+                    textFullName.setText("${currentPatient.firstName} ${currentPatient.lastName}")
                 }
-                else if (currentPatient.gender == "M"){
-                    textGender.setText( mContext.getString(R.string.male)  )
+                else{
+                    textFullName.setText(mContext.getString(R.string.no_full_name))
+                }
+
+                if("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}" != "   "){
+                    textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
+                }
+                else{
+                    textFullAddress.setText(mContext.getString(R.string.no_address))
+                }
+
+                if(currentPatient.patientID?.isNotEmpty() == true){
+                    textPatientID.setText(currentPatient.patientID)
+                }
+                else{
+                    textPatientID.setText(mContext.getString(R.string.no_patient_id))
                 }
 
 
-            }
-            else{
-                textGender.setText( mContext.getString(R.string.no_gender) )
-            }
-            btnEditPatient.setOnClickListener {
-                patientItemOnClickInterface.onPatientEditClick(currentPatient)
-            }
+                if(currentPatient.birthDate != null){
+                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                    textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
+                }
+                else{
+                    textBirthDate.setText(mContext.getString(R.string.no_birthdate))
+                }
+                if(!currentPatient.gender.isNullOrEmpty()){
+                    if(currentPatient.gender == "W"){
+                        textGender.setText( mContext.getString(R.string.female) )
+                    }
+                    else if (currentPatient.gender == "M"){
+                        textGender.setText( mContext.getString(R.string.male)  )
+                    }
 
-            btnRemovePatient.setOnClickListener {
-                patientItemOnClickInterface.onPatientRemoveClick(currentPatient)
-            }
 
-            patientItem.setOnClickListener {
-                patientItemOnClickInterface.onPatientItemClick(currentPatient)
+                }
+                else{
+                    textGender.setText( mContext.getString(R.string.no_gender) )
+                }
+
+                if(currentPatient.isFullyValidated()){
+                    textIsFinished.setText(R.string.completed)
+                    textIsFinished.setTextColor(Color.GREEN)
+                    statusColoredBorder.setBackgroundColor(Color.GREEN)
+                }
+                else{
+                    textIsFinished.setTextColor(Color.RED)
+                    textIsFinished.setText(R.string.incompleted)
+                    statusColoredBorder.setBackgroundColor(Color.RED)
+                }
+                btnEditPatient.setOnClickListener {
+                    patientItemOnClickInterface.onPatientEditClick(currentPatient)
+                }
+
+                btnRemovePatient.setOnClickListener {
+                    patientItemOnClickInterface.onPatientRemoveClick(currentPatient)
+                }
+
+                patientItem.setOnClickListener {
+                    patientItemOnClickInterface.onPatientItemClick(currentPatient)
+                }
+                holder.itemBinding.loadingProgressBar.visibility = View.GONE
+                holder.itemBinding.patientItemLayout.visibility = View.VISIBLE
             }
         }
-
 
 
     }
@@ -111,6 +131,7 @@ class PatientAdapter(
         // on below line we are clearing
         // our notes array list
         allPatients.clear()
+
         // on below line we are adding a
         // new list to our all notes list.
         Log.e(TAG_NAME, "Update List: ${newList.count()}")
