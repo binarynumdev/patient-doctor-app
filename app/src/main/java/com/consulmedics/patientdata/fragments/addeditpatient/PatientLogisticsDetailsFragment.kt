@@ -1,6 +1,7 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -29,6 +32,7 @@ import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 
 class PatientLogisticsDetailsFragment : Fragment() {
@@ -89,13 +93,25 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 }
                 val hourOfDay: Int = c.get(Calendar.HOUR_OF_DAY)
                 val minute: Int = c.get(Calendar.MINUTE)
-                TimePickerDialog(context,{ timePicker, hour, minute ->
-                    c.set(Calendar.HOUR_OF_DAY, hour)
-                    c.set(Calendar.MINUTE, minute)
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_time_picker)
+                val timePicker = dialog.findViewById<TimePicker>(R.id.time_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                timePicker.setIs24HourView(true)
+                timePicker.hour = hourOfDay
+                timePicker.minute = minute
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.HOUR_OF_DAY, timePicker.hour)
+                    c.set(Calendar.MINUTE, timePicker.minute)
                     editTimeOfVisit.setText(converter.timeToString(c.time))
                     sharedViewModel.setStartVisitTime(converter.timeToString(c.time)!!)
-                },
-                    hourOfDay,minute,true).show()
+                    dialog.dismiss()
+                }
+                dialog.show()
             }
 
             radioStartPointIsPrevPatient.setOnClickListener {
