@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -64,26 +65,45 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 var day = c.get(Calendar.DAY_OF_MONTH)
 
 
-                var datePicker = DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
+//                var datePicker = DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
+//
+//                    Log.e(AppConstants.TAG_NAME, "$year $monthOfYear $dayOfMonth")
+//                    c.set(Calendar.YEAR, year)
+//                    c.set(Calendar.MONTH, monthOfYear)
+//                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//                    sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
+//                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+//                    binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
+//                },year , month, day)
+//                var layoutParams = datePicker.window?.attributes
+//                if (layoutParams != null) {
+//                    Log.e(TAG_NAME, "Apply new size to datepicker")
+//                    layoutParams.width = layoutParams.width * 2
+//                    layoutParams.height =layoutParams.height * 2
+//                    datePicker.window?.setLayout(layoutParams.width, layoutParams.height)
+////                    datePicker.window?.attributes = layoutParams
+//                }
 
-                    Log.e(AppConstants.TAG_NAME, "$year $monthOfYear $dayOfMonth")
-                    c.set(Calendar.YEAR, year)
-                    c.set(Calendar.MONTH, monthOfYear)
-                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//                datePicker.show()
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_date_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                var datePicker = dialog.findViewById<DatePicker>(R.id.date_picker)
+                datePicker.init(year, month, day, DatePicker.OnDateChangedListener { view, year, monthOfYear, dayOfMonth ->  })
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.YEAR, datePicker.year)
+                    c.set(Calendar.MONTH, datePicker.month)
+                    c.set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
                     sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
                     val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
                     binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
-                },year , month, day)
-                var layoutParams = datePicker.window?.attributes
-                if (layoutParams != null) {
-                    Log.e(TAG_NAME, "Apply new size to datepicker")
-                    layoutParams.width = layoutParams.width * 2
-                    layoutParams.height =layoutParams.height * 2
-                    datePicker.window?.setLayout(layoutParams.width, layoutParams.height)
-//                    datePicker.window?.attributes = layoutParams
+                    dialog.dismiss()
                 }
-
-                datePicker.show()
+                dialog.show()
             }
             editTimeOfVisit.setOnClickListener {
                 var c = Calendar.getInstance()
