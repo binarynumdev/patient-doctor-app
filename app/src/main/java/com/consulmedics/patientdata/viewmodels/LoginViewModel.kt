@@ -23,7 +23,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
 
                 val loginRequest = LoginRequest(
                     password = pwd,
-                    email = email
+                    username = email
                 )
                 val response = userRepo.loginUser(loginRequest = loginRequest)
                 if (response?.code() == 200) {

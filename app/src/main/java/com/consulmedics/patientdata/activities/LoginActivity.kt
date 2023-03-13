@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 is BaseResponse.Error -> {
+                    stopLoading()
                     processError(it.msg)
                 }
                 else -> {
