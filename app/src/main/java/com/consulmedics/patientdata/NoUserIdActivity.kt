@@ -4,10 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.core.widget.doAfterTextChanged
-import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
 import com.consulmedics.patientdata.databinding.ActivityNoUserIdBinding
-import com.consulmedics.patientdata.ui.login.LoginActivity
+import com.consulmedics.patientdata.activities.LoginActivity
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 
 class NoUserIdActivity : AppCompatActivity() {
