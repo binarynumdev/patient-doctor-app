@@ -10,4 +10,132 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="street">Street</string>
+    <string name="city">City</string>
+    <string name="post_code">Post Code</string>
+    <string name="house_number">House Number</string>
+    <string name="gender">Gender</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="insurrance_details">Insurrance Details</string>
+    <string name="patient_id">Patient ID</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_patient_data_tab">PatientDataTabActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="insurrance_number">Insurrance Number</string>
+    <string name="insurrane_name">Insurrance Name</string>
+    <string name="insurrance_status">Insurrance Status</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="hint_password">Please input admin password</string>
+    <string name="btn_next">Next</string>
+    <string name="password_no_match">Password does not match. Please input correct password</string>
+    <string name="login_successed">Login success.</string>
+    <string name="hint_userid">Please input User ID</string>
+    <string name="action_register">Register</string>
+    <string name="hint_device_id">Please input Device ID</string>
+    <string name="missing_user_id">Please fill User ID field</string>
+    <string name="missing_device_id">Please fill Device ID field</string>
+    <string name="patient_list">Patient List</string>
+    <string name="patient_search">Search Patients</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="error_in_validate_personal_details_form">Please fill all fields for personal details.</string>
+    <string name="error_in_validate_insurance_details_form">Please fill all fields for insurance details</string>
+    <string name="date_of_exam">Date of Examination</string>
+    <string name="time_of_exam">Time of Examination</string>
+    <string name="killometers">Killometers</string>
+    <string name="diagnosis">Diagnosis</string>
+    <string name="health_status">Health Status</string>
+    <string name="hand_sign">Sign</string>
+    <string name="clear_sign">Clear</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="additional_details">Additional Details</string>
+    <string name="save">Save</string>
+    <string name="patient_data">Patient Data</string>
+    <string name="logistic_data">Logistics Data</string>
+    <string name="doctor_document">Doctor Document</string>
+    <string name="receipts">Receipts</string>
+    <string name="sign_doctor">Sign Doctor</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="day">Day</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="name_practise">Name Practise</string>
+    <string name="sign_patient">Sign Patient</string>
+    <string name="back">Back</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="start_point">What is the Start Point?</string>
+    <string name="previous_patient">Previous Patient</string>
+    <string name="hotel">Hotel</string>
+    <string name="is_same_address_as_previous_patient">Current address same as previous patient?</string>
+    <string name="current_patient_already_visited_during_this_shift">Current patient already visited during this shift?</string>
+    <string name="date_of_visit">Date Start of Visit</string>
+    <string name="time_of_visit">Time of Visit</string>
+    <string name="error_in_validate_logistic_details">Please check all fields of logistic details.</string>
+    <string name="error_in_valid_doctor_document">Please fill doctor document details.</string>
+    <string name="demenz">Demenz/eingeschrankte Kommunikationsfahikeit</string>
+    <string name="geriatrics">Geriatriche Patient</string>
+    <string name="infant">"Neugeborenes/Säugling/Kleinkind "</string>
+    <string name="fractures">Frakturen im Bereich der Extremitäten…</string>
+    <string name="server_head_injury">Server Head Injury</string>
+    <string name="thrombosis">Thrombosis</string>
+    <string name="hypertension">Hypertension Krise</string>
+    <string name="pre_heart_attack">Pre Heart Attack</string>
+    <string name="pneumonia">Pneumonia</string>
+    <string name="divertikulitis">Divertikulitis</string>
+    <string name="medicals_1">Medical 1</string>
+    <string name="medicals_2">Medicals 2</string>
+    <string name="medicals_3">Medicals 3</string>
+    <string name="print_receipt">Print Medical List for receipt</string>
+    <string name="doctor_sign">Doctor Sign</string>
+    <string name="edit_max_line_error">Max 3 line is allowed in this field.</string>
+    <string name="print_insurance">Print Patient Label</string>
+    <string name="edit_max_letters_error">Max length is 100 character is allowed.</string>
+    <string name="no_gender">No Gender</string>
+    <string name="no_birthdate">No Birth Date</string>
+    <string name="no_patient_id">No Patient ID</string>
+    <string name="no_address">No Address</string>
+    <string name="no_full_name">No Patient Name</string>
+    <string name="warning">Warning</string>
+    <string name="confirm_remove_patient">Are you sure to remove this patient?</string>
+    <string name="no_user_certificate_error">You removed user certificate file, Please conntact to admin to use this app continue.</string>
+    <string name="go_to_admin">Go To Admin</string>
+    <string name="edit_max_letter_per_line_error">Max letters per line is allowed only 23 letters</string>
+    <string name="completed">Completed</string>
+    <string name="incompleted">Incompleted</string>
+    <string name="go_to_home">Go To Home</string>
+    <string name="finish">Finish</string>
+    <string name="read_card">Read Card</string>
+    <string name="no_card_reader">Please check card reader is connected or card is inserted.</string>
+    <string-array name="month_array">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
 </resources>

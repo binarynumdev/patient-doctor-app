@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_edit_navigation"
+    app:startDestination="@id/patientPersonalDetailsFragment">
+
+    <fragment
+        android:id="@+id/patientPersonalDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientPersonalDetailsFragment"
+        android:label="PatientPersonalDetailsFragment" >
+        <action
+            android:id="@+id/action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment"
+            app:destination="@id/patientInsurranceDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientInsurranceDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment"
+        android:label="PatientInsurranceDetailsFragment" >
+        <action
+            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment"
+            app:destination="@id/patientLogisticsDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientAdditionalDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientAdditionalDetailsFragment"
+        android:label="fragment_patient_additional_details"
+        tools:layout="@layout/fragment_patient_additional_details" >
+        <action
+            android:id="@+id/action_patientAdditionalDetailsFragment_to_patientReceiptFragment"
+            app:destination="@id/patientReceiptFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientSummaryFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientSummaryFragment"
+        android:label="fragment_patient_summary"
+        tools:layout="@layout/fragment_patient_summary" />
+    <fragment
+        android:id="@+id/patientLogisticsDetailsFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientLogisticsDetailsFragment"
+        android:label="fragment_patient_logistics_details"
+        tools:layout="@layout/fragment_patient_logistics_details" >
+        <action
+            android:id="@+id/action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment"
+            app:destination="@id/patientDoctorDocumentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientDoctorDocumentFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientDoctorDocumentFragment"
+        android:label="fragment_patient_doctor_document"
+        tools:layout="@layout/fragment_patient_doctor_document" >
+        <action
+            android:id="@+id/action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment"
+            app:destination="@id/patientAdditionalDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientReceiptFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientReceiptFragment"
+        android:label="fragment_patient_receipt"
+        tools:layout="@layout/fragment_patient_receipt" >
+        <action
+            android:id="@+id/action_patientReceiptFragment_to_patientSummaryFragment"
+            app:destination="@id/patientSummaryFragment" />
+    </fragment>
+</navigation>
