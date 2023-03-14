@@ -3,7 +3,7 @@ package com.consulmedics.patientdata
 import android.content.Context
 import androidx.room.*
 import com.consulmedics.patientdata.dao.PatientDao
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 
 @Database(entities = [Patient::class], version = 2)
 @TypeConverters(Converters::class)

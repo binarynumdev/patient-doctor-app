@@ -1,20 +1,16 @@
 package com.consulmedics.patientdata.activities
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.get
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
-import com.consulmedics.patientdata.databinding.ActivityMainBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.vinay.stepview.models.Step
 

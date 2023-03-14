@@ -22,7 +22,6 @@ import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientInsurranceDetailsBinding
-import com.consulmedics.patientdata.models.Patient
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel

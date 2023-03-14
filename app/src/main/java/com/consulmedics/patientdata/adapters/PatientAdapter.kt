@@ -1,24 +1,15 @@
 package com.consulmedics.patientdata.adapters
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.opengl.Visibility
-import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.consulmedics.patientdata.MyApplication.Companion.patientDetailsActivityRequestCode
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ItemPatientBinding
-import com.consulmedics.patientdata.databinding.RowPatientItemBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.text.SimpleDateFormat

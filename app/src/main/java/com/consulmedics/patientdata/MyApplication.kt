@@ -1,7 +1,7 @@
 package com.consulmedics.patientdata
 
 import android.app.Application
-import com.consulmedics.patientdata.models.PatientRepository
+import com.consulmedics.patientdata.repository.PatientRepository
 
 class MyApplication : Application() {
     companion object {

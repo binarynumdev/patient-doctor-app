@@ -1,4 +1,4 @@
-package com.consulmedics.patientdata.ui.register
+package com.consulmedics.patientdata.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,9 @@ import android.os.Environment.getExternalStorageDirectory
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.consulmedics.patientdata.activities.AdminActivity
 import com.consulmedics.patientdata.databinding.ActivityRegisterBinding
 
 import com.consulmedics.patientdata.R
-import com.consulmedics.patientdata.activities.MainActivity
 import com.consulmedics.patientdata.utils.AESEncyption
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_FOLDER
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_NAME

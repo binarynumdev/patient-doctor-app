@@ -2,7 +2,7 @@ package com.consulmedics.patientdata.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.consulmedics.patientdata.models.PatientRepository
+import com.consulmedics.patientdata.repository.PatientRepository
 
 class AddEditPatientViewModelFactory (private val repository: PatientRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

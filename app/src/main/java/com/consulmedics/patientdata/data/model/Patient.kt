@@ -1,7 +1,6 @@
-package com.consulmedics.patientdata.models
+package com.consulmedics.patientdata.data.model
 
 import android.util.Log
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.consulmedics.patientdata.utils.AESEncyption

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.consulmedics.patientdata.SCardExt
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 
 class MainActivity : BaseActivity() {
 

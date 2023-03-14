@@ -40,7 +40,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
             android:screenOrientation="landscape"

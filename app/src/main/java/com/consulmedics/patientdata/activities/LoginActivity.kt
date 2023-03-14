@@ -9,14 +9,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.consulmedics.patientdata.databinding.ActivityLoginBinding
 
-import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.LoginResponse
-import com.consulmedics.patientdata.ui.register.RegisterActivity
-import com.consulmedics.patientdata.utils.AESEncyption
-import com.consulmedics.patientdata.utils.AppConstants.ADMIN_PASSWORD
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.utils.SessionManager
 import com.consulmedics.patientdata.viewmodels.LoginViewModel
 
