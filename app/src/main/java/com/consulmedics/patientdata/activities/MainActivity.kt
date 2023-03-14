@@ -28,12 +28,12 @@ class MainActivity : BaseActivity() {
 
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = MainPageAdapter(this, supportFragmentManager)
+//        val sectionsPagerAdapter = MainPageAdapter(this, supportFragmentManager)
 
-        val viewPager: ViewPager = binding.appBarMain.contentMain.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.appBarMain.tabs
-        tabs.setupWithViewPager(viewPager)
+//        val viewPager: ViewPager = binding.appBarMain.contentMain.viewPager
+//        viewPager.adapter = sectionsPagerAdapter
+//        val tabs: TabLayout = binding.appBarMain.tabs
+//        tabs.setupWithViewPager(viewPager)
         binding.appBarMain.fabCreateNewPatient.setOnClickListener{
             startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
                 // you can add values(if any) to pass to the next class or avoid using `.apply`
