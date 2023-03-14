@@ -23,7 +23,6 @@ import java.io.IOException
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var registerViewModel: RegisterViewModel
     private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
