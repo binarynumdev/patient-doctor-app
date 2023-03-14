@@ -12,6 +12,7 @@ abstract  class BaseActivity: AppCompatActivity() {
         progressDialog = ProgressDialog(this@BaseActivity)
         progressDialog.setTitle(title)
         progressDialog.setMessage(message)
+        progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
     }
     fun hideLoadingSpinner(){
