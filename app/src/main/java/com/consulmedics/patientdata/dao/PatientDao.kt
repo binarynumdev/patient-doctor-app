@@ -2,7 +2,7 @@ package com.consulmedics.patientdata.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 
 @Dao
 interface PatientDao {

@@ -3,9 +3,8 @@ package com.consulmedics.patientdata.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.consulmedics.patientdata.Converters
-import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ActivityPatientDetailsBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 
 class PatientDetailsActivity : AppCompatActivity() {
     private var patient: Patient? = null

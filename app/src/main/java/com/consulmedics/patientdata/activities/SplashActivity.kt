@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.utils.AppConstants.PERMISSION_REQUEST_CODE
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import com.consulmedics.patientdata.threads.CheckUserThread
+import com.consulmedics.patientdata.utils.SessionManager
 
 
 class SplashActivity : AppCompatActivity() {
@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
             requestPermission()
         }
         else{
-            readUserCertificate()
+            readUserInfomation()
         }
 
     }
@@ -77,7 +77,7 @@ class SplashActivity : AppCompatActivity() {
                 Log.e(TAG_NAME, grantResults.toString())
                 val IS_PERMISSION_GRANTED = grantResults[0] == PackageManager.PERMISSION_GRANTED
                 if (IS_PERMISSION_GRANTED) {
-                    readUserCertificate()
+                    readUserInfomation()
                 } else {
                     Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT)
                         .show()
@@ -91,7 +91,7 @@ class SplashActivity : AppCompatActivity() {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (SDK_INT >= Build.VERSION_CODES.R) {
                 if (Environment.isExternalStorageManager()) {
-                    readUserCertificate()
+                    readUserInfomation()
                 } else {
                     Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT)
                         .show()
@@ -99,8 +99,20 @@ class SplashActivity : AppCompatActivity() {
             }
         }
     }
-    fun readUserCertificate(){
-        val thread: CheckUserThread = CheckUserThread(applicationContext)
-        thread.start()
+    fun readUserInfomation(){
+//        val thread: CheckUserThread = CheckUserThread(applicationContext)
+//        thread.start()
+        val token = SessionManager.getToken(this)
+        if (!token.isNullOrBlank()) {
+            val i = Intent(this, MainActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+        }
+        else{
+            val i = Intent(this, LoginActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+        }
+
     }
 }

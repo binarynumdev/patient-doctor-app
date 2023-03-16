@@ -6,7 +6,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.consulmedics.patientdata.activities.MainActivity
 import com.consulmedics.patientdata.NoUserIdActivity
 import com.consulmedics.patientdata.PatientsDatabase
-import com.consulmedics.patientdata.ui.login.LoginActivity
+import com.consulmedics.patientdata.activities.LoginActivity
 import com.consulmedics.patientdata.utils.AppUtils
 
 class CheckUserThread(appContext: Context): Thread() {
