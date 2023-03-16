@@ -6,7 +6,7 @@
     android:id="@+id/activity_new_patient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/layout_border"
+    android:background="@color/default_background"
     android:padding="@dimen/appbar_padding">
 
     <androidx.constraintlayout.widget.ConstraintLayout

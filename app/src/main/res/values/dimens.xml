@@ -13,4 +13,7 @@
     <dimen name="text_size_big">30sp</dimen>
     <dimen name="text_size_middle">25sp</dimen>
     <dimen name="text_size_normal">20sp</dimen>
+    <dimen name="default_margin_4">4dp</dimen>
+    <dimen name="default_margin_2">2dp</dimen>
+    <dimen name="default_margin_8">8dp</dimen>
 </resources>
