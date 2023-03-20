@@ -18,8 +18,8 @@
         android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment"
         android:label="PatientInsurranceDetailsFragment" >
         <action
-            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment"
-            app:destination="@id/patientLogisticsDetailsFragment" />
+            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientDoctorSignFragment"
+            app:destination="@id/patientDoctorSignFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientAdditionalDetailsFragment"
@@ -61,5 +61,14 @@
         <action
             android:id="@+id/action_patientReceiptFragment_to_patientSummaryFragment"
             app:destination="@id/patientSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientDoctorSignFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientDoctorSignFragment"
+        android:label="fragment_patient_doctor_sign"
+        tools:layout="@layout/fragment_patient_doctor_sign" >
+        <action
+            android:id="@+id/action_patientDoctorSignFragment_to_patientLogisticsDetailsFragment"
+            app:destination="@id/patientLogisticsDetailsFragment" />
     </fragment>
 </navigation>

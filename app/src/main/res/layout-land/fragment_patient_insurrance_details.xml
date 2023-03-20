@@ -7,31 +7,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background"
-    android:padding="@dimen/appbar_padding">
+    android:padding="@dimen/appbar_padding"
+    tools:ignore="MissingDefaultResource">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/patient_add_edit_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/insurrane_name"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textPatientInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/topBar" />
 
         <EditText
             android:id="@+id/editInsurranceName"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/text_edit_height"
             android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="@dimen/text_size_middle"
+            android:theme="@style/CustomEditBoxStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -50,11 +60,13 @@
         <EditText
             android:id="@+id/editInsurranceStatus"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/text_edit_height"
             android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="@dimen/text_size_middle"
+            android:theme="@style/CustomEditBoxStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,11 +86,13 @@
         <EditText
             android:id="@+id/editInsurranceNumber"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/text_edit_height"
             android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="@dimen/text_size_middle"
+            android:theme="@style/CustomEditBoxStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -107,40 +121,17 @@
         <EditText
             android:id="@+id/editPatientID"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/text_edit_height"
             android:layout_marginTop="8dp"
+            android:height="@dimen/text_edit_height"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="@dimen/text_size_middle"
+            android:theme="@style/CustomEditBoxStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView36" />
-
-        <TextView
-            android:id="@+id/textView42"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
-            android:text="@string/sign_patient"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editInsurranceStatus" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/layout_border"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/textView42">
-
-            <ImageView
-                android:id="@+id/signPatientImg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/appbar_padding_top" />
-        </LinearLayout>
 
         <Button
             android:id="@+id/btnBack"
@@ -150,28 +141,8 @@
             android:text="@string/back"
             android:textSize="@dimen/text_size_middle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-        <TextView
-            android:id="@+id/textPatientInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_big"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnPrintInsuranceDetails"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:text="@string/print_insurance"
-            android:textSize="@dimen/text_size_middle"
-            app:layout_constraintBottom_toBottomOf="@+id/btnContinue"
-            app:layout_constraintStart_toEndOf="@+id/btnContinue"
-            app:layout_constraintTop_toTopOf="@+id/btnContinue" />
+            app:layout_constraintTop_toBottomOf="@+id/editInsurranceStatus"
+            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/btnSave"
