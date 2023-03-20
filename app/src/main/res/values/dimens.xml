@@ -16,4 +16,5 @@
     <dimen name="default_margin_4">4dp</dimen>
     <dimen name="default_margin_2">2dp</dimen>
     <dimen name="default_margin_8">8dp</dimen>
+    <dimen name="default_margin_1">1dp</dimen>
 </resources>

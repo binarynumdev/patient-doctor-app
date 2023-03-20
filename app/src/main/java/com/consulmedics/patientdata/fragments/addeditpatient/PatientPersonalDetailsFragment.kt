@@ -1,9 +1,13 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
+import android.graphics.drawable.Drawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -147,35 +151,75 @@ class PatientPersonalDetailsFragment : Fragment() {
             }
 
             editPatientPhoneNumber.doAfterTextChanged {
+                if(it.toString().isNullOrEmpty()){
+                    editPatientPhoneNumber.setBackgroundResource(R.drawable.bg_edit_text_red_border)
+                }
+                else{
+                    editPatientPhoneNumber.setBackgroundResource(R.drawable.bg_edit_text)
+                }
                 sharedViewModel.setPhoneNumber(it.toString())
             }
             editPatientNamePractice.doAfterTextChanged {
                 sharedViewModel.setPracticeName(it.toString())
+                if(it.toString().isNullOrEmpty()){
+                    editPatientNamePractice.setBackgroundResource(R.drawable.bg_edit_text_red_border)
+                }
+                else{
+                    editPatientNamePractice.setBackgroundResource(R.drawable.bg_edit_text)
+                }
             }
             btnContinue.setOnClickListener {
-                findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
+                if(canSave()){
+                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
+                }
+                else{
+                    Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()
+                }
+
             }
             btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    sharedViewModel.savePatient(it1)
-                    activity?.finish()
+                if(canSave()){
+                    sharedViewModel.patientData.value?.let { it1 ->
+                        sharedViewModel.savePatient(it1)
+                        activity?.finish()
+                    }
                 }
+                else{
+                    Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()
+                }
+
             }
             btnCancel.setOnClickListener {
                 requireActivity().finish()
             }
-            btnReadCard.setOnClickListener {
-                val cardReadResult = sharedViewModel.loadPatientFromCard(requireContext())
-                if(cardReadResult){
 
-                }
-                else{
-                    Toast.makeText(requireContext(), R.string.no_card_reader, Toast.LENGTH_SHORT).show()
+            topBar.apply {
+//                textViewLeft.visibility = GONE
+                buttonRight1.text = getText(R.string.read_card)
+                buttonRight1.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.stat_sys_download, 0, 0, 0)
+                buttonRight1.setOnClickListener {
+                    val cardReadResult = sharedViewModel.loadPatientFromCard(requireContext())
+                    if(cardReadResult){
+
+                    }
+                    else{
+                        Toast.makeText(requireContext(), R.string.no_card_reader, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
         val root = binding.root
         return root
+    }
+
+    private fun canSave(): Boolean {
+        if(binding.editPatientPhoneNumber.text.isNullOrEmpty()){
+            return false
+        }
+        if(binding.editPatientNamePractice.text.isNullOrEmpty()){
+            return false
+        }
+        return true
     }
 
     private fun updatePatientBirthDate() {
