@@ -19,14 +19,12 @@
 
         <!-- TODO: Update blank fragment layout -->
 
-        <TextView
-            android:id="@+id/textPatientInfo"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/patient_add_edit_top_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_big"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -53,14 +51,16 @@
                 <EditText
                     android:id="@+id/editDateOfVisit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/text_edit_height"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:ems="10"
                     android:focusable="false"
                     android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_middle" />
+                    android:textSize="@dimen/text_size_middle"
+                    android:theme="@style/CustomEditBoxStyle" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,14 +82,16 @@
                 <EditText
                     android:id="@+id/editTimeOfVisit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/text_edit_height"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:ems="10"
                     android:focusable="false"
                     android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_middle" />
+                    android:textSize="@dimen/text_size_middle"
+                    android:theme="@style/CustomEditBoxStyle" />
             </LinearLayout>
 
         </LinearLayout>
@@ -112,6 +114,7 @@
                 android:id="@+id/radioStartPointIsPrevPatient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/previous_patient"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -120,6 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/hotel"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -143,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -152,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -174,6 +180,7 @@
                 android:id="@+id/radioCurrentPatientVisitThisShiftYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -182,6 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>

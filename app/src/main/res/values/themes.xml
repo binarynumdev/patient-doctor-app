@@ -30,6 +30,6 @@
         <item name="android:layout_height">@dimen/text_edit_height</item>
         <item name="android:paddingLeft">@dimen/appbar_padding_top</item>
         <item name="android:paddingRight">@dimen/appbar_padding_top</item>
-        <item name="android:background">@drawable/bg_edit_text</item>
+        <item name="background">@drawable/bg_edit_text</item>
     </style>
 </resources>
