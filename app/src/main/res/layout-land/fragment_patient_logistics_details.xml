@@ -51,6 +51,7 @@
                     android:id="@+id/editDateOfVisit"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:clickable="false"
@@ -82,6 +83,7 @@
                     android:id="@+id/editTimeOfVisit"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:clickable="false"
@@ -114,6 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/previous_patient"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -123,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/hotel"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -139,6 +143,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:orientation="horizontal">
 
             <RadioButton
@@ -147,6 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -157,6 +163,7 @@
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -173,6 +180,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:orientation="horizontal">
 
             <RadioButton
@@ -180,6 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -189,6 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
