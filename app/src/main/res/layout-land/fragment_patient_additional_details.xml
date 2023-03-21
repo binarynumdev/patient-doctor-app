@@ -13,16 +13,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textPatientInfo"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/patient_add_edit_top_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_big"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -43,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -52,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -76,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -85,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -109,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -118,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -142,6 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -151,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -175,6 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -184,6 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -208,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -217,6 +225,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -241,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -250,6 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -274,6 +285,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -283,6 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -307,6 +320,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -316,6 +330,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -340,6 +355,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -349,6 +365,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>

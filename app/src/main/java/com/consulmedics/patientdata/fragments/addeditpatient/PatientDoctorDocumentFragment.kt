@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
@@ -58,6 +59,7 @@ class PatientDoctorDocumentFragment : Fragment() {
                     activity?.finish()
                 }
             }
+            topBar.buttonRight1.visibility = GONE
         }
         return binding.root
     }
@@ -75,10 +77,10 @@ class PatientDoctorDocumentFragment : Fragment() {
                 val year = cal[Calendar.YEAR]
                 val month = cal[Calendar.MONTH]
                 val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
+                binding.topBar.textViewLeft.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
             }
             else{
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
+                binding.topBar.textViewLeft.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
             }
         })
     }
