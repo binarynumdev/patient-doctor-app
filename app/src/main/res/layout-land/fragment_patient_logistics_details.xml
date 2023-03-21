@@ -97,39 +97,7 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView44"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/start_point"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioStartPointIsPrevPatient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/previous_patient"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioButton
-                android:id="@+id/radioStartPointIsHotel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/hotel"
-                android:textSize="@dimen/text_size_middle" />
-        </RadioGroup>
 
         <TextView
             android:id="@+id/textView45"
@@ -168,6 +136,39 @@
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
 
+        <TextView
+            android:id="@+id/textView44"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:text="@string/start_point"
+            android:textColor="?attr/editTextColor"
+            android:textSize="@dimen/text_size_middle" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioStartPointIsPrevPatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
+                android:text="@string/previous_patient"
+                android:textSize="@dimen/text_size_middle" />
+
+            <RadioButton
+                android:id="@+id/radioStartPointIsHotel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
+                android:text="@string/hotel"
+                android:textSize="@dimen/text_size_middle" />
+        </RadioGroup>
         <TextView
             android:id="@+id/textView46"
             android:layout_width="match_parent"

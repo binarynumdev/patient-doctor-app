@@ -25,11 +25,14 @@
         android:id="@+id/buttonRight1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/app_orange"
         android:text="Button"
         android:textSize="@dimen/text_size_middle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="@dimen/default_margin_2" />
 
     <Button
         android:id="@+id/buttonRight2"
