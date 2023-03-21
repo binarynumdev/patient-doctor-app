@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.UsbConnectionService
 import com.consulmedics.patientdata.utils.AppConstants.PERMISSION_REQUEST_CODE
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.threads.CheckUserThread
@@ -27,13 +28,18 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val permissionResult:Boolean = checkRWPermissions()
+
+        Log.e("DDDD", "START SERVICE---")
+        Intent(applicationContext, UsbConnectionService::class.java).also {
+            Log.e("DDDD", "START SERVICE")
+            startService(it)
+        }
         if(!permissionResult){
             requestPermission()
         }
         else{
             readUserCertificate()
         }
-
     }
     private fun checkRWPermissions(): Boolean {
         return if (SDK_INT >= Build.VERSION_CODES.R) {
