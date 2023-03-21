@@ -22,6 +22,7 @@
             layout="@layout/patient_add_edit_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/orange_bar_height"
+            android:layout_marginBottom="@dimen/appbar_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +30,6 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/medicals_1"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle" />

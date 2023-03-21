@@ -18,6 +18,7 @@
             layout="@layout/patient_add_edit_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/orange_bar_height"
+            android:layout_marginBottom="@dimen/appbar_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView

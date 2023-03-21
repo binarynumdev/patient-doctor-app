@@ -9,13 +9,13 @@
 
     <com.vinay.stepview.VerticalStepView
         android:id="@+id/patient_step_indicator"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@color/app_blue_200"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
         android:id="@+id/nav_host_fragment_patient_flow"

@@ -19,19 +19,17 @@
             layout="@layout/patient_add_edit_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/orange_bar_height"
+            android:layout_marginBottom="@dimen/appbar_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView43"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/doctor_sign"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textView32"
             app:layout_constraintTop_toBottomOf="@+id/textHealthStatus" />
 
         <LinearLayout
@@ -39,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
 
+            android:layout_marginTop="@dimen/appbar_padding"
             android:background="@drawable/layout_border"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
