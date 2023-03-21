@@ -43,7 +43,7 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:minLines="4"
+            android:minLines="1"
             android:padding="@dimen/appbar_padding_top"
             android:textSize="@dimen/text_size_middle" />
 
@@ -65,7 +65,7 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:minLines="4"
+            android:minLines="1"
             android:padding="@dimen/appbar_padding_top"
             android:textSize="@dimen/text_size_middle" />
 
@@ -86,7 +86,7 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:minLines="4"
+            android:minLines="1"
             android:padding="@dimen/appbar_padding_top"
             android:textSize="@dimen/text_size_middle" />
 
