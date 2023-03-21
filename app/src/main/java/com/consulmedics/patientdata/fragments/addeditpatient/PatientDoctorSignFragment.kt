@@ -113,10 +113,10 @@ class PatientDoctorSignFragment : Fragment() {
                 val year = cal[Calendar.YEAR]
                 val month = cal[Calendar.MONTH]
                 val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day.${month + 1}.$year")
+                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
             }
             else{
-                binding.topBar.textViewLeft.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
+                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
             }
 
             sharedViewModel.patientData.value?.signPatient?.let { it1 ->
