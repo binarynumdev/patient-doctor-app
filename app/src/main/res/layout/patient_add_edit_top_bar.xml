@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginBottom="@dimen/appbar_padding"
+    android:background="@drawable/bg_orange_rounded"
+    android:paddingStart="@dimen/appbar_padding_top"
+    android:paddingEnd="@dimen/appbar_padding_top"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:id="@+id/textViewLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="?attr/colorSurface"
+        android:textSize="@dimen/text_size_big"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonRight1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/app_orange"
+        android:text="Button"
+        android:textSize="@dimen/text_size_middle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="@dimen/default_margin_2" />
+
+    <Button
+        android:id="@+id/buttonRight2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/appbar_padding"
+        android:text="Button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRight1"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRight1"
+        app:layout_constraintTop_toTopOf="@+id/buttonRight1" />
+
+    <Button
+        android:id="@+id/buttonRight3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/appbar_padding"
+        android:text="Button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRight2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRight2"
+        app:layout_constraintTop_toTopOf="@+id/buttonRight2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
