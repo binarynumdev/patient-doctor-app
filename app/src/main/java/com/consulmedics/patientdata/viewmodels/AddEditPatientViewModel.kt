@@ -315,19 +315,19 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
             status = scardLib.SCardConnect()
             if(0L == status){
                 var patientData = scardLib.getPatientData()
-//                _patientData.value = patientData
-                setPatientID(patientData.patientID!!)
-                setBirthDate(patientData.birthDate!!)
-                setFirstname(patientData.firstName)
-                setLastname(patientData.lastName)
-                setGender(patientData.gender)
-                setPostCode(patientData.postCode)
-                setCity(patientData.city)
-                setStreet(patientData.street)
-                setHouseNumber(patientData.houseNumber)
-                setInsuranceName(patientData.insuranceName)
-                setInsuranceNumber(patientData.insuranceNumber)
-                setInsuranceStatus(patientData.insuranceStatus)
+                _patientData.value = patientData
+//                setPatientID(patientData.patientID!!)
+  //              setBirthDate(patientData.birthDate!!)
+    //            setFirstname(patientData.firstName)
+      //          setLastname(patientData.lastName)
+        //        setGender(patientData.gender)
+          //      setPostCode(patientData.postCode)
+            //    setCity(patientData.city)
+              //  setStreet(patientData.street)
+                //setHouseNumber(patientData.houseNumber)
+                ///setInsuranceName(patientData.insuranceName)
+                //setInsuranceNumber(patientData.insuranceNumber)
+                //setInsuranceStatus(patientData.insuranceStatus)
                 return true
             }
             else{
