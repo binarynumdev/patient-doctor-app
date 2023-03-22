@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
@@ -54,10 +55,10 @@ class PatientSummaryFragment : Fragment() {
                 val year = cal[Calendar.YEAR]
                 val month = cal[Calendar.MONTH]
                 val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${it.lastName} ${it.firstName} $day, ${month + 1}, $year")
+                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
             }
             else{
-                binding.textPatientInfo.setText("${it.lastName} ${it.firstName} ")
+                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
             }
 
                 if(it.signature.isNotEmpty()){
@@ -129,6 +130,7 @@ class PatientSummaryFragment : Fragment() {
         binding.btnPrev.setOnClickListener {
             activity?.onBackPressed()
         }
+        binding.topBar.buttonRight1.visibility = GONE
         return binding.root
     }
 }

@@ -13,16 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textPatientInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_big"
-            app:layout_constraintStart_toStartOf="parent"
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/patient_add_edit_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/orange_bar_height"
+            android:layout_marginBottom="@dimen/appbar_padding"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -35,6 +33,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -43,6 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -52,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -59,6 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/geriatrics"
@@ -68,6 +72,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -76,6 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -85,6 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -92,6 +101,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/infant"
@@ -101,6 +111,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -109,6 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -118,6 +131,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -125,6 +140,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/fractures"
@@ -134,6 +150,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -142,6 +159,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -151,6 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -158,6 +179,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/server_head_injury"
@@ -167,6 +189,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -175,6 +198,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -184,6 +209,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -191,6 +218,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/thrombosis"
@@ -200,6 +228,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -208,6 +237,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -217,6 +248,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -224,6 +257,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/hypertension"
@@ -233,6 +267,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -241,6 +276,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -250,6 +287,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -257,6 +296,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/pre_heart_attack"
@@ -266,6 +306,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -274,6 +315,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -283,6 +326,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -290,6 +335,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/pneumonia"
@@ -299,6 +345,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -307,6 +354,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -316,6 +365,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -323,6 +374,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/divertikulitis"
@@ -332,6 +384,7 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -340,6 +393,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/yes"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -349,6 +404,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:layout_weight="1"
+                android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>

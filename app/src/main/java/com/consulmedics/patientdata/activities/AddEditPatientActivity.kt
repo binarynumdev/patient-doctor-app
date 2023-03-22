@@ -28,20 +28,23 @@ class AddEditPatientActivity : BaseActivity() {
         else if (destination.id == R.id.patientInsurranceDetailsFragment){
             tabIndex = 1
         }
-        else if (destination.id == R.id.patientLogisticsDetailsFragment){
+        else if (destination.id == R.id.patientDoctorSignFragment){
             tabIndex = 2
         }
-        else if (destination.id == R.id.patientDoctorDocumentFragment){
+        else if (destination.id == R.id.patientLogisticsDetailsFragment){
             tabIndex = 3
         }
-        else if (destination.id == R.id.patientAdditionalDetailsFragment){
+        else if (destination.id == R.id.patientDoctorDocumentFragment){
             tabIndex = 4
         }
-        else if (destination.id == R.id.patientReceiptFragment){
+        else if (destination.id == R.id.patientAdditionalDetailsFragment){
             tabIndex = 5
         }
-        else if (destination.id == R.id.patientSummaryFragment){
+        else if (destination.id == R.id.patientReceiptFragment){
             tabIndex = 6
+        }
+        else if (destination.id == R.id.patientSummaryFragment){
+            tabIndex = 7
         }
         for (i in 0 until pageTitleList.count()){
 
@@ -92,6 +95,7 @@ class AddEditPatientActivity : BaseActivity() {
         pageTitleList = listOf<Step>(
             Step(getString(R.string.patient_data), Step.State.CURRENT),
             Step(getString(R.string.insurrance_details)),
+            Step(getString(R.string.patient_sign)),
             Step(getString(R.string.logistic_data)),
             Step(getString(R.string.doctor_document)),
             Step(getString(R.string.additional_details)),

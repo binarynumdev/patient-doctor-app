@@ -13,27 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/appbar_padding"
         tools:context=".fragments.addeditpatient.PatientDoctorDocumentFragment"
         tools:ignore="MissingDefaultResource">
 
         <!-- TODO: Update blank fragment layout -->
-
-        <TextView
-            android:id="@+id/textPatientInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_big"
-            app:layout_constraintStart_toStartOf="parent"
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/patient_add_edit_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/orange_bar_height"
+            android:layout_marginBottom="@dimen/appbar_padding"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
             android:text="@string/diagnosis"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle" />
@@ -43,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
-            android:background="@drawable/round_corder_edit_text"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
@@ -66,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/appbar_padding_top"
-            android:background="@drawable/round_corder_edit_text"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"

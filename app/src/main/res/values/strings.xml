@@ -103,10 +103,10 @@
     <string name="medicals_1">Medical 1</string>
     <string name="medicals_2">Medicals 2</string>
     <string name="medicals_3">Medicals 3</string>
-    <string name="print_receipt">Print Medical List for receipt</string>
+    <string name="print_receipt">Print Medicals</string>
     <string name="doctor_sign">Doctor Sign</string>
     <string name="edit_max_line_error">Max 3 line is allowed in this field.</string>
-    <string name="print_insurance">Print Patient Label</string>
+    <string name="print_insurance">Print Label</string>
     <string name="edit_max_letters_error">Max length is 100 character is allowed.</string>
     <string name="no_gender">No Gender</string>
     <string name="no_birthdate">No Birth Date</string>
@@ -126,6 +126,9 @@
     <string name="no_card_reader">Please check card reader is connected or card is inserted.</string>
     <string name="email_address">Please input your Email address.</string>
     <string name="btn_login">Login</string>
+    <string name="error_empty_phone_number">Please make sure you filled phone number and practice name.</string>
+    <string name="error_no_patient_sign">Need sign from patient.</string>
+    <string name="patient_sign">Sign Patient</string>
     <string-array name="month_array">
         <item>Jan</item>
         <item>Feb</item>

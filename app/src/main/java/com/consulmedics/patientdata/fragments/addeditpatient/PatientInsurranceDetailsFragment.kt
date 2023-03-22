@@ -69,45 +69,9 @@ class PatientInsurranceDetailsFragment : Fragment() {
             editPatientID.doAfterTextChanged {
                 sharedViewModel.setPatientID(it.toString())
             }
-            signPatientImg.setOnClickListener {
-                val builder = AlertDialog.Builder(requireActivity())
-                val inflater = layoutInflater
-                val dialogLayout = inflater.inflate(R.layout.dialog_signature, null)
-                val signPad = dialogLayout.findViewById<SignaturePad>(R.id.signPad)
 
-                builder.setView(dialogLayout)
-                builder.setNegativeButton(R.string.cancel, null)
-                builder.setPositiveButton(
-                    R.string.ok,null)
-                builder.setNeutralButton(
-                    R.string.clear_sign, null
-                )
-
-                val alertDialog = builder.create()
-                alertDialog.setOnShowListener {dialog->
-                    val button: Button =
-                        (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
-                    button.setOnClickListener(View.OnClickListener { // TODO Do something
-                        binding.signPatientImg.setImageBitmap(signPad.transparentSignatureBitmap)
-                        val svgStr = signPad.signatureSvg
-                        val newBM: Bitmap = AppUtils.svgStringToBitmap(svgStr)
-                        binding.signPatientImg.setImageBitmap(newBM)
-                        sharedViewModel.setSignPatient(svgStr)
-                        dialog.dismiss()
-                        Log.e(AppConstants.TAG_NAME, svgStr)
-                    })
-                    val clearButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-                    clearButton.setOnClickListener{
-                        signPad.clear()
-                    }
-                }
-                alertDialog.show()
-                val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-                val height = (resources.displayMetrics.heightPixels * 0.45).toInt()
-                alertDialog.getWindow()?.setLayout(width, height)
-            }
             btnContinue.setOnClickListener {
-                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment)
+                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientDoctorSignFragment)
 
             }
             btnBack.setOnClickListener {
@@ -120,29 +84,33 @@ class PatientInsurranceDetailsFragment : Fragment() {
                 }
             }
 
-            btnPrintInsuranceDetails.setOnClickListener {
-                var pdfFile = sharedViewModel.printInsurance()
-                if(pdfFile != null){
-                    val intent = Intent()
-                    intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-                    val uriPdfPath =
-                        FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
-                    Log.d("pdfPath", "" + uriPdfPath);
-                    val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
-                    pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
-                    pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
-                    pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
-                    try {
-                        startActivity(pdfOpenIntent)
-                    } catch (activityNotFoundException: ActivityNotFoundException) {
-                        Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
-                            .show()
+
+            topBar.apply {
+                buttonRight1.text = getString(R.string.print_insurance)
+                buttonRight1.setOnClickListener {
+                    var pdfFile = sharedViewModel.printInsurance()
+                    if(pdfFile != null){
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                        val uriPdfPath =
+                            FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
+                        Log.d("pdfPath", "" + uriPdfPath);
+                        val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
+                        pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
+                        pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
+                        pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+                        try {
+                            startActivity(pdfOpenIntent)
+                        } catch (activityNotFoundException: ActivityNotFoundException) {
+                            Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
+                                .show()
+                        }
                     }
                 }
             }
-
         }
         return binding.root
     }
@@ -163,17 +131,17 @@ class PatientInsurranceDetailsFragment : Fragment() {
                 val year = cal[Calendar.YEAR]
                 val month = cal[Calendar.MONTH]
                 val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
+                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
             }
             else{
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
+                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
             }
 
             sharedViewModel.patientData.value?.signPatient?.let { it1 ->
 
                 if(it1.isNotEmpty()){
                     val newBM:Bitmap = AppUtils.svgStringToBitmap(it1)
-                    binding.signPatientImg.setImageBitmap(newBM)
+//                    binding.signPatientImg.setImageBitmap(newBM)
                 }
 
             }

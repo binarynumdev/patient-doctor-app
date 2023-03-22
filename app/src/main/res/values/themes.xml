@@ -26,4 +26,10 @@
     <style name="Theme.ConsulmedicsPatientData.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ConsulmedicsPatientData.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="CustomEditBoxStyle" parent="android:Widget.Material.EditText">
+        <item name="android:layout_height">@dimen/text_edit_height</item>
+        <item name="android:paddingLeft">@dimen/appbar_padding_top</item>
+        <item name="android:paddingRight">@dimen/appbar_padding_top</item>
+        <item name="background">@drawable/bg_edit_text</item>
+    </style>
 </resources>

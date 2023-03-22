@@ -6,22 +6,21 @@
     android:id="@+id/activity_new_patient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/default_background"
     android:padding="@dimen/appbar_padding"
     tools:ignore="MissingDefaultResource">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/appbar_padding">
+        android:orientation="vertical">
 
-
-        <Button
-            android:id="@+id/btnReadCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/read_card"
-            app:icon="@android:drawable/stat_sys_download" />
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/patient_add_edit_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/orange_bar_height"
+            android:layout_marginBottom="@dimen/appbar_padding"></include>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,7 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
 
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
@@ -60,6 +60,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
@@ -74,8 +75,8 @@
                     android:id="@+id/editFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
@@ -96,7 +97,7 @@
             android:id="@+id/textView22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/date_of_birth"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle" />
@@ -107,10 +108,10 @@
             android:orientation="horizontal">
 
 
-
             <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/appbar_padding_top"
                 android:orientation="vertical">
 
                 <TextView
@@ -126,7 +127,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
 
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="number"
                     android:maxLength="2"
@@ -136,10 +138,12 @@
                     android:paddingBottom="@dimen/efab_ui_margin_xxs"
                     android:textSize="@dimen/text_size_middle" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/appbar_padding_top"
                 android:orientation="vertical">
 
                 <TextView
@@ -154,7 +158,8 @@
                     android:id="@+id/editBirthMonth"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:ems="10"
@@ -165,9 +170,12 @@
                     android:paddingRight="@dimen/appbar_padding_top"
                     android:paddingBottom="@dimen/efab_ui_margin_xxs" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/appbar_padding_top"
                 android:orientation="vertical">
 
                 <TextView
@@ -182,8 +190,8 @@
                     android:id="@+id/editBirthYear"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="number"
                     android:maxLength="4"
@@ -199,7 +207,7 @@
             android:id="@+id/textView29"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/gender"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle" />
@@ -207,6 +215,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:orientation="horizontal">
 
             <RadioButton
@@ -214,6 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/male"
                 android:textSize="@dimen/text_size_middle" />
 
@@ -223,6 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
                 android:buttonTint="@color/app_orange"
+                android:minHeight="0dp"
                 android:text="@string/female"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
@@ -230,7 +241,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -250,7 +261,8 @@
                     android:id="@+id/editStreet"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
@@ -279,7 +291,8 @@
                     android:id="@+id/editHouseNumber"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="numberDecimal"
                     android:paddingLeft="@dimen/appbar_padding_top"
@@ -294,6 +307,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -313,7 +327,8 @@
                     android:id="@+id/editPostalCode"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
@@ -342,7 +357,8 @@
                     android:id="@+id/editCity"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-                    android:background="@drawable/round_corder_edit_text"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:background="@drawable/bg_edit_text"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
@@ -358,7 +374,7 @@
             android:id="@+id/textView38"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/phone_number"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle" />
@@ -367,7 +383,8 @@
             android:id="@+id/editPatientPhoneNumber"
             android:layout_width="250dp"
             android:layout_height="@dimen/text_edit_height"
-            android:background="@drawable/round_corder_edit_text"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:inputType="numberDecimal"
             android:paddingLeft="@dimen/appbar_padding_top"
@@ -380,7 +397,7 @@
             android:id="@+id/textView40"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding"
+            android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/name_practise"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle" />
@@ -389,7 +406,8 @@
             android:id="@+id/editPatientNamePractice"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/text_edit_height"
-            android:background="@drawable/round_corder_edit_text"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:inputType="textPersonName"
             android:paddingLeft="@dimen/appbar_padding_top"
@@ -411,24 +429,25 @@
                 android:text="@string/cancel"
                 android:textSize="@dimen/text_size_middle" />
 
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:text="@string/btn_next"
+                android:textSize="@dimen/text_size_middle" />
+
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btnContinue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_next"
-                android:textSize="@dimen/text_size_middle" />
-
-            <Button
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/finish"
+                android:text="@string/go_to_home"
                 android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
