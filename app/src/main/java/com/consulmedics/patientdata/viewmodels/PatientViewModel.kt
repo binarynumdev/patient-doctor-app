@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.PatientsDatabase
-import com.consulmedics.patientdata.models.Patient
-import com.consulmedics.patientdata.models.PatientRepository
+import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.repository.PatientRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

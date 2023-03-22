@@ -9,13 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.AddEditPatientActivity
 import com.consulmedics.patientdata.activities.BaseActivity
@@ -23,7 +20,7 @@ import com.consulmedics.patientdata.activities.PatientDetailsActivity
 import com.consulmedics.patientdata.adapters.PatientAdapter
 import com.consulmedics.patientdata.adapters.PatientItemClickInterface
 import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
 import kotlinx.coroutines.CoroutineScope

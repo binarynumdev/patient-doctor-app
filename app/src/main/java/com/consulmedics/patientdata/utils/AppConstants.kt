@@ -16,4 +16,9 @@ object AppConstants {
     const val MAX_LEN_MEDICALS: Int = 46
     const val MAX_LEN_PER_LINE: Int = 23
 
+
+    const val BACKEND_BASE_URL: String = "https://admin-test.bd365.de/"
+    const val LOGIN_API_ENDPOINT: String = "api/login-to-mobile-app"
+    const val SYNC_PATIENT_ENDPOINT: String = "api/v1/sync-patient-data"
+
 }

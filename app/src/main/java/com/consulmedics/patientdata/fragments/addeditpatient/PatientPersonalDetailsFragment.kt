@@ -16,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientPersonalDetailsBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel

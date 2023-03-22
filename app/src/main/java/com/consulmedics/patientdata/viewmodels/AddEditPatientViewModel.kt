@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.SCardExt
-import com.consulmedics.patientdata.models.Patient
-import com.consulmedics.patientdata.models.PatientRepository
+import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

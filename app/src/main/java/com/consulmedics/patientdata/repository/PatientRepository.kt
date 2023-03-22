@@ -1,4 +1,4 @@
-package com.consulmedics.patientdata.models
+package com.consulmedics.patientdata.repository
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -10,15 +10,13 @@ import android.os.Environment
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import com.consulmedics.patientdata.Converters
-import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.dao.PatientDao
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppUtils.Companion.mmToPt
 import java.io.File
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
 import java.util.*
 
 class PatientRepository(private val patientDao: PatientDao)  {

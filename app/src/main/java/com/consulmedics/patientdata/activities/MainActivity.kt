@@ -3,21 +3,13 @@ package com.consulmedics.patientdata.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.viewpager.widget.ViewPager
 import com.consulmedics.patientdata.SCardExt
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
-import com.consulmedics.patientdata.models.Patient
-import com.consulmedics.patientdata.ui.main.MainPageAdapter
-import com.google.android.material.tabs.TabLayout
-
+import com.consulmedics.patientdata.data.model.Patient
 
 class MainActivity : BaseActivity() {
 
 
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     val scardLib = SCardExt()
@@ -28,17 +20,20 @@ class MainActivity : BaseActivity() {
 
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = MainPageAdapter(this, supportFragmentManager)
+//        val sectionsPagerAdapter = MainPageAdapter(this, supportFragmentManager)
 
-        val viewPager: ViewPager = binding.appBarMain.contentMain.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.appBarMain.tabs
-        tabs.setupWithViewPager(viewPager)
+//        val viewPager: ViewPager = binding.appBarMain.contentMain.viewPager
+//        viewPager.adapter = sectionsPagerAdapter
+//        val tabs: TabLayout = binding.appBarMain.tabs
+//        tabs.setupWithViewPager(viewPager)
         binding.appBarMain.fabCreateNewPatient.setOnClickListener{
             startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
                 // you can add values(if any) to pass to the next class or avoid using `.apply`
                 putExtra("patient_data", Patient())
             })
+        }
+        binding.appBarMain.btnSyncPatients.setOnClickListener {
+
         }
 //        binding.appBarMain.fabReadCard.setOnClickListener { view ->
 //            run {

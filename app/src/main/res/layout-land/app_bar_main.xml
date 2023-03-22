@@ -12,24 +12,36 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.ConsulmedicsPatientData.AppBarOverlay">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:textSize="24sp" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:tabIndicatorColor="@color/white"
-            app:tabTextColor="@color/white" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="?actionBarSize"
+                android:padding="@dimen/appbar_padding"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:textSize="@dimen/text_size_big"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnSyncPatients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/appbar_padding"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/stat_sys_upload" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main"  android:id="@+id/content_main"/>
@@ -48,49 +60,5 @@
         app:fabCustomSize="78dp"
         app:maxImageSize="48dp"
         app:srcCompat="@mipmap/ic_user_plus" />
-<!--    <com.nambimobile.widgets.efab.ExpandableFabLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
-<!--        &lt;!&ndash; The next 3 Views will only display in portrait orientation &ndash;&gt;-->
-<!--        <com.nambimobile.widgets.efab.Overlay-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:overlay_orientation="portrait"/>-->
-
-<!--        <com.nambimobile.widgets.efab.ExpandableFab-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom|end"-->
-<!--            android:layout_marginEnd="@dimen/ui_margin_medium"-->
-<!--            android:layout_marginRight="@dimen/ui_margin_medium"-->
-<!--            android:layout_marginBottom="@dimen/ui_margin_medium"-->
-<!--            android:background="@color/app_orange"-->
-<!--            app:backgroundTint="@color/app_orange"-->
-<!--            app:efab_orientation="portrait" />-->
-
-<!--        <com.nambimobile.widgets.efab.FabOption-->
-<!--            android:id="@+id/fabReadCard"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="@dimen/ui_margin_medium"-->
-<!--            android:layout_marginRight="@dimen/ui_margin_medium"-->
-<!--            android:layout_marginBottom="@dimen/ui_margin_medium"-->
-<!--            app:backgroundTint="@color/app_orange"-->
-<!--            app:fab_orientation="portrait"-->
-<!--            app:srcCompat="@mipmap/ic_card_read" />-->
-
-<!--        <com.nambimobile.widgets.efab.FabOption-->
-<!--            android:id="@+id/fabCreateNewPatient"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="@dimen/ui_margin_medium"-->
-<!--            android:layout_marginRight="@dimen/ui_margin_medium"-->
-<!--            android:layout_marginBottom="@dimen/ui_margin_medium"-->
-<!--            app:backgroundTint="@color/app_orange"-->
-<!--            app:fab_orientation="portrait"-->
-<!--            app:srcCompat="@mipmap/ic_user_plus" />-->
-
-<!--    </com.nambimobile.widgets.efab.ExpandableFabLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

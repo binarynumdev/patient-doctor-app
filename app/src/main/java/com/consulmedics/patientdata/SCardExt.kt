@@ -1,7 +1,7 @@
 package com.consulmedics.patientdata
 
 import android.content.Context
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 import com.identive.libs.SCard
 import com.identive.libs.WinDefs
 import java.io.ByteArrayInputStream
