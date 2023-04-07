@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.consulmedics.patientdata.PatientsDatabase
+import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.repository.PatientRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class PatientViewModel(application: Application) : AndroidViewModel(application)
     // on below line we are initializing
     // our dao, repository and all notes
     init {
-        val dao = PatientsDatabase.getDatabase(application).patientDao()
+        val dao = MyAppDatabase.getDatabase(application).patientDao()
         repository = PatientRepository(dao)
         allPatients = repository.allPatients
     }

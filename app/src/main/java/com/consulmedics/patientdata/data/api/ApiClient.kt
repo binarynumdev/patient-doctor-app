@@ -16,7 +16,7 @@ object ApiClient {
         .build()
 
     var mRetrofit: Retrofit? = null
-
+    var gRetrofit: Retrofit? = null
 
     val client: Retrofit?
         get() {
@@ -28,5 +28,16 @@ object ApiClient {
                     .build()
             }
             return mRetrofit
+        }
+    val googleMapApiClient: Retrofit?
+        get() {
+            if(gRetrofit == null){
+                gRetrofit = Retrofit.Builder()
+                    .baseUrl(AppConstants.GOOGLE_MAP_API_ENDPOINT)
+                    .client(mOkHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            return gRetrofit
         }
 }

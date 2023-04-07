@@ -136,73 +136,82 @@
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/textView44"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/start_point"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
-
-        <RadioGroup
+        <LinearLayout
+            android:id="@+id/address_form_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/radioStartPointIsPrevPatient"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/previous_patient"
+                android:layout_marginTop="@dimen/appbar_padding_top"
+                android:text="@string/start_point"
+                android:textColor="?attr/editTextColor"
                 android:textSize="@dimen/text_size_middle" />
 
-            <RadioButton
-                android:id="@+id/radioStartPointIsHotel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/hotel"
-                android:textSize="@dimen/text_size_middle" />
-        </RadioGroup>
-        <TextView
-            android:id="@+id/textView46"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/current_patient_already_visited_during_this_shift"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radioStartPointIsPrevPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/app_orange"
+                    android:minHeight="0dp"
+                    android:text="@string/previous_patient"
+                    android:textSize="@dimen/text_size_middle" />
 
-            <RadioButton
-                android:id="@+id/radioCurrentPatientVisitThisShiftYes"
-                android:layout_width="wrap_content"
+                <RadioButton
+                    android:id="@+id/radioStartPointIsHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/appbar_padding"
+                    android:buttonTint="@color/app_orange"
+                    android:minHeight="0dp"
+                    android:text="@string/hotel"
+                    android:textSize="@dimen/text_size_middle" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/yes"
+                android:layout_marginTop="@dimen/appbar_padding_top"
+                android:text="@string/current_patient_already_visited_during_this_shift"
+                android:textColor="?attr/editTextColor"
                 android:textSize="@dimen/text_size_middle" />
 
-            <RadioButton
-                android:id="@+id/radioCurrentPatientVisitThisShiftNo"
+            <RadioGroup
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/no"
-                android:textSize="@dimen/text_size_middle" />
-        </RadioGroup>
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/appbar_padding_top"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioCurrentPatientVisitThisShiftYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/app_orange"
+                    android:minHeight="0dp"
+                    android:text="@string/yes"
+                    android:textSize="@dimen/text_size_middle" />
+
+                <RadioButton
+                    android:id="@+id/radioCurrentPatientVisitThisShiftNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/appbar_padding"
+                    android:buttonTint="@color/app_orange"
+                    android:minHeight="0dp"
+                    android:text="@string/no"
+                    android:textSize="@dimen/text_size_middle" />
+            </RadioGroup>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

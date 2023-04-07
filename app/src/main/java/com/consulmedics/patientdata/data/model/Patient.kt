@@ -43,7 +43,7 @@ data class Patient(
     var signPatient:    String  = ""
     var startVisitDate: String  = ""
     var startVisitTime: String  = ""
-    var startPoint:     String  = PREV_PATIENT_TEXT
+    var startPoint:     String  = ""
 
     var sameAddAsPrev:    String  = NO_TEXT
     var alreadyVisitedDuringThisShift:    String  = NO_TEXT

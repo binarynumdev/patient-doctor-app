@@ -1,7 +1,6 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,8 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.caverock.androidsvg.SVG
-import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
@@ -41,7 +38,7 @@ class PatientSummaryFragment : Fragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!)
     }
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {

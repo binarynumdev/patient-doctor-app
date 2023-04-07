@@ -1,13 +1,9 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
-import android.graphics.drawable.Drawable
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -43,8 +39,8 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var birthDay: Int? = null
     private var tmpFirstName: String = ""
     private var tmpLastName: String = ""
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels() {
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
+    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!)
     }
     val binding get() = _binding!!
 

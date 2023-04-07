@@ -2,19 +2,22 @@ package com.consulmedics.patientdata
 
 import android.content.Context
 import androidx.room.*
+import com.consulmedics.patientdata.dao.HotelDao
 import com.consulmedics.patientdata.dao.PatientDao
+import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
 
-@Database(entities = [Patient::class], version = 2)
+@Database(entities = [Patient::class, Hotel::class], version = 2)
 @TypeConverters(Converters::class)
-abstract  class PatientsDatabase: RoomDatabase() {
+abstract  class MyAppDatabase: RoomDatabase() {
     abstract fun patientDao(): PatientDao
+    abstract fun hotelDao(): HotelDao
     companion object {
 
         @Volatile
-        private var INSTANCE: PatientsDatabase? = null
+        private var INSTANCE: MyAppDatabase? = null
 
-        fun getDatabase(context: Context): PatientsDatabase {
+        fun getDatabase(context: Context): MyAppDatabase {
             if (INSTANCE == null) {
                 synchronized(this) {
                     INSTANCE = buildDatabase(context)
@@ -23,11 +26,11 @@ abstract  class PatientsDatabase: RoomDatabase() {
             return INSTANCE!!
         }
 
-        private fun buildDatabase(context: Context): PatientsDatabase {
+        private fun buildDatabase(context: Context): MyAppDatabase {
             return Room.databaseBuilder(
                 context.applicationContext,
-                PatientsDatabase::class.java,
-                "patients_database"
+                MyAppDatabase::class.java,
+                "consulmedics_database"
             ).allowMainThreadQueries().build()
         }
     }

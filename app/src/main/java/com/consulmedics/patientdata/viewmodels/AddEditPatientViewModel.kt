@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.SCardExt
+import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.repository.HotelRepository
 import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
-class AddEditPatientViewModel(private val repository: PatientRepository): ViewModel() {
+class AddEditPatientViewModel(private val patientRepository: PatientRepository, private val hotelRepository: HotelRepository): ViewModel() {
 /*
 *     var patientID:      String? = ""
     var firstName:      String  = ""
@@ -165,14 +167,14 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         }
     }
     fun updatePatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
-        repository.update(patient)
+        patientRepository.update(patient)
     }
 
 
     // on below line we are creating a new method for adding a new note to our database
     // we are calling a method from our repository to add a new note.
     fun insertPatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(patient)
+        patientRepository.insert(patient)
     }
 
     fun savePatient(patient: Patient) {
@@ -289,11 +291,11 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     }
 
     fun printInsurance() : File?{
-        return repository.generateInsurnacePDF(_patientData.value)
+        return patientRepository.generateInsurnacePDF(_patientData.value)
     }
 
     fun printReceipt(): File?{
-        return repository.generateReceiptPDF(_patientData.value)
+        return patientRepository.generateReceiptPDF(_patientData.value)
     }
 
     fun isValidMedicalReceipt(): Boolean? {
@@ -336,5 +338,10 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         }
 
         return false
+    }
+
+    fun getHotelList(): List<Hotel>? {
+//        repository.getHotels()
+        return hotelRepository.hotelList.value
     }
 }

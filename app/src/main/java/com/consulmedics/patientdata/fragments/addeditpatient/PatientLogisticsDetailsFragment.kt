@@ -1,27 +1,25 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
-import android.app.DatePickerDialog
 import android.app.Dialog
-import android.app.TimePickerDialog
-import android.graphics.Bitmap
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
-import com.consulmedics.patientdata.databinding.FragmentPatientInsurranceDetailsBinding
+import com.consulmedics.patientdata.activities.MapsActivity
 import com.consulmedics.patientdata.databinding.FragmentPatientLogisticsDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.HOTEL_TEXT
@@ -29,19 +27,17 @@ import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
-import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 
 class PatientLogisticsDetailsFragment : Fragment() {
     private var _binding: FragmentPatientLogisticsDetailsBinding? = null
     val binding get() = _binding!!
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,12 +137,29 @@ class PatientLogisticsDetailsFragment : Fragment() {
             }
             radioStartPointIsHotel.setOnClickListener {
                 sharedViewModel.setStartPoint(HOTEL_TEXT)
+                sharedViewModel.getHotelList().also {
+                    if(it == null){
+                        showCreateHotelModal()
+                    }
+                    else{
+                        if(it.isNotEmpty()){
+                            showChooseHotelModal()
+                        }
+                        else{
+                            showCreateHotelModal()
+                        }
+                    }
+
+                }
+
             }
             radioCurrentAddressSameNo.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(NO_TEXT)
+                addressFormLayout.visibility = VISIBLE
             }
             radioCurrentAddressSameYes.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(YES_TEXT)
+                addressFormLayout.visibility = GONE
             }
             radioCurrentPatientVisitThisShiftYes.setOnClickListener{
                 sharedViewModel.setCurrentPatientAlreadyVisited(YES_TEXT)
@@ -170,6 +183,16 @@ class PatientLogisticsDetailsFragment : Fragment() {
         return binding.root
     }
 
+    fun showChooseHotelModal(){
+        Log.e(TAG_NAME, "SHOW CHOOSE HOTEL MODAL")
+    }
+    fun showCreateHotelModal(){
+        Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
+        val intent = Intent(requireActivity(), MapsActivity::class.java)
+
+
+        startActivityForResult(intent, 1100)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
@@ -202,15 +225,17 @@ class PatientLogisticsDetailsFragment : Fragment() {
             if(sharedViewModel.patientData.value?.startPoint == HOTEL_TEXT){
                 binding.radioStartPointIsHotel.isChecked = true
             }
-            else{
+            else if(sharedViewModel.patientData.value?.startPoint == PREV_PATIENT_TEXT){
                 binding.radioStartPointIsPrevPatient.isChecked = true
             }
 
             if(sharedViewModel.patientData.value?.sameAddAsPrev == YES_TEXT){
                 binding.radioCurrentAddressSameYes.isChecked = true
+                binding.addressFormLayout.visibility = GONE
             }
             else{
                 binding.radioCurrentAddressSameNo.isChecked = true
+                binding.addressFormLayout.visibility = VISIBLE
             }
 
             if(sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == YES_TEXT){
