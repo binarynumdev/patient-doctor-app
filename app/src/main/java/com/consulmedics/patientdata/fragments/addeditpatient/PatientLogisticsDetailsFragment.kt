@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -20,6 +22,7 @@ import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.MapsActivity
+import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.databinding.FragmentPatientLogisticsDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.HOTEL_TEXT
@@ -189,9 +192,10 @@ class PatientLogisticsDetailsFragment : Fragment() {
     fun showCreateHotelModal(){
         Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
         val intent = Intent(requireActivity(), MapsActivity::class.java)
+        intent.putExtra("isHotel", true)
 
-
-        startActivityForResult(intent, 1100)
+//        startActivityForResult(intent, 1100)
+        resultLauncher.launch(intent)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -247,4 +251,21 @@ class PatientLogisticsDetailsFragment : Fragment() {
         })
     }
 
+    var resultLauncher = registerForActivityResult(StartActivityForResult()){
+        if(it.resultCode == RESULT_OK){
+            val data:Intent? = it.data
+            var address: Address? = data?.getSerializableExtra("address") as Address
+            if(address != null){
+                binding.startAddressForm.apply {
+                    formRoot.visibility = VISIBLE
+                    editStreet.setText(address.streetName)
+                    editHouseNumber.setText(address.streetNumber)
+                    editCity.setText(address.city)
+                    editPostalCode.setText(address.postCode)
+                }
+
+
+            }
+        }
+    }
 }

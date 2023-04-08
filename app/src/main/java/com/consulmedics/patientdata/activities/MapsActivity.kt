@@ -20,9 +20,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.FetchLocationResponse
@@ -31,7 +34,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.consulmedics.patientdata.databinding.ActivityMapsBinding
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.consulmedics.patientdata.viewmodels.LocationViewModel
+import com.consulmedics.patientdata.viewmodels.LocationViewModelFactory
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -45,7 +51,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.io.InputStream
 import java.util.*
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
     val PERMISSION_ID = 42
     private lateinit var mMap: GoogleMap
@@ -58,8 +64,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
     private lateinit var coordinates: LatLng
     private lateinit var apiKey: String
-
-    private lateinit var viewModel: LocationViewModel
+    private lateinit var targetAddress: com.consulmedics.patientdata.data.model.Address
+//    private lateinit var viewModel: LocationViewModel
+    private val viewModel: LocationViewModel by viewModels(){
+        LocationViewModelFactory(MyApplication.addressRepository!!)
+    }
     private var startAutocompleteIntentListener = View.OnClickListener { view: View ->
         view.setOnClickListener(null)
         startAutocompleteIntent()
@@ -70,8 +79,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
-        showLoading()
+//        viewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+        targetAddress = com.consulmedics.patientdata.data.model.Address()
+        val isAddressHotel = intent.getBooleanExtra("isHotel", true)
+        targetAddress.isHotel = isAddressHotel
+        showLoading("Just a seconds", "We are detecting your location.")
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -110,27 +122,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         binding.btnConfirm.setOnClickListener {
+            Log.e("TargetAddress :", "${targetAddress.city}")
+            Log.e("TargetAddress :", "${targetAddress.postCode}")
+            Log.e("TargetAddress :", "${targetAddress.streetNumber}")
+            Log.e("TargetAddress :", "${targetAddress.streetName}")
+            Log.e("TargetAddress :", "${targetAddress.latitute}")
+            Log.e("TargetAddress :", "${targetAddress.longitute}")
 
+            var intent: Intent = Intent()
+            intent.putExtra("address", targetAddress)
+            setResult(RESULT_OK, intent)
+            viewModel.saveAddress(targetAddress)
+            finish()
         }
 
         viewModel.fetchResponseResult.observe(this) {
             when (it) {
                 is BaseResponse.Loading -> {
-                    showLoading()
+//                    showLoading()
+                    showLoading("Just a sec", "We are getting address information of your target.")
                 }
 
                 is BaseResponse.Success -> {
                     stopLoading()
+
                     processApiResult(it.data)
 //                    processLogin(it.data)
                 }
 
                 is BaseResponse.Error -> {
                     stopLoading()
+
                     processError(it.msg)
                 }
                 else -> {
                     stopLoading()
+
                 }
             }
         }
@@ -140,19 +167,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         data?.apply {
             if(results.count() > 0){
                 val result = results[0]
+
                 result.addressComponents.forEach{
                     when(it.types[0]){
                         "street_number" ->{
                             binding.textHouseNumber.text = it.longName
+                            targetAddress.streetNumber = it.longName
                         }
                         "route" ->{
                             binding.textStreet.text = it.longName
+                            targetAddress.streetName = it.longName
                         }
                         "locality" ->{
                             binding.textCity.text = it.longName
+                            targetAddress.city = it.longName
                         }
                         "postal_code" ->{
                             binding.textPostCode.text = it.longName
+                            targetAddress.postCode = it.longName
                         }
                     }
 
@@ -161,11 +193,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun showLoading() {
-        binding.progressBar.visibility = View.VISIBLE
+    fun showLoading(title: String, message: String) {
+//        binding.progressBar.visibility = View.VISIBLE
+        showLoadingSpinner(title, message)
     }
     fun stopLoading(){
-        binding.progressBar.visibility = View.GONE
+//        binding.progressBar.visibility = View.GONE
+        hideLoadingSpinner()
     }
     fun processError(msg: String?) {
         showToast("Error:" + msg)
@@ -193,24 +227,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         address1.insert(0, component.name)
                         Log.e(TAG_NAME, component.name)
                         binding.textHouseNumber.text = component.name
+                        targetAddress.streetNumber = component.name
                     }
                     "route" -> {
                         address1.append(" ")
                         address1.append(component.shortName)
                         Log.e(TAG_NAME, component.shortName)
                         binding.textStreet.text = component.name
+                        targetAddress.streetName = component.name
                     }
                     "postal_code" -> {
                         postcode.insert(0, component.name)
                         Log.e(TAG_NAME, component.name)
+                        targetAddress.postCode = component.name
 
                     }
                     "postal_code_suffix" -> {
                         postcode.append("-").append(component.name)
                         Log.e(TAG_NAME, component.name)
+
                     }
                     "locality" ->{
                         binding.textCity.text = component.name
+                        targetAddress.city = component.name
                     }
 //                    "locality" -> binding.autocompleteCity.setText(component.name)
 //                    "administrative_area_level_1" -> {
@@ -237,6 +276,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         coordinates = place.latLng as LatLng
         if(mMarker != null){
             mMarker!!.position = coordinates
+            targetAddress.latitute = coordinates.latitude
+            targetAddress.longitute = coordinates.longitude
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 13f))
     }
@@ -300,8 +341,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .position(LatLng(location.latitude, location.longitude))
                 .title("Pickup Your Hotel")
         )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 13f))
 
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 13f))
+        viewModel.getAddressFromLatLng(location.latitude, location.longitude, apiKey)
     }
 
     @SuppressLint("MissingPermission")
@@ -387,13 +429,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        getLastLocation()
+
+        mMap.setOnMapLoadedCallback {
+            getLastLocation()
+        }
         mMap.setOnMapClickListener {
             Log.e(TAG_NAME, "Lat:${it.latitude}, Long:${it.longitude}")
             if(mMarker != null){
                 mMarker!!.position = it
             }
-            showLoading()
+            showLoading("Just a sec", "We are getting address information of your target.")
+            targetAddress.latitute = it.latitude
+            targetAddress.longitute = it.longitude
             viewModel.getAddressFromLatLng(it.latitude, it.longitude, apiKey)
 //            viewModel.getAddressUsingGeoCode(it.latitude, it.longitude)
         }

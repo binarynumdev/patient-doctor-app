@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "83ce8ecc8c968412ce674783132da04c",
+    "identityHash": "fbcfe1cd5d0c3e97797b6a3e5ce0f3b8",
     "entities": [
       {
         "tableName": "Patient",
@@ -295,12 +295,74 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Address",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `streetNumber` TEXT NOT NULL, `streetName` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `latitute` REAL NOT NULL, `longitute` REAL NOT NULL, `isHotel` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "streetNumber",
+            "columnName": "streetNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "streetName",
+            "columnName": "streetName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postCode",
+            "columnName": "postCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitute",
+            "columnName": "latitute",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitute",
+            "columnName": "longitute",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHotel",
+            "columnName": "isHotel",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '83ce8ecc8c968412ce674783132da04c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fbcfe1cd5d0c3e97797b6a3e5ce0f3b8')"
     ]
   }
 }

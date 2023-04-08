@@ -174,7 +174,15 @@
                     android:minHeight="0dp"
                     android:text="@string/hotel"
                     android:textSize="@dimen/text_size_middle" />
+
             </RadioGroup>
+
+
+            <include
+                android:id="@+id/startAddressForm"
+                layout="@layout/form_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/textView46"
