@@ -16,7 +16,6 @@
         tools:context=".fragments.addeditpatient.PatientLogisticsDetailsFragment"
         tools:ignore="MissingDefaultResource">
 
-        <!-- TODO: Update blank fragment layout -->
 
         <include
             android:id="@+id/topBar"
@@ -135,6 +134,12 @@
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />
         </RadioGroup>
+
+        <include
+            android:id="@+id/current_address_form"
+            layout="@layout/form_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/address_form_layout"

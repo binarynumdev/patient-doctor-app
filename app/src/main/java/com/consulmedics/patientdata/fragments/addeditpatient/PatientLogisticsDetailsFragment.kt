@@ -2,6 +2,7 @@ package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -22,6 +24,7 @@ import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.MapsActivity
+import com.consulmedics.patientdata.adapters.AddressDialogAdapter
 import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.databinding.FragmentPatientLogisticsDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
@@ -34,13 +37,15 @@ import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PatientLogisticsDetailsFragment : Fragment() {
     private var _binding: FragmentPatientLogisticsDetailsBinding? = null
     val binding get() = _binding!!
+    var hotelList = emptyList<Address>()
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,25 +145,21 @@ class PatientLogisticsDetailsFragment : Fragment() {
             }
             radioStartPointIsHotel.setOnClickListener {
                 sharedViewModel.setStartPoint(HOTEL_TEXT)
-                sharedViewModel.getHotelList().also {
-                    if(it == null){
+
+                    if(hotelList.count() == 0){
                         showCreateHotelModal()
                     }
                     else{
-                        if(it.isNotEmpty()){
-                            showChooseHotelModal()
-                        }
-                        else{
-                            showCreateHotelModal()
-                        }
+                        showChooseHotelModal()
                     }
 
-                }
 
             }
             radioCurrentAddressSameNo.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(NO_TEXT)
                 addressFormLayout.visibility = VISIBLE
+                showNewAddressMapScreen()
+
             }
             radioCurrentAddressSameYes.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(YES_TEXT)
@@ -188,6 +189,40 @@ class PatientLogisticsDetailsFragment : Fragment() {
 
     fun showChooseHotelModal(){
         Log.e(TAG_NAME, "SHOW CHOOSE HOTEL MODAL")
+        val builder = AlertDialog.Builder(requireContext())
+
+        val dialogAddressList = ArrayList(hotelList)
+        dialogAddressList.add(Address())
+        dialogAddressList.add(Address(-99))
+        val adapter = AddressDialogAdapter(requireContext(), dialogAddressList)
+
+        builder.setTitle("Select an item")
+        builder.setAdapter(adapter) { dialog, which ->
+            // Handle item selection
+            val address = dialogAddressList.get(which)
+            if(address.uid == null){
+                showCreateHotelModal()
+            }
+            else if (address.uid == -99){
+                setStartPointAddress(Address())
+            }
+            else{
+                setStartPointAddress(address)
+            }
+        }
+        builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialogInterface, i ->
+
+        })
+        val dialog = builder.create()
+        dialog.show()
+    }
+    fun showNewAddressMapScreen(){
+        Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
+        val intent = Intent(requireActivity(), MapsActivity::class.java)
+        intent.putExtra("isHotel", false)
+
+//        startActivityForResult(intent, 1100)
+        resultLauncher.launch(intent)
     }
     fun showCreateHotelModal(){
         Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
@@ -249,6 +284,21 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 binding.radioCurrentPatientVisitThisShiftNo.isChecked = true
             }
         })
+        sharedViewModel.hotelList.observe(viewLifecycleOwner, Observer {
+            hotelList = it
+        })
+
+        sharedViewModel.startAddress.observe(viewLifecycleOwner, Observer {
+            Log.e(TAG_NAME, "Collect start address: ${it.uid}")
+            if(it.uid != null){
+                showStartPointAddressForm(it)
+            }
+        })
+        sharedViewModel.visitAddress.observe(viewLifecycleOwner, Observer {
+            if(it.uid != null){
+                showCurrentAddressForm(it)
+            }
+        })
     }
 
     var resultLauncher = registerForActivityResult(StartActivityForResult()){
@@ -256,16 +306,45 @@ class PatientLogisticsDetailsFragment : Fragment() {
             val data:Intent? = it.data
             var address: Address? = data?.getSerializableExtra("address") as Address
             if(address != null){
-                binding.startAddressForm.apply {
-                    formRoot.visibility = VISIBLE
-                    editStreet.setText(address.streetName)
-                    editHouseNumber.setText(address.streetNumber)
-                    editCity.setText(address.city)
-                    editPostalCode.setText(address.postCode)
+                if(address.isHotel == true){
+                    setStartPointAddress(address)
+                }
+                else{
+                    setVisitAddress(address)
                 }
 
-
             }
+        }
+    }
+    private fun setStartPointAddress(address: Address){
+        sharedViewModel.setStartAddress(address.uid)
+        sharedViewModel.setStartAddress(address)
+        showStartPointAddressForm(address)
+    }
+    private fun showStartPointAddressForm(address: Address) {
+        binding.startAddressForm.apply {
+            formRoot.visibility = VISIBLE
+            editStreet.setText(address.streetName)
+            editHouseNumber.setText(address.streetNumber)
+            editCity.setText(address.city)
+            editPostalCode.setText(address.postCode)
+
+        }
+    }
+    private fun setVisitAddress(address: Address){
+        sharedViewModel.setCurrentAddress(address.uid)
+        sharedViewModel.setCurrentAddress(address)
+        showCurrentAddressForm(address)
+    }
+    private fun showCurrentAddressForm(address: Address){
+        binding.currentAddressForm.apply {
+            formRoot.visibility = VISIBLE
+            editStreet.setText(address.streetName)
+            editHouseNumber.setText(address.streetNumber)
+            editCity.setText(address.city)
+            editPostalCode.setText(address.postCode)
+
+
         }
     }
 }

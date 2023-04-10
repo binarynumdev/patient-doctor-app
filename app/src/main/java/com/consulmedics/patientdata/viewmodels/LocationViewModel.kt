@@ -26,7 +26,7 @@ import java.util.*
 class LocationViewModel(private val addressRepo: AddressRepository) : ViewModel() {
     val locationRepo = LocationRepository()
     val fetchResponseResult: MutableLiveData<BaseResponse<FetchLocationResponse>> = MutableLiveData()
-
+    var saveAddressId: MutableLiveData<Long> = MutableLiveData()
     fun getAddressFromLatLng(latitude: Double, longitude: Double,apiKey: String) {
 
         viewModelScope.launch {
@@ -56,7 +56,13 @@ class LocationViewModel(private val addressRepo: AddressRepository) : ViewModel(
     }
 
     fun saveAddress(address: Address) = viewModelScope.launch(Dispatchers.IO){
-        addressRepo.insert(address)
+        val addressId = addressRepo.insert(address)
+        saveAddressId.postValue(addressId)
+
     }
+
+}
+
+sealed class SaveAddressResult {
 
 }

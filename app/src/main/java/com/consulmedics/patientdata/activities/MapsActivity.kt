@@ -133,9 +133,13 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             intent.putExtra("address", targetAddress)
             setResult(RESULT_OK, intent)
             viewModel.saveAddress(targetAddress)
+
+//            finish()
+        }
+        viewModel.saveAddressId.observe(this){
+            targetAddress.uid = it.toInt()
             finish()
         }
-
         viewModel.fetchResponseResult.observe(this) {
             when (it) {
                 is BaseResponse.Loading -> {

@@ -40,7 +40,7 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var tmpFirstName: String = ""
     private var tmpLastName: String = ""
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     val binding get() = _binding!!
 

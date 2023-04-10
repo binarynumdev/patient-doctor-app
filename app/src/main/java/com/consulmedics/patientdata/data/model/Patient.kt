@@ -64,6 +64,8 @@ data class Patient(
     var medicals2:      String = ""
     var medicals3:      String = ""
 
+    var startAddress:   Int? = null
+    var visitAddress:   Int? = null
 
 
 

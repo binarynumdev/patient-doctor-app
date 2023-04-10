@@ -28,7 +28,7 @@ class PatientDoctorSignFragment : Fragment() {
     private var _binding: FragmentPatientDoctorSignBinding? = null
     val binding get() = _binding!!
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

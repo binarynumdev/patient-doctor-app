@@ -6,9 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.SCardExt
+import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.repository.AddressRepository
 import com.consulmedics.patientdata.repository.HotelRepository
 import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
@@ -17,7 +20,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
-class AddEditPatientViewModel(private val patientRepository: PatientRepository, private val hotelRepository: HotelRepository): ViewModel() {
+class AddEditPatientViewModel(private val patientRepository: PatientRepository, private val hotelRepository: HotelRepository, private val addressRepository: AddressRepository): ViewModel() {
 /*
 *     var patientID:      String? = ""
     var firstName:      String  = ""
@@ -32,11 +35,36 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     var insuranceName:  String  = ""
     var insuranceStatus:String  = ""
 * */
-    private val _patientID = MutableLiveData<String>("")
     val scardLib = SCardExt()
+    private val _patientData = MutableLiveData<Patient>()
+    val patientData: LiveData<Patient> = _patientData
+    val hotelList : LiveData<List<Address>>
+    private val _startAddress = MutableLiveData<Address>()
+    var startAddress: LiveData<Address> = _startAddress
+    private val _visitAddress = MutableLiveData<Address>()
+    var visitAddress: LiveData<Address> = _visitAddress
+    init {
+        hotelList = addressRepository.hotelList
+        if(_patientData.value?.startAddress != null){
+//            startAddress = addressRepository.find(_patientData.value?.startAddress)
+//            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
+            _startAddress.value = addressRepository.find(_patientData.value?.startAddress)?.value
+        }
+        else{
+//            _startAddress = Address()
+            _startAddress.value = Address()
+        }
 
-    val patientID: LiveData<String> = _patientID;
-
+        if(_patientData.value?.visitAddress != null){
+//            startAddress = addressRepository.find(_patientData.value?.startAddress)
+//            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
+            _visitAddress.value = addressRepository.find(_patientData.value?.visitAddress)?.value
+        }
+        else{
+//            _startAddress = Address()
+            _visitAddress.value = Address()
+        }
+    }
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -106,8 +134,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.insuranceStatus = editValue
     }
 
-    private val _patientData = MutableLiveData<Patient>()
-    val patientData: LiveData<Patient> = _patientData;
+
 
     fun setPatientData(patient: Patient) {
         _patientData.value = patient
@@ -230,6 +257,21 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.alreadyVisitedDuringThisShift = s
     }
 
+    fun setCurrentAddress(address: Int?){
+        _patientData.value?.visitAddress = address
+    }
+    fun setCurrentAddress(address: Address?){
+        Log.e(TAG_NAME, "SET Visit Point: ${address?.uid}")
+        _visitAddress.value = address
+    }
+    fun setStartAddress(address: Int?){
+        _patientData.value?.startAddress = address
+
+    }
+    fun setStartAddress(address: Address?){
+        Log.e(TAG_NAME, "SET Start Point: ${address?.uid}")
+        _startAddress.value = address
+    }
     fun isValidLogisticDetails(): Boolean? {
         return _patientData.value?.isValidLogisticDetails()
     }
@@ -340,8 +382,5 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         return false
     }
 
-    fun getHotelList(): List<Hotel>? {
-//        repository.getHotels()
-        return hotelRepository.hotelList.value
-    }
+
 }
