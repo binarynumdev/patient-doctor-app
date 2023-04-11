@@ -48,7 +48,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         if(_patientData.value?.startAddress != null){
 //            startAddress = addressRepository.find(_patientData.value?.startAddress)
 //            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
-            _startAddress.value = addressRepository.find(_patientData.value?.startAddress)?.value
+            _startAddress.value = addressRepository.find(_patientData.value?.startAddress)
         }
         else{
 //            _startAddress = Address()
@@ -58,7 +58,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         if(_patientData.value?.visitAddress != null){
 //            startAddress = addressRepository.find(_patientData.value?.startAddress)
 //            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
-            _visitAddress.value = addressRepository.find(_patientData.value?.visitAddress)?.value
+            _visitAddress.value = addressRepository.find(_patientData.value?.visitAddress)
         }
         else{
 //            _startAddress = Address()
@@ -138,6 +138,23 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
 
     fun setPatientData(patient: Patient) {
         _patientData.value = patient
+
+        if(patient.startAddress != null){
+            _startAddress.value = addressRepository.find(patient.startAddress)
+            Log.e(TAG_NAME, "Start Address : ${patient.startAddress}")
+        }
+        else{
+            _startAddress.value = Address()
+        }
+
+        if(patient.visitAddress != null){
+            Log.e(TAG_NAME, "Visit Address : ${patient.visitAddress}")
+            _visitAddress.value = addressRepository.find(patient.visitAddress)
+            Log.e(TAG_NAME, "Visit Address : ${visitAddress.value?.uid}")
+        }
+        else{
+            _visitAddress.value = Address()
+        }
 //        patient?.patientID?.let { setPatientID(it) }
 //        patient?.firstName?.let { setFirstname(it) }
 //        patient?.lastName?.let { setLastname(it) }

@@ -289,15 +289,21 @@ class PatientLogisticsDetailsFragment : Fragment() {
         })
 
         sharedViewModel.startAddress.observe(viewLifecycleOwner, Observer {
-            Log.e(TAG_NAME, "Collect start address: ${it.uid}")
-            if(it.uid != null){
-                showStartPointAddressForm(it)
+            if(it != null){
+                Log.e(TAG_NAME, "Collect start address: ${it.uid}")
+                if(it.uid != null){
+                    showStartPointAddressForm(it)
+                }
             }
+
         })
         sharedViewModel.visitAddress.observe(viewLifecycleOwner, Observer {
-            if(it.uid != null){
-                showCurrentAddressForm(it)
+            if(it != null){
+                if(it.uid != null){
+                    showCurrentAddressForm(it)
+                }
             }
+
         })
     }
 

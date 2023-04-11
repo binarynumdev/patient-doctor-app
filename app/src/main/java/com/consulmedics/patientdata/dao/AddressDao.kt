@@ -21,5 +21,5 @@ interface AddressDao {
     fun getHotels(): LiveData<List<Address>>
 
     @Query("SELECT * FROM address WHERE uid=:id ")
-    fun findAddress(id: String): LiveData<Address>
+    fun findAddress(id: Int): Address
 }

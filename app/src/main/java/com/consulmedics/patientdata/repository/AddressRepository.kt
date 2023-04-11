@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.consulmedics.patientdata.dao.AddressDao
 import com.consulmedics.patientdata.dao.HotelDao
@@ -28,8 +29,9 @@ class AddressRepository (private val addreessDao: AddressDao){
         addreessDao.updateAddress(address)
     }
 
-    fun find(startAddress: Int?): LiveData<Address>? {
-        return addreessDao.findAddress(startAddress.toString())
+    fun find(startAddress: Int?): Address {
+        Log.e("TAG", "Address ID: ${startAddress}")
+        return addreessDao.findAddress(startAddress!!)
     }
 
 }
