@@ -17,6 +17,7 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -142,6 +143,7 @@ class PatientLogisticsDetailsFragment : Fragment() {
 
             radioStartPointIsPrevPatient.setOnClickListener {
                 sharedViewModel.setStartPoint(PREV_PATIENT_TEXT);
+                binding.startAddressForm.formRoot.visibility = GONE
             }
             radioStartPointIsHotel.setOnClickListener {
                 sharedViewModel.setStartPoint(HOTEL_TEXT)
@@ -158,7 +160,9 @@ class PatientLogisticsDetailsFragment : Fragment() {
             radioCurrentAddressSameNo.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(NO_TEXT)
                 addressFormLayout.visibility = VISIBLE
-                showNewAddressMapScreen()
+                if(sharedViewModel.visitAddress.value?.uid == null){
+                    showNewAddressMapScreen()
+                }
 
             }
             radioCurrentAddressSameYes.setOnClickListener {
@@ -180,7 +184,39 @@ class PatientLogisticsDetailsFragment : Fragment() {
             btnSave.setOnClickListener {
                 sharedViewModel.patientData.value?.let { it1 ->
                     sharedViewModel.savePatient(it1)
+                    it.isEnabled = false
                     activity?.finish()
+                }
+            }
+            startAddressForm.apply {
+
+            }
+            currentAddressForm.apply {
+                editCity.doAfterTextChanged {
+                    sharedViewModel.visitAddress.value?.city = it.toString()
+                }
+                editStreet.doAfterTextChanged {
+                    sharedViewModel.visitAddress.value?.streetName = it.toString()
+                }
+                editHouseNumber.doAfterTextChanged {
+                    sharedViewModel.visitAddress.value?.streetNumber = it.toString()
+                }
+                editPostalCode.doAfterTextChanged {
+                    sharedViewModel.visitAddress.value?.postCode = it.toString()
+                }
+            }
+            startAddressForm.apply {
+                editCity.doAfterTextChanged {
+                    sharedViewModel.startAddress.value?.city = it.toString()
+                }
+                editStreet.doAfterTextChanged {
+                    sharedViewModel.startAddress.value?.streetName = it.toString()
+                }
+                editHouseNumber.doAfterTextChanged {
+                    sharedViewModel.startAddress.value?.streetNumber = it.toString()
+                }
+                editPostalCode.doAfterTextChanged {
+                    sharedViewModel.startAddress.value?.postCode = it.toString()
                 }
             }
         }
@@ -211,7 +247,7 @@ class PatientLogisticsDetailsFragment : Fragment() {
             }
         }
         builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialogInterface, i ->
-
+            binding.startAddressForm.formRoot.visibility = VISIBLE
         })
         val dialog = builder.create()
         dialog.show()
@@ -303,7 +339,6 @@ class PatientLogisticsDetailsFragment : Fragment() {
                     showCurrentAddressForm(it)
                 }
             }
-
         })
     }
 
@@ -329,6 +364,12 @@ class PatientLogisticsDetailsFragment : Fragment() {
     }
     private fun showStartPointAddressForm(address: Address) {
         binding.startAddressForm.apply {
+            if(address.latitute != 0.0 && address.longitute != 0.0){
+                editStreet.isEnabled = false
+                editHouseNumber.isEnabled = false
+                editCity.isEnabled = false
+                editPostalCode.isEnabled = false
+            }
             formRoot.visibility = VISIBLE
             editStreet.setText(address.streetName)
             editHouseNumber.setText(address.streetNumber)
@@ -345,6 +386,12 @@ class PatientLogisticsDetailsFragment : Fragment() {
     private fun showCurrentAddressForm(address: Address){
         binding.currentAddressForm.apply {
             formRoot.visibility = VISIBLE
+            if(address.latitute != 0.0 && address.longitute != 0.0){
+                editStreet.isEnabled = false
+                editHouseNumber.isEnabled = false
+                editCity.isEnabled = false
+                editPostalCode.isEnabled = false
+            }
             editStreet.setText(address.streetName)
             editHouseNumber.setText(address.streetNumber)
             editCity.setText(address.city)

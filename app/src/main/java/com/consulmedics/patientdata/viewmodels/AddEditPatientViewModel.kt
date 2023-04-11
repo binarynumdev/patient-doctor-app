@@ -223,7 +223,15 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
 
     fun savePatient(patient: Patient) {
         _isLoading.value = true
-        patient.encryptFields();
+        patient.encryptFields()
+        visitAddress.value?.let {
+            if(visitAddress.value?.uid == null)
+                patient.visitAddress = addressRepository.insert(it).toInt()
+        }
+        startAddress.value?.let {
+            if(startAddress.value?.uid == null)
+                patient.startAddress = addressRepository.insert(it).toInt()
+        }
         if(patient.uid == null){
             Log.e(TAG_NAME, "INSERT PATIENT")
             insertPatient(patient)

@@ -323,6 +323,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                     } else {
                         Log.e(TAG_NAME, location.latitude.toString())
                         Log.e(TAG_NAME, location.longitude.toString())
+                        targetAddress.latitute = location.latitude
+                        targetAddress.longitute = location.longitude
                         addMarker(location)
                         stopLoading()
 //                        findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
@@ -371,6 +373,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             if(mLastLocation != null){
                 Log.e(TAG_NAME, mLastLocation!!.latitude.toString())
                 Log.e(TAG_NAME, mLastLocation!!.longitude.toString())
+                targetAddress.latitute = mLastLocation.latitude
+                targetAddress.longitute = mLastLocation.longitude
                 addMarker(mLastLocation)
                 stopLoading()
             }

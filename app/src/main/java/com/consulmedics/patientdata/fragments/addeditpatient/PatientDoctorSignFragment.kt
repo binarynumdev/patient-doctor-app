@@ -83,6 +83,7 @@ class PatientDoctorSignFragment : Fragment() {
             btnSave.setOnClickListener {
                 sharedViewModel.patientData.value?.let { it1 ->
                     sharedViewModel.savePatient(it1)
+                    it.isEnabled = false
                     activity?.finish()
                 }
             }
