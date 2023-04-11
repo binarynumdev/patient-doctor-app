@@ -34,6 +34,7 @@ import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
+import com.consulmedics.patientdata.utils.AppUtils.Companion.isOnline
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
@@ -149,7 +150,12 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 sharedViewModel.setStartPoint(HOTEL_TEXT)
 
                     if(hotelList.count() == 0){
-                        showCreateHotelModal()
+                        if(isOnline(requireContext())) {
+                            showCreateHotelModal()
+                        }
+                        else{
+                            showStartPointAddressForm(Address())
+                        }
                     }
                     else{
                         showChooseHotelModal()
@@ -161,7 +167,13 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 sharedViewModel.setCurrentAddressSame(NO_TEXT)
                 addressFormLayout.visibility = VISIBLE
                 if(sharedViewModel.visitAddress.value?.uid == null){
-                    showNewAddressMapScreen()
+                    if(isOnline(requireContext())){
+                        showNewAddressMapScreen()
+                    }
+                    else{
+                        showCurrentAddressForm(Address())
+                    }
+
                 }
 
             }
@@ -183,8 +195,9 @@ class PatientLogisticsDetailsFragment : Fragment() {
             }
             btnSave.setOnClickListener {
                 sharedViewModel.patientData.value?.let { it1 ->
-                    sharedViewModel.savePatient(it1)
                     it.isEnabled = false
+
+                    sharedViewModel.savePatient(it1)
                     activity?.finish()
                 }
             }
@@ -228,7 +241,10 @@ class PatientLogisticsDetailsFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
 
         val dialogAddressList = ArrayList(hotelList)
-        dialogAddressList.add(Address())
+        if(isOnline(requireContext())){
+            dialogAddressList.add(Address())
+        }
+
         dialogAddressList.add(Address(-99))
         val adapter = AddressDialogAdapter(requireContext(), dialogAddressList)
 
