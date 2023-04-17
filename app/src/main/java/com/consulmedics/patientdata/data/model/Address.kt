@@ -14,4 +14,7 @@ data class Address(@PrimaryKey(autoGenerate = true) var uid: Int? = null)
     var longitute: Double = 0.0
     var isHotel: Boolean = true
 
+    override fun toString(): String {
+        return "${streetName} ${streetNumber}, ${postCode}, ${city}"
+    }
 }

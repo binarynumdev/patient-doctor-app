@@ -8,6 +8,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
@@ -15,6 +16,7 @@ import com.consulmedics.patientdata.databinding.FragmentPatientDoctorDocumentBin
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,7 +54,9 @@ class PatientDoctorDocumentFragment : Fragment() {
                 sharedViewModel.patientData.value?.let { it1 ->
                     it.isEnabled = false
 
-                    sharedViewModel.savePatient(it1)
+                    sharedViewModel.viewModelScope.launch {
+                        sharedViewModel.savePatient(it1)
+                    }
                     activity?.finish()
                 }
             }

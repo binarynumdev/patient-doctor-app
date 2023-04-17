@@ -23,5 +23,6 @@ object AppConstants {
 
     const val GOOGLE_MAP_API_ENDPOINT: String = "https://maps.googleapis.com/"
     const val FETCH_ADDRESS_FROM_LOCATION_ENDPOINT: String = "maps/api/geocode/json"
+    const val FETCH_DIRECTION_API_ENDPOINT: String = "maps/api/directions/json"
 
 }

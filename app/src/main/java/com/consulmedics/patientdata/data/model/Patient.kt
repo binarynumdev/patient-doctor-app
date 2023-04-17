@@ -66,8 +66,7 @@ data class Patient(
 
     var startAddress:   Int? = null
     var visitAddress:   Int? = null
-
-
+    var distance:       Double = 0.00
 
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){

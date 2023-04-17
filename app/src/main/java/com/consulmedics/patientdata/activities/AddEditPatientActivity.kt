@@ -1,18 +1,23 @@
 package com.consulmedics.patientdata.activities
 
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
 import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.shuhart.stepview.StepView
 import com.vinay.stepview.models.Step
 
@@ -124,6 +129,7 @@ class AddEditPatientActivity : BaseActivity() {
                 navController.navigate(R.id.patientSummaryFragment)
             }
         }
+
 
 //        binding.patientStepIndicator.setSteps(pageTitleList)
 //        binding.patientStepIndicator.setupWithNavController(findNavController(R.id.add_edit_navigation))

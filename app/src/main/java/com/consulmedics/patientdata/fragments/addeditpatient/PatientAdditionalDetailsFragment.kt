@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
@@ -18,6 +19,7 @@ import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -123,7 +125,9 @@ class PatientAdditionalDetailsFragment : Fragment() {
                 sharedViewModel.patientData.value?.let { it1 ->
                     it.isEnabled = false
 
-                    sharedViewModel.savePatient(it1)
+                    sharedViewModel.viewModelScope.launch {
+                        sharedViewModel.savePatient(it1)
+                    }
                     activity?.finish()
                 }
             }

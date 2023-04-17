@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "934f81946e8781d0b750da6a7942b501",
+    "identityHash": "15bf10c44d0ffb8720e59a6c257aacb8",
     "entities": [
       {
         "tableName": "Patient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT NOT NULL, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` TEXT NOT NULL, `alreadyVisitedDuringThisShift` TEXT NOT NULL, `dementia` TEXT NOT NULL, `geriatrics` TEXT NOT NULL, `infant` TEXT NOT NULL, `fractures` TEXT NOT NULL, `serverHandInjury` TEXT NOT NULL, `thrombosis` TEXT NOT NULL, `hypertension` TEXT NOT NULL, `preHeartAttack` TEXT NOT NULL, `pneumonia` TEXT NOT NULL, `divertikulitis` TEXT NOT NULL, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT NOT NULL, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` TEXT NOT NULL, `alreadyVisitedDuringThisShift` TEXT NOT NULL, `dementia` TEXT NOT NULL, `geriatrics` TEXT NOT NULL, `infant` TEXT NOT NULL, `fractures` TEXT NOT NULL, `serverHandInjury` TEXT NOT NULL, `thrombosis` TEXT NOT NULL, `hypertension` TEXT NOT NULL, `preHeartAttack` TEXT NOT NULL, `pneumonia` TEXT NOT NULL, `divertikulitis` TEXT NOT NULL, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER, `distance` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -259,6 +259,12 @@
             "columnName": "visitAddress",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "distance",
+            "columnName": "distance",
+            "affinity": "REAL",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -374,7 +380,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '934f81946e8781d0b750da6a7942b501')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '15bf10c44d0ffb8720e59a6c257aacb8')"
     ]
   }
 }

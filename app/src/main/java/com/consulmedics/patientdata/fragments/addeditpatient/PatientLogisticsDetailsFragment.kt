@@ -15,11 +15,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
@@ -37,6 +39,7 @@ import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils.Companion.isOnline
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -175,6 +178,25 @@ class PatientLogisticsDetailsFragment : Fragment() {
                     }
 
                 }
+                else{
+                    if(isOnline(requireContext())){
+                        val builder = AlertDialog.Builder(requireContext())
+                        builder.setTitle("Choose New Address?")
+                        builder.setMessage("Do you want to choose new address from Google Map?")
+                        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                            showNewAddressMapScreen()
+                        }
+
+                        builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        builder.show()
+                    }
+                    else{
+                        Toast.makeText(context, "Please try again when you have internet connection", Toast.LENGTH_LONG).show()
+                    }
+
+                }
 
             }
             radioCurrentAddressSameYes.setOnClickListener {
@@ -197,7 +219,9 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 sharedViewModel.patientData.value?.let { it1 ->
                     it.isEnabled = false
 
-                    sharedViewModel.savePatient(it1)
+                    sharedViewModel.viewModelScope.launch {
+                        sharedViewModel.savePatient(it1)
+                    }
                     activity?.finish()
                 }
             }

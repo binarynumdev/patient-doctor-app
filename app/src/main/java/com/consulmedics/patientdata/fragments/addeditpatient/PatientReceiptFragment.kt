@@ -24,8 +24,10 @@ import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.utils.AppUtils
+import kotlinx.coroutines.launch
 
 class PatientReceiptFragment : Fragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
@@ -72,7 +74,9 @@ class PatientReceiptFragment : Fragment() {
                 sharedViewModel.patientData.value?.let { it1 ->
                     it.isEnabled = false
 
-                    sharedViewModel.savePatient(it1)
+                    sharedViewModel.viewModelScope.launch {
+                        sharedViewModel.savePatient(it1)
+                    }
                     activity?.finish()
                 }
             }

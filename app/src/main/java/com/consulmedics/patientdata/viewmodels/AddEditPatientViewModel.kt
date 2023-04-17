@@ -1,6 +1,7 @@
 package com.consulmedics.patientdata.viewmodels
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,7 @@ import com.consulmedics.patientdata.repository.AddressRepository
 import com.consulmedics.patientdata.repository.HotelRepository
 import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.google.android.libraries.places.api.Places
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -36,6 +38,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     var insuranceStatus:String  = ""
 * */
     val scardLib = SCardExt()
+    var googleMapApiKey = ""
     private val _patientData = MutableLiveData<Patient>()
     val patientData: LiveData<Patient> = _patientData
     val hotelList : LiveData<List<Address>>
@@ -221,7 +224,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         patientRepository.insert(patient)
     }
 
-    fun savePatient(patient: Patient) {
+    suspend fun savePatient(patient: Patient) {
         _isLoading.value = true
         patient.encryptFields()
         visitAddress.value?.let {
@@ -232,6 +235,20 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
             if(startAddress.value?.uid == null)
                 patient.startAddress = addressRepository.insert(it).toInt()
         }
+
+        if(visitAddress.value != null && startAddress.value != null){
+            if(visitAddress.value!!.longitute == 0.00 || visitAddress.value!!.latitute == 0.00 || startAddress.value!!.longitute == 0.00 || startAddress.value!!.latitute == 0.00 ){
+                patient.distance = 0.00
+            }
+            else{
+
+                patient.distance = addressRepository.calculateDistance(startAddress.value!!, visitAddress.value!!, googleMapApiKey)
+            }
+        }
+
+
+
+
         if(patient.uid == null){
             Log.e(TAG_NAME, "INSERT PATIENT")
             insertPatient(patient)
@@ -240,6 +257,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
             Log.e(TAG_NAME, "UPDATE PATIENT")
             updatePatient(patient)
         }
+        Log.e(TAG_NAME, "Created Or Updated Patient: ${patient.uid}")
         _isLoading.value = false
         _isFinished.value = true
     }
@@ -405,6 +423,10 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         }
 
         return false
+    }
+
+    fun setApiKey(apiKey: String) {
+        googleMapApiKey = apiKey
     }
 
 
