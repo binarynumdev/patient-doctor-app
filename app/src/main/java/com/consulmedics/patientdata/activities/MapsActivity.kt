@@ -441,6 +441,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
         mMap.setOnMapLoadedCallback {
             val builder = AlertDialog.Builder(this)
+            builder.setCancelable(false)
             builder.setTitle("Detect your location?")
             builder.setMessage("Do you want to detect your current location?")
             builder.setPositiveButton(android.R.string.yes) { dialog, which ->
@@ -450,10 +451,19 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             }
 
             builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                mMarker = mMap.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(51.035482, 13.7046237))
+                        .title("Pickup Your Hotel")
+                )
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
+                viewModel.getAddressFromLatLng(51.035482, 13.7046237, apiKey)
                 dialog.dismiss()
                 stopLoading()
             }
-            builder.show()
+            val qDialog = builder.show()
+            qDialog.setCanceledOnTouchOutside(false)
 
         }
         mMap.setOnMapClickListener {
