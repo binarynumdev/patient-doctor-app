@@ -230,10 +230,20 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         visitAddress.value?.let {
             if(visitAddress.value?.uid == null)
                 patient.visitAddress = addressRepository.insert(it).toInt()
+            else{
+                if(visitAddress.value!!.latitute == 0.00 && visitAddress.value!!.longitute ==0.00){
+                    addressRepository.update(visitAddress.value!!)
+                }
+            }
         }
         startAddress.value?.let {
             if(startAddress.value?.uid == null)
                 patient.startAddress = addressRepository.insert(it).toInt()
+            else{
+                if(startAddress.value!!.latitute == 0.00 && startAddress.value!!.longitute ==0.00){
+                    addressRepository.update(startAddress.value!!)
+                }
+            }
         }
 
         if(visitAddress.value != null && startAddress.value != null){
