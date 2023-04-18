@@ -17,7 +17,7 @@ interface AddressDao {
     fun updateAddress(vararg  address: Address)
     @Query("select * from address")
     fun getList(): List<Address>
-    @Query("select * from address where isHotel = 1")
+    @Query("select * from address where isHotel = 1 and streetNumber != '' and streetName != '' and city != '' and postCode != ''")
     fun getHotels(): LiveData<List<Address>>
 
     @Query("SELECT * FROM address WHERE uid=:id ")

@@ -21,6 +21,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -83,7 +84,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         targetAddress = com.consulmedics.patientdata.data.model.Address()
         val isAddressHotel = intent.getBooleanExtra("isHotel", true)
         targetAddress.isHotel = isAddressHotel
-        showLoading("Just a seconds", "We are detecting your location.")
+        showLoading("Just a seconds", "Loading map...")
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -439,7 +440,21 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
 
         mMap.setOnMapLoadedCallback {
-            getLastLocation()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Detect your location?")
+            builder.setMessage("Do you want to detect your current location?")
+            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                stopLoading()
+                showLoading("Just a seconds", "We are detecting your current location")
+                getLastLocation()
+            }
+
+            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                dialog.dismiss()
+                stopLoading()
+            }
+            builder.show()
+
         }
         mMap.setOnMapClickListener {
             Log.e(TAG_NAME, "Lat:${it.latitude}, Long:${it.longitude}")

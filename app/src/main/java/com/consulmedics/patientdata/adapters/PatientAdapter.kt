@@ -116,8 +116,6 @@ class PatientAdapter(
                 }
                 val strDistance = if(currentPatient.distance == 0.00)  "N/A" else "${currentPatient.distance/1000}KM"
                 textDistance.setText(strDistance)
-
-
             }
         }
 
