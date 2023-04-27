@@ -19,6 +19,9 @@ class LocationRepository{
     suspend fun fetchAddressFromLatLang(fetchLocationRequest: FetchLocationRequest): Response<FetchLocationResponse>?{
         return FetchLocationApi.getApi()?.fetch(latLng = fetchLocationRequest.latlng, apiKey = fetchLocationRequest.apKey)
     }
+    suspend fun fetchAddressFromString(fetchLocationRequest: FetchLocationRequest): Response<FetchLocationResponse>?{
+        return FetchLocationApi.getApi()?.fetchFromString(address = fetchLocationRequest.address, apiKey = fetchLocationRequest.apKey)
+    }
     fun getAddressFromLatLng(application: Application, latitude: Double, longitude: Double) {
 //        try{
 //            val geocoder = Geocoder(application, Locale.getDefault())

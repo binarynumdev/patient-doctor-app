@@ -133,6 +133,8 @@ class AddEditPatientActivity : BaseActivity() {
 
 //        binding.patientStepIndicator.setSteps(pageTitleList)
 //        binding.patientStepIndicator.setupWithNavController(findNavController(R.id.add_edit_navigation))
+//        actionBar?.hide()
+        supportActionBar?.hide()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

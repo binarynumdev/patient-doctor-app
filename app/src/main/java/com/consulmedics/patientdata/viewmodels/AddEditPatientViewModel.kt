@@ -42,12 +42,14 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     private val _patientData = MutableLiveData<Patient>()
     val patientData: LiveData<Patient> = _patientData
     val hotelList : LiveData<List<Address>>
+    var previousPatients:LiveData<List<Patient>>
     private val _startAddress = MutableLiveData<Address>()
     var startAddress: LiveData<Address> = _startAddress
     private val _visitAddress = MutableLiveData<Address>()
     var visitAddress: LiveData<Address> = _visitAddress
     init {
         hotelList = addressRepository.hotelList
+        previousPatients = patientRepository.previousPatients(null)
         if(_patientData.value?.startAddress != null){
 //            startAddress = addressRepository.find(_patientData.value?.startAddress)
 //            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
@@ -141,7 +143,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
 
     fun setPatientData(patient: Patient) {
         _patientData.value = patient
-
+        previousPatients = patientRepository.previousPatients(patient.uid)
         if(patient.startAddress != null){
             _startAddress.value = addressRepository.find(patient.startAddress)
             Log.e(TAG_NAME, "Start Address : ${patient.startAddress}")
@@ -223,7 +225,20 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     fun insertPatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
         patientRepository.insert(patient)
     }
+    suspend fun calculateDistance(){
+        var tmpPatient = patientData.value
+        Log.e(TAG_NAME, "Calculate Distance: ${visitAddress.value!!.longitute}")
+        if(visitAddress.value != null && startAddress.value != null){
+            if(visitAddress.value!!.longitute == 0.00 || visitAddress.value!!.latitute == 0.00 || startAddress.value!!.longitute == 0.00 || startAddress.value!!.latitute == 0.00 ){
+                tmpPatient?.distance = 0.00
+            }
+            else{
 
+                tmpPatient?.distance = addressRepository.calculateDistance(startAddress.value!!, visitAddress.value!!, googleMapApiKey)
+            }
+            _patientData.value = tmpPatient
+        }
+    }
     suspend fun savePatient(patient: Patient) {
         _isLoading.value = true
         patient.encryptFields()
@@ -245,16 +260,16 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
                 }
             }
         }
-
-        if(visitAddress.value != null && startAddress.value != null){
-            if(visitAddress.value!!.longitute == 0.00 || visitAddress.value!!.latitute == 0.00 || startAddress.value!!.longitute == 0.00 || startAddress.value!!.latitute == 0.00 ){
-                patient.distance = 0.00
-            }
-            else{
-
-                patient.distance = addressRepository.calculateDistance(startAddress.value!!, visitAddress.value!!, googleMapApiKey)
-            }
-        }
+//
+//        if(visitAddress.value != null && startAddress.value != null){
+//            if(visitAddress.value!!.longitute == 0.00 || visitAddress.value!!.latitute == 0.00 || startAddress.value!!.longitute == 0.00 || startAddress.value!!.latitute == 0.00 ){
+//                patient.distance = 0.00
+//            }
+//            else{
+//
+//                patient.distance = addressRepository.calculateDistance(startAddress.value!!, visitAddress.value!!, googleMapApiKey)
+//            }
+//        }
 
 
 
@@ -310,20 +325,27 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.alreadyVisitedDuringThisShift = s
     }
 
-    fun setCurrentAddress(address: Int?){
+    suspend fun setCurrentAddress(address: Int?){
         _patientData.value?.visitAddress = address
+        calculateDistance()
     }
-    fun setCurrentAddress(address: Address?){
+    suspend fun setCurrentAddress(address: Address?){
         Log.e(TAG_NAME, "SET Visit Point: ${address?.uid}")
+        _patientData.value?.visitAddress = address?.uid
         _visitAddress.value = address
+        calculateDistance()
     }
-    fun setStartAddress(address: Int?){
+    suspend fun setStartAddress(address: Int?){
         _patientData.value?.startAddress = address
+        _startAddress.value = addressRepository.find(address)
+        calculateDistance()
 
     }
-    fun setStartAddress(address: Address?){
+    suspend fun setStartAddress(address: Address?){
         Log.e(TAG_NAME, "SET Start Point: ${address?.uid}")
+        _patientData.value?.startAddress = address?.uid
         _startAddress.value = address
+        calculateDistance()
     }
     fun isValidLogisticDetails(): Boolean? {
         return _patientData.value?.isValidLogisticDetails()
@@ -437,6 +459,21 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
 
     fun setApiKey(apiKey: String) {
         googleMapApiKey = apiKey
+    }
+
+    fun setVisitAddressFromPatientData(isSync: Boolean) {
+        _patientData.value?.sincVisitAddress = isSync
+    }
+
+    fun setVisitAddress(address: Address) {
+        _visitAddress.value = address
+    }
+
+    fun formatVisitLocation() {
+        if(_visitAddress.value != null){
+            _visitAddress.value?.latitute = 0.0
+            _visitAddress.value?.longitute = 0.0
+        }
     }
 
 

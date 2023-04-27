@@ -65,7 +65,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
     private lateinit var coordinates: LatLng
     private lateinit var apiKey: String
-    private lateinit var targetAddress: com.consulmedics.patientdata.data.model.Address
+    private var targetAddress: com.consulmedics.patientdata.data.model.Address? = null
 //    private lateinit var viewModel: LocationViewModel
     private val viewModel: LocationViewModel by viewModels(){
         LocationViewModelFactory(MyApplication.addressRepository!!)
@@ -81,9 +81,13 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 //        viewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
-        targetAddress = com.consulmedics.patientdata.data.model.Address()
+//
+        targetAddress  = intent.getSerializableExtra("address") as com.consulmedics.patientdata.data.model.Address?
+        if(targetAddress == null)
+            targetAddress = com.consulmedics.patientdata.data.model.Address()
         val isAddressHotel = intent.getBooleanExtra("isHotel", true)
-        targetAddress.isHotel = isAddressHotel
+        targetAddress?.isHotel = isAddressHotel
+
         showLoading("Just a seconds", "Loading map...")
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -123,22 +127,13 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         }
 
         binding.btnConfirm.setOnClickListener {
-            Log.e("TargetAddress :", "${targetAddress.city}")
-            Log.e("TargetAddress :", "${targetAddress.postCode}")
-            Log.e("TargetAddress :", "${targetAddress.streetNumber}")
-            Log.e("TargetAddress :", "${targetAddress.streetName}")
-            Log.e("TargetAddress :", "${targetAddress.latitute}")
-            Log.e("TargetAddress :", "${targetAddress.longitute}")
-
             var intent: Intent = Intent()
             intent.putExtra("address", targetAddress)
             setResult(RESULT_OK, intent)
-            viewModel.saveAddress(targetAddress)
-
-//            finish()
+            viewModel.saveAddress(targetAddress!!)
         }
         viewModel.saveAddressId.observe(this){
-            targetAddress.uid = it.toInt()
+            targetAddress!!.uid = it.toInt()
             finish()
         }
         viewModel.fetchResponseResult.observe(this) {
@@ -174,27 +169,45 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 val result = results[0]
 
                 result.addressComponents.forEach{
+                    Log.e(it.types[0], it.longName)
                     when(it.types[0]){
                         "street_number" ->{
                             binding.textHouseNumber.text = it.longName
-                            targetAddress.streetNumber = it.longName
+                            targetAddress!!.streetNumber = it.longName
                         }
                         "route" ->{
                             binding.textStreet.text = it.longName
-                            targetAddress.streetName = it.longName
+                            targetAddress!!.streetName = it.longName
                         }
                         "locality" ->{
                             binding.textCity.text = it.longName
-                            targetAddress.city = it.longName
+                            targetAddress!!.city = it.longName
                         }
                         "postal_code" ->{
                             binding.textPostCode.text = it.longName
-                            targetAddress.postCode = it.longName
+                            targetAddress!!.postCode = it.longName
                         }
                     }
 
                 }
+
+                if(plusCode == null){
+                    Log.e(TAG_NAME, "LOCATION: ${result.geometry.location.longitude}, ${result.geometry.location.latitude}")
+                    Log.e(TAG_NAME, "LOCATION: ${result.geometry.location.longitude}, ${result.geometry.location.latitude}")
+                    targetAddress!!.longitute = result.geometry.location.longitude
+                    targetAddress!!.latitute = result.geometry.location.latitude
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(result.geometry.location.latitude, result.geometry.location.longitude), 13f))
+                    mMarker = mMap.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(result.geometry.location.latitude, result.geometry.location.longitude))
+                            .title("Pickup Your Hotel")
+                    )
+                }
+                else{
+//                    binding.editSearchAddress.setText(result.formatedAddress)
+                }
             }
+
         }
     }
 
@@ -232,19 +245,19 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                         address1.insert(0, component.name)
                         Log.e(TAG_NAME, component.name)
                         binding.textHouseNumber.text = component.name
-                        targetAddress.streetNumber = component.name
+                        targetAddress!!.streetNumber = component.name
                     }
                     "route" -> {
                         address1.append(" ")
                         address1.append(component.shortName)
                         Log.e(TAG_NAME, component.shortName)
                         binding.textStreet.text = component.name
-                        targetAddress.streetName = component.name
+                        targetAddress!!.streetName = component.name
                     }
                     "postal_code" -> {
                         postcode.insert(0, component.name)
                         Log.e(TAG_NAME, component.name)
-                        targetAddress.postCode = component.name
+                        targetAddress!!.postCode = component.name
 
                     }
                     "postal_code_suffix" -> {
@@ -254,7 +267,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                     }
                     "locality" ->{
                         binding.textCity.text = component.name
-                        targetAddress.city = component.name
+                        targetAddress!!.city = component.name
                     }
 //                    "locality" -> binding.autocompleteCity.setText(component.name)
 //                    "administrative_area_level_1" -> {
@@ -267,6 +280,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 //        binding.autocompleteAddress1.setText(address1.toString())
 //        binding.editSearchAddress.setText(address1.toString())
         binding.textPostCode.setText(postcode.toString())
+
 //        binding.autocompletePostal.setText(postcode.toString())
 //
 //        // After filling the form with address components from the Autocomplete
@@ -281,8 +295,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         coordinates = place.latLng as LatLng
         if(mMarker != null){
             mMarker!!.position = coordinates
-            targetAddress.latitute = coordinates.latitude
-            targetAddress.longitute = coordinates.longitude
+            targetAddress!!.latitute = coordinates.latitude
+            targetAddress!!.longitute = coordinates.longitude
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 13f))
     }
@@ -324,8 +338,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                     } else {
                         Log.e(TAG_NAME, location.latitude.toString())
                         Log.e(TAG_NAME, location.longitude.toString())
-                        targetAddress.latitute = location.latitude
-                        targetAddress.longitute = location.longitude
+                        targetAddress!!.latitute = location.latitude
+                        targetAddress!!.longitute = location.longitude
                         addMarker(location)
                         stopLoading()
 //                        findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
@@ -374,8 +388,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             if(mLastLocation != null){
                 Log.e(TAG_NAME, mLastLocation!!.latitude.toString())
                 Log.e(TAG_NAME, mLastLocation!!.longitude.toString())
-                targetAddress.latitute = mLastLocation.latitude
-                targetAddress.longitute = mLastLocation.longitude
+                targetAddress!!.latitute = mLastLocation.latitude
+                targetAddress!!.longitute = mLastLocation.longitude
                 addMarker(mLastLocation)
                 stopLoading()
             }
@@ -437,33 +451,59 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-
+        stopLoading()
+        Log.e("Selected Address", "${targetAddress!!.latitute } ${targetAddress!!.longitute }")
         mMap.setOnMapLoadedCallback {
-            val builder = AlertDialog.Builder(this)
-            builder.setCancelable(false)
-            builder.setTitle("Detect your location?")
-            builder.setMessage("Do you want to detect your current location?")
-            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-                stopLoading()
-                showLoading("Just a seconds", "We are detecting your current location")
-                getLastLocation()
-            }
 
-            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+            if(targetAddress!!.latitute == 0.00 && targetAddress!!.longitute == 0.00){
+
+                if(targetAddress!!.city.isEmpty() && targetAddress!!.postCode.isEmpty() && targetAddress!!.streetName.isEmpty() && targetAddress!!.streetNumber.isEmpty()){
+                    val builder = AlertDialog.Builder(this)
+                    builder.setCancelable(false)
+                    builder.setTitle("Detect your location?")
+                    builder.setMessage("Do you want to detect your current location?")
+                    builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                        stopLoading()
+                        showLoading("Just a seconds", "We are detecting your current location")
+                        getLastLocation()
+                    }
+                    builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                        mMarker = mMap.addMarker(
+                            MarkerOptions()
+                                .position(LatLng(51.035482, 13.7046237))
+                                .title("Pickup Your Hotel")
+                        )
+
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
+                        viewModel.getAddressFromLatLng(51.035482, 13.7046237, apiKey)
+                        dialog.dismiss()
+                        stopLoading()
+                    }
+                    val qDialog = builder.show()
+                    qDialog.setCanceledOnTouchOutside(false)
+                }
+                else{
+//                    binding.editSearchAddress.setText("${targetAddress!!.streetName} ${targetAddress!!.streetNumber}, ${targetAddress!!.postCode} ${targetAddress!!.city}")
+                    viewModel.getAddressFromString("${targetAddress!!.streetName} ${targetAddress!!.streetNumber}, ${targetAddress!!.postCode} ${targetAddress!!.city}", apiKey)
+                }
+            }
+            else{
                 mMarker = mMap.addMarker(
                     MarkerOptions()
-                        .position(LatLng(51.035482, 13.7046237))
+                        .position(LatLng(targetAddress!!.latitute, targetAddress!!.longitute))
                         .title("Pickup Your Hotel")
                 )
 
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
-                viewModel.getAddressFromLatLng(51.035482, 13.7046237, apiKey)
-                dialog.dismiss()
-                stopLoading()
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(targetAddress!!.latitute, targetAddress!!.longitute), 13f))
+//                viewModel.getAddressFromLatLng(targetAddress!!.latitute, targetAddress!!.longitute, apiKey)
+                binding.textCity.setText(targetAddress?.city)
+                binding.textStreet.setText(targetAddress?.streetName)
+                binding.textHouseNumber.setText(targetAddress?.streetNumber)
+                binding.textPostCode.setText(targetAddress?.postCode)
+
             }
-            val qDialog = builder.show()
-            qDialog.setCanceledOnTouchOutside(false)
+
+
 
         }
         mMap.setOnMapClickListener {
@@ -472,8 +512,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 mMarker!!.position = it
             }
             showLoading("Just a sec", "We are getting address information of your target.")
-            targetAddress.latitute = it.latitude
-            targetAddress.longitute = it.longitude
+            targetAddress!!.latitute = it.latitude
+            targetAddress!!.longitute = it.longitude
             viewModel.getAddressFromLatLng(it.latitude, it.longitude, apiKey)
 //            viewModel.getAddressUsingGeoCode(it.latitude, it.longitude)
         }

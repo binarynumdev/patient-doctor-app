@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
@@ -39,6 +42,7 @@ import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils.Companion.isOnline
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import com.consulmedics.patientdata.viewmodels.PatientViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,6 +56,7 @@ class PatientLogisticsDetailsFragment : Fragment() {
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
         AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
+    private  val patientListViewModel: PatientViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -147,7 +152,17 @@ class PatientLogisticsDetailsFragment : Fragment() {
 
             radioStartPointIsPrevPatient.setOnClickListener {
                 sharedViewModel.setStartPoint(PREV_PATIENT_TEXT);
-                binding.startAddressForm.formRoot.visibility = GONE
+                sharedViewModel.previousPatients.value?.also {
+                    if(it.isNotEmpty()){
+                        val prevPatient = it[0]
+                        sharedViewModel.viewModelScope.launch {
+                            sharedViewModel.setStartAddress(prevPatient.visitAddress)
+
+                        }
+
+                    }
+                }
+//                binding.startAddressForm.formRoot.visibility = GONE
             }
             radioStartPointIsHotel.setOnClickListener {
                 sharedViewModel.setStartPoint(HOTEL_TEXT)
@@ -169,34 +184,29 @@ class PatientLogisticsDetailsFragment : Fragment() {
             radioCurrentAddressSameNo.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(NO_TEXT)
                 addressFormLayout.visibility = VISIBLE
-                if(sharedViewModel.visitAddress.value?.uid == null){
-                    if(isOnline(requireContext())){
-                        showNewAddressMapScreen()
-                    }
-                    else{
-                        showCurrentAddressForm(Address())
-                    }
-
-                }
-                else{
-                    if(isOnline(requireContext())){
-                        val builder = AlertDialog.Builder(requireContext())
-                        builder.setTitle("Choose New Address?")
-                        builder.setMessage("Do you want to choose new address from Google Map?")
-                        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Choose New Address?")
+                val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
+                var selectedOption = 0;
+                builder.setSingleChoiceItems(radioOptions, -1) { dialog, which ->
+                    selectedOption = which
+                    dialog.dismiss()
+                    when(which){
+                        0 ->{
+                            importAddressFromPatientData()
+                        }
+                        1 ->{
                             showNewAddressMapScreen()
                         }
-
-                        builder.setNegativeButton(android.R.string.no) { dialog, which ->
-                            dialog.dismiss()
+                        2 ->{
+                            fillVisitAddressManually()
                         }
-                        builder.show()
                     }
-                    else{
-                        Toast.makeText(context, "Please try again when you have internet connection", Toast.LENGTH_LONG).show()
-                    }
-
                 }
+                builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                    dialog.dismiss()
+                }
+                builder.show()
 
             }
             radioCurrentAddressSameYes.setOnClickListener {
@@ -255,10 +265,88 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 editPostalCode.doAfterTextChanged {
                     sharedViewModel.startAddress.value?.postCode = it.toString()
                 }
+
+                btnSyncVisitAddress.setOnClickListener {
+                    importAddressFromPatientData()
+                }
+                btnVisitAddressFromMap.setOnClickListener {
+                    showNewAddressMapScreen()
+                }
+                btnFillVIsitAddressManually.setOnClickListener {
+                    fillVisitAddressManually()
+                }
+                btnConfirmStartAddress.setOnClickListener {
+                    confirmAddressFromMapScreen()
+                }
+                btnConfirmTargetAddress.setOnClickListener {
+
+                }
             }
         }
         return binding.root
     }
+
+    private fun fillVisitAddressManually() {
+        checkVisitAddress()
+        sharedViewModel.setVisitAddressFromPatientData(false)
+        binding.currentAddressForm.apply {
+
+            editStreet.setText("")
+            editHouseNumber.setText("")
+            editCity.setText("")
+            editPostalCode.setText("")
+            editStreet.isEnabled = true
+            editHouseNumber.isEnabled = true
+            editCity.isEnabled = true
+            editPostalCode.isEnabled = true
+        }
+    }
+
+    private fun importAddressFromPatientData() {
+
+        val patient = sharedViewModel.patientData.value
+        if(patient?.postCode?.trim()?.isEmpty() == true && patient?.houseNumber?.trim()?.isEmpty() == true && patient?.postCode?.trim()?.isEmpty() == true && patient?.city?.trim()?.isEmpty() == true){
+
+        }
+
+        sharedViewModel.setVisitAddressFromPatientData(true)
+        checkVisitAddress()
+        sharedViewModel.viewModelScope.launch {
+            var visitAddress = sharedViewModel.visitAddress.value
+            visitAddress?.apply {
+                city = patient?.city.toString()
+                streetName = patient?.street.toString()
+                streetNumber = patient?.houseNumber.toString()
+                postCode = patient?.postCode.toString()
+            }
+            if(visitAddress != null){
+                sharedViewModel.setVisitAddress(visitAddress!!)
+            }
+        }
+
+
+
+    }
+
+    fun checkVisitAddress() {
+        if(sharedViewModel.visitAddress.value == null){
+            sharedViewModel.setVisitAddress(Address())
+        }
+    }
+
+    private fun showVisitAddressFromPatientData() {
+        binding.currentAddressForm.apply {
+            editStreet.setText(sharedViewModel.patientData.value?.street)
+            editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
+            editCity.setText(sharedViewModel.patientData.value?.city)
+            editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
+            editStreet.isEnabled = false
+            editHouseNumber.isEnabled = false
+            editCity.isEnabled = false
+            editPostalCode.isEnabled = false
+        }
+    }
+
 
     fun showChooseHotelModal(){
         Log.e(TAG_NAME, "SHOW CHOOSE HOTEL MODAL")
@@ -294,8 +382,19 @@ class PatientLogisticsDetailsFragment : Fragment() {
     }
     fun showNewAddressMapScreen(){
         Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
+
         val intent = Intent(requireActivity(), MapsActivity::class.java)
         intent.putExtra("isHotel", false)
+        intent.putExtra("address", sharedViewModel.visitAddress.value)
+
+//        startActivityForResult(intent, 1100)
+        resultLauncher.launch(intent)
+    }
+
+    fun confirmAddressFromMapScreen(){
+        val intent = Intent(requireActivity(), MapsActivity::class.java)
+        intent.putExtra("isHotel", true)
+        intent.putExtra("address", sharedViewModel.startAddress.value)
 
 //        startActivityForResult(intent, 1100)
         resultLauncher.launch(intent)
@@ -359,6 +458,26 @@ class PatientLogisticsDetailsFragment : Fragment() {
             else{
                 binding.radioCurrentPatientVisitThisShiftNo.isChecked = true
             }
+            if(it.distance > 0.00){
+                Log.e("DISTANCE", "${it.distance}")
+                binding.textDistance.text = "Total Distance: ${(it.distance/1000).toInt()}Km"
+                binding.textDistance.visibility = VISIBLE
+            }
+            else{
+                binding.textDistance.visibility = GONE
+            }
+            if(it.sincVisitAddress){
+                binding.btnSyncVisitAddress.isChecked = true
+                showVisitAddressFromPatientData()
+            }
+            else{
+                binding.currentAddressForm.apply {
+                    editStreet.isEnabled = true
+                    editHouseNumber.isEnabled = true
+                    editCity.isEnabled = true
+                    editPostalCode.isEnabled = true
+                }
+            }
         })
         sharedViewModel.hotelList.observe(viewLifecycleOwner, Observer {
             hotelList = it
@@ -374,10 +493,21 @@ class PatientLogisticsDetailsFragment : Fragment() {
 
         })
         sharedViewModel.visitAddress.observe(viewLifecycleOwner, Observer {
-            if(it != null){
-                if(it.uid != null){
-                    showCurrentAddressForm(it)
-                }
+            showCurrentAddressForm(it)
+        })
+
+        sharedViewModel.previousPatients.observe(viewLifecycleOwner, Observer {
+            if(it.count() > 0){
+                binding.layoutVisitAddressIsPrv.visibility = VISIBLE
+                binding.layoutVisitAddressIsNew.visibility = GONE
+                binding.radioStartPointIsPrevPatient.visibility = VISIBLE
+            }
+            else{
+                binding.layoutVisitAddressIsPrv.visibility = GONE
+                binding.layoutVisitAddressIsNew.visibility = VISIBLE
+                binding.currentAddressForm.formRoot.visibility = VISIBLE
+
+                binding.radioStartPointIsPrevPatient.visibility = GONE
             }
         })
     }
@@ -398,8 +528,10 @@ class PatientLogisticsDetailsFragment : Fragment() {
         }
     }
     private fun setStartPointAddress(address: Address){
-        sharedViewModel.setStartAddress(address.uid)
-        sharedViewModel.setStartAddress(address)
+        sharedViewModel.viewModelScope.launch {
+//            sharedViewModel.setStartAddress(address.uid)
+            sharedViewModel.setStartAddress(address)
+        }
         showStartPointAddressForm(address)
     }
     private fun showStartPointAddressForm(address: Address) {
@@ -409,6 +541,14 @@ class PatientLogisticsDetailsFragment : Fragment() {
                 editHouseNumber.isEnabled = false
                 editCity.isEnabled = false
                 editPostalCode.isEnabled = false
+                binding.btnConfirmStartAddress.isEnabled = false
+            }
+            else{
+                editStreet.isEnabled = true
+                editHouseNumber.isEnabled = true
+                editCity.isEnabled = true
+                editPostalCode.isEnabled = true
+                binding.btnConfirmStartAddress.isEnabled = true
             }
             formRoot.visibility = VISIBLE
             editStreet.setText(address.streetName)
@@ -419,18 +559,42 @@ class PatientLogisticsDetailsFragment : Fragment() {
         }
     }
     private fun setVisitAddress(address: Address){
-        sharedViewModel.setCurrentAddress(address.uid)
-        sharedViewModel.setCurrentAddress(address)
-        showCurrentAddressForm(address)
+        sharedViewModel.viewModelScope.launch {
+//            sharedViewModel.setCurrentAddress(address.uid)
+            sharedViewModel.setCurrentAddress(address)
+            if(sharedViewModel.patientData.value?.sincVisitAddress == true){
+                sharedViewModel.setCity(address.city)
+                sharedViewModel.setPostCode(address.postCode)
+                sharedViewModel.setHouseNumber(address.streetNumber)
+                sharedViewModel.setStreet(address.streetName)
+            }
+        }
+//        showCurrentAddressForm(address)
     }
     private fun showCurrentAddressForm(address: Address){
         binding.currentAddressForm.apply {
             formRoot.visibility = VISIBLE
-            if(address.latitute != 0.0 && address.longitute != 0.0){
+            if(sharedViewModel.patientData.value?.sincVisitAddress == true){
                 editStreet.isEnabled = false
                 editHouseNumber.isEnabled = false
                 editCity.isEnabled = false
                 editPostalCode.isEnabled = false
+                binding.btnConfirmTargetAddress.isEnabled = false
+
+            }
+            else if(address.latitute != 0.0 && address.longitute != 0.0){
+                editStreet.isEnabled = false
+                editHouseNumber.isEnabled = false
+                editCity.isEnabled = false
+                editPostalCode.isEnabled = false
+                binding.btnConfirmTargetAddress.isEnabled = false
+            }
+            else{
+                editStreet.isEnabled = true
+                editHouseNumber.isEnabled = true
+                editCity.isEnabled = true
+                editPostalCode.isEnabled = true
+                binding.btnConfirmTargetAddress.isEnabled = true
             }
             editStreet.setText(address.streetName)
             editHouseNumber.setText(address.streetNumber)

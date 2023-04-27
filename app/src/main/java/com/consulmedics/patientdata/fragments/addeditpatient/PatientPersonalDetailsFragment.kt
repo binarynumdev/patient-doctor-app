@@ -95,15 +95,23 @@ class PatientPersonalDetailsFragment : Fragment() {
 
             editStreet.doAfterTextChanged {
                 sharedViewModel.setStreet(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editHouseNumber.doAfterTextChanged {
                 sharedViewModel.setHouseNumber(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editCity.doAfterTextChanged {
                 sharedViewModel.setCity(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editPostalCode.doAfterTextChanged {
                 sharedViewModel.setPostCode(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editBirthMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {

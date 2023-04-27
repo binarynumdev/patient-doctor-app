@@ -33,7 +33,7 @@ abstract  class MyAppDatabase: RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 MyAppDatabase::class.java,
-                "consulmedics_database_5"
+                "consulmedics_database_6"
             ).allowMainThreadQueries().build()
         }
     }

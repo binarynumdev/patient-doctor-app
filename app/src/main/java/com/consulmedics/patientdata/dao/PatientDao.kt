@@ -10,10 +10,12 @@ interface PatientDao {
     fun insertAll(vararg patient: Patient)
     @Delete
     fun delete(patient: Patient)
-    @Query("select * from patient")
+    @Query("select * from patient order by uid desc")
     fun getAll(): LiveData<List<Patient>>
     @Update
     fun updatePatient(vararg  patient: Patient)
     @Query("select * from patient")
     fun getList(): List<Patient>
+    @Query("select * from patient where uid <:parentId order by uid desc")
+    fun getPreviousPatients(parentId: Int?): LiveData<List<Patient>>
 }

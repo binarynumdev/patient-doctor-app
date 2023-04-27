@@ -35,8 +35,9 @@ class AddressRepository (private val addreessDao: AddressDao){
 
     // on below line we are creating a update method for
     // updating our note from database.
-    suspend fun update(address: Address){
+    suspend fun update(address: Address): Long{
         addreessDao.updateAddress(address)
+        return address.uid!!.toLong()
     }
 
     fun find(startAddress: Int?): Address {

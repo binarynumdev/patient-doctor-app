@@ -1,6 +1,5 @@
 package com.consulmedics.patientdata.data.api.response
 
-import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 data class FetchLocationResponse(
@@ -43,4 +42,11 @@ data class Bounds(
     var northeast: LatLng,
     @SerializedName("southwest")
     var southwest: LatLng,
+)
+
+data class LatLng(
+    @SerializedName("lat")
+    var latitude: Double,
+    @SerializedName("lng")
+    var longitude: Double,
 )

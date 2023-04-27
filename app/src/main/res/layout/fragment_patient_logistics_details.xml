@@ -26,6 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -96,50 +97,116 @@
 
         </LinearLayout>
 
-
-
-        <TextView
-            android:id="@+id/textView45"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/is_same_address_as_previous_patient"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
+            android:layout_height="match_parent">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What is the Visit Address?"
+                android:textColor="?attr/editTextColor"
+                android:textSize="@dimen/text_size_middle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnConfirmTargetAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:layout_constraintBottom_toBottomOf="@+id/textView45"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView45"
+                app:srcCompat="@drawable/ic_completed" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutVisitAddressIsPrv"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/radioCurrentAddressSameYes"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/appbar_padding_top"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioCurrentAddressSameYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/app_orange"
+                    android:minHeight="0dp"
+                    android:text="From Previous Patient"
+                    android:textSize="@dimen/text_size_middle" />
+
+                <RadioButton
+                    android:id="@+id/radioCurrentAddressSameNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/appbar_padding"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/app_orange"
+                    android:minHeight="0dp"
+                    android:text="New Address"
+                    android:textSize="@dimen/text_size_middle" />
+
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutVisitAddressIsNew"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/yes"
-                android:textSize="@dimen/text_size_middle" />
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioCurrentAddressSameNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_weight="1"
-                android:buttonTint="@color/app_orange"
-                android:minHeight="0dp"
-                android:text="@string/no"
-                android:textSize="@dimen/text_size_middle" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/btnSyncVisitAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From Patient Data"
+                    android:textSize="@dimen/text_size_middle" />
 
+                <RadioButton
+                    android:id="@+id/btnVisitAddressFromMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From Map"
+                    android:textSize="@dimen/text_size_middle" />
+
+                <RadioButton
+                    android:id="@+id/btnFillVIsitAddressManually"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Manually"
+                    android:textSize="@dimen/text_size_middle" />
+
+            </RadioGroup>
+        </LinearLayout>
         <include
             android:id="@+id/current_address_form"
             layout="@layout/form_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
 
         <LinearLayout
             android:id="@+id/address_form_layout"
@@ -147,17 +214,41 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView44"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/appbar_padding_top"
-                android:text="@string/start_point"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_point"
+                    android:textColor="?attr/editTextColor"
+                    android:textSize="@dimen/text_size_middle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnConfirmStartAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView44"
+                    app:srcCompat="@drawable/ic_completed" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <RadioGroup
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
@@ -223,6 +314,16 @@
                     android:text="@string/no"
                     android:textSize="@dimen/text_size_middle" />
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/textDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/appbar_padding"
+                android:layout_marginBottom="@dimen/appbar_padding"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_middle" />
 
         </LinearLayout>
 

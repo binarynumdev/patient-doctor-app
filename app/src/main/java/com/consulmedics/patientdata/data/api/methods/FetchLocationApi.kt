@@ -14,6 +14,8 @@ import retrofit2.http.Query
 interface FetchLocationApi {
     @GET(AppConstants.FETCH_ADDRESS_FROM_LOCATION_ENDPOINT)
     suspend fun fetch(@Query("latlng") latLng:String, @Query("key") apiKey: String): Response<FetchLocationResponse>
+    @GET(AppConstants.FETCH_ADDRESS_FROM_LOCATION_ENDPOINT)
+    suspend fun fetchFromString(@Query("address") address:String, @Query("key") apiKey: String, @Query("components") components: String = "country:DE"): Response<FetchLocationResponse>
 
     companion object {
         fun getApi(): FetchLocationApi? {
