@@ -1,21 +1,28 @@
 package com.consulmedics.patientdata.viewmodels
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.SCardExt
+import com.consulmedics.patientdata.data.model.Address
+import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.repository.AddressRepository
+import com.consulmedics.patientdata.repository.HotelRepository
 import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.google.android.libraries.places.api.Places
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 
-class AddEditPatientViewModel(private val repository: PatientRepository): ViewModel() {
+class AddEditPatientViewModel(private val patientRepository: PatientRepository, private val hotelRepository: HotelRepository, private val addressRepository: AddressRepository): ViewModel() {
 /*
 *     var patientID:      String? = ""
     var firstName:      String  = ""
@@ -30,11 +37,39 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     var insuranceName:  String  = ""
     var insuranceStatus:String  = ""
 * */
-    private val _patientID = MutableLiveData<String>("")
     val scardLib = SCardExt()
+    var googleMapApiKey = ""
+    private val _patientData = MutableLiveData<Patient>()
+    val patientData: LiveData<Patient> = _patientData
+    val hotelList : LiveData<List<Address>>
+    var previousPatients:LiveData<List<Patient>>
+    private val _startAddress = MutableLiveData<Address>()
+    var startAddress: LiveData<Address> = _startAddress
+    private val _visitAddress = MutableLiveData<Address>()
+    var visitAddress: LiveData<Address> = _visitAddress
+    init {
+        hotelList = addressRepository.hotelList
+        previousPatients = patientRepository.previousPatients(null)
+        if(_patientData.value?.startAddress != null){
+//            startAddress = addressRepository.find(_patientData.value?.startAddress)
+//            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
+            _startAddress.value = addressRepository.find(_patientData.value?.startAddress)
+        }
+        else{
+//            _startAddress = Address()
+            _startAddress.value = Address()
+        }
 
-    val patientID: LiveData<String> = _patientID;
-
+        if(_patientData.value?.visitAddress != null){
+//            startAddress = addressRepository.find(_patientData.value?.startAddress)
+//            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
+            _visitAddress.value = addressRepository.find(_patientData.value?.visitAddress)
+        }
+        else{
+//            _startAddress = Address()
+            _visitAddress.value = Address()
+        }
+    }
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -104,11 +139,27 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         _patientData.value?.insuranceStatus = editValue
     }
 
-    private val _patientData = MutableLiveData<Patient>()
-    val patientData: LiveData<Patient> = _patientData;
+
 
     fun setPatientData(patient: Patient) {
         _patientData.value = patient
+        previousPatients = patientRepository.previousPatients(patient.uid)
+        if(patient.startAddress != null){
+            _startAddress.value = addressRepository.find(patient.startAddress)
+            Log.e(TAG_NAME, "Start Address : ${patient.startAddress}")
+        }
+        else{
+            _startAddress.value = Address()
+        }
+
+        if(patient.visitAddress != null){
+            Log.e(TAG_NAME, "Visit Address : ${patient.visitAddress}")
+            _visitAddress.value = addressRepository.find(patient.visitAddress)
+            Log.e(TAG_NAME, "Visit Address : ${visitAddress.value?.uid}")
+        }
+        else{
+            _visitAddress.value = Address()
+        }
 //        patient?.patientID?.let { setPatientID(it) }
 //        patient?.firstName?.let { setFirstname(it) }
 //        patient?.lastName?.let { setLastname(it) }
@@ -165,19 +216,64 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         }
     }
     fun updatePatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
-        repository.update(patient)
+        patientRepository.update(patient)
     }
 
 
     // on below line we are creating a new method for adding a new note to our database
     // we are calling a method from our repository to add a new note.
     fun insertPatient(patient: Patient) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(patient)
+        patientRepository.insert(patient)
     }
+    suspend fun calculateDistance(){
+        var tmpPatient = patientData.value
+        Log.e(TAG_NAME, "Calculate Distance: ${visitAddress.value!!.longitute}")
+        if(visitAddress.value != null && startAddress.value != null){
+            if(visitAddress.value!!.longitute == 0.00 || visitAddress.value!!.latitute == 0.00 || startAddress.value!!.longitute == 0.00 || startAddress.value!!.latitute == 0.00 ){
+                tmpPatient?.distance = 0.00
+            }
+            else{
 
-    fun savePatient(patient: Patient) {
+                tmpPatient?.distance = addressRepository.calculateDistance(startAddress.value!!, visitAddress.value!!, googleMapApiKey)
+            }
+            _patientData.value = tmpPatient
+        }
+    }
+    suspend fun savePatient(patient: Patient) {
         _isLoading.value = true
-        patient.encryptFields();
+        patient.encryptFields()
+        visitAddress.value?.let {
+            if(visitAddress.value?.uid == null)
+                patient.visitAddress = addressRepository.insert(it).toInt()
+            else{
+                if(visitAddress.value!!.latitute == 0.00 && visitAddress.value!!.longitute ==0.00){
+                    addressRepository.update(visitAddress.value!!)
+                }
+            }
+        }
+        startAddress.value?.let {
+            if(startAddress.value?.uid == null)
+                patient.startAddress = addressRepository.insert(it).toInt()
+            else{
+                if(startAddress.value!!.latitute == 0.00 && startAddress.value!!.longitute ==0.00){
+                    addressRepository.update(startAddress.value!!)
+                }
+            }
+        }
+//
+//        if(visitAddress.value != null && startAddress.value != null){
+//            if(visitAddress.value!!.longitute == 0.00 || visitAddress.value!!.latitute == 0.00 || startAddress.value!!.longitute == 0.00 || startAddress.value!!.latitute == 0.00 ){
+//                patient.distance = 0.00
+//            }
+//            else{
+//
+//                patient.distance = addressRepository.calculateDistance(startAddress.value!!, visitAddress.value!!, googleMapApiKey)
+//            }
+//        }
+
+
+
+
         if(patient.uid == null){
             Log.e(TAG_NAME, "INSERT PATIENT")
             insertPatient(patient)
@@ -186,6 +282,7 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
             Log.e(TAG_NAME, "UPDATE PATIENT")
             updatePatient(patient)
         }
+        Log.e(TAG_NAME, "Created Or Updated Patient: ${patient.uid}")
         _isLoading.value = false
         _isFinished.value = true
     }
@@ -228,6 +325,40 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
         _patientData.value?.alreadyVisitedDuringThisShift = s
     }
 
+    suspend fun setCurrentAddress(address: Int?){
+        _patientData.value?.visitAddress = address
+        calculateDistance()
+    }
+    suspend fun setCurrentAddress(address: Address?){
+        Log.e(TAG_NAME, "SET Visit Point: ${address?.uid}")
+        _patientData.value?.visitAddress = address?.uid
+        _visitAddress.value = address
+        calculateDistance()
+    }
+    suspend fun setStartAddress(address: Int?){
+//        _patientData.value?.startAddress = address
+
+        val findAddress = addressRepository.find(address)
+        var newAddress = findAddress.clone()
+
+        _startAddress.value = newAddress
+        calculateDistance()
+
+    }
+    suspend fun setVisitAddress(address: Int?){
+//        _patientData.value?.visitAddress = address
+        val findAddress = addressRepository.find(address)
+        var newAddress = findAddress.clone()
+        _visitAddress.value = newAddress
+        calculateDistance()
+
+    }
+    suspend fun setStartAddress(address: Address?){
+        Log.e(TAG_NAME, "SET Start Point: ${address?.uid}")
+        _patientData.value?.startAddress = address?.uid
+        _startAddress.value = address
+        calculateDistance()
+    }
     fun isValidLogisticDetails(): Boolean? {
         return _patientData.value?.isValidLogisticDetails()
     }
@@ -289,11 +420,11 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
     }
 
     fun printInsurance() : File?{
-        return repository.generateInsurnacePDF(_patientData.value)
+        return patientRepository.generateInsurnacePDF(_patientData.value)
     }
 
     fun printReceipt(): File?{
-        return repository.generateReceiptPDF(_patientData.value)
+        return patientRepository.generateReceiptPDF(_patientData.value)
     }
 
     fun isValidMedicalReceipt(): Boolean? {
@@ -337,4 +468,25 @@ class AddEditPatientViewModel(private val repository: PatientRepository): ViewMo
 
         return false
     }
+
+    fun setApiKey(apiKey: String) {
+        googleMapApiKey = apiKey
+    }
+
+    fun setVisitAddressFromPatientData(isSync: Boolean) {
+        _patientData.value?.sincVisitAddress = isSync
+    }
+
+    fun setVisitAddress(address: Address) {
+        _visitAddress.value = address
+    }
+
+    fun formatVisitLocation() {
+        if(_visitAddress.value != null){
+            _visitAddress.value?.latitute = 0.0
+            _visitAddress.value?.longitute = 0.0
+        }
+    }
+
+
 }

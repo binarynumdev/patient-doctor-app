@@ -1,10 +1,11 @@
 package com.consulmedics.patientdata.activities
 
 import android.app.ProgressDialog
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.widget.Toast
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+
 
 abstract  class BaseActivity: AppCompatActivity() {
     lateinit var progressDialog: ProgressDialog
@@ -17,5 +18,10 @@ abstract  class BaseActivity: AppCompatActivity() {
     }
     fun hideLoadingSpinner(){
         progressDialog.dismiss()
+    }
+
+    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 }

@@ -21,7 +21,12 @@ import java.util.*
 
 class PatientRepository(private val patientDao: PatientDao)  {
     val allPatients: LiveData<List<Patient>> = patientDao.getAll()
-
+    fun previousPatients(parentId: Int?): LiveData<List<Patient>> {
+        return if(parentId != null)
+            patientDao.getPreviousPatients(parentId)
+        else
+            allPatients
+    }
     // on below line we are creating an insert method
     // for adding the note to our database.
     suspend fun insert(patient: Patient) {
@@ -250,4 +255,6 @@ class PatientRepository(private val patientDao: PatientDao)  {
         }
 
     }
+
+
 }

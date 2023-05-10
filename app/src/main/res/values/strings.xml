@@ -143,4 +143,7 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="confirm">Confirm</string>
+    <string name="type_address">Please type address what you looking for.</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,8 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.caverock.androidsvg.SVG
-import com.consulmedics.patientdata.Converters
+import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
@@ -23,6 +21,7 @@ import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.github.gcacace.signaturepad.views.SignaturePad
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,7 +40,7 @@ class PatientSummaryFragment : Fragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,7 +122,11 @@ class PatientSummaryFragment : Fragment() {
         }
         binding.btnSave.setOnClickListener {
             sharedViewModel.patientData.value?.let { it1 ->
-                sharedViewModel.savePatient(it1)
+                it.isEnabled = false
+
+                sharedViewModel.viewModelScope.launch {
+                    sharedViewModel.savePatient(it1)
+                }
 //                activity?.finish()
             }
         }

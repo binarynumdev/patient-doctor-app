@@ -7,18 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ItemPatientBinding
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.repository.AddressRepository
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.text.SimpleDateFormat
+import kotlin.math.roundToInt
 
 class PatientAdapter(
     private val mContext: Context,
     val patientItemOnClickInterface: PatientItemClickInterface
 ) :
     RecyclerView.Adapter<PatientAdapter.ViewHolder>(){
+    val addressRepository: AddressRepository = AddressRepository(MyAppDatabase.getDatabase(mContext).addressDao())
     private val allPatients = ArrayList<Patient>()
     inner class ViewHolder(val itemBinding: ItemPatientBinding) : RecyclerView.ViewHolder(itemBinding.root) {
     }
@@ -105,6 +109,13 @@ class PatientAdapter(
                 }
                 holder.itemBinding.loadingProgressBar.visibility = View.GONE
                 holder.itemBinding.patientItemLayout.visibility = View.VISIBLE
+                if(currentPatient.startAddress != 0)
+                    textStartPoint.setText(addressRepository.find(currentPatient.startAddress).toString())
+                if(currentPatient.visitAddress != 0){
+                    txtVisitPoint.setText(addressRepository.find(currentPatient.visitAddress).toString())
+                }
+                val strDistance = if(currentPatient.distance == 0.00)  "N/A" else "${currentPatient.distance/1000}KM"
+                textDistance.setText(strDistance)
             }
         }
 

@@ -43,7 +43,7 @@ data class Patient(
     var signPatient:    String  = ""
     var startVisitDate: String  = ""
     var startVisitTime: String  = ""
-    var startPoint:     String  = PREV_PATIENT_TEXT
+    var startPoint:     String  = ""
 
     var sameAddAsPrev:    String  = NO_TEXT
     var alreadyVisitedDuringThisShift:    String  = NO_TEXT
@@ -64,8 +64,10 @@ data class Patient(
     var medicals2:      String = ""
     var medicals3:      String = ""
 
-
-
+    var startAddress:   Int? = null
+    var visitAddress:   Int? = null
+    var distance:       Double = 0.00
+    var sincVisitAddress:Boolean = false
 
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){

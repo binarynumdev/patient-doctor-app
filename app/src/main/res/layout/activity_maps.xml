@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/appbar_padding">
+
+            <EditText
+                android:id="@+id/editSearchAddress"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/text_edit_height"
+                android:background="@drawable/bg_edit_text"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/type_address"
+                android:inputType="textPersonName"
+                android:padding="@dimen/default_margin_4"
+                android:textSize="@dimen/text_size_middle"
+                map:layout_constraintEnd_toEndOf="parent"
+                map:layout_constraintStart_toStartOf="parent"
+                map:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textStreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_middle"
+                map:layout_constraintBottom_toBottomOf="@+id/textHouseNumber"
+                map:layout_constraintStart_toStartOf="@+id/editSearchAddress"
+                map:layout_constraintTop_toTopOf="@+id/textHouseNumber" />
+
+            <TextView
+                android:id="@+id/textHouseNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:textSize="@dimen/text_size_middle"
+                map:layout_constraintBottom_toBottomOf="@+id/textPostCode"
+                map:layout_constraintStart_toEndOf="@+id/textStreet"
+                map:layout_constraintTop_toTopOf="@+id/textPostCode" />
+
+            <TextView
+                android:id="@+id/textPostCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:textSize="@dimen/text_size_middle"
+                map:layout_constraintBottom_toBottomOf="@+id/textCity"
+                map:layout_constraintStart_toEndOf="@+id/textHouseNumber"
+                map:layout_constraintTop_toTopOf="@+id/textCity" />
+
+            <TextView
+                android:id="@+id/textCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/appbar_padding"
+                android:textSize="@dimen/text_size_middle"
+                map:layout_constraintBottom_toBottomOf="@+id/btnConfirm"
+                map:layout_constraintStart_toEndOf="@+id/textPostCode"
+                map:layout_constraintTop_toTopOf="@+id/btnConfirm" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/appbar_padding"
+                android:text="@string/confirm"
+                map:layout_constraintEnd_toEndOf="@+id/editSearchAddress"
+                map:layout_constraintTop_toBottomOf="@+id/editSearchAddress" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent"
+        tools:context=".activities.MapsActivity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

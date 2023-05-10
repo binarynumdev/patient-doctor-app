@@ -13,28 +13,26 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientReceiptBinding
-import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import com.consulmedics.patientdata.utils.AppConstants.MAX_LEN_MEDICALS
-import com.consulmedics.patientdata.utils.AppConstants.MAX_LINE_MEDICALS
 import com.consulmedics.patientdata.utils.AppUtils
+import kotlinx.coroutines.launch
 
 class PatientReceiptFragment : Fragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +72,11 @@ class PatientReceiptFragment : Fragment() {
             }
             btnSave.setOnClickListener {
                 sharedViewModel.patientData.value?.let { it1 ->
-                    sharedViewModel.savePatient(it1)
+                    it.isEnabled = false
+
+                    sharedViewModel.viewModelScope.launch {
+                        sharedViewModel.savePatient(it1)
+                    }
                     activity?.finish()
                 }
             }

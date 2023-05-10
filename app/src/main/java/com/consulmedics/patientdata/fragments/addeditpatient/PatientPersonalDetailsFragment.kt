@@ -1,13 +1,10 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
-import android.graphics.drawable.Drawable
-import android.opengl.Visibility
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,6 +13,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
@@ -25,6 +23,7 @@ import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,8 +42,10 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var birthDay: Int? = null
     private var tmpFirstName: String = ""
     private var tmpLastName: String = ""
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels() {
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
+    private lateinit var apiKey: String
+
+    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     val binding get() = _binding!!
 
@@ -53,7 +54,17 @@ class PatientPersonalDetailsFragment : Fragment() {
         arguments?.let {
             patient = it.getSerializable("patient_data") as Patient
         }
+        try {
+            // Load the API key from the local.properties file
+            val applicationInfo = requireActivity().packageManager.getApplicationInfo(
+                requireActivity().packageName, PackageManager.GET_META_DATA)
+            val bundle = applicationInfo.metaData
+            apiKey = bundle.getString("com.google.android.geo.API_KEY").toString()
+            sharedViewModel.setApiKey(apiKey)
 
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
 
     }
@@ -84,15 +95,23 @@ class PatientPersonalDetailsFragment : Fragment() {
 
             editStreet.doAfterTextChanged {
                 sharedViewModel.setStreet(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editHouseNumber.doAfterTextChanged {
                 sharedViewModel.setHouseNumber(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editCity.doAfterTextChanged {
                 sharedViewModel.setCity(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editPostalCode.doAfterTextChanged {
                 sharedViewModel.setPostCode(it.toString())
+                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+                    sharedViewModel.formatVisitLocation()
             }
             editBirthMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -155,7 +174,11 @@ class PatientPersonalDetailsFragment : Fragment() {
             btnSave.setOnClickListener {
                 if(canSave()){
                     sharedViewModel.patientData.value?.let { it1 ->
-                        sharedViewModel.savePatient(it1)
+                        it.isEnabled = false
+
+                        sharedViewModel.viewModelScope.launch {
+                            sharedViewModel.savePatient(it1)
+                        }
                         activity?.finish()
                     }
                 }
