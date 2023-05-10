@@ -17,4 +17,9 @@ data class Address(@PrimaryKey(autoGenerate = true) var uid: Int? = null)
     override fun toString(): String {
         return "${streetName} ${streetNumber}, ${postCode}, ${city}"
     }
+
+    fun clone(): Address? {
+        this.uid = null
+        return this
+    }
 }

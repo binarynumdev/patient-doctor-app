@@ -112,15 +112,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/btnConfirmTargetAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0"
-                app:layout_constraintBottom_toBottomOf="@+id/textView45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView45"
-                app:srcCompat="@drawable/ic_completed" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -200,12 +191,6 @@
 
             </RadioGroup>
         </LinearLayout>
-        <include
-            android:id="@+id/current_address_form"
-            layout="@layout/form_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
 
 
         <LinearLayout
@@ -213,6 +198,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <include
+                android:id="@+id/current_address_form"
+                layout="@layout/form_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -229,15 +220,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/btnConfirmStartAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView44"
-                    app:srcCompat="@drawable/ic_completed" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

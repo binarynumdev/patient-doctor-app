@@ -476,6 +476,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
                         viewModel.getAddressFromLatLng(51.035482, 13.7046237, apiKey)
+
                         dialog.dismiss()
                         stopLoading()
                     }

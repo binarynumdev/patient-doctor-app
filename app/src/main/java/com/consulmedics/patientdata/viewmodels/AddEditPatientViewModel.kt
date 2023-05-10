@@ -336,8 +336,20 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         calculateDistance()
     }
     suspend fun setStartAddress(address: Int?){
-        _patientData.value?.startAddress = address
-        _startAddress.value = addressRepository.find(address)
+//        _patientData.value?.startAddress = address
+
+        val findAddress = addressRepository.find(address)
+        var newAddress = findAddress.clone()
+
+        _startAddress.value = newAddress
+        calculateDistance()
+
+    }
+    suspend fun setVisitAddress(address: Int?){
+//        _patientData.value?.visitAddress = address
+        val findAddress = addressRepository.find(address)
+        var newAddress = findAddress.clone()
+        _visitAddress.value = newAddress
         calculateDistance()
 
     }

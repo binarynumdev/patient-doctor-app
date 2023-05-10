@@ -54,8 +54,11 @@ class AddressRepository (private val addreessDao: AddressDao){
         if (response != null) {
             if (response.isSuccessful) {
                 val directions = response.body()
-                Log.e("DISTANCE", "${directions?.routes?.get(0)?.legs?.get(0)?.distance?.text}")
-                totalDistance = directions?.routes?.get(0)?.legs?.get(0)?.distance?.value?.toDouble()!!
+                if(directions?.routes?.isNotEmpty() == true){
+                    Log.e("DISTANCE", "${directions?.routes?.get(0)?.legs?.get(0)?.distance?.text}")
+                    totalDistance = directions?.routes?.get(0)?.legs?.get(0)?.distance?.value?.toDouble()!!
+                }
+
             } else {
                 Log.e("DISTANCE", "-----")
             }
