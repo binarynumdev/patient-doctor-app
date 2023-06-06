@@ -14,14 +14,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/appbar_height">
 
             <ImageButton
                 android:id="@+id/imageButton"
                 android:layout_width="50dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="@dimen/appbar_padding"
-                android:background="@drawable/ic_drawer"
+                android:background="@drawable/home_drawer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -45,10 +45,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/appbar_padding"
-                android:background="@drawable/bg_orange_rounded"
-                android:padding="@dimen/default_margin_4"
+                android:background="@drawable/bg_blue_radius_rectangle"
+                android:padding="@dimen/default_margin_12"
                 android:text="Yaroslav danko"
                 android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/white"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnSyncPatients"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +63,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/stat_sys_upload" />
+                android:padding="@dimen/default_margin_12"
+                android:background="@drawable/bg_orange_circle"
+                app:srcCompat="@drawable/ic_upload" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
