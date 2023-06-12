@@ -20,7 +20,17 @@
             layout="@layout/patient_add_edit_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/orange_bar_height"
-            android:layout_marginBottom="@dimen/appbar_padding"></include>
+            android:layout_marginBottom="@dimen/appbar_padding"
+            android:visibility="gone"></include>
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Basic Details"
+            android:textColor="#000000"
+            android:textSize="@dimen/text_size_big"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,22 +43,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/last_name"
-                    android:textColor="?attr/editTextColor"
-                    android:textSize="@dimen/text_size_middle" />
-
                 <EditText
-                    android:id="@+id/editLastName"
+                    android:id="@+id/editFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
-
                     android:layout_marginTop="@dimen/appbar_padding_top"
                     android:background="@drawable/bg_edit_text"
+                    android:drawableLeft="@drawable/ic_user"
                     android:ems="10"
+                    android:hint="@string/first_name"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
                     android:paddingTop="@dimen/efab_ui_margin_xxs"
@@ -63,21 +66,16 @@
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/first_name"
-                    android:textColor="?attr/editTextColor"
-                    android:textSize="@dimen/text_size_middle" />
-
                 <EditText
-                    android:id="@+id/editFirstName"
+                    android:id="@+id/editLastName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
+
                     android:layout_marginTop="@dimen/appbar_padding_top"
                     android:background="@drawable/bg_edit_text"
+                    android:drawableLeft="@drawable/ic_user"
                     android:ems="10"
+                    android:hint="@string/last_name"
                     android:inputType="textPersonName"
                     android:paddingLeft="@dimen/appbar_padding_top"
                     android:paddingTop="@dimen/efab_ui_margin_xxs"
@@ -93,19 +91,49 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_edit_height"
+                    android:background="@drawable/bg_edit_text"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:ems="10"
+                    android:hint="@string/date_of_birth"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:textSize="@dimen/text_size_middle" />
+            </LinearLayout>
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/textView35"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:text="@string/date_of_birth"
-            android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
+            android:text="Contact Details"
+            android:textColor="#000000"
+            android:textSize="@dimen/text_size_big"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
 
             <LinearLayout
