@@ -3,12 +3,16 @@ package com.consulmedics.patientdata.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.components.LeftStepperAdapter
 import com.consulmedics.patientdata.components.MainStepper
@@ -16,7 +20,10 @@ import com.consulmedics.patientdata.components.StepperCallback
 import com.consulmedics.patientdata.components.models.StepItem
 import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
+import com.consulmedics.patientdata.fragments.addeditpatient.BaseAddEditPatientFragment
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
+import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 
 
 class AddEditPatientActivity : BaseActivity() , StepperCallback{
@@ -26,6 +33,9 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     private lateinit var navController: NavController
     private var pageTitleList: List <StepItem> = listOf ()
     private var isLeftStepperInitialized = false
+    private val sharedViewModel: AddEditPatientViewModel by viewModels<AddEditPatientViewModel>(){
+        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
+    }
     private val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
         var tabIndex: Int = 0
         if(destination.id == R.id.patientPersonalDetailsFragment){
@@ -83,12 +93,12 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
 
         pageTitleList = listOf<StepItem>(
             StepItem(getString(R.string.patient_data), getString(R.string.read_card)),
-            StepItem(getString(R.string.insurrance_details)),
+            StepItem(getString(R.string.insurrance_details), getString(R.string.print_insurance)),
             StepItem(getString(R.string.patient_sign)),
             StepItem(getString(R.string.logistic_data)),
             StepItem(getString(R.string.doctor_document)),
             StepItem(getString(R.string.additional_details)),
-            StepItem(getString(R.string.receipts)),
+            StepItem(getString(R.string.receipts), getString(R.string.print_receipt)),
             StepItem(getString(R.string.sign_doctor)))
 
 
@@ -139,11 +149,46 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     override fun onStepItemClicked(index: Int) {
         pageStepper.go(index)
         binding.leftStepper.setCurrentIndex(index)
+        index.also {
+            if(it == 0){
+                navController.navigate(R.id.patientPersonalDetailsFragment)
+            }
+            else if (it == 1){
+                navController.navigate(R.id.patientInsurranceDetailsFragment)
+            }
+            else if(it == 2){
+                navController.navigate(R.id.patientDoctorSignFragment)
+            }
+            else if (it == 3){
+                navController.navigate(R.id.patientLogisticsDetailsFragment)
+            }
+            else if (it == 4){
+                navController.navigate(R.id.patientDoctorDocumentFragment)
+            }
+            else if (it == 5){
+                navController.navigate(R.id.patientAdditionalDetailsFragment)
+            }
+            else if (it == 6){
+                navController.navigate(R.id.patientReceiptFragment)
+            }
+            else if (it == 7){
+                navController.navigate(R.id.patientSummaryFragment)
+            }
+        }
+
 
     }
 
-    override fun stepActionButtonClicked() {
-
+    override fun stepActionButtonClicked(buttonString: String) {
+        Log.e(TAG_NAME, "STEP ACTION BUTTON HAS BEEN CLICKED")
+        Log.e(TAG_NAME, "STEP ACTION BUTTON HAS BEEN CLICKED : TRACK FROM ACTIVITY SIDE")
+        val navHostGragment: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_patient_flow)
+        if(buttonString == getString(R.string.read_card)){
+            sharedViewModel.loadPatientFromCard(applicationContext)
+        }
+        else if (buttonString == getString(R.string.print_insurance)){
+            sharedViewModel.printInsurance()
+        }
     }
 
 }

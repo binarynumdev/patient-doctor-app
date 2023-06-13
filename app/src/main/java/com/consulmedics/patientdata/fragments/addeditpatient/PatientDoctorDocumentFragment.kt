@@ -24,9 +24,7 @@ import java.util.*
 class PatientDoctorDocumentFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientDoctorDocumentBinding? = null
     val binding get() = _binding!!
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

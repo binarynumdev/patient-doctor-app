@@ -31,9 +31,7 @@ import kotlinx.coroutines.launch
 
 class PatientReceiptFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

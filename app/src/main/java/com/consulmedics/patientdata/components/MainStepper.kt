@@ -46,7 +46,7 @@ class MainStepper @JvmOverloads constructor(context: Context, attrs: AttributeSe
             callback?.stepperRootViewClicked()
         }
         stepActionButton.setOnClickListener {
-            callback?.stepActionButtonClicked()
+            callback?.stepActionButtonClicked(stepActionButton.text.toString())
         }
 
     }
@@ -75,5 +75,5 @@ interface StepperCallback{
     fun stepperRootViewClicked()
     fun onStepItemClicked(index: Int)
 
-    fun stepActionButtonClicked()
+    fun stepActionButtonClicked(buttonText: String)
 }

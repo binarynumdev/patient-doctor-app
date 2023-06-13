@@ -16,10 +16,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.databinding.FragmentPatientInsurranceDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
@@ -41,9 +43,7 @@ class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
     // TODO: Rename and change types of parameters
     private var _binding: FragmentPatientInsurranceDetailsBinding? = null
     val binding get() = _binding!!
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -91,26 +91,7 @@ class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
             topBar.apply {
                 buttonRight1.text = getString(R.string.print_insurance)
                 buttonRight1.setOnClickListener {
-                    var pdfFile = sharedViewModel.printInsurance()
-                    if(pdfFile != null){
-                        val intent = Intent()
-                        intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-                        val uriPdfPath =
-                            FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
-                        Log.d("pdfPath", "" + uriPdfPath);
-                        val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
-                        pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
-                        pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
-                        pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-
-                        try {
-                            startActivity(pdfOpenIntent)
-                        } catch (activityNotFoundException: ActivityNotFoundException) {
-                            Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                    }
+                    sharedViewModel.printInsurance()
                 }
             }
         }
@@ -146,6 +127,33 @@ class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
 //                    binding.signPatientImg.setImageBitmap(newBM)
                 }
 
+            }
+        })
+        sharedViewModel.printResult.observe(viewLifecycleOwner, Observer {
+            when(it){
+                is BaseResponse.Success ->{
+                   var pdfFile = it.data?.result_file
+                    if(pdfFile != null){
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                        val uriPdfPath =
+                            FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
+                        Log.d("pdfPath", "" + uriPdfPath);
+                        val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
+                        pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
+                        pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
+                        pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+                        try {
+                            startActivity(pdfOpenIntent)
+                        } catch (activityNotFoundException: ActivityNotFoundException) {
+                            Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
+                }
+                else -> {}
             }
         })
     }

@@ -44,9 +44,7 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
     private var tmpLastName: String = ""
     private lateinit var apiKey: String
 
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -39,9 +39,7 @@ private const val ARG_PARAM2 = "param2"
 class PatientSummaryFragment : BaseAddEditPatientFragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

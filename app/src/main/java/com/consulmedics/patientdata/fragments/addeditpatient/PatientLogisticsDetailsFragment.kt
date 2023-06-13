@@ -53,9 +53,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientLogisticsDetailsBinding? = null
     val binding get() = _binding!!
     var hotelList = emptyList<Address>()
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     private  val patientListViewModel: PatientViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
