@@ -83,12 +83,10 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
             editFirstName.doAfterTextChanged {
                 sharedViewModel.setFirstname(it.toString())
                 tmpFirstName = it.toString()
-                updateTopBar()
             }
             editLastName.doAfterTextChanged {
                 sharedViewModel.setLastname(it.toString())
                 tmpLastName = it.toString()
-                updateTopBar()
             }
 
             editStreet.doAfterTextChanged {
@@ -229,35 +227,9 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
             sharedViewModel.setBirthDate(cal.time);
 //            sharedViewModel.patientData.value?.birthDate = cal.time
         }
-        updateTopBar()
     }
 
-    private fun updateTopBar() {
-        Log.e(TAG_NAME,"${tmpLastName} ${tmpFirstName} ${birthDay} ${birthYear} ${birthMonth}" )
-        if(birthDay == null || birthYear == null || birthMonth == null){
-            if(tmpLastName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpFirstName}"
-            }
-            else if (tmpFirstName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpLastName}"
-            }
-            else{
-                binding.topBar.textViewLeft.text = "${tmpLastName},${tmpFirstName}"
-            }
-        }
-        else{
-            val dateStr = "(${birthDay}.${birthMonth+1}.${birthYear})"
-            if(tmpLastName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpFirstName}${dateStr}"
-            }
-            else if (tmpFirstName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpLastName}${dateStr}"
-            }
-            else{
-                binding.topBar.textViewLeft.text = "${tmpLastName},${tmpFirstName}${dateStr}"
-            }
-        }
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -266,7 +238,6 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
 //            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
             tmpFirstName = it.firstName
             tmpLastName = it.lastName
-            updateTopBar()
             binding.editFirstName.setText(sharedViewModel.patientData.value?.firstName)
             binding.editLastName.setText(sharedViewModel.patientData.value?.lastName)
             if(!sharedViewModel.patientData.value?.gender.isNullOrEmpty()){

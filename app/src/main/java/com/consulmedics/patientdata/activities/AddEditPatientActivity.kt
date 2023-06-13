@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -65,6 +66,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         pageStepper.go(tabIndex)
         if(isLeftStepperInitialized)
             binding.leftStepper.setCurrentIndex(tabIndex)
+        reloadPatientData()
         for (i in 0 until pageTitleList.count()){
 
 //            if(i < tabIndex){
@@ -129,6 +131,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         }
 
         supportActionBar?.hide()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -176,9 +179,16 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             }
         }
 
-
+        reloadPatientData()
     }
 
+    fun reloadPatientData(){
+
+        sharedViewModel.patientData.observe(this) {
+            Log.e(TAG_NAME, "UPDATED PATIENT DETAILS")
+            pageStepper.setPatientData(it)
+        }
+    }
     override fun stepActionButtonClicked(buttonString: String) {
         Log.e(TAG_NAME, "STEP ACTION BUTTON HAS BEEN CLICKED")
         Log.e(TAG_NAME, "STEP ACTION BUTTON HAS BEEN CLICKED : TRACK FROM ACTIVITY SIDE")

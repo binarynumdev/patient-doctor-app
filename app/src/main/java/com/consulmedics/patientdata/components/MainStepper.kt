@@ -17,10 +17,14 @@ import androidx.annotation.StyleRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.components.models.StepItem
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.databinding.ActivityLoginBinding
 import com.consulmedics.patientdata.databinding.ComponentsMainStepIndicatorBinding
+import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainStepper @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0, defStyleRes: Int = 0) : ConstraintLayout(context, attrs, defStyle, defStyleRes) {
@@ -31,6 +35,7 @@ class MainStepper @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private lateinit var stepProgressBar: CircularProgressIndicator
     private lateinit var stepCountTextView: TextView
     private lateinit var stepTitleTextView: TextView
+    private lateinit var patientDetailsTextView: TextView
     private lateinit var stepActionButton: Button
     private lateinit var stepActionButtonFrame: FrameLayout
     init {
@@ -41,6 +46,7 @@ class MainStepper @JvmOverloads constructor(context: Context, attrs: AttributeSe
         stepCountTextView = inflater.findViewById<TextView>(R.id.stepCountTextView)
         stepTitleTextView = inflater.findViewById<TextView>(R.id.stepTitleTextView)
         stepActionButtonFrame = inflater.findViewById<FrameLayout>(R.id.stepActionButtonFrame)
+        patientDetailsTextView = inflater.findViewById<TextView>(R.id.patientDetailsTextView)
         rootLayout.setOnClickListener {
             Log.e(TAG_NAME, "Clicked on stepper")
             callback?.stepperRootViewClicked()
@@ -69,6 +75,33 @@ class MainStepper @JvmOverloads constructor(context: Context, attrs: AttributeSe
             stepActionButtonFrame.visibility = GONE
         }
         stepProgressBar.progress = (((pageIndex + 1) / pageTitleList.count().toDouble())* 100).toInt()
+    }
+
+    fun setPatientData(it: Patient?) {
+        var dateString: String = ""
+        if(it?.birthDate != null){
+            val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+            val cal = Calendar.getInstance()
+            cal.time = it.birthDate
+            val year = cal[Calendar.YEAR]
+            val month = cal[Calendar.MONTH]
+            val day = cal[Calendar.DAY_OF_MONTH]
+
+            dateString = ("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
+        }
+        if(it?.lastName.isNullOrEmpty() && it?.firstName.isNullOrEmpty()){
+            patientDetailsTextView.setText("Patient Details ${dateString.takeUnless { it.isNullOrEmpty() } ?: ""}")
+        }
+        else if(it?.lastName.isNullOrEmpty()){
+            patientDetailsTextView.setText("${it?.firstName}  ${dateString.takeUnless { it.isNullOrEmpty() } ?: ""}")
+        }
+        else if(it?.firstName.isNullOrEmpty()){
+            patientDetailsTextView.setText("${it?.lastName}  ${dateString.takeUnless { it.isNullOrEmpty() } ?: ""}")
+        }
+        else{
+            patientDetailsTextView.setText("${it?.lastName} ${it?.firstName}  ${dateString.takeUnless { it.isNullOrEmpty() } ?: ""}")
+        }
+
     }
 }
 interface StepperCallback{
