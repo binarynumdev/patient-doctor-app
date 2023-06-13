@@ -49,7 +49,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PatientLogisticsDetailsFragment : Fragment() {
+class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientLogisticsDetailsBinding? = null
     val binding get() = _binding!!
     var hotelList = emptyList<Address>()

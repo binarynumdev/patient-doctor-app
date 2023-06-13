@@ -37,7 +37,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PatientInsurranceDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientInsurranceDetailsFragment : Fragment() {
+class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
     // TODO: Rename and change types of parameters
     private var _binding: FragmentPatientInsurranceDetailsBinding? = null
     val binding get() = _binding!!

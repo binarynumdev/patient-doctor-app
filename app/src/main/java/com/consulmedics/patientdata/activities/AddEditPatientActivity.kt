@@ -13,6 +13,7 @@ import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.components.LeftStepperAdapter
 import com.consulmedics.patientdata.components.MainStepper
 import com.consulmedics.patientdata.components.StepperCallback
+import com.consulmedics.patientdata.components.models.StepItem
 import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
@@ -23,7 +24,8 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     private lateinit var binding: ActivityAddEditPatientBinding
     private lateinit var pageStepper: MainStepper
     private lateinit var navController: NavController
-    private var pageTitleList: List <String> = listOf ()
+    private var pageTitleList: List <StepItem> = listOf ()
+    private var isLeftStepperInitialized = false
     private val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
         var tabIndex: Int = 0
         if(destination.id == R.id.patientPersonalDetailsFragment){
@@ -51,6 +53,8 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             tabIndex = 7
         }
         pageStepper.go(tabIndex)
+        if(isLeftStepperInitialized)
+            binding.leftStepper.setCurrentIndex(tabIndex)
         for (i in 0 until pageTitleList.count()){
 
 //            if(i < tabIndex){
@@ -76,15 +80,16 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
 //        setContentView(R.layout.activity_add_edit_patient)
         binding = ActivityAddEditPatientBinding.inflate(layoutInflater)
 
-        pageTitleList = listOf<String>(
-            getString(R.string.patient_data),
-            getString(R.string.insurrance_details),
-            getString(R.string.patient_sign),
-            getString(R.string.logistic_data),
-            getString(R.string.doctor_document),
-            getString(R.string.additional_details),
-            getString(R.string.receipts),
-            getString(R.string.sign_doctor))
+
+        pageTitleList = listOf<StepItem>(
+            StepItem(getString(R.string.patient_data), getString(R.string.read_card)),
+            StepItem(getString(R.string.insurrance_details)),
+            StepItem(getString(R.string.patient_sign)),
+            StepItem(getString(R.string.logistic_data)),
+            StepItem(getString(R.string.doctor_document)),
+            StepItem(getString(R.string.additional_details)),
+            StepItem(getString(R.string.receipts)),
+            StepItem(getString(R.string.sign_doctor)))
 
 
         pageStepper = binding.MainStepper
@@ -109,6 +114,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             leftStepper.initStepper(leftStepperAdapter)
             leftStepperAdapter.updateList(pageTitleList)
             leftStepper.setCurrentIndex(0)
+            isLeftStepperInitialized = true
 
         }
 
@@ -133,6 +139,10 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     override fun onStepItemClicked(index: Int) {
         pageStepper.go(index)
         binding.leftStepper.setCurrentIndex(index)
+
+    }
+
+    override fun stepActionButtonClicked() {
 
     }
 

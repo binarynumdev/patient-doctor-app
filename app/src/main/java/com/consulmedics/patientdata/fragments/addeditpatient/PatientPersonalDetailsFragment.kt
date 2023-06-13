@@ -32,7 +32,7 @@ import java.util.*
  * Use the [PatientPersonalDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientPersonalDetailsFragment : Fragment() {
+class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
     // TODO: Rename and change types of parameters
     private var patient: Patient? = null
     private var param2: String? = null

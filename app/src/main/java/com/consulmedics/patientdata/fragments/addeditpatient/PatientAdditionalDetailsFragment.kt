@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PatientAdditionalDetailsFragment : Fragment() {
+class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientAdditionalDetailsBinding? = null
     val binding get() = _binding!!
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){

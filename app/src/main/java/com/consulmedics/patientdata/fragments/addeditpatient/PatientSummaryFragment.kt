@@ -36,7 +36,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PatientSummaryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientSummaryFragment : Fragment() {
+class PatientSummaryFragment : BaseAddEditPatientFragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){

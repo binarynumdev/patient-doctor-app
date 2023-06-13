@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.components.models.StepItem
 import com.consulmedics.patientdata.databinding.ItemLeftStepperBinding
 
 class LeftStepper @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0, defStyleRes: Int = 0) : RecyclerView(context, attrs, defStyle) {
@@ -27,7 +28,7 @@ class LeftStepperAdapter(
     val stepperCallback: StepperCallback
 ) :
     RecyclerView.Adapter<LeftStepperAdapter.ViewHolder>(){
-    private val menuItems = ArrayList<String>()
+    private val menuItems = ArrayList<StepItem>()
     private var currentIndex = 0
     inner class ViewHolder(val itemBinding: ItemLeftStepperBinding) : RecyclerView.ViewHolder(itemBinding.root) {
     }
@@ -50,7 +51,7 @@ class LeftStepperAdapter(
             holder.itemBinding.stepDescription.setTextColor(mContext.resources.getColor(R.color.gray_400))
         }
         holder.itemBinding.stepTitle.text = "Step ${position + 1}"
-        holder.itemBinding.stepDescription.text = menuTitle
+        holder.itemBinding.stepDescription.text = menuTitle.stepTitle
         holder.itemBinding.rootLayout.setOnClickListener {
             stepperCallback.onStepItemClicked(position)
         }
@@ -60,7 +61,7 @@ class LeftStepperAdapter(
         return menuItems.size
     }
 
-    fun updateList(pageTitleList: List<String>) {
+    fun updateList(pageTitleList: List<StepItem>) {
         menuItems.clear()
         menuItems.addAll(pageTitleList)
         notifyDataSetChanged()

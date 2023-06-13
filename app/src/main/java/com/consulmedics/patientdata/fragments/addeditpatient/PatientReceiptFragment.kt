@@ -29,7 +29,7 @@ import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.utils.AppUtils
 import kotlinx.coroutines.launch
 
-class PatientReceiptFragment : Fragment() {
+class PatientReceiptFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
         AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)

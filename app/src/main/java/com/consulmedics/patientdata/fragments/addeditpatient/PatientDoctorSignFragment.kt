@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PatientDoctorSignFragment : Fragment() {
+class PatientDoctorSignFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientDoctorSignBinding? = null
     val binding get() = _binding!!
     private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
