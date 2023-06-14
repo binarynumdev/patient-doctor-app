@@ -87,7 +87,7 @@ class MainStepper @JvmOverloads constructor(context: Context, attrs: AttributeSe
             val month = cal[Calendar.MONTH]
             val day = cal[Calendar.DAY_OF_MONTH]
 
-            dateString = ("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
+            dateString = (" ($day.${month + 1}.$year)")
         }
         if(it?.lastName.isNullOrEmpty() && it?.firstName.isNullOrEmpty()){
             patientDetailsTextView.setText("Patient Details ${dateString.takeUnless { it.isNullOrEmpty() } ?: ""}")
