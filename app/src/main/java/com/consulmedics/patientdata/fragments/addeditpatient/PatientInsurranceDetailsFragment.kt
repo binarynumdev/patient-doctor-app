@@ -76,15 +76,6 @@ class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    it.isEnabled = false
-                    sharedViewModel.viewModelScope.launch {
-                        sharedViewModel.savePatient(it1)
-                    }
-                    activity?.finish()
-                }
-            }
 
 
 
@@ -101,19 +92,6 @@ class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
             binding.editInsurranceNumber.setText(sharedViewModel.patientData.value?.insuranceNumber)
             binding.editInsurranceStatus.setText(sharedViewModel.patientData.value?.insuranceStatus)
             binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
-
             sharedViewModel.patientData.value?.signPatient?.let { it1 ->
 
                 if(it1.isNotEmpty()){
