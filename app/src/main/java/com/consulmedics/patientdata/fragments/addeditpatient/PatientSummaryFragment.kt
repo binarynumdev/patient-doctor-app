@@ -45,18 +45,7 @@ class PatientSummaryFragment : BaseAddEditPatientFragment() {
         super.onCreate(savedInstanceState)
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
-            if(it.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = it.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
+
 
                 if(it.signature.isNotEmpty()){
                     val newBM:Bitmap = AppUtils.svgStringToBitmap(it.signature)
@@ -131,7 +120,6 @@ class PatientSummaryFragment : BaseAddEditPatientFragment() {
         binding.btnPrev.setOnClickListener {
             activity?.onBackPressed()
         }
-        binding.topBar.buttonRight1.visibility = GONE
         return binding.root
     }
 }
