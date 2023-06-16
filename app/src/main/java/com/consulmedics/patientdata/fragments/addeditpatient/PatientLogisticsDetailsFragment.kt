@@ -2,13 +2,9 @@ package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -19,18 +15,16 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.consulmedics.patientdata.Converters
-import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.MapsActivity
 import com.consulmedics.patientdata.adapters.AddressDialogAdapter
+import com.consulmedics.patientdata.components.SelectBottomSheetDialogFragment
 import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.databinding.FragmentPatientLogisticsDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
@@ -40,8 +34,6 @@ import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils.Companion.isOnline
-import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
-import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -67,7 +59,6 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         // Inflate the layout for this fragment
         _binding = FragmentPatientLogisticsDetailsBinding.inflate(inflater, container, false)
         binding.apply {
-            topBar.buttonRight1.visibility = GONE
             editDateOfVisit.setOnClickListener {
                 var c = Calendar.getInstance()
                 val converter: Converters = Converters()
@@ -182,14 +173,11 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             radioCurrentAddressSameNo.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(NO_TEXT)
                 addressFormLayout.visibility = VISIBLE
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle("Choose New Address?")
                 val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
-                var selectedOption = 0;
-                builder.setSingleChoiceItems(radioOptions, -1) { dialog, which ->
-                    selectedOption = which
-                    dialog.dismiss()
-                    when(which){
+                val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, false)
+                bottomSheet.setOnItemClickListener {
+                    bottomSheet.dismiss()
+                    when(it){
                         0 ->{
                             importAddressFromPatientData()
                         }
@@ -201,10 +189,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                         }
                     }
                 }
-                builder.setNegativeButton(android.R.string.no) { dialog, which ->
-                    dialog.dismiss()
-                }
-                builder.show()
+                activity?.supportFragmentManager?.let { it1 -> bottomSheet.show(it1, "SelectBottomSheet") }
 
             }
             radioCurrentAddressSameYes.setOnClickListener {
@@ -227,22 +212,13 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             radioCurrentPatientVisitThisShiftNo.setOnClickListener {
                 sharedViewModel.setCurrentPatientAlreadyVisited(NO_TEXT)
             }
-            btnNext.setOnClickListener {
+            btnContinue.setOnClickListener {
                 findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
             }
-            btnPrev.setOnClickListener {
+            btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    it.isEnabled = false
 
-                    sharedViewModel.viewModelScope.launch {
-                        sharedViewModel.savePatient(it1)
-                    }
-                    activity?.finish()
-                }
-            }
             startAddressForm.apply {
 
             }
@@ -377,9 +353,8 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
 
     fun showChooseHotelModal(){
-        Log.e(TAG_NAME, "SHOW CHOOSE HOTEL MODAL")
-        val builder = AlertDialog.Builder(requireContext())
-
+        val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
+        val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, true)
         val dialogAddressList = ArrayList(hotelList)
         if(isOnline(requireContext())){
             dialogAddressList.add(Address())
@@ -387,26 +362,47 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
         dialogAddressList.add(Address(-99))
         val adapter = AddressDialogAdapter(requireContext(), dialogAddressList)
+        bottomSheet.setAdapter(adapter)
+//
+//        bottomSheet.setOnItemClickListener {
+//            bottomSheet.dismiss()
+//            when(it){
+//                0 ->{
+//                    importAddressFromPatientData()
+//                }
+//                1 ->{
+//                    showNewAddressMapScreen()
+//                }
+//                2 ->{
+//                    fillVisitAddressManually()
+//                }
+//            }
+//        }
+        activity?.supportFragmentManager?.let { it1 -> bottomSheet.show(it1, "SelectBottomSheet") }
 
-        builder.setTitle("Select an item")
-        builder.setAdapter(adapter) { dialog, which ->
-            // Handle item selection
-            val address = dialogAddressList.get(which)
-            if(address.uid == null){
-                showCreateHotelModal()
-            }
-            else if (address.uid == -99){
-                setStartPointAddress(Address())
-            }
-            else{
-                setStartPointAddress(address)
-            }
-        }
-        builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialogInterface, i ->
-            binding.startAddressForm.formRoot.visibility = VISIBLE
-        })
-        val dialog = builder.create()
-        dialog.show()
+//        val builder = AlertDialog.Builder(requireContext())
+//
+
+//
+//        builder.setTitle("Select an item")
+//        builder.setAdapter(adapter) { dialog, which ->
+//            // Handle item selection
+//            val address = dialogAddressList.get(which)
+//            if(address.uid == null){
+//                showCreateHotelModal()
+//            }
+//            else if (address.uid == -99){
+//                setStartPointAddress(Address())
+//            }
+//            else{
+//                setStartPointAddress(address)
+//            }
+//        }
+//        builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialogInterface, i ->
+//            binding.startAddressForm.formRoot.visibility = VISIBLE
+//        })
+//        val dialog = builder.create()
+//        dialog.show()
     }
     fun showNewAddressMapScreen(){
         Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
@@ -458,19 +454,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
         val converters: Converters = Converters()
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
-            Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Insurance fragment")
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
+
 
             binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
             if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()) {

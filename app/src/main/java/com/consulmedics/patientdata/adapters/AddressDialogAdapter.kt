@@ -6,24 +6,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.data.model.Address
 
-class AddressDialogAdapter(context: Context, private val items: List<Address>) : ArrayAdapter<Address>(context, 0, items) {
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.row_address_item, parent, false)
-        val textAddressView = view.findViewById<TextView>(R.id.txtAddress)
+class AddressDialogAdapter(context: Context, private val items: List<Address>) : RecyclerView.Adapter<AddressDialogAdapter.ViewHolder>() {
+    private var context = context
+    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        internal val textAddressView: TextView = itemView.findViewById<TextView>(R.id.txtAddress)
+    }
+
+    // Create and inflate the item view
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.row_address_item, parent, false)
+        return ViewHolder(view)
+    }
+
+    // Bind the data to the views
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = items[position]
         val currentAddress: Address = items.get(position)
         if(currentAddress.uid == null){
-            textAddressView.setText("Choose new address")
+            holder.textAddressView.setText("Choose new address")
         }
         else if (currentAddress.uid == -99){
-            textAddressView.setText("Fill address form manually")
+            holder.textAddressView.setText("Fill address form manually")
         }
         else{
-            textAddressView.setText("${currentAddress.streetName}, ${currentAddress.streetNumber} ${currentAddress.city} ${currentAddress.postCode}")
+            holder.textAddressView.setText("${currentAddress.streetName}, ${currentAddress.streetNumber} ${currentAddress.city} ${currentAddress.postCode}")
+        }
+        holder.textAddressView.setOnClickListener {
         }
 
-        return view
     }
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+
 }

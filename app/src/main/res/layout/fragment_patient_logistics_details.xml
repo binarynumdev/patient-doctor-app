@@ -1,221 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="@dimen/appbar_padding"
+    android:background="@color/default_background"
+    android:orientation="vertical"
     tools:ignore="MissingDefaultResource">
 
-    <LinearLayout
-        android:id="@+id/frameLayout2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".fragments.addeditpatient.PatientLogisticsDetailsFragment"
-        tools:ignore="MissingDefaultResource">
-
-
-        <include
-            android:id="@+id/topBar"
-            layout="@layout/patient_add_edit_top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/orange_bar_height"
-            android:layout_marginBottom="@dimen/appbar_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="@dimen/appbar_padding">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:id="@+id/frameLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            tools:context=".fragments.addeditpatient.PatientLogisticsDetailsFragment"
+            tools:ignore="MissingDefaultResource">
+
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/date_of_visit"
-                    android:textColor="?attr/editTextColor"
-                    android:textSize="@dimen/text_size_middle" />
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/editDateOfVisit"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
                     android:layout_marginTop="@dimen/appbar_padding_top"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_calendar"
                     android:ems="10"
                     android:focusable="false"
+                    android:hint="@string/time_of_exam"
                     android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_middle"
+                    android:textSize="@dimen/text_size_normal"
                     android:theme="@style/CustomEditBoxStyle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/time_of_visit"
-                    android:textColor="?attr/editTextColor"
-                    android:textSize="@dimen/text_size_middle" />
 
                 <EditText
                     android:id="@+id/editTimeOfVisit"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/text_edit_height"
                     android:layout_marginTop="@dimen/appbar_padding_top"
                     android:layout_weight="1"
                     android:background="@drawable/bg_edit_text"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_clock"
                     android:ems="10"
                     android:focusable="false"
+                    android:hint="@string/time_of_visit"
                     android:inputType="textPersonName"
-                    android:textSize="@dimen/text_size_middle"
+                    android:textSize="@dimen/text_size_normal"
                     android:theme="@style/CustomEditBoxStyle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView45"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="What is the Visit Address?"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutVisitAddressIsPrv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
 
             </LinearLayout>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/appbar_padding_top"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioCurrentAddressSameYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/app_orange"
-                    android:minHeight="0dp"
-                    android:text="From Previous Patient"
-                    android:textSize="@dimen/text_size_middle" />
-
-                <RadioButton
-                    android:id="@+id/radioCurrentAddressSameNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/app_orange"
-                    android:minHeight="0dp"
-                    android:text="New Address"
-                    android:textSize="@dimen/text_size_middle" />
-
-            </RadioGroup>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/layoutVisitAddressIsNew"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/btnSyncVisitAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="From Patient Data"
-                    android:textSize="@dimen/text_size_middle" />
-
-                <RadioButton
-                    android:id="@+id/btnVisitAddressFromMap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="From Map"
-                    android:textSize="@dimen/text_size_middle" />
-
-                <RadioButton
-                    android:id="@+id/btnFillVIsitAddressManually"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Manually"
-                    android:textSize="@dimen/text_size_middle" />
-
-            </RadioGroup>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/address_form_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/current_address_form"
-                layout="@layout/form_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView44"
+                    android:id="@+id/textView45"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/start_point"
+                    android:text="What is the Visit Address?"
                     android:textColor="?attr/editTextColor"
-                    android:textSize="@dimen/text_size_middle"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -223,126 +87,272 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:id="@+id/layoutVisitAddressIsPrv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioCurrentAddressSameYes"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:text="From Previous Patient"
+                        android:textSize="@dimen/text_size_middle" />
+
+                    <RadioButton
+                        android:id="@+id/radioCurrentAddressSameNo"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/appbar_padding"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:text="New Address"
+                        android:textSize="@dimen/text_size_middle" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutVisitAddressIsNew"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btnSyncVisitAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From Patient Data"
+                        android:textSize="@dimen/text_size_middle" />
+
+                    <RadioButton
+                        android:id="@+id/btnVisitAddressFromMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From Map"
+                        android:textSize="@dimen/text_size_middle" />
+
+                    <RadioButton
+                        android:id="@+id/btnFillVIsitAddressManually"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Manually"
+                        android:textSize="@dimen/text_size_middle" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/address_form_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/current_address_form"
+                    layout="@layout/form_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/start_point"
+                        android:textColor="?attr/editTextColor"
+                        android:textSize="@dimen/text_size_big"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioStartPointIsPrevPatient"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/previous_patient"
+                        android:textSize="@dimen/text_size_middle" />
+
+                    <RadioButton
+                        android:id="@+id/radioStartPointIsHotel"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/appbar_padding"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/hotel"
+                        android:textSize="@dimen/text_size_middle" />
+
+                </RadioGroup>
+
+
+                <include
+                    android:id="@+id/startAddressForm"
+                    layout="@layout/form_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView46"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:text="@string/current_patient_already_visited_during_this_shift"
+                    android:textColor="?attr/editTextColor"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioCurrentPatientVisitThisShiftYes"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
+                        android:drawableLeft="@drawable/ic_yes"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/yes"
+                        android:textSize="@dimen/text_size_middle" />
+
+                    <RadioButton
+                        android:id="@+id/radioCurrentPatientVisitThisShiftNo"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/appbar_padding"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
+                        android:drawableLeft="@drawable/ic_close"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="10dp"
+                        android:text="@string/no"
+                        android:textSize="@dimen/text_size_middle" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textDistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/appbar_padding"
+                    android:layout_marginBottom="@dimen/appbar_padding"
+                    android:text="TextView"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_middle" />
 
             </LinearLayout>
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioStartPointIsPrevPatient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/app_orange"
-                    android:minHeight="0dp"
-                    android:text="@string/previous_patient"
-                    android:textSize="@dimen/text_size_middle" />
-
-                <RadioButton
-                    android:id="@+id/radioStartPointIsHotel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:buttonTint="@color/app_orange"
-                    android:minHeight="0dp"
-                    android:text="@string/hotel"
-                    android:textSize="@dimen/text_size_middle" />
-
-            </RadioGroup>
-
-
-            <include
-                android:id="@+id/startAddressForm"
-                layout="@layout/form_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/textView46"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/appbar_padding_top"
-                android:text="@string/current_patient_already_visited_during_this_shift"
-                android:textColor="?attr/editTextColor"
-                android:textSize="@dimen/text_size_middle" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/appbar_padding_top"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioCurrentPatientVisitThisShiftYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/app_orange"
-                    android:minHeight="0dp"
-                    android:text="@string/yes"
-                    android:textSize="@dimen/text_size_middle" />
-
-                <RadioButton
-                    android:id="@+id/radioCurrentPatientVisitThisShiftNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding"
-                    android:buttonTint="@color/app_orange"
-                    android:minHeight="0dp"
-                    android:text="@string/no"
-                    android:textSize="@dimen/text_size_middle" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textDistance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/appbar_padding"
-                android:layout_marginBottom="@dimen/appbar_padding"
-                android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_middle" />
 
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/appbar_padding"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/appbar_padding"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnPrev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                android:textSize="@dimen/text_size_middle" />
 
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/btn_next"
-                android:textSize="@dimen/text_size_middle" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="200dp"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/back"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/text_size_middle" />
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/go_to_home"
-                android:textSize="@dimen/text_size_middle" />
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="200dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="@dimen/appbar_padding"
+            android:layout_weight="1"
+            android:backgroundTint="@color/app_blue"
+            android:drawableRight="@drawable/ic_arrow_next"
+            android:drawablePadding="0dp"
+            android:paddingLeft="40dp"
+            android:text="@string/btn_next"
+            android:textSize="@dimen/text_size_middle" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

@@ -23,5 +23,7 @@
     <dimen name="orange_bar_height">55dp</dimen>
     <dimen name="address_form_margin_left">48dp</dimen>
     <dimen name="appbar_height">150dp</dimen>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
 
 </resources>
