@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_background"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+<ScrollView
     android:id="@+id/activity_new_patient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/appbar_padding"
+    android:layout_weight="1"
     tools:ignore="MissingDefaultResource">
 
     <LinearLayout
@@ -16,15 +23,6 @@
         tools:context=".fragments.addeditpatient.PatientDoctorDocumentFragment"
         tools:ignore="MissingDefaultResource">
 
-
-        <include
-            android:id="@+id/topBar"
-            layout="@layout/patient_add_edit_top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/orange_bar_height"
-            android:layout_marginBottom="@dimen/appbar_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView8"
@@ -90,42 +88,51 @@
             android:padding="@dimen/appbar_padding_top"
             android:textSize="@dimen/text_size_middle" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/appbar_padding"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnPrev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                android:textSize="@dimen/text_size_middle" />
-
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/btn_next"
-                android:textSize="@dimen/text_size_middle" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/appbar_padding"
-                android:text="@string/go_to_home"
-                android:textSize="@dimen/text_size_middle" />
-        </LinearLayout>
 
     </LinearLayout>
 
 
 </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/appbar_padding"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="200dp"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/back"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/text_size_middle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="200dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="@dimen/appbar_padding"
+            android:layout_weight="1"
+            android:backgroundTint="@color/app_blue"
+            android:drawableRight="@drawable/ic_arrow_next"
+            android:drawablePadding="0dp"
+            android:paddingLeft="40dp"
+            android:text="@string/btn_next"
+            android:textSize="@dimen/text_size_middle" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</LinearLayout>

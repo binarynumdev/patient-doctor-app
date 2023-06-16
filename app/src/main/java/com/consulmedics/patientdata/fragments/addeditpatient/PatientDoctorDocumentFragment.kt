@@ -42,23 +42,13 @@ class PatientDoctorDocumentFragment : BaseAddEditPatientFragment() {
             editHealthStatus.doAfterTextChanged {
                 sharedViewModel.setHealthStatus(it.toString())
             }
-            btnPrev.setOnClickListener {
+            btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
-            btnNext.setOnClickListener {
+            btnContinue.setOnClickListener {
                 findNavController().navigate(R.id.action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment)
             }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    it.isEnabled = false
 
-                    sharedViewModel.viewModelScope.launch {
-                        sharedViewModel.savePatient(it1)
-                    }
-                    activity?.finish()
-                }
-            }
-            topBar.buttonRight1.visibility = GONE
         }
         return binding.root
     }
@@ -69,18 +59,6 @@ class PatientDoctorDocumentFragment : BaseAddEditPatientFragment() {
             binding.editDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
             binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
 
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
         })
     }
 

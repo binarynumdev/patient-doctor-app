@@ -199,6 +199,9 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         else if (buttonString == getString(R.string.print_insurance)){
             sharedViewModel.printInsurance()
         }
+        else if (buttonString == getString(R.string.print_receipt)){
+            sharedViewModel.printReceipt()
+        }
     }
 
 }

@@ -436,8 +436,16 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         }
     }
 
-    fun printReceipt(): File?{
-        return patientRepository.generateReceiptPDF(_patientData.value)
+    fun printReceipt(){
+        printResult.value = BaseResponse.Loading()
+        viewModelScope.launch {
+            val result = patientRepository.generateReceiptPDF(_patientData.value)
+            if(result!= null){
+
+                printResult.value = BaseResponse.Success(PDFGenerateResponse(result))
+
+            }
+        }
     }
 
     fun isValidMedicalReceipt(): Boolean? {
