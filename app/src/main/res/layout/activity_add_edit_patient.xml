@@ -12,36 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.shuhart.stepview.StepView
-            android:id="@+id/patient_step_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/app_blue_200"
-            android:padding="16dp"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:sv_animationType="Line"
-            app:sv_doneCircleColor="@color/app_blue"
-
-            app:sv_doneCircleRadius="12dp"
-            app:sv_doneStepLineColor="@color/app_blue"
-
-            app:sv_doneStepMarkColor="@color/white"
-            app:sv_doneTextColor="@color/white"
-
-            app:sv_nextStepLineColor="@color/app_blue"
-            app:sv_nextTextColor="@color/app_blue"
-            app:sv_selectedCircleColor="@color/app_orange"
-            app:sv_selectedCircleRadius="12dp"
-            app:sv_selectedStepNumberColor="@color/white"
-            app:sv_selectedTextColor="@color/white"
-            app:sv_stepLineWidth="1dp"
-            app:sv_stepNumberTextSize="12sp"
-            app:sv_stepPadding="4dp"
-            app:sv_stepViewStyle="@style/StepView" />
-
         <com.consulmedics.patientdata.components.MainStepper
             android:id="@+id/MainStepper"
             android:layout_width="0dp"
