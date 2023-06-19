@@ -70,26 +70,6 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 var day = c.get(Calendar.DAY_OF_MONTH)
 
 
-//                var datePicker = DatePickerDialog(requireActivity(),{ view, year, monthOfYear, dayOfMonth ->
-//
-//                    Log.e(AppConstants.TAG_NAME, "$year $monthOfYear $dayOfMonth")
-//                    c.set(Calendar.YEAR, year)
-//                    c.set(Calendar.MONTH, monthOfYear)
-//                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-//                    sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
-//                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-//                    binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
-//                },year , month, day)
-//                var layoutParams = datePicker.window?.attributes
-//                if (layoutParams != null) {
-//                    Log.e(TAG_NAME, "Apply new size to datepicker")
-//                    layoutParams.width = layoutParams.width * 2
-//                    layoutParams.height =layoutParams.height * 2
-//                    datePicker.window?.setLayout(layoutParams.width, layoutParams.height)
-////                    datePicker.window?.attributes = layoutParams
-//                }
-
-//                datePicker.show()
                 val dialog = Dialog(requireContext())
                 dialog.setContentView(R.layout.custom_date_picker)
                 val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
@@ -354,7 +334,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
     fun showChooseHotelModal(){
         val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
-        val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, true)
+        val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, true, "Select an item")
         val dialogAddressList = ArrayList(hotelList)
         if(isOnline(requireContext())){
             dialogAddressList.add(Address())
@@ -362,47 +342,24 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
         dialogAddressList.add(Address(-99))
         val adapter = AddressDialogAdapter(requireContext(), dialogAddressList)
+        adapter.setOnItemClickListener {
+            bottomSheet.dismiss()
+            val address = dialogAddressList.get(it)
+            if(address.uid == null){
+                showCreateHotelModal()
+            }
+            else if (address.uid == -99){
+                setStartPointAddress(Address())
+            }
+            else{
+                setStartPointAddress(address)
+            }
+        }
         bottomSheet.setAdapter(adapter)
-//
-//        bottomSheet.setOnItemClickListener {
-//            bottomSheet.dismiss()
-//            when(it){
-//                0 ->{
-//                    importAddressFromPatientData()
-//                }
-//                1 ->{
-//                    showNewAddressMapScreen()
-//                }
-//                2 ->{
-//                    fillVisitAddressManually()
-//                }
-//            }
-//        }
-        activity?.supportFragmentManager?.let { it1 -> bottomSheet.show(it1, "SelectBottomSheet") }
+        activity?.supportFragmentManager?.let { it1 ->
+            bottomSheet.show(it1, "SelectBottomSheet")
+        }
 
-//        val builder = AlertDialog.Builder(requireContext())
-//
-
-//
-//        builder.setTitle("Select an item")
-//        builder.setAdapter(adapter) { dialog, which ->
-//            // Handle item selection
-//            val address = dialogAddressList.get(which)
-//            if(address.uid == null){
-//                showCreateHotelModal()
-//            }
-//            else if (address.uid == -99){
-//                setStartPointAddress(Address())
-//            }
-//            else{
-//                setStartPointAddress(address)
-//            }
-//        }
-//        builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialogInterface, i ->
-//            binding.startAddressForm.formRoot.visibility = VISIBLE
-//        })
-//        val dialog = builder.create()
-//        dialog.show()
     }
     fun showNewAddressMapScreen(){
         Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")

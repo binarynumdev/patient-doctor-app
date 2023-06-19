@@ -101,8 +101,6 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/appbar_padding_top"
-                    android:layout_marginTop="@dimen/appbar_padding_top"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -114,8 +112,10 @@
                         android:background="@drawable/bg_edit_text"
                         android:buttonTint="@color/app_blue"
                         android:drawableLeft="@drawable/ic_male"
+                        android:drawablePadding="@dimen/default_margin_10"
                         android:layoutDirection="rtl"
                         android:minHeight="0dp"
+                        android:paddingLeft="@dimen/default_margin_10"
                         android:text="@string/male" />
 
                     <RadioButton
@@ -128,8 +128,10 @@
                         android:background="@drawable/bg_edit_text"
                         android:buttonTint="@color/app_blue"
                         android:drawableLeft="@drawable/ic_female"
+                        android:drawablePadding="@dimen/default_margin_10"
                         android:layoutDirection="rtl"
                         android:minHeight="0dp"
+                        android:paddingLeft="@dimen/default_margin_10"
                         android:text="@string/female" />
                 </RadioGroup>
 

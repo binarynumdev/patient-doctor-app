@@ -12,6 +12,14 @@ import com.consulmedics.patientdata.data.model.Address
 
 class AddressDialogAdapter(context: Context, private val items: List<Address>) : RecyclerView.Adapter<AddressDialogAdapter.ViewHolder>() {
     private var context = context
+    private var itemClickListener: ((Int) -> Unit)? = null
+
+    private fun onItemClicked(itemId: Int) {
+        itemClickListener?.invoke(itemId)
+    }
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        itemClickListener = listener
+    }
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         internal val textAddressView: TextView = itemView.findViewById<TextView>(R.id.txtAddress)
     }
@@ -36,6 +44,7 @@ class AddressDialogAdapter(context: Context, private val items: List<Address>) :
             holder.textAddressView.setText("${currentAddress.streetName}, ${currentAddress.streetNumber} ${currentAddress.city} ${currentAddress.postCode}")
         }
         holder.textAddressView.setOnClickListener {
+            onItemClicked(position)
         }
 
     }

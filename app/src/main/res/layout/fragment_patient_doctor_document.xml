@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="@string/diagnosis"
             android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editDiagnosis"
@@ -53,7 +54,8 @@
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:text="@string/health_status"
             android:textColor="?attr/editTextColor"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editHealthStatus"

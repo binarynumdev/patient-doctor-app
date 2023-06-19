@@ -28,14 +28,16 @@ const val ARG_ITEM_COUNT = "item_count"
  *    SelectBottomSheetDialogFragment.newInstance(30).show(supportFragmentManager, "dialog")
  * </pre>
  */
-class SelectBottomSheetDialogFragment(radioOptions: Array<String>, isCustomAdapter: Boolean) : BottomSheetDialogFragment() {
+class SelectBottomSheetDialogFragment(radioOptions: Array<String>, isCustomAdapter: Boolean, modalTitle: String = "") : BottomSheetDialogFragment() {
     private var radioOptions = radioOptions
+    private var modalTitle: String = modalTitle
     private var _binding: FragmentSelectBottomSheetDialogListDialogBinding? = null
     private var itemClickListener: ((Int) -> Unit)? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
     private val isCustomAdapter = isCustomAdapter
+    private lateinit var listAdapter: RecyclerView.Adapter<*>
     init {
     }
     override fun onCreateView(
@@ -57,15 +59,17 @@ class SelectBottomSheetDialogFragment(radioOptions: Array<String>, isCustomAdapt
             Log.e(TAG_NAME, "View Created On the BottomSheetDialog")
             if(!isCustomAdapter)
                adapter =StringAdapter(radioOptions)
+            else
+                adapter = listAdapter
         }
+        if(modalTitle != ""){
+            binding.dialogTitle.text = modalTitle
+        }
+
 
     }
     fun setAdapter(arrayAdapter:  RecyclerView.Adapter<*>){
-        binding.list.apply {
-            layoutManager = LinearLayoutManager(context)
-            Log.e(TAG_NAME, "View Created On the BottomSheetDialog")
-            adapter = arrayAdapter
-        }
+        listAdapter = arrayAdapter
     }
 
     override fun getTheme(): Int {
@@ -73,9 +77,7 @@ class SelectBottomSheetDialogFragment(radioOptions: Array<String>, isCustomAdapt
     }
     private inner class ViewHolder internal constructor(binding: FragmentSelectBottomSheetDialogListDialogItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         internal val text: TextView = binding.text
-
     }
 
     private fun onItemClicked(itemId: Int) {
