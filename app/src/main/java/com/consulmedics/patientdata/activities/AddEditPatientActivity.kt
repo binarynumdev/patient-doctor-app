@@ -7,24 +7,23 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.components.ConfirmationDialog
 import com.consulmedics.patientdata.components.LeftStepperAdapter
 import com.consulmedics.patientdata.components.MainStepper
 import com.consulmedics.patientdata.components.StepperCallback
 import com.consulmedics.patientdata.components.models.StepItem
 import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
-import com.consulmedics.patientdata.fragments.addeditpatient.BaseAddEditPatientFragment
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
+import kotlinx.coroutines.launch
 
 
 class AddEditPatientActivity : BaseActivity() , StepperCallback{
@@ -34,11 +33,12 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     private lateinit var navController: NavController
     private var pageTitleList: List <StepItem> = listOf ()
     private var isLeftStepperInitialized = false
+    var tabIndex: Int = 0
     private val sharedViewModel: AddEditPatientViewModel by viewModels<AddEditPatientViewModel>(){
         AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
     }
     private val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
-        var tabIndex: Int = 0
+
         if(destination.id == R.id.patientPersonalDetailsFragment){
             tabIndex = 0
         }
@@ -127,6 +127,44 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             leftStepperAdapter.updateList(pageTitleList)
             leftStepper.setCurrentIndex(0)
             isLeftStepperInitialized = true
+            btnBack.setOnClickListener {
+                if(tabIndex > 0)
+                    onStepItemClicked(tabIndex - 1)
+            }
+            btnCancel.setOnClickListener {
+
+                val confirmationDialog = ConfirmationDialog("Are you sure?", "You will lose all data what you did if you confirm yes.")
+                confirmationDialog.setNegativeClickListener {
+                    confirmationDialog.dismiss()
+                }
+                confirmationDialog.setPostiveClickListener {
+                    confirmationDialog.dismiss()
+                    finish()
+                }
+                confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
+            }
+            btnNext.setOnClickListener {
+                if(tabIndex < 7)
+                    onStepItemClicked(tabIndex + 1)
+            }
+            btnFinish.setOnClickListener {
+                val confirmationDialog = ConfirmationDialog("Confirm go to home?", "You will move to home screen after save data.")
+                confirmationDialog.setNegativeClickListener {
+                    confirmationDialog.dismiss()
+                }
+                confirmationDialog.setPostiveClickListener {
+                    sharedViewModel.patientData.value?.let { it1 ->
+                        sharedViewModel.viewModelScope.launch {
+                            sharedViewModel.savePatient(it1)
+                        }
+                        confirmationDialog.dismiss()
+                        finish()
+                    }
+
+
+                }
+                confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
+            }
 
         }
 

@@ -26,12 +26,93 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/MainStepper" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/default_background_dark"
+            android:orientation="horizontal"
+            android:padding="@dimen/appbar_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
+            <Space
+                android:id="@+id/space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text_red_border"
+                android:drawableLeft="@drawable/ic_close"
+                android:text="@string/cancel"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_blue_border_radius"
+                android:drawableLeft="@drawable/ic_arrow_back_blue"
+                android:text="@string/back"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_blue_border_radius"
+                android:drawableRight="@drawable/ic_arrow_next_blue"
+                android:text="@string/btn_next"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_orange_border_radius"
+                android:drawableRight="@drawable/ic_home"
+                android:text="@string/finish"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:id="@+id/space2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
