@@ -26,8 +26,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.components.ConfirmationDialog
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.FetchLocationResponse
 
@@ -49,6 +51,7 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.util.*
 
@@ -458,30 +461,25 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             if(targetAddress!!.latitute == 0.00 && targetAddress!!.longitute == 0.00){
 
                 if(targetAddress!!.city.isEmpty() && targetAddress!!.postCode.isEmpty() && targetAddress!!.streetName.isEmpty() && targetAddress!!.streetNumber.isEmpty()){
-                    val builder = AlertDialog.Builder(this)
-                    builder.setCancelable(false)
-                    builder.setTitle("Detect your location?")
-                    builder.setMessage("Do you want to detect your current location?")
-                    builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-                        stopLoading()
-                        showLoading("Just a seconds", "We are detecting your current location")
-                        getLastLocation()
-                    }
-                    builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                    val confirmationDialog = ConfirmationDialog("Detect your location?", "Do you want to detect your current location?")
+                    confirmationDialog.setNegativeClickListener {
                         mMarker = mMap.addMarker(
                             MarkerOptions()
                                 .position(LatLng(51.035482, 13.7046237))
                                 .title("Pickup Your Hotel")
                         )
-
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
                         viewModel.getAddressFromLatLng(51.035482, 13.7046237, apiKey)
-
-                        dialog.dismiss()
+                        confirmationDialog.dismiss()
                         stopLoading()
                     }
-                    val qDialog = builder.show()
-                    qDialog.setCanceledOnTouchOutside(false)
+                    confirmationDialog.setPostiveClickListener {
+                        stopLoading()
+                        showLoading("Just a seconds", "We are detecting your current location")
+                        getLastLocation()
+                    }
+                    confirmationDialog.isCancelable = false
+                    confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
                 }
                 else{
 //                    binding.editSearchAddress.setText("${targetAddress!!.streetName} ${targetAddress!!.streetNumber}, ${targetAddress!!.postCode} ${targetAddress!!.city}")

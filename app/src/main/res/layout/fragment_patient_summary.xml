@@ -28,12 +28,13 @@
             android:text="@string/doctor_sign"
             android:textColor="?attr/editTextColor"
             android:textSize="@dimen/text_size_middle"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/textHealthStatus" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="300dp"
 
             android:layout_marginTop="@dimen/appbar_padding_top"
             android:background="@drawable/layout_border"

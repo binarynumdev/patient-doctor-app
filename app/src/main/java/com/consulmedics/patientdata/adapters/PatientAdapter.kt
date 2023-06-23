@@ -75,9 +75,12 @@ class PatientAdapter(
                 if(!currentPatient.gender.isNullOrEmpty()){
                     if(currentPatient.gender == "W"){
                         textGender.setText( mContext.getString(R.string.female) )
+                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_female))
+
                     }
                     else if (currentPatient.gender == "M"){
                         textGender.setText( mContext.getString(R.string.male)  )
+                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_male))
                     }
 
 

@@ -65,10 +65,11 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/bg_orange_circle"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnSyncPatients"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_patient" />
+                app:srcCompat="@drawable/ic_user_plus" />
 
             <ImageButton
                 android:id="@+id/btnSyncPatients"
