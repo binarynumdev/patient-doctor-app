@@ -25,4 +25,9 @@ object AppConstants {
     const val FETCH_ADDRESS_FROM_LOCATION_ENDPOINT: String = "maps/api/geocode/json"
     const val FETCH_DIRECTION_API_ENDPOINT: String = "maps/api/directions/json"
 
+
+    const val PHONE_CALL_MODE: String = "phone_call"
+    const val PATIENT_MODE: String = "patient_mode"
+    const val PATIENT_DATA: String = "patient_data"
+
 }

@@ -7,7 +7,7 @@
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:background="@color/quantum_grey400"
-    android:drawableRight="@drawable/ic_current"
+    android:drawableRight="@drawable/circular"
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/list_item_spacing"
     android:paddingTop="@dimen/list_item_spacing_half"

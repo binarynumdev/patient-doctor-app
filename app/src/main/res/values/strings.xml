@@ -68,6 +68,7 @@
     <string name="additional_details">Additional Details</string>
     <string name="save">Save</string>
     <string name="patient_data">Patient Data</string>
+    <string name="patient_data_from_phone">Patient Data Called</string>
     <string name="logistic_data">Logistics Data</string>
     <string name="doctor_document">Doctor Document</string>
     <string name="receipts">Receipts</string>
@@ -146,4 +147,8 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="confirm">Confirm</string>
     <string name="type_address">Please type address what you looking for.</string>
+    <string name="action_new_patient">New Patient</string>
+    <string name="action_new_patient_called">New Patient Called</string>
+    <string name="date_of_called">Date of Called</string>
+    <string name="time_of_called">Time of Called</string>
 </resources>
