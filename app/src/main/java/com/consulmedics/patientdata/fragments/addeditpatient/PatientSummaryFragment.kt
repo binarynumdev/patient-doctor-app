@@ -36,29 +36,16 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PatientSummaryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientSummaryFragment : Fragment() {
+class PatientSummaryFragment : BaseAddEditPatientFragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
-            if(it.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = it.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
+
 
                 if(it.signature.isNotEmpty()){
                     val newBM:Bitmap = AppUtils.svgStringToBitmap(it.signature)
@@ -133,7 +120,6 @@ class PatientSummaryFragment : Fragment() {
         binding.btnPrev.setOnClickListener {
             activity?.onBackPressed()
         }
-        binding.topBar.buttonRight1.visibility = GONE
         return binding.root
     }
 }

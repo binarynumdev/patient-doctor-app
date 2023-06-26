@@ -24,12 +24,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PatientAdditionalDetailsFragment : Fragment() {
+class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientAdditionalDetailsBinding? = null
     val binding get() = _binding!!
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -121,17 +119,7 @@ class PatientAdditionalDetailsFragment : Fragment() {
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    it.isEnabled = false
 
-                    sharedViewModel.viewModelScope.launch {
-                        sharedViewModel.savePatient(it1)
-                    }
-                    activity?.finish()
-                }
-            }
-            topBar.buttonRight1.visibility = GONE
         }
         return binding.root
     }
@@ -139,23 +127,6 @@ class PatientAdditionalDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
-            Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Additional fragment")
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
-
-
-
-
             if(sharedViewModel.patientData.value?.dementia == YES_TEXT){
                 binding.radioDemenzYes.isChecked = true
             }

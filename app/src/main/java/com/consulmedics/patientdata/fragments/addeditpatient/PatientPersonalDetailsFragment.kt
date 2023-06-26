@@ -1,24 +1,25 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
+import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientPersonalDetailsBinding
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
@@ -32,7 +33,7 @@ import java.util.*
  * Use the [PatientPersonalDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientPersonalDetailsFragment : Fragment() {
+class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
     // TODO: Rename and change types of parameters
     private var patient: Patient? = null
     private var param2: String? = null
@@ -44,9 +45,7 @@ class PatientPersonalDetailsFragment : Fragment() {
     private var tmpLastName: String = ""
     private lateinit var apiKey: String
 
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,12 +84,10 @@ class PatientPersonalDetailsFragment : Fragment() {
             editFirstName.doAfterTextChanged {
                 sharedViewModel.setFirstname(it.toString())
                 tmpFirstName = it.toString()
-                updateTopBar()
             }
             editLastName.doAfterTextChanged {
                 sharedViewModel.setLastname(it.toString())
                 tmpLastName = it.toString()
-                updateTopBar()
             }
 
             editStreet.doAfterTextChanged {
@@ -113,29 +110,39 @@ class PatientPersonalDetailsFragment : Fragment() {
                 if(sharedViewModel.patientData.value?.sincVisitAddress == true)
                     sharedViewModel.formatVisitLocation()
             }
-            editBirthMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onNothingSelected(parent: AdapterView<*>?) {
 
-                }
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    birthMonth = position
-                    updatePatientBirthDate()
-                }
 
-            }
-            editBirthDay.doAfterTextChanged {
-                if(it.toString().isNotEmpty()){
-                    birthDay = it.toString().toInt()
-                    updatePatientBirthDate()
-                }
 
-            }
-            editBirthYear.doAfterTextChanged {
-                if(it.toString().isNotEmpty()){
-                    birthYear = it.toString().toInt()
-                    updatePatientBirthDate()
+            editPatientBirthDate.setOnClickListener {
+                var c = Calendar.getInstance()
+                val converter: Converters = Converters()
+                if(sharedViewModel.patientData.value?.birthDate != null){
+                    c.time = sharedViewModel.patientData.value?.birthDate
                 }
+                var year = c.get(Calendar.YEAR)
+                var month = c.get(Calendar.MONTH)
+                var day = c.get(Calendar.DAY_OF_MONTH)
 
+
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_date_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                var datePicker = dialog.findViewById<DatePicker>(R.id.date_picker)
+                datePicker.init(year, month, day, DatePicker.OnDateChangedListener { view, year, monthOfYear, dayOfMonth ->  })
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.YEAR, datePicker.year)
+                    c.set(Calendar.MONTH, datePicker.month)
+                    c.set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
+                    sharedViewModel.setBirthDate(c.time)
+                    dialog.dismiss()
+                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                    binding.editPatientBirthDate.setText(birthDateFormat.format(c.time))
+                }
+                dialog.show()
             }
             radioMale.setOnClickListener{
                 sharedViewModel.setGender("M")
@@ -231,35 +238,9 @@ class PatientPersonalDetailsFragment : Fragment() {
             sharedViewModel.setBirthDate(cal.time);
 //            sharedViewModel.patientData.value?.birthDate = cal.time
         }
-        updateTopBar()
     }
 
-    private fun updateTopBar() {
-        Log.e(TAG_NAME,"${tmpLastName} ${tmpFirstName} ${birthDay} ${birthYear} ${birthMonth}" )
-        if(birthDay == null || birthYear == null || birthMonth == null){
-            if(tmpLastName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpFirstName}"
-            }
-            else if (tmpFirstName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpLastName}"
-            }
-            else{
-                binding.topBar.textViewLeft.text = "${tmpLastName},${tmpFirstName}"
-            }
-        }
-        else{
-            val dateStr = "(${birthDay}.${birthMonth+1}.${birthYear})"
-            if(tmpLastName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpFirstName}${dateStr}"
-            }
-            else if (tmpFirstName.isNullOrEmpty()){
-                binding.topBar.textViewLeft.text = "${tmpLastName}${dateStr}"
-            }
-            else{
-                binding.topBar.textViewLeft.text = "${tmpLastName},${tmpFirstName}${dateStr}"
-            }
-        }
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -268,7 +249,6 @@ class PatientPersonalDetailsFragment : Fragment() {
 //            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
             tmpFirstName = it.firstName
             tmpLastName = it.lastName
-            updateTopBar()
             binding.editFirstName.setText(sharedViewModel.patientData.value?.firstName)
             binding.editLastName.setText(sharedViewModel.patientData.value?.lastName)
             if(!sharedViewModel.patientData.value?.gender.isNullOrEmpty()){

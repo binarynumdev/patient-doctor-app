@@ -1,48 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawerLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AddEditPatientActivity"
     tools:ignore="MissingDefaultResource">
-
-    <com.shuhart.stepview.StepView
-        android:id="@+id/patient_step_indicator"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/app_blue_200"
-        android:padding="16dp"
-        app:sv_selectedCircleColor="@color/app_orange"
-        app:sv_selectedStepNumberColor="@color/white"
-        app:sv_selectedTextColor="@color/white"
+        android:layout_height="match_parent">
 
-        app:sv_stepLineWidth="1dp"
-        app:sv_stepPadding="4dp"
+        <com.consulmedics.patientdata.components.MainStepper
+            android:id="@+id/MainStepper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></com.consulmedics.patientdata.components.MainStepper>
 
-        app:sv_nextTextColor="@color/app_blue"
-        app:sv_nextStepLineColor="@color/app_blue"
+        <fragment
+            android:id="@+id/nav_host_fragment_patient_flow"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/MainStepper" />
 
-        app:sv_doneCircleColor="@color/app_blue"
-        app:sv_doneStepLineColor="@color/app_blue"
-        app:sv_doneTextColor="@color/white"
-        app:sv_doneStepMarkColor="@color/white"
-        app:sv_doneCircleRadius="12dp"
-        app:sv_selectedCircleRadius="12dp"
-        app:sv_stepViewStyle="@style/StepView"
-        app:sv_stepNumberTextSize="12sp"
-        app:sv_animationType="Line"/>
-    <fragment
-        android:id="@+id/nav_host_fragment_patient_flow"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/patient_step_indicator" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/default_background_dark"
+            android:orientation="horizontal"
+            android:padding="@dimen/appbar_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text_red_border"
+                android:drawableLeft="@drawable/ic_close"
+                android:text="@string/cancel"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_blue_border_radius"
+                android:drawableLeft="@drawable/ic_arrow_back_blue"
+                android:text="@string/back"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_blue_border_radius"
+                android:drawableRight="@drawable/ic_arrow_next_blue"
+                android:text="@string/btn_next"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_orange_border_radius"
+                android:drawableRight="@drawable/ic_home"
+                android:text="@string/finish"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:id="@+id/space2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header_add_edit_patient"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+            <com.consulmedics.patientdata.components.LeftStepper
+                android:id="@+id/leftStepper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.consulmedics.patientdata.components.LeftStepper>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

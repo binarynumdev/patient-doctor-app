@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.SCardExt
+import com.consulmedics.patientdata.data.api.response.BaseResponse
+import com.consulmedics.patientdata.data.api.response.PDFGenerateResponse
 import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
@@ -47,6 +49,9 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     var startAddress: LiveData<Address> = _startAddress
     private val _visitAddress = MutableLiveData<Address>()
     var visitAddress: LiveData<Address> = _visitAddress
+//    private val _printResult = MutableLiveData<BaseResponse<PDFGenerateResponse>>()
+    var printResult: MutableLiveData<BaseResponse<PDFGenerateResponse>> = MutableLiveData()
+
     init {
         hotelList = addressRepository.hotelList
         previousPatients = patientRepository.previousPatients(null)
@@ -419,12 +424,28 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         }
     }
 
-    fun printInsurance() : File?{
-        return patientRepository.generateInsurnacePDF(_patientData.value)
+    fun printInsurance() {
+        printResult.value = BaseResponse.Loading()
+        viewModelScope.launch {
+            val result = patientRepository.generateInsurnacePDF(_patientData.value)
+            if(result!= null){
+
+                printResult.value = BaseResponse.Success(PDFGenerateResponse(result))
+
+            }
+        }
     }
 
-    fun printReceipt(): File?{
-        return patientRepository.generateReceiptPDF(_patientData.value)
+    fun printReceipt(){
+        printResult.value = BaseResponse.Loading()
+        viewModelScope.launch {
+            val result = patientRepository.generateReceiptPDF(_patientData.value)
+            if(result!= null){
+
+                printResult.value = BaseResponse.Success(PDFGenerateResponse(result))
+
+            }
+        }
     }
 
     fun isValidMedicalReceipt(): Boolean? {

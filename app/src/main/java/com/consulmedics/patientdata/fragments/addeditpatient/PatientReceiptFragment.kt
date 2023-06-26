@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,14 +27,13 @@ import java.util.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.utils.AppUtils
 import kotlinx.coroutines.launch
 
-class PatientReceiptFragment : Fragment() {
+class PatientReceiptFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientReceiptBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
-    }
+
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,66 +64,47 @@ class PatientReceiptFragment : Fragment() {
             editMedikament3.doOnTextChanged { text, start, count, after ->
                 AppUtils.validateMaxLineMaxLetterForEditText(editMedikament3, text, requireContext());
             }
-            btnNext.setOnClickListener {
+            btnContinue.setOnClickListener {
                 findNavController().navigate(R.id.action_patientReceiptFragment_to_patientSummaryFragment)
             }
-            btnPrev.setOnClickListener {
+            btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    it.isEnabled = false
 
-                    sharedViewModel.viewModelScope.launch {
-                        sharedViewModel.savePatient(it1)
-                    }
-                    activity?.finish()
-                }
-            }
-            topBar.apply {
-                buttonRight1.text = getText(R.string.print_receipt)
-                buttonRight1.setOnClickListener {
-                    var pdfFile = sharedViewModel.printReceipt()
-                    if(pdfFile != null){
-                        val intent = Intent()
-                        intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-                        val uriPdfPath =
-                            FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
-                        Log.d("pdfPath", "" + uriPdfPath);
-                        val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
-                        pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
-                        pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
-                        pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            sharedViewModel.printResult.observe(viewLifecycleOwner, Observer {
+                when(it){
+                    is BaseResponse.Success ->{
+                        var pdfFile = it.data?.result_file
+                        if(pdfFile != null){
+                            val intent = Intent()
+                            intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                            val uriPdfPath =
+                                FileProvider.getUriForFile(requireContext(), requireActivity().applicationContext.packageName + ".provider", pdfFile)
+                            Log.d("pdfPath", "" + uriPdfPath);
+                            val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
+                            pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
+                            pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
+                            pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
-                        try {
-                            startActivity(pdfOpenIntent)
-                        } catch (activityNotFoundException: ActivityNotFoundException) {
-                            Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
-                                .show()
+                            try {
+                                startActivity(pdfOpenIntent)
+                            } catch (activityNotFoundException: ActivityNotFoundException) {
+                                Toast.makeText(requireContext(), "There is no app to load corresponding PDF", Toast.LENGTH_LONG)
+                                    .show()
+                            }
                         }
                     }
+                    else -> {}
                 }
-            }
+            })
+
         }
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${it.lastName},${it.firstName} ")
-            }
-
             binding.editMedikament1.setText(sharedViewModel.patientData.value?.medicals1)
             binding.editMedikament2.setText(sharedViewModel.patientData.value?.medicals2)
             binding.editMedikament3.setText(sharedViewModel.patientData.value?.medicals3)

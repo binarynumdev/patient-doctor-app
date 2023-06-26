@@ -75,9 +75,12 @@ class PatientAdapter(
                 if(!currentPatient.gender.isNullOrEmpty()){
                     if(currentPatient.gender == "W"){
                         textGender.setText( mContext.getString(R.string.female) )
+                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_female))
+
                     }
                     else if (currentPatient.gender == "M"){
                         textGender.setText( mContext.getString(R.string.male)  )
+                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_male))
                     }
 
 
@@ -88,13 +91,13 @@ class PatientAdapter(
 
                 if(currentPatient.isFullyValidated()){
                     textIsFinished.setText(R.string.completed)
-                    textIsFinished.setTextColor(Color.GREEN)
-                    statusColoredBorder.setBackgroundColor(Color.GREEN)
+//                    textIsFinished.setTextColor(Color.GREEN)
+//                    statusColoredBorder.setBackgroundColor(Color.GREEN)
                 }
                 else{
-                    textIsFinished.setTextColor(Color.RED)
+//                    textIsFinished.setTextColor(Color.RED)
                     textIsFinished.setText(R.string.incompleted)
-                    statusColoredBorder.setBackgroundColor(Color.RED)
+//                    statusColoredBorder.setBackgroundColor(Color.RED)
                 }
                 btnEditPatient.setOnClickListener {
                     patientItemOnClickInterface.onPatientEditClick(currentPatient)
@@ -110,12 +113,12 @@ class PatientAdapter(
                 holder.itemBinding.loadingProgressBar.visibility = View.GONE
                 holder.itemBinding.patientItemLayout.visibility = View.VISIBLE
                 if(currentPatient.startAddress != 0)
-                    textStartPoint.setText(addressRepository.find(currentPatient.startAddress).toString())
+//                    textStartPoint.setText(addressRepository.find(currentPatient.startAddress).toString())
                 if(currentPatient.visitAddress != 0){
-                    txtVisitPoint.setText(addressRepository.find(currentPatient.visitAddress).toString())
+//                    txtVisitPoint.setText(addressRepository.find(currentPatient.visitAddress).toString())
                 }
                 val strDistance = if(currentPatient.distance == 0.00)  "N/A" else "${currentPatient.distance/1000}KM"
-                textDistance.setText(strDistance)
+//                textDistance.setText(strDistance)
             }
         }
 
