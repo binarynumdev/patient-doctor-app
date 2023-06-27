@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.MyAppDatabase
@@ -76,7 +77,9 @@ class PatientAdapter(
                     textGender.setText( "Phone"  )
                     imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone))
                     textFullAddress.setText(currentPatient.phoneNumber)
-                    imageLocation.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone))
+                    imageLocation.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone_number))
+                    textPatientID.visibility = GONE
+                    divider.visibility = GONE
                 }
                 else{
                     textGender.setText( "Car"  )
