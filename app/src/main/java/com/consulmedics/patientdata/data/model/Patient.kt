@@ -337,8 +337,16 @@ data class Patient(
     }
 
     fun isFullyValidated(): Boolean {
-        if(isValidMedicalReceipt() == true && isValidatePersonalDetails() && isValidAdditionalDetails() && isValidLogisticDetails() && isValidDoctorDocument() == true && isValidMedicalReceipt() == true)
-            return true
+        if(target.equals("call")){
+            if(firstName.isNotEmpty() && lastName.isNotEmpty() && phoneNumber.isNotEmpty()){
+                return true
+            }
+        }
+        else{
+            if(isValidMedicalReceipt() == true && isValidatePersonalDetails() && isValidAdditionalDetails() && isValidLogisticDetails() && isValidDoctorDocument() == true && isValidMedicalReceipt() == true)
+                return true
+        }
+
         return false
     }
 
