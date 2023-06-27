@@ -25,6 +25,7 @@ import com.consulmedics.patientdata.adapters.PatientItemClickInterface
 import com.consulmedics.patientdata.components.ConfirmationDialog
 import com.consulmedics.patientdata.databinding.FragmentPatientListBinding
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -121,6 +122,9 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
         Log.e(TAG_NAME, "Edit Event Handler")
 
         startActivity(Intent(requireContext(), AddEditPatientActivity::class.java).apply {
+            if(patient.target.equals("call")){
+                putExtra(AppConstants.PATIENT_MODE, AppConstants.PHONE_CALL_MODE)
+            }
             putExtra("patient_data", patient)
         })
     }

@@ -61,7 +61,7 @@ class MainActivity : BaseActivity() {
                     // you can add values(if any) to pass to the next class or avoid using `.apply`
                     putExtra(PATIENT_MODE, PHONE_CALL_MODE)
 
-                    putExtra(PATIENT_DATA, Patient())
+                    putExtra(PATIENT_DATA, Patient(target = "call"))
                 })
                 return true
             }

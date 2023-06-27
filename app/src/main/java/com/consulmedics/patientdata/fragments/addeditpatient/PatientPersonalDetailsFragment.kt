@@ -262,18 +262,9 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
             }
             if(sharedViewModel.patientData.value?.birthDate != null){
                 val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.editBirthDay.setText("${day}")
-                binding.editBirthYear.setText("${year}")
-                binding.editBirthMonth.setSelection(month)
-                binding.topBar.textViewLeft.setText("${sharedViewModel.patientData.value?.lastName},${sharedViewModel.patientData.value?.firstName}($day.${month + 1}.$year)")
-            }
-            else{
-                binding.topBar.textViewLeft.setText("${sharedViewModel.patientData.value?.lastName},${sharedViewModel.patientData.value?.firstName} ")
+                binding.editPatientBirthDate.setText(
+                    birthDateFormat.format(sharedViewModel.patientData.value?.birthDate)
+                )
             }
             binding.editStreet.setText(sharedViewModel.patientData.value?.street)
             binding.editCity.setText(sharedViewModel.patientData.value?.city)

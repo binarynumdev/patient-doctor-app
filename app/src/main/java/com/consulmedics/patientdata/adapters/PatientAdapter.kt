@@ -72,22 +72,30 @@ class PatientAdapter(
                 else{
                     textBirthDate.setText(mContext.getString(R.string.no_birthdate))
                 }
-                if(!currentPatient.gender.isNullOrEmpty()){
-                    if(currentPatient.gender == "W"){
-                        textGender.setText( mContext.getString(R.string.female) )
-                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_female))
-
-                    }
-                    else if (currentPatient.gender == "M"){
-                        textGender.setText( mContext.getString(R.string.male)  )
-                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_male))
-                    }
-
-
+                if(currentPatient.target.equals("call")){
+                    textGender.setText( "Phone"  )
+                    imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone))
                 }
                 else{
-                    textGender.setText( mContext.getString(R.string.no_gender) )
+                    textGender.setText( "Car"  )
+                    imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_car))
                 }
+//                if(!currentPatient.gender.isNullOrEmpty()){
+//                    if(currentPatient.gender == "W"){
+//                        textGender.setText( mContext.getString(R.string.female) )
+//                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_female))
+//
+//                    }
+//                    else if (currentPatient.gender == "M"){
+//                        textGender.setText( mContext.getString(R.string.male)  )
+//                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_male))
+//                    }
+//
+//
+//                }
+//                else{
+//                    textGender.setText( mContext.getString(R.string.no_gender) )
+//                }
 
                 if(currentPatient.isFullyValidated()){
                     textIsFinished.setText(R.string.completed)

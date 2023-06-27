@@ -125,7 +125,65 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
             radioFemale.setOnClickListener{
                 sharedViewModel.setGender("W")
             }
+            editDateOfVisit.setOnClickListener {
+                var c = Calendar.getInstance()
+                val converter: Converters = Converters()
+                if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()){
+                    c.time = converter.stringToDate(sharedViewModel.patientData.value?.startVisitDate!!)
+                }
+                var year = c.get(Calendar.YEAR)
+                var month = c.get(Calendar.MONTH)
+                var day = c.get(Calendar.DAY_OF_MONTH)
 
+
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_date_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                var datePicker = dialog.findViewById<DatePicker>(R.id.date_picker)
+                datePicker.init(year, month, day, DatePicker.OnDateChangedListener { view, year, monthOfYear, dayOfMonth ->  })
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.YEAR, datePicker.year)
+                    c.set(Calendar.MONTH, datePicker.month)
+                    c.set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
+                    sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
+                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                    binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
+                    dialog.dismiss()
+                }
+                dialog.show()
+            }
+            editTimeOfVisit.setOnClickListener {
+                var c = Calendar.getInstance()
+                val converter: Converters = Converters()
+                if(!sharedViewModel.patientData.value?.startVisitTime.isNullOrEmpty()){
+                    c.time = converter.stringToTime(sharedViewModel.patientData.value?.startVisitTime!!)
+                }
+                val hourOfDay: Int = c.get(Calendar.HOUR_OF_DAY)
+                val minute: Int = c.get(Calendar.MINUTE)
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_time_picker)
+                val timePicker = dialog.findViewById<TimePicker>(R.id.time_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                timePicker.setIs24HourView(true)
+                timePicker.hour = hourOfDay
+                timePicker.minute = minute
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.HOUR_OF_DAY, timePicker.hour)
+                    c.set(Calendar.MINUTE, timePicker.minute)
+                    editTimeOfVisit.setText(converter.timeToString(c.time))
+                    sharedViewModel.setStartVisitTime(converter.timeToString(c.time)!!)
+                    dialog.dismiss()
+                }
+                dialog.show()
+            }
             editPatientPhoneNumber.doAfterTextChanged {
                 if(it.toString().isNullOrEmpty()){
                     editPatientPhoneNumber.setBackgroundResource(R.drawable.bg_edit_text_red_border)
@@ -135,49 +193,8 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
                 }
                 sharedViewModel.setPhoneNumber(it.toString())
             }
-
-            btnContinue.setOnClickListener {
-                if(canSave()){
-                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
-                }
-                else{
-                    Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()
-                }
-
-            }
-            btnSave.setOnClickListener {
-                if(canSave()){
-                    sharedViewModel.patientData.value?.let { it1 ->
-                        it.isEnabled = false
-
-                        sharedViewModel.viewModelScope.launch {
-                            sharedViewModel.savePatient(it1)
-                        }
-                        activity?.finish()
-                    }
-                }
-                else{
-                    Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()
-                }
-
-            }
-            btnCancel.setOnClickListener {
-                requireActivity().finish()
-            }
-
-            topBar.apply {
-//                textViewLeft.visibility = GONE
-                buttonRight1.text = getText(R.string.read_card)
-                buttonRight1.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.stat_sys_download, 0, 0, 0)
-                buttonRight1.setOnClickListener {
-                    val cardReadResult = sharedViewModel.loadPatientFromCard(requireContext())
-                    if(cardReadResult){
-
-                    }
-                    else{
-                        Toast.makeText(requireContext(), R.string.no_card_reader, Toast.LENGTH_SHORT).show()
-                    }
-                }
+            editHealthStatus.doAfterTextChanged {
+                sharedViewModel.setHealthStatus(it.toString())
             }
         }
         val root = binding.root
@@ -192,23 +209,13 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
         return true
     }
 
-    private fun updatePatientBirthDate() {
-        if(birthYear != null  && birthDay != null){
-            val cal = Calendar.getInstance()
-//            cal.time = sharedViewModel.patientData.value?.birthDate
-            cal[Calendar.YEAR] = birthYear!!
-            cal[Calendar.MONTH] = birthMonth
-            cal[Calendar.DAY_OF_MONTH] = birthDay!!
-            Log.e(TAG_NAME, cal.time.toString())
-            sharedViewModel.setBirthDate(cal.time);
-//            sharedViewModel.patientData.value?.birthDate = cal.time
-        }
-    }
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+        val converters: Converters = Converters()
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
             Log.e(TAG_NAME, "Shared Vide Model Data Changed")
 //            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
@@ -225,7 +232,23 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
                     binding.radioMale.isChecked = true
                 }
             }
-
+            if(sharedViewModel.patientData.value?.birthDate != null){
+                val birthDateFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
+                binding.editPatientBirthDate.setText(
+                    birthDateFormat.format(sharedViewModel.patientData.value?.birthDate)
+                )
+            }
+            binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
+            if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()) {
+                binding.editDateOfVisit.setText(
+                    birthDateFormat.format(
+                        converters.stringToDate(
+                            sharedViewModel.patientData.value?.startVisitDate
+                        )
+                    )
+                )
+            }
+            binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
             binding.editPatientPhoneNumber.setText(sharedViewModel.patientData.value?.phoneNumber)
         })
     }

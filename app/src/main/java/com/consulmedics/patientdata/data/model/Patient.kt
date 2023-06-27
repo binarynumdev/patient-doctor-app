@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 @Entity
 data class Patient(
-    @PrimaryKey(autoGenerate = true) var uid: Int? = null
+    @PrimaryKey(autoGenerate = true) var uid: Int? = null, var target: String? = null
 ): Serializable {
     var patientID:      String? = ""
     var firstName:      String  = ""
