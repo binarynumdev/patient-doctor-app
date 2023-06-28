@@ -151,4 +151,5 @@
     <string name="action_new_patient_called">New Patient Called</string>
     <string name="date_of_called">Date of Called</string>
     <string name="time_of_called">Time of Called</string>
+    <string name="doctor_shift">Doctor Shift</string>
 </resources>
