@@ -19,6 +19,7 @@ import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientPersonalDetailsBinding
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.databinding.FragmentPatientDetailsForPhoneCallBinding
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.DISPLAY_DATE_FORMAT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
@@ -33,11 +34,11 @@ import java.util.*
  * Use the [PatientPersonalDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
+class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
     // TODO: Rename and change types of parameters
     private var patient: Patient? = null
     private var param2: String? = null
-    private var _binding: FragmentPatientPersonalDetailsBinding? = null
+    private var _binding: FragmentPatientDetailsForPhoneCallBinding? = null
     private var birthYear: Int? = null
     private var birthMonth: Int = 0
     private var birthDay: Int? = null
@@ -72,13 +73,9 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentPatientPersonalDetailsBinding.inflate(inflater, container, false)
+        _binding = FragmentPatientDetailsForPhoneCallBinding.inflate(inflater, container, false)
         patient?.let { sharedViewModel.setPatientData(it) }
-        ArrayAdapter.createFromResource(requireContext(), R.array.month_array, android.R.layout.simple_spinner_dropdown_item).also {
-            adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.editBirthMonth.adapter = adapter
-        }
+
         _binding?.apply {
 
             editFirstName.doAfterTextChanged {
@@ -89,28 +86,6 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
                 sharedViewModel.setLastname(it.toString())
                 tmpLastName = it.toString()
             }
-
-            editStreet.doAfterTextChanged {
-                sharedViewModel.setStreet(it.toString())
-                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
-                    sharedViewModel.formatVisitLocation()
-            }
-            editHouseNumber.doAfterTextChanged {
-                sharedViewModel.setHouseNumber(it.toString())
-                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
-                    sharedViewModel.formatVisitLocation()
-            }
-            editCity.doAfterTextChanged {
-                sharedViewModel.setCity(it.toString())
-                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
-                    sharedViewModel.formatVisitLocation()
-            }
-            editPostalCode.doAfterTextChanged {
-                sharedViewModel.setPostCode(it.toString())
-                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
-                    sharedViewModel.formatVisitLocation()
-            }
-
 
 
             editPatientBirthDate.setOnClickListener {
@@ -150,7 +125,65 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
             radioFemale.setOnClickListener{
                 sharedViewModel.setGender("W")
             }
+            editDateOfVisit.setOnClickListener {
+                var c = Calendar.getInstance()
+                val converter: Converters = Converters()
+                if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()){
+                    c.time = converter.stringToDate(sharedViewModel.patientData.value?.startVisitDate!!)
+                }
+                var year = c.get(Calendar.YEAR)
+                var month = c.get(Calendar.MONTH)
+                var day = c.get(Calendar.DAY_OF_MONTH)
 
+
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_date_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                var datePicker = dialog.findViewById<DatePicker>(R.id.date_picker)
+                datePicker.init(year, month, day, DatePicker.OnDateChangedListener { view, year, monthOfYear, dayOfMonth ->  })
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.YEAR, datePicker.year)
+                    c.set(Calendar.MONTH, datePicker.month)
+                    c.set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
+                    sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
+                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                    binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
+                    dialog.dismiss()
+                }
+                dialog.show()
+            }
+            editTimeOfVisit.setOnClickListener {
+                var c = Calendar.getInstance()
+                val converter: Converters = Converters()
+                if(!sharedViewModel.patientData.value?.startVisitTime.isNullOrEmpty()){
+                    c.time = converter.stringToTime(sharedViewModel.patientData.value?.startVisitTime!!)
+                }
+                val hourOfDay: Int = c.get(Calendar.HOUR_OF_DAY)
+                val minute: Int = c.get(Calendar.MINUTE)
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.custom_time_picker)
+                val timePicker = dialog.findViewById<TimePicker>(R.id.time_picker)
+                val btnTimeOk = dialog.findViewById<Button>(R.id.btnOk)
+                val btnTimeCancel = dialog.findViewById<Button>(R.id.btnCancel)
+                timePicker.setIs24HourView(true)
+                timePicker.hour = hourOfDay
+                timePicker.minute = minute
+                btnTimeCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+                btnTimeOk.setOnClickListener {
+                    c.set(Calendar.HOUR_OF_DAY, timePicker.hour)
+                    c.set(Calendar.MINUTE, timePicker.minute)
+                    editTimeOfVisit.setText(converter.timeToString(c.time))
+                    sharedViewModel.setStartVisitTime(converter.timeToString(c.time)!!)
+                    dialog.dismiss()
+                }
+                dialog.show()
+            }
             editPatientPhoneNumber.doAfterTextChanged {
                 if(it.toString().isNullOrEmpty()){
                     editPatientPhoneNumber.setBackgroundResource(R.drawable.bg_edit_text_red_border)
@@ -160,57 +193,8 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
                 }
                 sharedViewModel.setPhoneNumber(it.toString())
             }
-            editPatientNamePractice.doAfterTextChanged {
-                sharedViewModel.setPracticeName(it.toString())
-                if(it.toString().isNullOrEmpty()){
-                    editPatientNamePractice.setBackgroundResource(R.drawable.bg_edit_text_red_border)
-                }
-                else{
-                    editPatientNamePractice.setBackgroundResource(R.drawable.bg_edit_text)
-                }
-            }
-            btnContinue.setOnClickListener {
-                if(canSave()){
-                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
-                }
-                else{
-                    Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()
-                }
-
-            }
-            btnSave.setOnClickListener {
-                if(canSave()){
-                    sharedViewModel.patientData.value?.let { it1 ->
-                        it.isEnabled = false
-
-                        sharedViewModel.viewModelScope.launch {
-                            sharedViewModel.savePatient(it1)
-                        }
-                        activity?.finish()
-                    }
-                }
-                else{
-                    Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()
-                }
-
-            }
-            btnCancel.setOnClickListener {
-                requireActivity().finish()
-            }
-
-            topBar.apply {
-//                textViewLeft.visibility = GONE
-                buttonRight1.text = getText(R.string.read_card)
-                buttonRight1.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.stat_sys_download, 0, 0, 0)
-                buttonRight1.setOnClickListener {
-                    val cardReadResult = sharedViewModel.loadPatientFromCard(requireContext())
-                    if(cardReadResult){
-
-                    }
-                    else{
-                        Toast.makeText(requireContext(), R.string.no_card_reader, Toast.LENGTH_SHORT).show()
-                    }
-                }
+            editHealthStatus.doAfterTextChanged {
+                sharedViewModel.setHealthStatus(it.toString())
             }
         }
         val root = binding.root
@@ -221,29 +205,17 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
         if(binding.editPatientPhoneNumber.text.isNullOrEmpty()){
             return false
         }
-        if(binding.editPatientNamePractice.text.isNullOrEmpty()){
-            return false
-        }
+
         return true
     }
 
-    private fun updatePatientBirthDate() {
-        if(birthYear != null  && birthDay != null){
-            val cal = Calendar.getInstance()
-//            cal.time = sharedViewModel.patientData.value?.birthDate
-            cal[Calendar.YEAR] = birthYear!!
-            cal[Calendar.MONTH] = birthMonth
-            cal[Calendar.DAY_OF_MONTH] = birthDay!!
-            Log.e(TAG_NAME, cal.time.toString())
-            sharedViewModel.setBirthDate(cal.time);
-//            sharedViewModel.patientData.value?.birthDate = cal.time
-        }
-    }
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+        val converters: Converters = Converters()
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
             Log.e(TAG_NAME, "Shared Vide Model Data Changed")
 //            binding.editPatientID.setText(sharedViewModel.patientData.value?.patientID)
@@ -266,12 +238,18 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
                     birthDateFormat.format(sharedViewModel.patientData.value?.birthDate)
                 )
             }
-            binding.editStreet.setText(sharedViewModel.patientData.value?.street)
-            binding.editCity.setText(sharedViewModel.patientData.value?.city)
-            binding.editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
-            binding.editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
+            binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
+            if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()) {
+                binding.editDateOfVisit.setText(
+                    birthDateFormat.format(
+                        converters.stringToDate(
+                            sharedViewModel.patientData.value?.startVisitDate
+                        )
+                    )
+                )
+            }
+            binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
             binding.editPatientPhoneNumber.setText(sharedViewModel.patientData.value?.phoneNumber)
-            binding.editPatientNamePractice.setText(sharedViewModel.patientData.value?.practiceName)
         })
     }
 

@@ -3,6 +3,7 @@ package com.consulmedics.patientdata.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.GONE
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -20,6 +21,9 @@ import com.consulmedics.patientdata.components.StepperCallback
 import com.consulmedics.patientdata.components.models.StepItem
 import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.databinding.ActivityAddEditPatientBinding
+import com.consulmedics.patientdata.utils.AppConstants.PATIENT_DATA
+import com.consulmedics.patientdata.utils.AppConstants.PATIENT_MODE
+import com.consulmedics.patientdata.utils.AppConstants.PHONE_CALL_MODE
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
@@ -28,6 +32,7 @@ import kotlinx.coroutines.launch
 
 class AddEditPatientActivity : BaseActivity() , StepperCallback{
     private var patient: Patient? = null
+    private var patientMode: String? = null
     private lateinit var binding: ActivityAddEditPatientBinding
     private lateinit var pageStepper: MainStepper
     private lateinit var navController: NavController
@@ -39,49 +44,40 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     }
     private val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
 
-        if(destination.id == R.id.patientPersonalDetailsFragment){
-            tabIndex = 0
-        }
-        else if (destination.id == R.id.patientInsurranceDetailsFragment){
-            tabIndex = 1
-        }
-        else if (destination.id == R.id.patientDoctorSignFragment){
-            tabIndex = 2
-        }
-        else if (destination.id == R.id.patientLogisticsDetailsFragment){
-            tabIndex = 3
-        }
-        else if (destination.id == R.id.patientDoctorDocumentFragment){
-            tabIndex = 4
-        }
-        else if (destination.id == R.id.patientAdditionalDetailsFragment){
-            tabIndex = 5
-        }
-        else if (destination.id == R.id.patientReceiptFragment){
-            tabIndex = 6
-        }
-        else if (destination.id == R.id.patientSummaryFragment){
-            tabIndex = 7
-        }
-        pageStepper.go(tabIndex)
-        if(isLeftStepperInitialized)
-            binding.leftStepper.setCurrentIndex(tabIndex)
-        reloadPatientData()
-        for (i in 0 until pageTitleList.count()){
+        if(patientMode == PHONE_CALL_MODE){
 
-//            if(i < tabIndex){
-//                binding.patientStepIndicator.setStepState(Step.State.COMPLETED, i )
-//                Log.e(TAG_NAME, "Complted STEP_${i}: ${i ==  tabIndex}: ${i < tabIndex}")
-//            }
-//            else if (i == tabIndex){
-//                binding.patientStepIndicator.setStepState(Step.State.CURRENT, i )
-//                Log.e(TAG_NAME, "Current STEP_${i}: ${i ==  tabIndex}: ${i < tabIndex}")
-//            }
-//            else{
-//                binding.patientStepIndicator.setStepState(Step.State.NOT_COMPLETED, i )
-//                Log.e(TAG_NAME, "Uncomplted STEP_${i}: ${i ==  tabIndex}: ${i < tabIndex}")
-//            }
         }
+        else{
+            if(destination.id == R.id.patientPersonalDetailsFragment){
+                tabIndex = 0
+            }
+            else if (destination.id == R.id.patientInsurranceDetailsFragment){
+                tabIndex = 1
+            }
+            else if (destination.id == R.id.patientDoctorSignFragment){
+                tabIndex = 2
+            }
+            else if (destination.id == R.id.patientLogisticsDetailsFragment){
+                tabIndex = 3
+            }
+            else if (destination.id == R.id.patientDoctorDocumentFragment){
+                tabIndex = 4
+            }
+            else if (destination.id == R.id.patientAdditionalDetailsFragment){
+                tabIndex = 5
+            }
+            else if (destination.id == R.id.patientReceiptFragment){
+                tabIndex = 6
+            }
+            else if (destination.id == R.id.patientSummaryFragment){
+                tabIndex = 7
+            }
+            pageStepper.go(tabIndex)
+            if(isLeftStepperInitialized)
+                binding.leftStepper.setCurrentIndex(tabIndex)
+            reloadPatientData()
+        }
+
 
 
     }
@@ -91,46 +87,69 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_add_edit_patient)
         binding = ActivityAddEditPatientBinding.inflate(layoutInflater)
-
-
-        pageTitleList = listOf<StepItem>(
-            StepItem(getString(R.string.patient_data), getString(R.string.read_card)),
-            StepItem(getString(R.string.insurrance_details), getString(R.string.print_insurance)),
-            StepItem(getString(R.string.patient_sign)),
-            StepItem(getString(R.string.logistic_data)),
-            StepItem(getString(R.string.doctor_document)),
-            StepItem(getString(R.string.additional_details)),
-            StepItem(getString(R.string.receipts), getString(R.string.print_receipt)),
-            StepItem(getString(R.string.sign_doctor)))
-
-
+        patientMode = intent.getStringExtra(PATIENT_MODE)
         pageStepper = binding.MainStepper
-        pageStepper.setCallback(this)
-        pageStepper.setPageList(pageTitleList)
+
+        if(patientMode == PHONE_CALL_MODE){
+            pageTitleList = listOf<StepItem>(
+                StepItem(getString(R.string.patient_data_from_phone)))
+            pageStepper.setPageList(pageTitleList)
+        }
+        else{
+            pageTitleList = listOf<StepItem>(
+                StepItem(getString(R.string.patient_data), getString(R.string.read_card)),
+                StepItem(getString(R.string.insurrance_details), getString(R.string.print_insurance)),
+                StepItem(getString(R.string.patient_sign)),
+                StepItem(getString(R.string.logistic_data)),
+                StepItem(getString(R.string.doctor_document)),
+                StepItem(getString(R.string.additional_details)),
+                StepItem(getString(R.string.receipts), getString(R.string.print_receipt)),
+                StepItem(getString(R.string.sign_doctor)))
+            pageStepper.setCallback(this)
+            pageStepper.setPageList(pageTitleList)
+        }
         pageStepper.go(0)
         setContentView(binding.root)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_patient_flow) as NavHostFragment
         navController = navHostFragment.navController
-        patient = intent.getSerializableExtra("patient_data") as Patient
-        navController.setGraph(R.navigation.add_edit_navigation, intent.extras)
+        patient = intent.getSerializableExtra(PATIENT_DATA) as Patient
+        if(patientMode == PHONE_CALL_MODE){
+            navController.setGraph(R.navigation.add_edit_navigation_phone_call, intent.extras)
+        }
+        else{
+            navController.setGraph(R.navigation.add_edit_navigation, intent.extras)
+        }
+
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener (listener)
 
         val leftStepperAdapter = LeftStepperAdapter(applicationContext, this)
         binding.apply {
-            toggle = ActionBarDrawerToggle(this@AddEditPatientActivity, drawerLayout, R.string.patient_data, R.string.patient_data)
-            drawerLayout.addDrawerListener(toggle)
-            toggle.syncState()
-            leftStepper.initStepper(leftStepperAdapter)
-            leftStepperAdapter.updateList(pageTitleList)
-            leftStepper.setCurrentIndex(0)
-            isLeftStepperInitialized = true
-            btnBack.setOnClickListener {
-                if(tabIndex > 0)
-                    onStepItemClicked(tabIndex - 1)
+            if(patientMode == PHONE_CALL_MODE){
+                btnBack.visibility = GONE
+                btnNext.visibility = GONE
             }
+            else{
+                toggle = ActionBarDrawerToggle(this@AddEditPatientActivity, drawerLayout, R.string.patient_data, R.string.patient_data)
+                drawerLayout.addDrawerListener(toggle)
+                toggle.syncState()
+                leftStepper.initStepper(leftStepperAdapter)
+                leftStepperAdapter.updateList(pageTitleList)
+                leftStepper.setCurrentIndex(0)
+                isLeftStepperInitialized = true
+                btnBack.setOnClickListener {
+                    if(tabIndex > 0)
+                        onStepItemClicked(tabIndex - 1)
+                }
+                btnNext.setOnClickListener {
+                    if(tabIndex < 7)
+                        onStepItemClicked(tabIndex + 1)
+                }
+            }
+
+
             btnCancel.setOnClickListener {
 
                 val confirmationDialog = ConfirmationDialog("Are you sure?", "You will lose all data what you did if you confirm yes.")
@@ -143,10 +162,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                 }
                 confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
             }
-            btnNext.setOnClickListener {
-                if(tabIndex < 7)
-                    onStepItemClicked(tabIndex + 1)
-            }
+
             btnFinish.setOnClickListener {
                 val confirmationDialog = ConfirmationDialog("Confirm go to home?", "You will move to home screen after save data.")
                 confirmationDialog.setNegativeClickListener {

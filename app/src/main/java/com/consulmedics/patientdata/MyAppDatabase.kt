@@ -9,7 +9,7 @@ import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
 
-@Database(entities = [Patient::class, Hotel::class, Address::class], version = 4)
+@Database(entities = [Patient::class, Hotel::class, Address::class], version = 5)
 @TypeConverters(Converters::class)
 abstract  class MyAppDatabase: RoomDatabase() {
     abstract fun patientDao(): PatientDao
@@ -33,7 +33,7 @@ abstract  class MyAppDatabase: RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 MyAppDatabase::class.java,
-                "consulmedics_database_6"
+                "consulmedics_database_7"
             ).allowMainThreadQueries().build()
         }
     }

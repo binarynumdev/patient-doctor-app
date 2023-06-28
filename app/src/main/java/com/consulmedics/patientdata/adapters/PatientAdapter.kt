@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.MyAppDatabase
@@ -72,31 +73,29 @@ class PatientAdapter(
                 else{
                     textBirthDate.setText(mContext.getString(R.string.no_birthdate))
                 }
-                if(!currentPatient.gender.isNullOrEmpty()){
-                    if(currentPatient.gender == "W"){
-                        textGender.setText( mContext.getString(R.string.female) )
-                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_female))
-
-                    }
-                    else if (currentPatient.gender == "M"){
-                        textGender.setText( mContext.getString(R.string.male)  )
-                        imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_male))
-                    }
-
-
+                if(currentPatient.target.equals("call")){
+                    textGender.setText( "Phone"  )
+                    imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone))
+                    textFullAddress.setText(currentPatient.phoneNumber)
+                    imageLocation.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone_number))
+                    textPatientID.visibility = GONE
+                    divider.visibility = GONE
                 }
                 else{
-                    textGender.setText( mContext.getString(R.string.no_gender) )
+                    textGender.setText( "Car"  )
+                    imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_car))
                 }
 
                 if(currentPatient.isFullyValidated()){
                     textIsFinished.setText(R.string.completed)
+                    textIsFinished.setBackgroundResource(R.drawable.bg_blue_circle)
 //                    textIsFinished.setTextColor(Color.GREEN)
 //                    statusColoredBorder.setBackgroundColor(Color.GREEN)
                 }
                 else{
 //                    textIsFinished.setTextColor(Color.RED)
                     textIsFinished.setText(R.string.incompleted)
+                    textIsFinished.setBackgroundResource(R.drawable.bg_red_circle)
 //                    statusColoredBorder.setBackgroundColor(Color.RED)
                 }
                 btnEditPatient.setOnClickListener {
@@ -112,13 +111,7 @@ class PatientAdapter(
                 }
                 holder.itemBinding.loadingProgressBar.visibility = View.GONE
                 holder.itemBinding.patientItemLayout.visibility = View.VISIBLE
-                if(currentPatient.startAddress != 0)
-//                    textStartPoint.setText(addressRepository.find(currentPatient.startAddress).toString())
-                if(currentPatient.visitAddress != 0){
-//                    txtVisitPoint.setText(addressRepository.find(currentPatient.visitAddress).toString())
-                }
-                val strDistance = if(currentPatient.distance == 0.00)  "N/A" else "${currentPatient.distance/1000}KM"
-//                textDistance.setText(strDistance)
+
             }
         }
 

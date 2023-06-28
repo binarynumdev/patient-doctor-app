@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 @Entity
 data class Patient(
-    @PrimaryKey(autoGenerate = true) var uid: Int? = null
+    @PrimaryKey(autoGenerate = true) var uid: Int? = null, var target: String? = null
 ): Serializable {
     var patientID:      String? = ""
     var firstName:      String  = ""
@@ -337,8 +337,16 @@ data class Patient(
     }
 
     fun isFullyValidated(): Boolean {
-        if(isValidMedicalReceipt() == true && isValidatePersonalDetails() && isValidAdditionalDetails() && isValidLogisticDetails() && isValidDoctorDocument() == true && isValidMedicalReceipt() == true)
-            return true
+        if(target.equals("call")){
+            if(firstName.isNotEmpty() && lastName.isNotEmpty() && phoneNumber.isNotEmpty()){
+                return true
+            }
+        }
+        else{
+            if(isValidMedicalReceipt() == true && isValidatePersonalDetails() && isValidAdditionalDetails() && isValidLogisticDetails() && isValidDoctorDocument() == true && isValidMedicalReceipt() == true)
+                return true
+        }
+
         return false
     }
 

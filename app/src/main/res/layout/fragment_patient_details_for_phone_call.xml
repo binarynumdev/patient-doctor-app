@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_background"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <ScrollView
+        android:id="@+id/activity_new_patient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/appbar_padding"
+        tools:ignore="MissingDefaultResource">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/topBar"
+                layout="@layout/patient_add_edit_top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orange_bar_height"
+                android:layout_marginBottom="@dimen/appbar_padding"
+                android:visibility="gone"></include>
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Basic Details"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_big"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/editFirstName"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:ems="10"
+                    android:hint="@string/first_name"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/editLastName"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:ems="10"
+                    android:hint="@string/last_name"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <EditText
+                    android:id="@+id/editPatientBirthDate"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_edit_height"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="@string/date_of_birth"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/appbar_padding_top" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioMale"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_blue"
+                        android:drawableLeft="@drawable/ic_male"
+                        android:drawablePadding="@dimen/default_margin_10"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="@dimen/default_margin_10"
+                        android:text="@string/male" />
+
+                    <RadioButton
+                        android:id="@+id/radioFemale"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/appbar_padding"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_blue"
+                        android:drawableLeft="@drawable/ic_female"
+                        android:drawablePadding="@dimen/default_margin_10"
+                        android:layoutDirection="rtl"
+                        android:minHeight="0dp"
+                        android:paddingLeft="@dimen/default_margin_10"
+                        android:text="@string/female" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact Details"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_big"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editDateOfVisit"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="@string/date_of_called"
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/text_size_normal"
+                    android:theme="@style/CustomEditBoxStyle" />
+
+                <EditText
+                    android:id="@+id/editTimeOfVisit"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_clock"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="@string/time_of_called"
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/text_size_normal"
+                    android:theme="@style/CustomEditBoxStyle" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editPatientPhoneNumber"
+                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_edit_height"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:drawableLeft="@drawable/ic_mobile"
+                    android:ems="10"
+                    android:hint="@string/phone_number"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingTop="@dimen/efab_ui_margin_xxs"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/health_status"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_big"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editHealthStatus"
+                style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:minHeight="300dp"
+                android:padding="10dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
