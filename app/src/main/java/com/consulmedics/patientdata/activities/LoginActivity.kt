@@ -61,6 +61,13 @@ class LoginActivity : AppCompatActivity() {
             data?.api_token?.let { SessionManager.saveAuthToken(this, it) }
             navigateToHome()
         }
+        if(!data?.userID.isNullOrEmpty()){
+            data?.userID?.let { SessionManager.saveUserID(this, it) }
+        }
+        if(!data?.doctorID.isNullOrEmpty()){
+            data?.doctorID?.let { SessionManager.saveDoctorID(this, it) }
+        }
+
     }
     fun showLoading() {
         binding.progressBar.visibility = View.VISIBLE

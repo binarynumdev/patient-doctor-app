@@ -10,7 +10,11 @@ data class LoginResponse(
     @SerializedName("api_token")
     var api_token: String,
     @SerializedName("private_key")
-    var private_key: String
+    var private_key: String,
+    @SerializedName("user_id")
+    var userID: String,
+    @SerializedName("doctor_id")
+    var doctorID: String
 
 
 
