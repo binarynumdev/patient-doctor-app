@@ -12,4 +12,6 @@ class ShiftListActivity : AppCompatActivity() {
         binding = ActivityShiftListBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+
 }

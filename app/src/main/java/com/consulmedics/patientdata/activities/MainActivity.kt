@@ -9,6 +9,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.SCardExt
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
@@ -23,6 +25,7 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
 
     private lateinit var binding: ActivityMainBinding
     lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navController: NavController
     val scardLib = SCardExt()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,11 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
         binding.appBarMain.navView.setNavigationItemSelectedListener(this)
         val sttus = scardLib.USBRequestPermission(applicationContext)
         Log.e("USB_CONNECTION", sttus.toString())
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_patient_flow) as NavHostFragment
+        navController = navHostFragment.navController
+        navController.setGraph(R.navigation.nav_main_graph, intent.extras)
     }
 
     fun showDropDownMenu(){
@@ -90,8 +98,10 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
             R.id.nav_shift ->{
                 Log.e("DDD", "EEE")
                 binding.appBarMain.drawerLayout.closeDrawer(GravityCompat.START)
-                startActivity(Intent(this, ShiftListActivity::class.java).apply {
-                })
+                navController.navigate(R.id.shiftListFragment)
+            }
+            R.id.nav_patients ->{
+                navController.navigate(R.id.patientListFragment)
             }
         }
         return true
