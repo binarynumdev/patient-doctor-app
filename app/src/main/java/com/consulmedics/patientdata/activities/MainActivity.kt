@@ -90,6 +90,8 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
             R.id.nav_shift ->{
                 Log.e("DDD", "EEE")
                 binding.appBarMain.drawerLayout.closeDrawer(GravityCompat.START)
+                startActivity(Intent(this, ShiftListActivity::class.java).apply {
+                })
             }
         }
         return true
