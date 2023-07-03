@@ -1,6 +1,8 @@
 package com.consulmedics.patientdata.data.api
 
+import android.util.Log
 import com.consulmedics.patientdata.utils.AppConstants
+import com.consulmedics.patientdata.utils.SessionManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +19,18 @@ object ApiClient {
 
     var mRetrofit: Retrofit? = null
     var gRetrofit: Retrofit? = null
-
+    var authRetrofit: Retrofit? = null
+    fun setBearerToken(token: String) {
+        Log.e("API_CLIENT_TOKEN", token)
+        val authInterceptor = OkHttpClient.Builder().addInterceptor { chain ->
+            val original = chain.request()
+            val requestBuilder = original.newBuilder()
+                .header("Authorization", "Bearer $token")
+            val request = requestBuilder.build()
+            chain.proceed(request)
+        }.build()
+        mOkHttpClient = authInterceptor
+    }
     val client: Retrofit?
         get() {
             if(mRetrofit == null){
@@ -29,6 +42,7 @@ object ApiClient {
             }
             return mRetrofit
         }
+
     val googleMapApiClient: Retrofit?
         get() {
             if(gRetrofit == null){

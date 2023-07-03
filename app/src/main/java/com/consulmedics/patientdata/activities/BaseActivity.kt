@@ -3,6 +3,7 @@ package com.consulmedics.patientdata.activities
 import android.app.ProgressDialog
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 
@@ -17,7 +18,10 @@ abstract  class BaseActivity: AppCompatActivity() {
         progressDialog.show()
     }
     fun hideLoadingSpinner(){
-        progressDialog.dismiss()
+        if(this::progressDialog.isInitialized){
+            progressDialog.dismiss()
+            Log.e("Fragment", "Hide Loading Dailog")
+        }
     }
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {

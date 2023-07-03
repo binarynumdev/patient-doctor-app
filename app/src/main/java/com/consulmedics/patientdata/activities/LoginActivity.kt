@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.consulmedics.patientdata.data.api.ApiClient
 import com.consulmedics.patientdata.databinding.ActivityLoginBinding
 
 import com.consulmedics.patientdata.data.api.response.BaseResponse
@@ -58,7 +59,10 @@ class LoginActivity : AppCompatActivity() {
     fun processLogin(data: LoginResponse?) {
         showToast("Success:")
         if (!data?.api_token.isNullOrEmpty()) {
-            data?.api_token?.let { SessionManager.saveAuthToken(this, it) }
+            data?.api_token?.let {
+                SessionManager.saveAuthToken(this, it)
+                ApiClient.setBearerToken(it)
+            }
             navigateToHome()
         }
         if(!data?.userID.isNullOrEmpty()){

@@ -94,10 +94,10 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         Log.e("DDD","DDD")
+        binding.appBarMain.drawerLayout.closeDrawer(GravityCompat.START)
         when(item.itemId){
             R.id.nav_shift ->{
                 Log.e("DDD", "EEE")
-                binding.appBarMain.drawerLayout.closeDrawer(GravityCompat.START)
                 navController.navigate(R.id.shiftListFragment)
             }
             R.id.nav_patients ->{
