@@ -154,4 +154,6 @@
     <string name="doctor_shift">Working Confirmations</string>
     <string name="patients">Patients</string>
     <string name="death_protocols">Death Protocols</string>
+    <string name="past_shifts">Past Shifts</string>
+    <string name="upcoming_shifts">Upcoming Shifts</string>
 </resources>

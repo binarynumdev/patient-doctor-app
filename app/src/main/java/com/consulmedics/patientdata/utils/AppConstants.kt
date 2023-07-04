@@ -31,4 +31,7 @@ object AppConstants {
     const val PATIENT_MODE: String = "patient_mode"
     const val PATIENT_DATA: String = "patient_data"
 
+    const val UPCOMING_TABS: String = "upcoming"
+    const val PAST_TABS: String = "past"
+
 }

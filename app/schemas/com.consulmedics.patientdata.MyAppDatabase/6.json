@@ -1,0 +1,460 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 6,
+    "identityHash": "67689aa088900415b3d26a0d7bbedd32",
+    "entities": [
+      {
+        "tableName": "Patient",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `target` TEXT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT NOT NULL, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` TEXT NOT NULL, `alreadyVisitedDuringThisShift` TEXT NOT NULL, `dementia` TEXT NOT NULL, `geriatrics` TEXT NOT NULL, `infant` TEXT NOT NULL, `fractures` TEXT NOT NULL, `serverHandInjury` TEXT NOT NULL, `thrombosis` TEXT NOT NULL, `hypertension` TEXT NOT NULL, `preHeartAttack` TEXT NOT NULL, `pneumonia` TEXT NOT NULL, `divertikulitis` TEXT NOT NULL, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER, `distance` REAL NOT NULL, `sincVisitAddress` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "target",
+            "columnName": "target",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "patientID",
+            "columnName": "patientID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "lastName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "birthDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "street",
+            "columnName": "street",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postCode",
+            "columnName": "postCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "houseNumber",
+            "columnName": "houseNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insuranceNumber",
+            "columnName": "insuranceNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insuranceName",
+            "columnName": "insuranceName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insuranceStatus",
+            "columnName": "insuranceStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateofExam",
+            "columnName": "dateofExam",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeOfExam",
+            "columnName": "timeOfExam",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "killometers",
+            "columnName": "killometers",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "diagnosis",
+            "columnName": "diagnosis",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "healthStatus",
+            "columnName": "healthStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signature",
+            "columnName": "signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phoneNumber",
+            "columnName": "phoneNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "practiceName",
+            "columnName": "practiceName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signPatient",
+            "columnName": "signPatient",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startVisitDate",
+            "columnName": "startVisitDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startVisitTime",
+            "columnName": "startVisitTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startPoint",
+            "columnName": "startPoint",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sameAddAsPrev",
+            "columnName": "sameAddAsPrev",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alreadyVisitedDuringThisShift",
+            "columnName": "alreadyVisitedDuringThisShift",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dementia",
+            "columnName": "dementia",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "geriatrics",
+            "columnName": "geriatrics",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "infant",
+            "columnName": "infant",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fractures",
+            "columnName": "fractures",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverHandInjury",
+            "columnName": "serverHandInjury",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thrombosis",
+            "columnName": "thrombosis",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hypertension",
+            "columnName": "hypertension",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preHeartAttack",
+            "columnName": "preHeartAttack",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pneumonia",
+            "columnName": "pneumonia",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "divertikulitis",
+            "columnName": "divertikulitis",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicals1",
+            "columnName": "medicals1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicals2",
+            "columnName": "medicals2",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicals3",
+            "columnName": "medicals3",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startAddress",
+            "columnName": "startAddress",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visitAddress",
+            "columnName": "visitAddress",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "distance",
+            "columnName": "distance",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sincVisitAddress",
+            "columnName": "sincVisitAddress",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Hotel",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `hotelName` TEXT NOT NULL, `address` TEXT NOT NULL, `city` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hotelName",
+            "columnName": "hotelName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Address",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `streetNumber` TEXT NOT NULL, `streetName` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `latitute` REAL NOT NULL, `longitute` REAL NOT NULL, `isHotel` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "streetNumber",
+            "columnName": "streetNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "streetName",
+            "columnName": "streetName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postCode",
+            "columnName": "postCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitute",
+            "columnName": "latitute",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitute",
+            "columnName": "longitute",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHotel",
+            "columnName": "isHotel",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "patient_shift",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, `serviceType` INTEGER NOT NULL, `nameBidding` TEXT NOT NULL, `additionalRemuneration` INTEGER NOT NULL, `abNumber` INTEGER NOT NULL, `bonusPayment` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startDate",
+            "columnName": "startDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endDate",
+            "columnName": "endDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serviceType",
+            "columnName": "serviceType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameBidding",
+            "columnName": "nameBidding",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "additionalRemuneration",
+            "columnName": "additionalRemuneration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "abNumber",
+            "columnName": "abNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bonusPayment",
+            "columnName": "bonusPayment",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '67689aa088900415b3d26a0d7bbedd32')"
+    ]
+  }
+}
