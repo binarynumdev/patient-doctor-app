@@ -39,7 +39,7 @@ object SessionManager {
     fun getString(context: Context, key: String): String? {
         val prefs: SharedPreferences =
             context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
-        return prefs.getString(this.API_TOKEN, null)
+        return prefs.getString(key, null)
     }
 
     fun clearData(context: Context){

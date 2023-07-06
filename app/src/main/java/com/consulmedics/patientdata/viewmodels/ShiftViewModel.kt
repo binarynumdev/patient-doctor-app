@@ -1,6 +1,7 @@
 package com.consulmedics.patientdata.viewmodels
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,13 +23,18 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
     val allShiftList: LiveData<List<PatientShift>>
     val userRepo = UserRepository()
     val repository : PatientShiftRepository
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
     val loadShiftResult: MutableLiveData<BaseResponse<LoadShiftApiResponse>> = MutableLiveData()
+    val saveShiftResult: MutableLiveData<BaseResponse<String>> = MutableLiveData()
+    val mContext: Context
     init {
         val dao = MyAppDatabase.getDatabase(application).patientShiftDao()
+        mContext = application.applicationContext
         repository = PatientShiftRepository(dao)
         allShiftList = repository.allPatients
-        upcomingShiftList = repository.upcomingShiftList
-        pastShiftList = repository.pastShiftList
+        upcomingShiftList = repository.upcomingShiftList(mContext)
+        pastShiftList = repository.pastShiftList(mContext)
     }
     fun loadShiftDetails(){
         loadShiftResult.value = BaseResponse.Loading()
@@ -37,7 +43,7 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
                 val response = userRepo.loadShiftDetails()
                 if (response?.code() == 200) {
                     loadShiftResult.value = BaseResponse.Success(response.body())
-                    response.body()?.let { repository.saveShiftDetails(it.shiftList) }
+                    response.body()?.let { repository.saveShiftDetails(it.shiftList, mContext) }
                 } else {
                     loadShiftResult.value = BaseResponse.Error(response?.message())
                 }
@@ -45,5 +51,19 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
                 loadShiftResult.value = BaseResponse.Error(ex.message)
             }
         }
+    }
+
+    suspend fun savePatientShift(patientShift: PatientShift) {
+        saveShiftResult.value = BaseResponse.Loading()
+
+        try {
+            repository.insertOrUpdate(patientShift)
+            saveShiftResult.value = BaseResponse.Success("Success")
+        }
+        catch (ex: Exception){
+            saveShiftResult.value = BaseResponse.Error(ex.message)
+        }
+
+
     }
 }

@@ -9,6 +9,7 @@ import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.data.api.response.LoadShiftApiResponse
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.databinding.RowShiftItemBinding
 import com.consulmedics.patientdata.repository.AddressRepository
@@ -16,7 +17,8 @@ import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
 
 class ShiftAdapter(
-    private val mContext: Context
+    private val mContext: Context,
+    val patientItemOnClickInterface: ShiftItemClickInterface
 ) :
     RecyclerView.Adapter<ShiftAdapter.ViewHolder>(){
     val addressRepository: AddressRepository = AddressRepository(MyAppDatabase.getDatabase(mContext).addressDao())
@@ -35,7 +37,7 @@ class ShiftAdapter(
         holder.itemView.post {
             holder.itemBinding.apply {
                 val converters: Converters = Converters()
-                textShiftTime.text = "${converters.dateToFormatedString(currentShift.startDate, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy HH")} - ${AppUtils.calculateTimeDiffInHours(currentShift.startDate, currentShift.endDate)} Hours"
+                textShiftTime.text = "${converters.dateToFormatedString(currentShift.startDate, "yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy HH")} - ${converters.dateToFormatedString(currentShift.endDate, "yyyy-MM-dd HH:mm:ss", "H")} Uhr"
                 if(currentShift.serviceType == 1 || currentShift.serviceType == 0){
                     imageServiceType.setImageDrawable(mContext.getDrawable(R.drawable.ic_car))
                     textServiceType.setText("Visit Patient")
@@ -45,6 +47,15 @@ class ShiftAdapter(
                     textServiceType.setText("Stay Hospital")
                 }
                 textShiftName.text = currentShift.nameBidding
+                btnFillShiftDetails.setOnClickListener {
+                    patientItemOnClickInterface.onShiftEditClick(currentShift)
+                }
+
+                if(currentShift.doctorNote.isNotEmpty()){
+                    textIsFinished.text = mContext.getString(R.string.completed)
+                    textIsFinished.setBackgroundResource(R.drawable.bg_blue_circle)
+                }
+
             }
         }
 
@@ -71,4 +82,7 @@ class ShiftAdapter(
         // change method to notify our adapter.
         notifyDataSetChanged()
     }
+}
+interface ShiftItemClickInterface{
+    fun onShiftEditClick(patient: PatientShift)
 }

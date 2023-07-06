@@ -58,18 +58,21 @@ class LoginActivity : AppCompatActivity() {
     }
     fun processLogin(data: LoginResponse?) {
         showToast("Success:")
-        if (!data?.api_token.isNullOrEmpty()) {
-            data?.api_token?.let {
+        if (!data?.data?.api_token.isNullOrEmpty()) {
+            data?.data?.api_token?.let {
                 SessionManager.saveAuthToken(this, it)
                 ApiClient.setBearerToken(it)
             }
             navigateToHome()
         }
-        if(!data?.userID.isNullOrEmpty()){
-            data?.userID?.let { SessionManager.saveUserID(this, it) }
+        if(!data?.data?.userID.isNullOrEmpty()){
+            data?.data?.userID?.let { SessionManager.saveUserID(this, it) }
         }
-        if(!data?.doctorID.isNullOrEmpty()){
-            data?.doctorID?.let { SessionManager.saveDoctorID(this, it) }
+        if(!data?.data?.doctorID.isNullOrEmpty()){
+            data?.data?.doctorID?.let {
+                SessionManager.saveDoctorID(this, it)
+                Log.e(TAG_NAME, "Doctor ID: ${it}")
+            }
         }
 
     }

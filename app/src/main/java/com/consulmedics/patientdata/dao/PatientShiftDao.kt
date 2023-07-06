@@ -10,10 +10,8 @@ import androidx.room.Query
 import androidx.room.Update
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 @Dao
 interface PatientShiftDao {
@@ -40,27 +38,31 @@ interface PatientShiftDao {
             }
             else{
                 Log.e(TAG_NAME, "Update Patient Shift")
+                val willUpdatePatientShift = itemsFromDB.first()
+                if(patientShift.doctorNote.isEmpty() && willUpdatePatientShift?.doctorNote?.isNotEmpty() == true){
+                    patientShift.doctorNote = willUpdatePatientShift?.doctorNote.toString()
+                }
                 updatePatientShift(patientShift)
             }
         }
 
     }
-    @Query("select * from patient_shift where endDate <= :fDate ")
-    fun getShiftBeforeDate(fDate: String): LiveData<List<PatientShift>>
+    @Query("select * from patient_shift where endDate <= :fDate and doctorID = :doctorID")
+    fun getShiftBeforeDate(fDate: String, doctorID: String?): LiveData<List<PatientShift>>
 
-    @Query("select * from patient_shift where startDate >= :sDate ")
-    fun getShiftAfterDate(sDate: String): LiveData<List<PatientShift>>
+    @Query("select * from patient_shift where startDate >= :sDate and doctorID = :doctorID")
+    fun getShiftAfterDate(sDate: String, doctorID: String?): LiveData<List<PatientShift>>
 
-    fun getUpcoming(): LiveData<List<PatientShift>>{
+    fun getUpcoming(doctorID: String?): LiveData<List<PatientShift>>{
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
-        return getShiftBeforeDate(formatter.format(current))
+        return getShiftBeforeDate(formatter.format(current), doctorID)
     }
-    fun getPastShifts(): LiveData<List<PatientShift>>{
+    fun getPastShifts(doctorID: String?): LiveData<List<PatientShift>>{
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
-        return getShiftAfterDate(formatter.format(current))
+        return getShiftAfterDate(formatter.format(current), doctorID)
     }
 }

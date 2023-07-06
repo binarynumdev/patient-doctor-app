@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "67689aa088900415b3d26a0d7bbedd32",
+    "identityHash": "75ca72a789401f774a08e64042254cb8",
     "entities": [
       {
         "tableName": "Patient",
@@ -390,7 +390,7 @@
       },
       {
         "tableName": "patient_shift",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, `serviceType` INTEGER NOT NULL, `nameBidding` TEXT NOT NULL, `additionalRemuneration` INTEGER NOT NULL, `abNumber` INTEGER NOT NULL, `bonusPayment` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, `serviceType` INTEGER NOT NULL, `nameBidding` TEXT NOT NULL, `additionalRemuneration` INTEGER NOT NULL, `abNumber` INTEGER NOT NULL, `bonusPayment` INTEGER NOT NULL, `doctorNote` TEXT NOT NULL, `doctorID` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -439,6 +439,18 @@
             "columnName": "bonusPayment",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "doctorNote",
+            "columnName": "doctorNote",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "doctorID",
+            "columnName": "doctorID",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -454,7 +466,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '67689aa088900415b3d26a0d7bbedd32')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '75ca72a789401f774a08e64042254cb8')"
     ]
   }
 }

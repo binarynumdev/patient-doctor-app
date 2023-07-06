@@ -110,6 +110,8 @@ class SplashActivity : AppCompatActivity() {
 //        val thread: CheckUserThread = CheckUserThread(applicationContext)
 //        thread.start()
         val token = SessionManager.getToken(this)
+        val doctorID = SessionManager.getDoctorID(this);
+        Log.e(TAG_NAME, "Doctor ID:${doctorID}")
         if (!token.isNullOrBlank()) {
             ApiClient.setBearerToken(token)
             val i = Intent(this, MainActivity::class.java)

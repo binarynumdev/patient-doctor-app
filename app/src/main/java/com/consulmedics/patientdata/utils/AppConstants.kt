@@ -34,4 +34,6 @@ object AppConstants {
     const val UPCOMING_TABS: String = "upcoming"
     const val PAST_TABS: String = "past"
 
+    const val PATIENT_SHIFT_DATA: String = "patient_shift_data"
+
 }

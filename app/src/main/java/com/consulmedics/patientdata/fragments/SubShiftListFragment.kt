@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,9 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.consulmedics.patientdata.activities.AddEditPatientActivity
+import com.consulmedics.patientdata.activities.EditPatientShiftActivity
 import com.consulmedics.patientdata.adapters.ShiftAdapter
+import com.consulmedics.patientdata.adapters.ShiftItemClickInterface
+import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.databinding.FragmentSubShiftListBinding
+import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.PAST_TABS
+import com.consulmedics.patientdata.utils.AppConstants.PATIENT_SHIFT_DATA
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.UPCOMING_TABS
 import com.consulmedics.patientdata.viewmodels.ShiftViewModel
@@ -28,7 +35,7 @@ private const val SHIFT_OPTION = "shift_option"
  * Use the [SubShiftListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubShiftListFragment(shiftOption: String) : Fragment() {
+class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInterface {
     private var shiftOption: String? = shiftOption
     private var _binding: FragmentSubShiftListBinding? = null
     val binding get() = _binding!!
@@ -37,7 +44,7 @@ class SubShiftListFragment(shiftOption: String) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        shiftAdapter = ShiftAdapter(requireContext())
+        shiftAdapter = ShiftAdapter(requireContext(), this)
     }
 
     override fun onCreateView(
@@ -69,6 +76,12 @@ class SubShiftListFragment(shiftOption: String) : Fragment() {
             }
 
         }
+    }
+
+    override fun onShiftEditClick(patient: PatientShift) {
+        startActivity(Intent(requireContext(), EditPatientShiftActivity::class.java).apply {
+            putExtra(PATIENT_SHIFT_DATA, patient)
+        })
     }
 
 }

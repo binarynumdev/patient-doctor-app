@@ -20,6 +20,8 @@ data class PatientShift(
     var additionalRemuneration: Int =0
     var abNumber: Int = 0
     var bonusPayment: Int = 0
+    var doctorNote: String = ""
+    var doctorID: Int = 0
 
     fun loadFromApiResponse(shiftDetails: LoadShiftApiResponse.ShiftDetails){
 
