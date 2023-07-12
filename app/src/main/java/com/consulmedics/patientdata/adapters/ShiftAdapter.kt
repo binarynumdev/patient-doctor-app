@@ -3,6 +3,7 @@ package com.consulmedics.patientdata.adapters
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.Converters
@@ -18,7 +19,7 @@ import com.consulmedics.patientdata.utils.AppUtils
 
 class ShiftAdapter(
     private val mContext: Context,
-    val patientItemOnClickInterface: ShiftItemClickInterface
+    val patientItemOnClickInterface: ShiftItemClickInterface? = null
 ) :
     RecyclerView.Adapter<ShiftAdapter.ViewHolder>(){
     val addressRepository: AddressRepository = AddressRepository(MyAppDatabase.getDatabase(mContext).addressDao())
@@ -47,9 +48,15 @@ class ShiftAdapter(
                     textServiceType.setText("Stay Hospital")
                 }
                 textShiftName.text = currentShift.nameBidding
-                btnFillShiftDetails.setOnClickListener {
-                    patientItemOnClickInterface.onShiftEditClick(currentShift)
+                if(patientItemOnClickInterface == null){
+                    btnFillShiftDetails.visibility = GONE
                 }
+                else{
+                    btnFillShiftDetails.setOnClickListener {
+                        patientItemOnClickInterface.onShiftEditClick(currentShift)
+                    }
+                }
+
 
                 if(currentShift.doctorNote.isNotEmpty()){
                     textIsFinished.text = mContext.getString(R.string.completed)

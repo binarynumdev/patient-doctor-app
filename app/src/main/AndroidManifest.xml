@@ -25,9 +25,14 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.ConsulmedicsPatientData">
         <activity
+            android:name=".activities.UploadPatientActivity"
+            android:exported="false"
+            android:label="@string/title_activity_upload_patient"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
             android:name=".activities.EditPatientShiftActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.ShiftListActivity"
             android:exported="false" />

@@ -13,22 +13,25 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="CustomTimePickerStyle" parent="android:Widget.Material.TimePicker">
         <item name="android:layout_width">300dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">80sp</item>
     </style>
+
     <style name="Theme.ConsulmedicsPatientData.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.ConsulmedicsPatientData.AppBarOverlay" >
+    <style name="Theme.ConsulmedicsPatientData.AppBarOverlay">
         <item name="android:background">@color/default_background</item>
         <item name="android:layout_height">@dimen/appbar_height</item>
     </style>
 
     <style name="Theme.ConsulmedicsPatientData.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="CustomEditBoxStyle" parent="android:Widget.Material.EditText">
         <item name="android:layout_height">@dimen/text_edit_height</item>
         <item name="android:paddingLeft">@dimen/appbar_padding_top</item>

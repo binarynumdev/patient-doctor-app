@@ -157,4 +157,6 @@
     <string name="past_shifts">Past Shifts</string>
     <string name="upcoming_shifts">Upcoming Shifts</string>
     <string name="confirm_shift_completed">I\'m confirming that I fully completed the shift</string>
+    <string name="title_activity_upload_patient">UploadPatientActivity</string>
+    <string name="no_internet_connection">You are currently offline. Please try again later.</string>
 </resources>

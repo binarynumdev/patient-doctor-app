@@ -38,7 +38,8 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
             showDropDownMenu()
         }
         binding.appBarMain.btnSyncPatients.setOnClickListener {
-
+            startActivity(Intent(this, UploadPatientActivity::class.java).apply {
+            })
         }
         toggle = ActionBarDrawerToggle(this@MainActivity, binding.appBarMain.drawerLayout, R.string.patient_data, R.string.patient_data)
         binding.appBarMain.drawerLayout.addDrawerListener(toggle)
