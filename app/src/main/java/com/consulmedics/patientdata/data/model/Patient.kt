@@ -2,11 +2,14 @@ package com.consulmedics.patientdata.data.model
 
 import android.util.Log
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.consulmedics.patientdata.utils.AESEncyption
 import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.Serializable
@@ -14,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 @Entity
 data class Patient(
-    @PrimaryKey(autoGenerate = true) var uid: Int? = null, var target: String? = null
+    @PrimaryKey(autoGenerate = true) var uid: Int? = null, var target: String? = "visit"
 ): Serializable {
     var patientID:      String? = ""
     var firstName:      String  = ""
@@ -34,12 +37,13 @@ data class Patient(
     var killometers:    String  = ""
     var diagnosis:      String  = ""
     var healthStatus:   String  = ""
+    @SerializedName("doctor_sign")
     var signature:      String  = ""
 
     var phoneNumber:    String  = ""
     var practiceName:   String  = ""
 
-
+    @SerializedName("patient_sign")
     var signPatient:    String  = ""
     var startVisitDate: String  = ""
     var startVisitTime: String  = ""
@@ -63,11 +67,17 @@ data class Patient(
     var medicals1:      String = ""
     var medicals2:      String = ""
     var medicals3:      String = ""
-
     var startAddress:   Int? = null
     var visitAddress:   Int? = null
     var distance:       Double = 0.00
     var sincVisitAddress:Boolean = false
+
+    @Ignore
+    @SerializedName("start_address_details")
+    var startAddressDetails: Address? = null
+    @Ignore
+    @SerializedName("visit_address_details")
+    var visitAddressDetails: Address? = null
 
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){

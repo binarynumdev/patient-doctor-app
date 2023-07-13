@@ -2,19 +2,28 @@ package com.consulmedics.patientdata.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyAppDatabase
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.data.api.request.LoginRequest
+import com.consulmedics.patientdata.data.api.request.UploadShiftRequest
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.LoadShiftApiResponse
 import com.consulmedics.patientdata.data.api.response.LoginResponse
+import com.consulmedics.patientdata.data.api.response.UploadShiftApiResponse
+import com.consulmedics.patientdata.data.model.Address
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.data.model.PatientShift
+import com.consulmedics.patientdata.repository.AddressRepository
 import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.repository.PatientShiftRepository
 import com.consulmedics.patientdata.repository.UserRepository
+import com.consulmedics.patientdata.utils.AppConstants
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import kotlinx.coroutines.launch
 
 class ShiftViewModel(application: Application) : AndroidViewModel(application)  {
@@ -23,15 +32,20 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
     val allShiftList: LiveData<List<PatientShift>>
     val userRepo = UserRepository()
     val repository : PatientShiftRepository
+    val addressRepository: AddressRepository
+    val patientRepositrory: PatientRepository
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
     val loadShiftResult: MutableLiveData<BaseResponse<LoadShiftApiResponse>> = MutableLiveData()
     val saveShiftResult: MutableLiveData<BaseResponse<String>> = MutableLiveData()
+    val uploadShiftResult: MutableLiveData<BaseResponse<UploadShiftApiResponse>> = MutableLiveData()
     val mContext: Context
     init {
         val dao = MyAppDatabase.getDatabase(application).patientShiftDao()
         mContext = application.applicationContext
         repository = PatientShiftRepository(dao)
+        patientRepositrory = PatientRepository(MyAppDatabase.getDatabase(application).patientDao())
+        addressRepository = AddressRepository(MyAppDatabase.getDatabase(application).addressDao())
         allShiftList = repository.allPatients
         upcomingShiftList = repository.upcomingShiftList(mContext)
         pastShiftList = repository.pastShiftList(mContext)
@@ -65,5 +79,50 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
         }
 
 
+    }
+
+    fun uploadShift(currentShift: PatientShift) {
+        uploadShiftResult.value = BaseResponse.Loading()
+        viewModelScope.launch {
+            val patientList = patientRepositrory.getPatientsByShift(currentShift)//currentShift.getPatients()
+
+
+            var isPatientFullyValidated = true
+            var uploadShiftRequest: UploadShiftRequest = UploadShiftRequest(
+                shiftId = "${currentShift.uid}",
+                doctorNotes = currentShift.doctorNote,
+                patients = ArrayList()
+            );
+            Log.e(TAG_NAME, "Patient List: ${patientList.size}")
+            patientList.forEach {
+                if(it.isFullyValidated()){
+                    Log.e(TAG_NAME, "Add Patient To Array")
+                    it.decryptFields()
+                    if(it.startAddress!=null){
+                        it.startAddressDetails = addressRepository.find(it.startAddress)
+                    }
+                    if(it.visitAddress != null){
+                        it.visitAddressDetails = addressRepository.find(it.visitAddress)
+                    }
+                    uploadShiftRequest.patients.add(it)
+                }
+                else{
+                    isPatientFullyValidated = false
+                }
+            }
+            if(!isPatientFullyValidated){
+                uploadShiftResult.value = BaseResponse.Error(mContext.getString(R.string.patient_is_not_validated))
+            }
+            else{
+
+                try {
+                    repository.uploadShiftDetail(uploadShiftRequest)
+                }
+                catch (e: Exception){
+                    uploadShiftResult.value = BaseResponse.Error(e.toString())
+                    Log.e(AppConstants.TAG_NAME, e.toString())
+                }
+            }
+        }
     }
 }

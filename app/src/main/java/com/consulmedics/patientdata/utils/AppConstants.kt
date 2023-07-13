@@ -21,6 +21,7 @@ object AppConstants {
     const val LOGIN_API_ENDPOINT: String = "api/login-to-mobile-app"
     const val SYNC_PATIENT_ENDPOINT: String = "api/v1/sync-patient-data"
     const val LOAD_MISSIONS_ENDPOINT: String = "api/v1/my-missions"
+    const val UPLOAD_SHIFT_ENDPOINT: String = "api/vi/upload-patient"
 
     const val GOOGLE_MAP_API_ENDPOINT: String = "https://maps.googleapis.com/"
     const val FETCH_ADDRESS_FROM_LOCATION_ENDPOINT: String = "maps/api/geocode/json"

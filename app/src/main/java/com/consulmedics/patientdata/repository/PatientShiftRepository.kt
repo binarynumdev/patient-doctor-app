@@ -4,10 +4,14 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.consulmedics.patientdata.dao.PatientShiftDao
+import com.consulmedics.patientdata.data.api.methods.LoadShiftApi
+import com.consulmedics.patientdata.data.api.methods.UploadShiftApi
+import com.consulmedics.patientdata.data.api.request.UploadShiftRequest
 import com.consulmedics.patientdata.data.api.response.LoadShiftApiResponse
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.SessionManager.getDoctorID
+import retrofit2.Response
 
 class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
     suspend fun saveShiftDetails(shiftList: List<LoadShiftApiResponse.ShiftDetails>, context: Context) {
@@ -40,7 +44,9 @@ class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
 
     fun pastShiftList(mContext: Context?): LiveData<List<PatientShift>> {
         if(mContext != null){
+            Log.e(TAG_NAME, "LOAD PATIENT SHIFTS")
             return patientShiftDao.getPastShifts( getDoctorID(mContext))
+
         }
         else{
             return patientShiftDao.getAll()
@@ -50,4 +56,8 @@ class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
 //    val pastShiftList: LiveData<List<PatientShift>> = patientShiftDao.getPastShifts()
 //    val upcomingShiftList: LiveData<List<PatientShift>> = patientShiftDao.getUpcoming(getDoctorID(mContext))
     val allPatients: LiveData<List<PatientShift>> = patientShiftDao.getAll()
+
+    suspend fun uploadShiftDetail(loginRequest: UploadShiftRequest): Response<String>?{
+        return UploadShiftApi.getApi()?.upload(loginRequest)
+    }
 }

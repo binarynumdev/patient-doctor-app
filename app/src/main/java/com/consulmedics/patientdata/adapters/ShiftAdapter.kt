@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyAppDatabase
@@ -14,6 +16,7 @@ import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.databinding.RowShiftItemBinding
 import com.consulmedics.patientdata.repository.AddressRepository
+import com.consulmedics.patientdata.repository.PatientRepository
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppUtils
 
@@ -22,7 +25,7 @@ class ShiftAdapter(
     val patientItemOnClickInterface: ShiftItemClickInterface? = null
 ) :
     RecyclerView.Adapter<ShiftAdapter.ViewHolder>(){
-    val addressRepository: AddressRepository = AddressRepository(MyAppDatabase.getDatabase(mContext).addressDao())
+    val patientRepository: PatientRepository = PatientRepository(MyAppDatabase.getDatabase(mContext).patientDao())
     private val allShifts = ArrayList<PatientShift>()
     inner class ViewHolder(val itemBinding: RowShiftItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
     }
@@ -56,11 +59,22 @@ class ShiftAdapter(
                         patientItemOnClickInterface.onShiftEditClick(currentShift)
                     }
                 }
+                patientRepository.getPatientsByShift(currentShift)?.apply {
+                    if(this.size > 0){
+                        textIsFinished.text = "${this.size} Patients"
+                        textIsFinished.setBackgroundResource(R.drawable.bg_blue_circle)
+                    }
+                }
 
 
                 if(currentShift.doctorNote.isNotEmpty()){
-                    textIsFinished.text = mContext.getString(R.string.completed)
-                    textIsFinished.setBackgroundResource(R.drawable.bg_blue_circle)
+                    btnUpload.visibility = VISIBLE
+                    btnUpload.setOnClickListener {
+                        patientItemOnClickInterface?.onShiftUploadClick(currentShift)
+                    }
+//                    btnFillShiftDetails.setImageDrawable(mContext.getDrawable(R.drawable.ic_upload))
+//                    textIsFinished.text = mContext.getString(R.string.completed)
+//                    textIsFinished.setBackgroundResource(R.drawable.bg_blue_circle)
                 }
 
             }
@@ -92,4 +106,5 @@ class ShiftAdapter(
 }
 interface ShiftItemClickInterface{
     fun onShiftEditClick(patient: PatientShift)
+    fun onShiftUploadClick(currentShift: PatientShift)
 }

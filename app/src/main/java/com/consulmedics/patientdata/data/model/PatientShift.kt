@@ -43,4 +43,9 @@ data class PatientShift(
         val date = inputFormat.parse(dateString)
         return outputFormat.format(date)
     }
+
+    fun getPatients(): List<Patient> {
+
+        return emptyList()
+    }
 }

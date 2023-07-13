@@ -84,4 +84,8 @@ class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInte
         })
     }
 
+    override fun onShiftUploadClick(currentShift: PatientShift) {
+        viewModel.uploadShift(currentShift)
+    }
+
 }
