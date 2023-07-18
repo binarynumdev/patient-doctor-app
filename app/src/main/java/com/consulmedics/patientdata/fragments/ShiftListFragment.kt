@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -89,25 +90,7 @@ class ShiftListFragment : Fragment() {
                 }
             }
         }
-        viewModel.uploadShiftResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is BaseResponse.Loading -> {
-                    mainActivity.showLoadingSpinner("Loading", "Please wait while load shift details")
-                }
 
-                is BaseResponse.Success -> {
-                    mainActivity.hideLoadingSpinner()
-                }
-
-                is BaseResponse.Error -> {
-                    Log.e(TAG_NAME, "API ERROR :${it.msg}")
-                    mainActivity.hideLoadingSpinner()
-                }
-                else -> {
-                    mainActivity.hideLoadingSpinner()
-                }
-            }
-        }
         if(AppUtils.isOnline(requireContext())){
             viewModel.loadShiftDetails()
         }

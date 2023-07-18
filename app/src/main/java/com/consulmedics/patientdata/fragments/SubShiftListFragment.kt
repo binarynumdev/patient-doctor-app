@@ -7,13 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.activities.AddEditPatientActivity
+import com.consulmedics.patientdata.activities.BaseActivity
 import com.consulmedics.patientdata.activities.EditPatientShiftActivity
 import com.consulmedics.patientdata.adapters.ShiftAdapter
 import com.consulmedics.patientdata.adapters.ShiftItemClickInterface
+import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.databinding.FragmentSubShiftListBinding
 import com.consulmedics.patientdata.utils.AppConstants
@@ -37,6 +41,7 @@ private const val SHIFT_OPTION = "shift_option"
  */
 class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInterface {
     private var shiftOption: String? = shiftOption
+    lateinit var mainActivity: BaseActivity
     private var _binding: FragmentSubShiftListBinding? = null
     val binding get() = _binding!!
     lateinit var shiftAdapter: ShiftAdapter
@@ -56,6 +61,7 @@ class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInte
             layoutManager = LinearLayoutManager(requireContext())
             adapter = shiftAdapter
         }
+        mainActivity = requireActivity() as BaseActivity
         return binding.root
     }
 
@@ -75,6 +81,32 @@ class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInte
                 })
             }
 
+        }
+        viewModel.uploadShiftResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is BaseResponse.Loading -> {
+                    mainActivity.showLoadingSpinner("Loading", "Please wait while upload shift details")
+                }
+
+                is BaseResponse.Success -> {
+                    mainActivity.hideLoadingSpinner()
+                }
+                is BaseResponse.SessionError ->{
+                    Log.e(TAG_NAME, "REDIRECT TO LOGOUT")
+                    Toast.makeText(context, R.string.wrong_session, Toast.LENGTH_LONG).show()
+                    mainActivity.hideLoadingSpinner()
+                    mainActivity.logout()
+                }
+                is BaseResponse.Error -> {
+                    Log.e(TAG_NAME, "API ERROR :${it.msg}")
+                    mainActivity.hideLoadingSpinner()
+                }
+                else -> {
+                    mainActivity.hideLoadingSpinner()
+                }
+
+
+            }
         }
     }
 
