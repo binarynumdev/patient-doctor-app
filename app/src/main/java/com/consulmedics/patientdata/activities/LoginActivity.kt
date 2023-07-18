@@ -65,6 +65,21 @@ class LoginActivity : AppCompatActivity() {
             }
             navigateToHome()
         }
+        if(!data?.data?.first_name.isNullOrEmpty()){
+            data?.data?.first_name?.let {
+                SessionManager.saveFirstName(this, it)
+            }
+        }
+        if(!data?.data?.last_name.isNullOrEmpty()){
+            data?.data?.last_name?.let {
+                SessionManager.saveLastName(this, it)
+            }
+        }
+        if(!data?.data?.private_key.isNullOrEmpty()){
+            data?.data?.private_key?.let {
+                SessionManager.savePrivateKey(this, it)
+            }
+        }
         if(!data?.data?.userID.isNullOrEmpty()){
             data?.data?.userID?.let { SessionManager.saveUserID(this, it) }
         }
@@ -93,5 +108,6 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 }
