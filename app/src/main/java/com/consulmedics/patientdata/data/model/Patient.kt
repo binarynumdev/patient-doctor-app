@@ -5,10 +5,8 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.consulmedics.patientdata.utils.AESEncyption
-import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
-import com.consulmedics.patientdata.utils.AppConstants.PREV_PATIENT_TEXT
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import com.google.gson.annotations.Expose
+import com.consulmedics.patientdata.utils.RSAEncryptionHelper
 import com.google.gson.annotations.SerializedName
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -45,24 +43,24 @@ data class Patient(
 
     @SerializedName("patient_sign")
     var signPatient:    String  = ""
-    var startVisitDate: String  = ""
+    var startVisitDate: Date?  = null
     var startVisitTime: String  = ""
     var startPoint:     String  = ""
 
-    var sameAddAsPrev:    String  = NO_TEXT
-    var alreadyVisitedDuringThisShift:    String  = NO_TEXT
+    var sameAddAsPrev:    Boolean  = false
+    var alreadyVisitedDuringThisShift:    Boolean  = false
 
 
-    var dementia:       String   = NO_TEXT
-    var geriatrics:     String  = NO_TEXT
-    var infant:         String  = NO_TEXT
-    var fractures:      String  = NO_TEXT
-    var serverHandInjury:   String  = NO_TEXT
-    var thrombosis:     String   = NO_TEXT
-    var hypertension:   String  = NO_TEXT
-    var preHeartAttack: String = NO_TEXT
-    var pneumonia:      String = NO_TEXT
-    var divertikulitis: String = NO_TEXT
+    var dementia:       Boolean  = false
+    var geriatrics:     Boolean  = false
+    var infant:         Boolean  = false
+    var fractures:      Boolean  = false
+    var serverHandInjury:   Boolean  = false
+    var thrombosis:     Boolean  = false
+    var hypertension:   Boolean  = false
+    var preHeartAttack: Boolean  = false
+    var pneumonia:      Boolean  = false
+    var divertikulitis: Boolean  = false
 
     var medicals1:      String = ""
     var medicals2:      String = ""
@@ -223,36 +221,7 @@ data class Patient(
     }
 
     fun isValidAdditionalDetails(): Boolean {
-        if(dementia?.isEmpty() == true){
-            return false
-        }
-        if(geriatrics?.isEmpty() == true){
-            return false
-        }
-        if(infant?.isEmpty() == true){
-            return false
-        }
-        if(fractures?.isEmpty() == true){
-            return false
-        }
-        if(serverHandInjury?.isEmpty() == true){
-            return false
-        }
-        if(thrombosis?.isEmpty() == true){
-            return false
-        }
-        if(hypertension?.isEmpty() == true){
-            return false
-        }
-        if(preHeartAttack?.isEmpty() == true){
-            return false
-        }
-        if(pneumonia?.isEmpty() == true){
-            return false
-        }
-        if(divertikulitis?.isEmpty() == true){
-            return false
-        }
+
         return true
     }
 
@@ -305,7 +274,7 @@ data class Patient(
     }
 
     fun isValidLogisticDetails() : Boolean{
-        if(startVisitDate?.isEmpty() == true){
+        if(startVisitDate == null){
             return false
         }
         if(startVisitTime?.isEmpty() == true){
@@ -314,12 +283,7 @@ data class Patient(
         if(startPoint?.isEmpty() == true){
             return false
         }
-        if(sameAddAsPrev?.isEmpty() == true){
-            return false
-        }
-        if(alreadyVisitedDuringThisShift?.isEmpty() == true){
-            return false
-        }
+
         return true
     }
 
@@ -358,6 +322,18 @@ data class Patient(
         }
 
         return false
+    }
+
+    fun encryptToSubmit(rsaPrivateKey: String) {
+        patientID = RSAEncryptionHelper.encryptStringWithPrivateKey(patientID!!, rsaPrivateKey)
+        street = RSAEncryptionHelper.encryptStringWithPrivateKey(street, rsaPrivateKey)
+        city = RSAEncryptionHelper.encryptStringWithPrivateKey(city, rsaPrivateKey)
+        postCode = RSAEncryptionHelper.encryptStringWithPrivateKey(postCode, rsaPrivateKey)
+        gender = RSAEncryptionHelper.encryptStringWithPrivateKey(gender, rsaPrivateKey)
+        houseNumber = RSAEncryptionHelper.encryptStringWithPrivateKey(houseNumber, rsaPrivateKey)
+        insuranceNumber = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceNumber, rsaPrivateKey)
+        insuranceName = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceName, rsaPrivateKey)
+        insuranceStatus = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceStatus, rsaPrivateKey)
     }
 
 

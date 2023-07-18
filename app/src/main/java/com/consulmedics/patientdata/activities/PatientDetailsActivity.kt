@@ -23,7 +23,7 @@ class PatientDetailsActivity : AppCompatActivity() {
             textInsuranceStatus.setText(patient?.insuranceStatus)
             textInsurnaceNumber.setText(patient?.insuranceNumber)
             val converters = Converters()
-            textDateOfVisitStart.setText(converters.dateToFormatedString(converters.stringToDate(patient?.startVisitDate)))
+            textDateOfVisitStart.setText(converters.dateToFormatedString(patient?.startVisitDate))
             textTimeOfVisitStart.setText(patient?.startVisitTime)
             textDiagnosis.setText(patient?.diagnosis)
             textHealthStatus.setText(patient?.healthStatus)
