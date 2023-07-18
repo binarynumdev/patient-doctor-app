@@ -9,14 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.R
-import com.consulmedics.patientdata.data.api.request.LoginRequest
 import com.consulmedics.patientdata.data.api.request.UploadShiftRequest
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.LoadShiftApiResponse
-import com.consulmedics.patientdata.data.api.response.LoginResponse
 import com.consulmedics.patientdata.data.api.response.UploadShiftApiResponse
-import com.consulmedics.patientdata.data.model.Address
-import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.repository.AddressRepository
 import com.consulmedics.patientdata.repository.PatientRepository
@@ -24,6 +20,7 @@ import com.consulmedics.patientdata.repository.PatientShiftRepository
 import com.consulmedics.patientdata.repository.UserRepository
 import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.utils.SessionManager
 import kotlinx.coroutines.launch
 
 class ShiftViewModel(application: Application) : AndroidViewModel(application)  {
@@ -94,35 +91,53 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
                 patients = ArrayList()
             );
             Log.e(TAG_NAME, "Patient List: ${patientList.size}")
-            patientList.forEach {
-                if(it.isFullyValidated()){
-                    Log.e(TAG_NAME, "Add Patient To Array")
-                    it.decryptFields()
-                    if(it.startAddress!=null){
-                        it.startAddressDetails = addressRepository.find(it.startAddress)
-                    }
-                    if(it.visitAddress != null){
-                        it.visitAddressDetails = addressRepository.find(it.visitAddress)
-                    }
-                    uploadShiftRequest.patients.add(it)
-                }
-                else{
-                    isPatientFullyValidated = false
-                }
-            }
-            if(!isPatientFullyValidated){
-                uploadShiftResult.value = BaseResponse.Error(mContext.getString(R.string.patient_is_not_validated))
+
+            var rsaPrivateKey = SessionManager.getPrivateKey(mContext)
+            if(rsaPrivateKey.isNullOrEmpty()){
+                Log.e(TAG_NAME, "No RSA Private Key")
+                uploadShiftResult.value = BaseResponse.SessionError()
             }
             else{
+                patientList.forEach {
+                    if(it.isFullyValidated()){
+                        Log.e(TAG_NAME, "Add Patient To Array")
+                        it.decryptFields()
 
-                try {
-                    repository.uploadShiftDetail(uploadShiftRequest)
+                        it.encryptToSubmit(rsaPrivateKey)
+                        if(it.startAddress!=null){
+                            it.startAddressDetails = addressRepository.find(it.startAddress)
+                        }
+                        if(it.visitAddress != null){
+                            it.visitAddressDetails = addressRepository.find(it.visitAddress)
+                        }
+                        uploadShiftRequest.patients.add(it)
+                    }
+                    else{
+                        isPatientFullyValidated = false
+                    }
                 }
-                catch (e: Exception){
-                    uploadShiftResult.value = BaseResponse.Error(e.toString())
-                    Log.e(AppConstants.TAG_NAME, e.toString())
+                if(!isPatientFullyValidated){
+                    uploadShiftResult.value = BaseResponse.Error(mContext.getString(R.string.patient_is_not_validated))
+                }
+                else{
+
+                    try {
+                        Log.e(TAG_NAME, "Start Uploading")
+                        val response = repository.uploadShiftDetail(uploadShiftRequest)
+                        if (response?.code() == 200) {
+                            uploadShiftResult.value = BaseResponse.Success()
+                        } else {
+                            uploadShiftResult.value = BaseResponse.Error(response?.message())
+                        }
+//                        uploadShiftResult.value = repository.uploadShiftDetail(uploadShiftRequest)
+                    }
+                    catch (e: Exception){
+                        uploadShiftResult.value = BaseResponse.Error(e.toString())
+                        Log.e(AppConstants.TAG_NAME, e.toString())
+                    }
                 }
             }
+
         }
     }
 }

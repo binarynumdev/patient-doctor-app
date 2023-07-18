@@ -36,7 +36,7 @@ abstract  class MyAppDatabase: RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 MyAppDatabase::class.java,
-                "consulmedics_database_11"
+                "consulmedics_database_13"
             ).allowMainThreadQueries().build()
         }
     }

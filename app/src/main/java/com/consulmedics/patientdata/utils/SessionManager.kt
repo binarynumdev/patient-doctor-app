@@ -8,6 +8,30 @@ object SessionManager {
     const val API_TOKEN   = "api_token"
     const val USER_ID     = "user_id"
     const val DOCTOR_ID   = "doctor_id"
+    const val FIRST_NAME = "first_name"
+    const val LAST_NAME = "last_name"
+    const val PRIVATE_KEY = "private_key"
+
+    fun savePrivateKey(context: Context, privateKey: String){
+        saveString(context, PRIVATE_KEY, privateKey)
+    }
+    fun getPrivateKey(context: Context): String? {
+        return getString(context, PRIVATE_KEY)
+    }
+
+    fun saveFirstName(context: Context, firstName: String){
+        saveString(context, FIRST_NAME, firstName)
+    }
+    fun getFirstName(context: Context): String?{
+        return getString(context, FIRST_NAME)
+    }
+
+    fun saveLastName(context: Context, lastName: String){
+        saveString(context, LAST_NAME, lastName)
+    }
+    fun getLastName(context: Context): String?{
+        return getString(context, LAST_NAME)
+    }
     fun saveAuthToken(context: Context, token: String){
         saveString(context, API_TOKEN, token)
     }
@@ -47,4 +71,6 @@ object SessionManager {
         editor.clear()
         editor.apply()
     }
+
+
 }

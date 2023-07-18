@@ -202,12 +202,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.timeOfExam = editValue
     }
 
-    fun setDateOfVisit(editValue: String){
-        _patientData.value?.startVisitDate = editValue
-    }
-    fun setTimeOfVisit(editValue: String){
-        _patientData.value?.startVisitTime = editValue
-    }
+
 
     fun setSignature(signatureSvg: String?) {
         if (signatureSvg != null) {
@@ -304,8 +299,8 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         return _patientData.value?.isValidInsuranceDetails()
     }
 
-    fun setStartVisitDate(dateToString: String) {
-        _patientData.value?.startVisitDate = dateToString
+    fun setStartVisitDate(startDate: Date) {
+        _patientData.value?.startVisitDate = startDate
     }
 
     fun setStartVisitTime(timeToString: String) {
@@ -316,11 +311,11 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.startPoint = s
     }
 
-    fun setCurrentAddressSame(s: String) {
+    fun setCurrentAddressSame(s: Boolean) {
         _patientData.value?.sameAddAsPrev = s
     }
 
-    fun setCurrentPatientAlreadyVisited(s: String) {
+    fun setCurrentPatientAlreadyVisited(s: Boolean) {
         _patientData.value?.alreadyVisitedDuringThisShift = s
     }
 
@@ -366,43 +361,43 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         return _patientData.value?.isValidDoctorDocument()
     }
 
-    fun setDementia(editValue: String) {
+    fun setDementia(editValue: Boolean) {
         _patientData.value?.dementia = editValue
     }
 
-    fun setGeriatrics(editValue: String) {
+    fun setGeriatrics(editValue: Boolean) {
         _patientData.value?.geriatrics = editValue
     }
 
-    fun setInfant(editValue: String) {
+    fun setInfant(editValue: Boolean) {
         _patientData.value?.infant = editValue
     }
 
-    fun setFractures(editValue: String) {
+    fun setFractures(editValue: Boolean) {
         _patientData.value?.fractures = editValue
     }
 
-    fun setServeHead(editValue: String) {
+    fun setServeHead(editValue: Boolean) {
         _patientData.value?.serverHandInjury = editValue
     }
 
-    fun setThrombosis(editValue: String) {
+    fun setThrombosis(editValue: Boolean) {
         _patientData.value?.thrombosis = editValue
     }
 
-    fun setHypertension(editValue: String) {
+    fun setHypertension(editValue: Boolean) {
         _patientData.value?.hypertension = editValue
     }
 
-    fun setPreHeartAttack(editValue: String) {
+    fun setPreHeartAttack(editValue: Boolean) {
         _patientData.value?.preHeartAttack = editValue
     }
 
-    fun setPneumonia(editValue: String) {
+    fun setPneumonia(editValue: Boolean) {
         _patientData.value?.pneumonia = editValue
     }
 
-    fun setDivertikulistis(editValue: String) {
+    fun setDivertikulistis(editValue: Boolean) {
         _patientData.value?.divertikulitis = editValue
     }
 
