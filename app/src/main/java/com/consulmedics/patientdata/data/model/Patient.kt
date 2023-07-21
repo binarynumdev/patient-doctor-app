@@ -65,8 +65,12 @@ data class Patient(
     var medicals1:      String = ""
     var medicals2:      String = ""
     var medicals3:      String = ""
+    var receiptFirstName: String = ""
+    var receiptLastName: String = ""
+    var receiptAdditionalInfo: String = ""
     var startAddress:   Int? = null
     var visitAddress:   Int? = null
+    var receiptAddress: Int? = null
     var distance:       Double = 0.00
     var sincVisitAddress:Boolean = false
 
@@ -76,6 +80,9 @@ data class Patient(
     @Ignore
     @SerializedName("visit_address_details")
     var visitAddressDetails: Address? = null
+    @Ignore
+    @SerializedName("receipt_address_details")
+    var receiptAddressDetails: Address? = null
 
     fun isValidInsuranceDetails():Boolean{
         if(insuranceName?.isEmpty() == true){
@@ -325,15 +332,14 @@ data class Patient(
     }
 
     fun encryptToSubmit(rsaPrivateKey: String) {
-        patientID = RSAEncryptionHelper.encryptStringWithPrivateKey(patientID!!, rsaPrivateKey)
+        firstName = RSAEncryptionHelper.encryptStringWithPrivateKey(firstName!!, rsaPrivateKey)
+        lastName = RSAEncryptionHelper.encryptStringWithPrivateKey(lastName, rsaPrivateKey)
+//        birthDate = RSAEncryptionHelper.encryptStringWithPrivateKey(city, rsaPrivateKey)
         street = RSAEncryptionHelper.encryptStringWithPrivateKey(street, rsaPrivateKey)
         city = RSAEncryptionHelper.encryptStringWithPrivateKey(city, rsaPrivateKey)
-        postCode = RSAEncryptionHelper.encryptStringWithPrivateKey(postCode, rsaPrivateKey)
-        gender = RSAEncryptionHelper.encryptStringWithPrivateKey(gender, rsaPrivateKey)
         houseNumber = RSAEncryptionHelper.encryptStringWithPrivateKey(houseNumber, rsaPrivateKey)
-        insuranceNumber = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceNumber, rsaPrivateKey)
-        insuranceName = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceName, rsaPrivateKey)
-        insuranceStatus = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceStatus, rsaPrivateKey)
+        postCode = RSAEncryptionHelper.encryptStringWithPrivateKey(postCode, rsaPrivateKey)
+//        insuranceStatus = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceStatus, rsaPrivateKey)
     }
 
 

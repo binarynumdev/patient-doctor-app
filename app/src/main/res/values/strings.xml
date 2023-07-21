@@ -162,4 +162,6 @@
     <string name="patient_is_not_validated">Patients assigned to this shift is not fully validated.</string>
     <string name="private_key_empty">Private Key is empty, You may need to login again.</string>
     <string name="wrong_session">Wrong session, please try to attem login again.</string>
+    <string name="address_from_patient_details">Copy from Patient Address</string>
+    <string name="receipt_details">Receipt Details</string>
 </resources>
