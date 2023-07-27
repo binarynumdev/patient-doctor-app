@@ -103,13 +103,17 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
                         Log.e(TAG_NAME, "Add Patient To Array")
                         it.decryptFields()
 
-                        it.encryptToSubmit(rsaPrivateKey)
                         if(it.startAddress!=null){
                             it.startAddressDetails = addressRepository.find(it.startAddress)
                         }
                         if(it.visitAddress != null){
-                            it.visitAddressDetails = addressRepository.find(it.visitAddress)
+                            it.visitAddressDetails = addressRepository.find(it.visitAddress).encrypt(rsaPrivateKey)
                         }
+                        if(it.receiptAddress != null){
+                            it.receiptAddressDetails = addressRepository.find(it.receiptAddress)
+                        }
+                        it.encryptToSubmit(rsaPrivateKey)
+
                         uploadShiftRequest.patients.add(it)
                     }
                     else{
@@ -125,6 +129,10 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
                         Log.e(TAG_NAME, "Start Uploading")
                         val response = repository.uploadShiftDetail(uploadShiftRequest)
                         if (response?.code() == 200) {
+                            uploadShiftRequest.patients.forEach {
+                                patientRepositrory.delete(it)
+                            }
+                            repository.delete(currentShift)
                             uploadShiftResult.value = BaseResponse.Success()
                         } else {
                             uploadShiftResult.value = BaseResponse.Error(response?.message())

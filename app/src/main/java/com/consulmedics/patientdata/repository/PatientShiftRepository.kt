@@ -60,4 +60,8 @@ class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
     suspend fun uploadShiftDetail(loginRequest: UploadShiftRequest): Response<String>?{
         return UploadShiftApi.getApi()?.upload(loginRequest)
     }
+
+    fun delete(patientShift: PatientShift){
+        patientShiftDao.delete(patientShift)
+    }
 }

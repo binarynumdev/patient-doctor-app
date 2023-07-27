@@ -135,7 +135,7 @@ class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
 
             binding.radioFracturesYes.isChecked = sharedViewModel.patientData.value?.fractures == true
 
-            binding.radioServerHeadYes.isChecked = sharedViewModel.patientData.value?.serverHandInjury == true
+            binding.radioServerHeadYes.isChecked = sharedViewModel.patientData.value?.severeHandInjury == true
 
             binding.radioThrombosisYes.isChecked =  sharedViewModel.patientData.value?.thrombosis == true
 

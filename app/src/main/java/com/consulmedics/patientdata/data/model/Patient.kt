@@ -55,7 +55,7 @@ data class Patient(
     var geriatrics:     Boolean  = false
     var infant:         Boolean  = false
     var fractures:      Boolean  = false
-    var serverHandInjury:   Boolean  = false
+    var severeHandInjury:   Boolean  = false
     var thrombosis:     Boolean  = false
     var hypertension:   Boolean  = false
     var preHeartAttack: Boolean  = false
@@ -79,7 +79,7 @@ data class Patient(
     var startAddressDetails: Address? = null
     @Ignore
     @SerializedName("visit_address_details")
-    var visitAddressDetails: Address? = null
+    var visitAddressDetails: String? = null
     @Ignore
     @SerializedName("receipt_address_details")
     var receiptAddressDetails: Address? = null
@@ -339,6 +339,11 @@ data class Patient(
         city = RSAEncryptionHelper.encryptStringWithPrivateKey(city, rsaPrivateKey)
         houseNumber = RSAEncryptionHelper.encryptStringWithPrivateKey(houseNumber, rsaPrivateKey)
         postCode = RSAEncryptionHelper.encryptStringWithPrivateKey(postCode, rsaPrivateKey)
+
+        patientID = RSAEncryptionHelper.encryptStringWithPrivateKey(patientID!!, rsaPrivateKey)
+        insuranceNumber = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceNumber!!, rsaPrivateKey)
+
+
 //        insuranceStatus = RSAEncryptionHelper.encryptStringWithPrivateKey(insuranceStatus, rsaPrivateKey)
     }
 

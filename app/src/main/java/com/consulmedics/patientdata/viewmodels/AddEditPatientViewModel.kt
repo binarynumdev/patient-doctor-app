@@ -381,7 +381,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     }
 
     fun setServeHead(editValue: Boolean) {
-        _patientData.value?.serverHandInjury = editValue
+        _patientData.value?.severeHandInjury = editValue
     }
 
     fun setThrombosis(editValue: Boolean) {
