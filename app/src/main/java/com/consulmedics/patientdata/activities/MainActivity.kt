@@ -2,6 +2,7 @@ package com.consulmedics.patientdata.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.se.omapi.Session
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -18,6 +19,8 @@ import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.utils.AppConstants.PATIENT_DATA
 import com.consulmedics.patientdata.utils.AppConstants.PATIENT_MODE
 import com.consulmedics.patientdata.utils.AppConstants.PHONE_CALL_MODE
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.utils.SessionManager
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedListener{
@@ -41,6 +44,9 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
             startActivity(Intent(this, UploadPatientActivity::class.java).apply {
             })
         }
+        var userFirstName = SessionManager.getFirstName(this)
+        var userLastName = SessionManager.getLastName(this)
+        binding.appBarMain.textUserName.text = "$userFirstName $userLastName"
         toggle = ActionBarDrawerToggle(this@MainActivity, binding.appBarMain.drawerLayout, R.string.patient_data, R.string.patient_data)
         binding.appBarMain.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
