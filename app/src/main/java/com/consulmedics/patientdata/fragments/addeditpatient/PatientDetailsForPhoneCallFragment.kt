@@ -128,8 +128,8 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
             editDateOfVisit.setOnClickListener {
                 var c = Calendar.getInstance()
                 val converter: Converters = Converters()
-                if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()){
-                    c.time = converter.stringToDate(sharedViewModel.patientData.value?.startVisitDate!!)
+                if(sharedViewModel.patientData.value?.startVisitDate != null){
+                    c.time = sharedViewModel.patientData.value?.startVisitDate!!
                 }
                 var year = c.get(Calendar.YEAR)
                 var month = c.get(Calendar.MONTH)
@@ -149,7 +149,7 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
                     c.set(Calendar.YEAR, datePicker.year)
                     c.set(Calendar.MONTH, datePicker.month)
                     c.set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
-                    sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
+                    sharedViewModel.setStartVisitDate(c.time)
                     val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
                     binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
                     dialog.dismiss()
@@ -239,12 +239,10 @@ class PatientDetailsForPhoneCallFragment : BaseAddEditPatientFragment() {
                 )
             }
             binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
-            if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()) {
+            if(sharedViewModel.patientData.value?.startVisitDate != null) {
                 binding.editDateOfVisit.setText(
                     birthDateFormat.format(
-                        converters.stringToDate(
-                            sharedViewModel.patientData.value?.startVisitDate
-                        )
+                        sharedViewModel.patientData.value?.startVisitDate
                     )
                 )
             }

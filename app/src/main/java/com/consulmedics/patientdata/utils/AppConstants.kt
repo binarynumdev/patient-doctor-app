@@ -20,6 +20,8 @@ object AppConstants {
     const val BACKEND_BASE_URL: String = "https://admin-test.bd365.de/"
     const val LOGIN_API_ENDPOINT: String = "api/login-to-mobile-app"
     const val SYNC_PATIENT_ENDPOINT: String = "api/v1/sync-patient-data"
+    const val LOAD_MISSIONS_ENDPOINT: String = "api/v1/my-missions"
+    const val UPLOAD_SHIFT_ENDPOINT: String = "api/v1/sync-patient-data"
 
     const val GOOGLE_MAP_API_ENDPOINT: String = "https://maps.googleapis.com/"
     const val FETCH_ADDRESS_FROM_LOCATION_ENDPOINT: String = "maps/api/geocode/json"
@@ -29,5 +31,10 @@ object AppConstants {
     const val PHONE_CALL_MODE: String = "phone_call"
     const val PATIENT_MODE: String = "patient_mode"
     const val PATIENT_DATA: String = "patient_data"
+
+    const val UPCOMING_TABS: String = "upcoming"
+    const val PAST_TABS: String = "past"
+
+    const val PATIENT_SHIFT_DATA: String = "patient_shift_data"
 
 }

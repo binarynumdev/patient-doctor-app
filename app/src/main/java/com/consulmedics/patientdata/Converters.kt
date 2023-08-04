@@ -43,4 +43,10 @@ class Converters {
         }
         return timeFormat.format(date)
     }
+    fun dateToFormatedString(dateStr: String, originPattern: String, outputPattern: String): String?{
+        val formatter = SimpleDateFormat(originPattern)
+        val dateTime = formatter.parse(dateStr)
+        val outputFormatter = SimpleDateFormat(outputPattern)
+        return outputFormatter.format(dateTime)
+    }
 }

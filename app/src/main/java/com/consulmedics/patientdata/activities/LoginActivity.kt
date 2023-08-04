@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.consulmedics.patientdata.data.api.ApiClient
 import com.consulmedics.patientdata.databinding.ActivityLoginBinding
 
 import com.consulmedics.patientdata.data.api.response.BaseResponse
@@ -57,10 +58,38 @@ class LoginActivity : AppCompatActivity() {
     }
     fun processLogin(data: LoginResponse?) {
         showToast("Success:")
-        if (!data?.api_token.isNullOrEmpty()) {
-            data?.api_token?.let { SessionManager.saveAuthToken(this, it) }
+        if (!data?.data?.api_token.isNullOrEmpty()) {
+            data?.data?.api_token?.let {
+                SessionManager.saveAuthToken(this, it)
+                ApiClient.setBearerToken(it)
+            }
             navigateToHome()
         }
+        if(!data?.data?.first_name.isNullOrEmpty()){
+            data?.data?.first_name?.let {
+                SessionManager.saveFirstName(this, it)
+            }
+        }
+        if(!data?.data?.last_name.isNullOrEmpty()){
+            data?.data?.last_name?.let {
+                SessionManager.saveLastName(this, it)
+            }
+        }
+        if(!data?.data?.private_key.isNullOrEmpty()){
+            data?.data?.private_key?.let {
+                SessionManager.savePrivateKey(this, it)
+            }
+        }
+        if(!data?.data?.userID.isNullOrEmpty()){
+            data?.data?.userID?.let { SessionManager.saveUserID(this, it) }
+        }
+        if(!data?.data?.doctorID.isNullOrEmpty()){
+            data?.data?.doctorID?.let {
+                SessionManager.saveDoctorID(this, it)
+                Log.e(TAG_NAME, "Doctor ID: ${it}")
+            }
+        }
+
     }
     fun showLoading() {
         binding.progressBar.visibility = View.VISIBLE
@@ -79,5 +108,6 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 }

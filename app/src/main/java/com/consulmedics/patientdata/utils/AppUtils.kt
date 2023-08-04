@@ -14,6 +14,9 @@ import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_PATH
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.io.*
+import java.lang.Math.abs
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AppUtils {
     companion object {
@@ -111,5 +114,17 @@ class AppUtils {
                 }
             }
         }
+        fun calculateTimeDiffInHours(startDate: String, endDate: String): Long {
+            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val startDateTime = format.parse(startDate)
+            val endDateTime = format.parse(endDate)
+
+            val differenceInMillis = abs(endDateTime.time - startDateTime.time)
+            val differenceInHours = differenceInMillis / (1000 * 60 * 60)
+
+            return differenceInHours
+        }
+
     }
+
 }

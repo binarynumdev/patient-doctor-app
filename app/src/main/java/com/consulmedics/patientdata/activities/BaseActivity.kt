@@ -1,8 +1,10 @@
 package com.consulmedics.patientdata.activities
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 
@@ -17,11 +19,22 @@ abstract  class BaseActivity: AppCompatActivity() {
         progressDialog.show()
     }
     fun hideLoadingSpinner(){
-        progressDialog.dismiss()
+        if(this::progressDialog.isInitialized){
+            progressDialog.dismiss()
+            Log.e("Fragment", "Hide Loading Dailog")
+        }
     }
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
+
+    fun logout(){
+        val intent = Intent(this, LoginActivity::class.java)
+        // Clear the activity stack and set the login activity as the new root
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        // Start the login activity
+        startActivity(intent)
     }
 }

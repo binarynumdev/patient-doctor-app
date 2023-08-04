@@ -10,10 +10,13 @@ import android.os.Environment
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.dao.PatientDao
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.data.model.PatientShift
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppUtils.Companion.mmToPt
 import java.io.File
 import java.io.FileOutputStream
@@ -254,6 +257,11 @@ class PatientRepository(private val patientDao: PatientDao)  {
             return  null
         }
 
+    }
+
+    fun getPatientsByShift(currentShift: PatientShift) : List<Patient>{
+        Log.e(TAG_NAME, "Start Date: ${currentShift.startDate}, End Date: ${currentShift.endDate}")
+        return patientDao.getPatientsByShift(currentShift.startDate, currentShift.endDate)
     }
 
 

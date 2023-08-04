@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main_graph.xml"
+    app:startDestination="@id/patientListFragment">
+
+    <fragment
+        android:id="@+id/patientListFragment"
+        android:name="com.consulmedics.patientdata.fragments.patients.PatientListFragment"
+        android:label="fragment_patient_list"
+        tools:layout="@layout/fragment_patient_list" >
+        <action
+            android:id="@+id/action_patientListFragment_to_shiftListFragment"
+            app:destination="@id/shiftListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shiftListFragment"
+        android:name="com.consulmedics.patientdata.fragments.ShiftListFragment"
+        android:label="fragment_shift_list"
+        tools:layout="@layout/fragment_shift_list" />
+</navigation>

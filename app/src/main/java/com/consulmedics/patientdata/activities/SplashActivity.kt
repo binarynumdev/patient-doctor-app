@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.UsbConnectionService
+import com.consulmedics.patientdata.data.api.ApiClient
 import com.consulmedics.patientdata.utils.AppConstants.PERMISSION_REQUEST_CODE
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.SessionManager
@@ -109,7 +110,10 @@ class SplashActivity : AppCompatActivity() {
 //        val thread: CheckUserThread = CheckUserThread(applicationContext)
 //        thread.start()
         val token = SessionManager.getToken(this)
+        val doctorID = SessionManager.getDoctorID(this);
+        Log.e(TAG_NAME, "Doctor ID:${doctorID}")
         if (!token.isNullOrBlank()) {
+            ApiClient.setBearerToken(token)
             val i = Intent(this, MainActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(i)

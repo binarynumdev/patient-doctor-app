@@ -5,16 +5,19 @@ import androidx.room.*
 import com.consulmedics.patientdata.dao.AddressDao
 import com.consulmedics.patientdata.dao.HotelDao
 import com.consulmedics.patientdata.dao.PatientDao
+import com.consulmedics.patientdata.dao.PatientShiftDao
 import com.consulmedics.patientdata.data.model.Address
 import com.consulmedics.patientdata.data.model.Hotel
 import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.data.model.PatientShift
 
-@Database(entities = [Patient::class, Hotel::class, Address::class], version = 5)
+@Database(entities = [Patient::class, Hotel::class, Address::class, PatientShift::class], version = 6)
 @TypeConverters(Converters::class)
 abstract  class MyAppDatabase: RoomDatabase() {
     abstract fun patientDao(): PatientDao
     abstract fun hotelDao(): HotelDao
     abstract fun addressDao(): AddressDao
+    abstract fun patientShiftDao(): PatientShiftDao
     companion object {
 
         @Volatile
@@ -33,7 +36,7 @@ abstract  class MyAppDatabase: RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 MyAppDatabase::class.java,
-                "consulmedics_database_7"
+                "consulmedics_database_16"
             ).allowMainThreadQueries().build()
         }
     }

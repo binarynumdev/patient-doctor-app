@@ -43,7 +43,7 @@
                     android:drawableLeft="@drawable/ic_calendar"
                     android:ems="10"
                     android:focusable="false"
-                    android:hint="@string/time_of_exam"
+                    android:hint="@string/date_of_visit"
                     android:inputType="textPersonName"
                     android:textSize="@dimen/text_size_normal"
                     android:theme="@style/CustomEditBoxStyle" />
@@ -142,29 +142,37 @@
                 android:orientation="vertical">
 
                 <RadioGroup
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/btnSyncVisitAddress"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
                         android:text="From Patient Data"
                         android:textSize="@dimen/text_size_middle" />
 
                     <RadioButton
                         android:id="@+id/btnVisitAddressFromMap"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
                         android:text="From Map"
                         android:textSize="@dimen/text_size_middle" />
 
                     <RadioButton
                         android:id="@+id/btnFillVIsitAddressManually"
+                        style="@style/Widget.MaterialComponents.CompoundButton.RadioButton.ConsulMedicsRadioButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        android:buttonTint="@color/app_orange"
                         android:text="Manually"
                         android:textSize="@dimen/text_size_middle" />
 

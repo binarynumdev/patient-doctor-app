@@ -49,6 +49,8 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     var startAddress: LiveData<Address> = _startAddress
     private val _visitAddress = MutableLiveData<Address>()
     var visitAddress: LiveData<Address> = _visitAddress
+    private val _receiptAddress = MutableLiveData<Address>()
+    var receiptAddress: LiveData<Address> = _receiptAddress
 //    private val _printResult = MutableLiveData<BaseResponse<PDFGenerateResponse>>()
     var printResult: MutableLiveData<BaseResponse<PDFGenerateResponse>> = MutableLiveData()
 
@@ -56,23 +58,24 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         hotelList = addressRepository.hotelList
         previousPatients = patientRepository.previousPatients(null)
         if(_patientData.value?.startAddress != null){
-//            startAddress = addressRepository.find(_patientData.value?.startAddress)
-//            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
             _startAddress.value = addressRepository.find(_patientData.value?.startAddress)
         }
         else{
-//            _startAddress = Address()
             _startAddress.value = Address()
         }
 
         if(_patientData.value?.visitAddress != null){
-//            startAddress = addressRepository.find(_patientData.value?.startAddress)
-//            startAddress = addressRepository.find(_patientData.value?.startAddress!!)!!
             _visitAddress.value = addressRepository.find(_patientData.value?.visitAddress)
         }
         else{
-//            _startAddress = Address()
             _visitAddress.value = Address()
+        }
+        if(_patientData.value?.receiptAddress != null){
+            Log.e(TAG_NAME, "Load Receipt Address")
+            _receiptAddress.value = addressRepository.find(_patientData.value?.receiptAddress)
+        }
+        else{
+            _receiptAddress.value = Address()
         }
     }
     private val _isLoading = MutableLiveData<Boolean>(false)
@@ -165,21 +168,14 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         else{
             _visitAddress.value = Address()
         }
-//        patient?.patientID?.let { setPatientID(it) }
-//        patient?.firstName?.let { setFirstname(it) }
-//        patient?.lastName?.let { setLastname(it) }
-//        patient?.gender?.let { setGender(it) }
-//        patient?.birthDate?.let {
-//            val birthDateFormat = SimpleDateFormat("dd.MM.yyyy")
-//            setBirthDate(birthDateFormat.format(it))
-//        }
-//        patient?.street?.let { setStreet(it) }
-//        patient?.postCode?.let { setPostCode(it) }
-//        patient?.houseNumber?.let { setHouseNumber(it) }
-//
-//        patient?.insuranceName?.let { setInsuranceName(it) }
-//        patient?.insuranceNumber?.let { setInsuranceNumber(it) }
-//        patient?.insuranceStatus?.let { setInsuranceStatus(it) }
+        if(patient.receiptAddress != null){
+            Log.e(TAG_NAME, "Visit Address : ${patient.receiptAddress}")
+            _receiptAddress.value = addressRepository.find(patient.receiptAddress)
+            Log.e(TAG_NAME, "Visit Address : ${receiptAddress.value?.uid}")
+        }
+        else{
+            _receiptAddress.value = Address()
+        }
     }
 
     fun setKillometer(editValue: String) {
@@ -202,12 +198,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.timeOfExam = editValue
     }
 
-    fun setDateOfVisit(editValue: String){
-        _patientData.value?.startVisitDate = editValue
-    }
-    fun setTimeOfVisit(editValue: String){
-        _patientData.value?.startVisitTime = editValue
-    }
+
 
     fun setSignature(signatureSvg: String?) {
         if (signatureSvg != null) {
@@ -269,6 +260,13 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
                     }
                 }
             }
+            receiptAddress.value?.let {
+                if(receiptAddress.value?.uid == null)
+                    patient.receiptAddress = addressRepository.insert(it).toInt()
+                else{
+                    addressRepository.update(receiptAddress.value!!)
+                }
+            }
         }
 
 
@@ -304,8 +302,8 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         return _patientData.value?.isValidInsuranceDetails()
     }
 
-    fun setStartVisitDate(dateToString: String) {
-        _patientData.value?.startVisitDate = dateToString
+    fun setStartVisitDate(startDate: Date) {
+        _patientData.value?.startVisitDate = startDate
     }
 
     fun setStartVisitTime(timeToString: String) {
@@ -316,11 +314,11 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.startPoint = s
     }
 
-    fun setCurrentAddressSame(s: String) {
+    fun setCurrentAddressSame(s: Boolean) {
         _patientData.value?.sameAddAsPrev = s
     }
 
-    fun setCurrentPatientAlreadyVisited(s: String) {
+    fun setCurrentPatientAlreadyVisited(s: Boolean) {
         _patientData.value?.alreadyVisitedDuringThisShift = s
     }
 
@@ -366,43 +364,43 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         return _patientData.value?.isValidDoctorDocument()
     }
 
-    fun setDementia(editValue: String) {
+    fun setDementia(editValue: Boolean) {
         _patientData.value?.dementia = editValue
     }
 
-    fun setGeriatrics(editValue: String) {
+    fun setGeriatrics(editValue: Boolean) {
         _patientData.value?.geriatrics = editValue
     }
 
-    fun setInfant(editValue: String) {
+    fun setInfant(editValue: Boolean) {
         _patientData.value?.infant = editValue
     }
 
-    fun setFractures(editValue: String) {
+    fun setFractures(editValue: Boolean) {
         _patientData.value?.fractures = editValue
     }
 
-    fun setServeHead(editValue: String) {
-        _patientData.value?.serverHandInjury = editValue
+    fun setServeHead(editValue: Boolean) {
+        _patientData.value?.severeHandInjury = editValue
     }
 
-    fun setThrombosis(editValue: String) {
+    fun setThrombosis(editValue: Boolean) {
         _patientData.value?.thrombosis = editValue
     }
 
-    fun setHypertension(editValue: String) {
+    fun setHypertension(editValue: Boolean) {
         _patientData.value?.hypertension = editValue
     }
 
-    fun setPreHeartAttack(editValue: String) {
+    fun setPreHeartAttack(editValue: Boolean) {
         _patientData.value?.preHeartAttack = editValue
     }
 
-    fun setPneumonia(editValue: String) {
+    fun setPneumonia(editValue: Boolean) {
         _patientData.value?.pneumonia = editValue
     }
 
-    fun setDivertikulistis(editValue: String) {
+    fun setDivertikulistis(editValue: Boolean) {
         _patientData.value?.divertikulitis = editValue
     }
 
@@ -500,6 +498,33 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         if(_visitAddress.value != null){
             _visitAddress.value?.latitute = 0.0
             _visitAddress.value?.longitute = 0.0
+        }
+    }
+
+    fun setReceiptFirstName(firstname: String) {
+        _patientData.value?.receiptFirstName = firstname
+    }
+
+    fun setReceiptLastName(lastname: String) {
+        _patientData.value?.receiptLastName = lastname
+    }
+
+    fun setReceiptAdditionalInfo(addInfo: String) {
+        _patientData.value?.receiptAdditionalInfo = addInfo
+    }
+
+    fun setReceiptAddressFromPatientAddress() {
+        if(!patientData.value?.city.isNullOrEmpty()){
+            _receiptAddress.value?.city = patientData.value?.city!!
+        }
+        if(!patientData.value?.street.isNullOrEmpty()){
+            _receiptAddress.value?.streetName = patientData.value?.street!!
+        }
+        if(!patientData.value?.houseNumber.isNullOrEmpty()){
+            _receiptAddress.value?.streetNumber = patientData.value?.houseNumber!!
+        }
+        if(!patientData.value?.postCode.isNullOrEmpty()){
+            _receiptAddress.value?.postCode = patientData.value?.postCode!!
         }
     }
 

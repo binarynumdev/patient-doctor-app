@@ -62,8 +62,8 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             editDateOfVisit.setOnClickListener {
                 var c = Calendar.getInstance()
                 val converter: Converters = Converters()
-                if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()){
-                    c.time = converter.stringToDate(sharedViewModel.patientData.value?.startVisitDate!!)
+                if(sharedViewModel.patientData.value?.startVisitDate != null){
+                    c.time = sharedViewModel.patientData.value?.startVisitDate!!
                 }
                 var year = c.get(Calendar.YEAR)
                 var month = c.get(Calendar.MONTH)
@@ -83,7 +83,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                     c.set(Calendar.YEAR, datePicker.year)
                     c.set(Calendar.MONTH, datePicker.month)
                     c.set(Calendar.DAY_OF_MONTH, datePicker.dayOfMonth)
-                    sharedViewModel.setStartVisitDate(converter.dateToString(c.time)!!)
+                    sharedViewModel.setStartVisitDate(c.time)
                     val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
                     binding.editDateOfVisit.setText(birthDateFormat.format(c.time))
                     dialog.dismiss()
@@ -151,7 +151,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
             }
             radioCurrentAddressSameNo.setOnClickListener {
-                sharedViewModel.setCurrentAddressSame(NO_TEXT)
+                sharedViewModel.setCurrentAddressSame(false)
                 addressFormLayout.visibility = VISIBLE
                 val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
                 val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, false)
@@ -173,7 +173,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
             }
             radioCurrentAddressSameYes.setOnClickListener {
-                sharedViewModel.setCurrentAddressSame(YES_TEXT)
+                sharedViewModel.setCurrentAddressSame(true)
                 addressFormLayout.visibility = GONE
                 sharedViewModel.previousPatients.value?.also {
                     if(it.isNotEmpty()){
@@ -187,10 +187,10 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 }
             }
             radioCurrentPatientVisitThisShiftYes.setOnClickListener{
-                sharedViewModel.setCurrentPatientAlreadyVisited(YES_TEXT)
+                sharedViewModel.setCurrentPatientAlreadyVisited(true)
             }
             radioCurrentPatientVisitThisShiftNo.setOnClickListener {
-                sharedViewModel.setCurrentPatientAlreadyVisited(NO_TEXT)
+                sharedViewModel.setCurrentPatientAlreadyVisited(false)
             }
             btnContinue.setOnClickListener {
                 findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
@@ -414,12 +414,10 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
 
             binding.editTimeOfVisit.setText(sharedViewModel.patientData.value?.startVisitTime)
-            if(!sharedViewModel.patientData.value?.startVisitDate.isNullOrEmpty()) {
+            if(sharedViewModel.patientData.value?.startVisitDate !=  null) {
                 binding.editDateOfVisit.setText(
                     birthDateFormat.format(
-                        converters.stringToDate(
-                            sharedViewModel.patientData.value?.startVisitDate
-                        )
+                        sharedViewModel.patientData.value?.startVisitDate
                     )
                 )
             }
@@ -430,7 +428,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 binding.radioStartPointIsPrevPatient.isChecked = true
             }
 
-            if(sharedViewModel.patientData.value?.sameAddAsPrev == YES_TEXT){
+            if(sharedViewModel.patientData.value?.sameAddAsPrev == true){
                 binding.radioCurrentAddressSameYes.isChecked = true
                 binding.addressFormLayout.visibility = GONE
             }
@@ -439,12 +437,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 binding.addressFormLayout.visibility = VISIBLE
             }
 
-            if(sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == YES_TEXT){
-                binding.radioCurrentPatientVisitThisShiftYes.isChecked = true
-            }
-            else{
-                binding.radioCurrentPatientVisitThisShiftNo.isChecked = true
-            }
+            binding.radioCurrentPatientVisitThisShiftYes.isChecked = sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == true
             if(it.distance > 0.00){
                 Log.e("DISTANCE", "${it.distance}")
                 binding.textDistance.text = "Total Distance: ${(it.distance/1000).toInt()}Km"
