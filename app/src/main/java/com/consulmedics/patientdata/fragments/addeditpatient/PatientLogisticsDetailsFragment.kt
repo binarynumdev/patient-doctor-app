@@ -126,7 +126,6 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                         val prevPatient = it[0]
                         sharedViewModel.viewModelScope.launch {
                             sharedViewModel.setStartAddress(prevPatient.visitAddress)
-
                         }
 
                     }

@@ -39,19 +39,29 @@ private const val SHIFT_OPTION = "shift_option"
  * Use the [SubShiftListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInterface {
-    private var shiftOption: String? = shiftOption
+class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
+    private var shiftOption: String? = null
     lateinit var mainActivity: BaseActivity
     private var _binding: FragmentSubShiftListBinding? = null
     val binding get() = _binding!!
     lateinit var shiftAdapter: ShiftAdapter
     private  val viewModel: ShiftViewModel by viewModels()
+
+    companion object {
+        fun newInstance(shiftOption: String): SubShiftListFragment {
+            val fragment = SubShiftListFragment()
+            val args = Bundle()
+            args.putString(SHIFT_OPTION, shiftOption)
+            fragment.arguments = args
+            return fragment
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        shiftOption = arguments?.getString(SHIFT_OPTION)
 
         shiftAdapter = ShiftAdapter(requireContext(), this)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,47 +75,96 @@ class SubShiftListFragment(shiftOption: String) : Fragment(), ShiftItemClickInte
         return binding.root
     }
 
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//
+//        if (view != null) {
+//            CoroutineScope(Dispatchers.Main).launch {
+//                if(shiftOption?.equals(PAST_TABS) == true){
+//                    Log.e(TAG_NAME, "PAST TABS")
+//
+//                    viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
+//                        shiftAdapter.updateList(it)
+//                    })
+//                }
+//                else if (shiftOption?.equals(UPCOMING_TABS) == true){
+//                    Log.e(TAG_NAME, "UPCOMING TABS")
+//                    viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
+//                        shiftAdapter.updateList(it)
+//                    })
+//                }
+//            }
+//
+//            viewModel.uploadShiftResult.observe(viewLifecycleOwner) {
+//                when (it) {
+//                    is BaseResponse.Loading -> {
+//                        mainActivity.showLoadingSpinner("Loading", "Please wait while uploading shift details")
+//                    }
+//
+//                    is BaseResponse.Success -> {
+//                        mainActivity.hideLoadingSpinner()
+//                    }
+//                    is BaseResponse.SessionError ->{
+//                        Log.e(TAG_NAME, "REDIRECT TO LOGOUT")
+//                        Toast.makeText(context, R.string.wrong_session, Toast.LENGTH_LONG).show()
+//                        mainActivity.hideLoadingSpinner()
+//                        mainActivity.logout()
+//                    }
+//                    is BaseResponse.Error -> {
+//                        Log.e(TAG_NAME, "API ERROR :${it.msg}")
+//                        mainActivity.hideLoadingSpinner()
+//                    }
+//                    else -> {
+//                        mainActivity.hideLoadingSpinner()
+//                    }
+//                }
+//            }
+//        }
+//    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        CoroutineScope(Dispatchers.Main).launch {
-            if(shiftOption?.equals(PAST_TABS) == true){
-                Log.e(TAG_NAME, "PAST TABS")
-                viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
-                    shiftAdapter.updateList(it)
-                })
+        if(view != null) {
+            CoroutineScope(Dispatchers.Main).launch {
+                if(shiftOption?.equals(PAST_TABS) == true){
+                    Log.e(TAG_NAME, "PAST TABS")
+
+                    viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
+                        shiftAdapter.updateList(it)
+                    })
+                }
+                else if (shiftOption?.equals(UPCOMING_TABS) == true){
+                    Log.e(TAG_NAME, "UPCOMING TABS")
+                    viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
+                        shiftAdapter.updateList(it)
+                    })
+                }
             }
-            else if (shiftOption?.equals(UPCOMING_TABS) == true){
-                Log.e(TAG_NAME, "UPCOMING TABS")
-                viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
-                    shiftAdapter.updateList(it)
-                })
-            }
 
-        }
-        viewModel.uploadShiftResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is BaseResponse.Loading -> {
-                    mainActivity.showLoadingSpinner("Loading", "Please wait while upload shift details")
-                }
+            if (view != null) {
+                viewModel.uploadShiftResult.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is BaseResponse.Loading -> {
+                            mainActivity.showLoadingSpinner("Loading", "Please wait while uploading shift details")
+                        }
 
-                is BaseResponse.Success -> {
-                    mainActivity.hideLoadingSpinner()
+                        is BaseResponse.Success -> {
+                            mainActivity.hideLoadingSpinner()
+                        }
+                        is BaseResponse.SessionError ->{
+                            Log.e(TAG_NAME, "REDIRECT TO LOGOUT")
+                            Toast.makeText(context, R.string.wrong_session, Toast.LENGTH_LONG).show()
+                            mainActivity.hideLoadingSpinner()
+                            mainActivity.logout()
+                        }
+                        is BaseResponse.Error -> {
+                            Log.e(TAG_NAME, "API ERROR :${it.msg}")
+                            mainActivity.hideLoadingSpinner()
+                        }
+                        else -> {
+                            mainActivity.hideLoadingSpinner()
+                        }
+                    }
                 }
-                is BaseResponse.SessionError ->{
-                    Log.e(TAG_NAME, "REDIRECT TO LOGOUT")
-                    Toast.makeText(context, R.string.wrong_session, Toast.LENGTH_LONG).show()
-                    mainActivity.hideLoadingSpinner()
-                    mainActivity.logout()
-                }
-                is BaseResponse.Error -> {
-                    Log.e(TAG_NAME, "API ERROR :${it.msg}")
-                    mainActivity.hideLoadingSpinner()
-                }
-                else -> {
-                    mainActivity.hideLoadingSpinner()
-                }
-
-
             }
         }
     }

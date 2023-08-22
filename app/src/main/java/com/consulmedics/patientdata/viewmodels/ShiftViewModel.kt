@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyAppDatabase
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.data.api.ApiClient
 import com.consulmedics.patientdata.data.api.request.UploadShiftRequest
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.LoadShiftApiResponse
@@ -51,6 +52,11 @@ class ShiftViewModel(application: Application) : AndroidViewModel(application)  
         loadShiftResult.value = BaseResponse.Loading()
         viewModelScope.launch {
             try {
+                Log.e("LoadShiftDetails","Here")
+
+                var api_token: String? = SessionManager.getString(getApplication(), "api_token")
+                Log.e("Load_API_TOKEN",api_token.toString())
+//                ApiClient.setBearerToken(api_token.toString())
                 val response = userRepo.loadShiftDetails()
                 if (response?.code() == 200) {
                     loadShiftResult.value = BaseResponse.Success(response.body())

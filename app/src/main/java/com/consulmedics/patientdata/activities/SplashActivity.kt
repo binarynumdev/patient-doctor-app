@@ -79,6 +79,7 @@ class SplashActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> if (grantResults.size > 0) {
                 Log.e(TAG_NAME, grantResults.toString())
@@ -113,7 +114,7 @@ class SplashActivity : AppCompatActivity() {
         val doctorID = SessionManager.getDoctorID(this);
         Log.e(TAG_NAME, "Doctor ID:${doctorID}")
         if (!token.isNullOrBlank()) {
-            ApiClient.setBearerToken(token)
+//            ApiClient.setBearerToken(token)
             val i = Intent(this, MainActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(i)

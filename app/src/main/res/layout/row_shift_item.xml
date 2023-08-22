@@ -43,7 +43,8 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/appbar_padding_top"
-            tools:context=".fragments.addeditpatient.PatientSummaryFragment">
+            tools:context=".fragments.addeditpatient.PatientSummaryFragment"
+            android:background="?attr/shiftPatientItemBackgroundColor">
 
 
             <TextView
@@ -51,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Claudia Burdack"
-                android:textColor="?attr/editTextColor"
+                android:textColor="?attr/text_color"
                 android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

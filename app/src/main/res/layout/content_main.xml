@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_main"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource"
+    tools:showIn="@layout/activity_main"
+    android:background="?attr/colorPrimary"
+    >
 
     <fragment
         android:id="@+id/nav_host_fragment_patient_flow"
@@ -17,15 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:defaultNavHost="true"/>
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/fragmentContainerView"-->
-<!--        android:name="com.consulmedics.patientdata.fragments.patients.PatientListFragment"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginStart="1dp"-->
-<!--        -->
-<!--        -->
-<!--        -->
-<!--         />-->
+        app:defaultNavHost="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

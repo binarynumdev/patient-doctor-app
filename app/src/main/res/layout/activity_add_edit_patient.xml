@@ -35,7 +35,7 @@
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_background_dark"
+            android:background="@color/default_background"
             android:orientation="horizontal"
             android:padding="@dimen/appbar_padding"
             app:layout_constraintBottom_toBottomOf="parent"
