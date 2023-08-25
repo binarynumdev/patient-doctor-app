@@ -8,12 +8,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.consulmedics.patientdata.data.api.ApiClient
+import com.consulmedics.patientdata.utils.SessionManager
 import com.consulmedics.patientdata.databinding.ActivityLoginBinding
-
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.api.response.LoginResponse
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import com.consulmedics.patientdata.utils.SessionManager
 import com.consulmedics.patientdata.viewmodels.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -33,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.editEmailAddress.text.toString()
             val pwd = binding.editPassword.text.toString()
             viewModel.loginUser(email = email, pwd = pwd)
+            Log.e("EMAIL", email.toString())
+            Log.e("PASSWORD", pwd.toString())
         }
 
         viewModel.loginResult.observe(this) {
@@ -58,13 +59,8 @@ class LoginActivity : AppCompatActivity() {
     }
     fun processLogin(data: LoginResponse?) {
         showToast("Success:")
-        if (!data?.data?.api_token.isNullOrEmpty()) {
-            data?.data?.api_token?.let {
-                SessionManager.saveAuthToken(this, it)
-                ApiClient.setBearerToken(it)
-            }
-            navigateToHome()
-        }
+        Log.e("Dataaaaaaaaa", data?.data?.api_token.toString())
+
         if(!data?.data?.first_name.isNullOrEmpty()){
             data?.data?.first_name?.let {
                 SessionManager.saveFirstName(this, it)
@@ -88,8 +84,15 @@ class LoginActivity : AppCompatActivity() {
                 SessionManager.saveDoctorID(this, it)
                 Log.e(TAG_NAME, "Doctor ID: ${it}")
             }
+        } else return
+        if (!data?.data?.api_token.isNullOrEmpty()) {
+            data?.data?.api_token?.let {
+                Log.e("api_token_here", it)
+//                ApiClient.setBearerToken(it)
+                SessionManager.saveAuthToken(this, it)
+            }
+            navigateToHome()
         }
-
     }
     fun showLoading() {
         binding.progressBar.visibility = View.VISIBLE

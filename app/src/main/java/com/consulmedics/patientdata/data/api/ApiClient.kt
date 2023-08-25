@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
+import okhttp3.Request
 
 object ApiClient {
     var mHttpLoggingInterceptor = HttpLoggingInterceptor()
@@ -36,16 +37,51 @@ object ApiClient {
             chain.proceed(request)
         }.build()
         mOkHttpClient = authInterceptor
+        Log.e("it contains BearToken", hasBearerToken(mOkHttpClient).toString())
     }
+
+
+    fun hasBearerToken(client: OkHttpClient): Boolean {
+        // Create a dummy request to test the interceptors
+        val testRequest = Request.Builder().url("http://example.com").build()
+
+        for (interceptor in client.interceptors) {
+            val modifiedRequest = interceptor.intercept(object : okhttp3.Interceptor.Chain {
+                override fun request(): Request = testRequest
+                override fun proceed(request: Request): okhttp3.Response {
+                    return okhttp3.Response.Builder()
+                        .request(request)
+                        .protocol(okhttp3.Protocol.HTTP_1_1)
+                        .code(200)
+                        .message("OK")
+                        .build()
+                }
+                override fun connection() = null
+                override fun call() = client.newCall(testRequest)
+                override fun connectTimeoutMillis() = 0
+                override fun withConnectTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+                override fun readTimeoutMillis() = 0
+                override fun withReadTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+                override fun writeTimeoutMillis() = 0
+                override fun withWriteTimeout(timeout: Int, unit: java.util.concurrent.TimeUnit) = this
+            }).request
+
+            val authHeader = modifiedRequest.header("Authorization")
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                return true
+            }
+        }
+
+        return false
+    }
+
     val client: Retrofit?
         get() {
-            if(mRetrofit == null){
-                mRetrofit = Retrofit.Builder()
-                    .baseUrl(AppConstants.BACKEND_BASE_URL)
-                    .client(mOkHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build()
-            }
+            mRetrofit = Retrofit.Builder()
+                .baseUrl(AppConstants.BACKEND_BASE_URL)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
             return mRetrofit
         }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="text_color" format="color" />
+    <attr name="edit_text_background_color" format="color" />
+
+    <attr name="shiftPatientItemBackgroundColor" format="color"/>
+    <attr name="shiftPatientNameColor" format="color" />
+
+    <attr name="sideBarIconColor" format="color" />
+
+<!--    <attr name="shift_patient_item_background" format="color"/>-->
+<!--    <attr name="shift_patient_name_color" format="color"/>-->
+<!--    <attr name="shift_patient_date_color" format="color"/>-->
+<!--    <attr name="shift_patient_action_color" format="color"/>-->
+</resources>

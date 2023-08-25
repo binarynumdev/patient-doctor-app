@@ -7,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
-    tools:ignore="MissingDefaultResource">
+    android:background="?attr/colorPrimary"
+    >
+<!--    tools:ignore="MissingDefaultResource"-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
@@ -17,7 +19,6 @@
             android:id="@+id/appBarLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.ConsulmedicsPatientData.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints">
@@ -87,7 +88,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_upload" />
+                    app:srcCompat="@drawable/ic_day" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,10 +103,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView

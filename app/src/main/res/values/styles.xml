@@ -36,4 +36,8 @@
         <item name="cornerSizeBottomRight">50dp</item>
         <item name="cornerSizeBottomLeft">50dp</item>
     </style>
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabSelectedTextColor">@color/customSelectedTabTextColor</item>
+        <item name="tabTextColor">@color/customUnSelectedTabTextColor</item>
+    </style>
 </resources>

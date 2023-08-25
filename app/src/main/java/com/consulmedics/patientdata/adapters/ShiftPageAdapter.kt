@@ -16,8 +16,8 @@ class ShiftPageAdapter(fm: FragmentManager, lifecycle: Lifecycle) : FragmentStat
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> SubShiftListFragment(PAST_TABS)  // Replace with your first tab fragment
-            1 -> SubShiftListFragment(UPCOMING_TABS)  // Replace with your second tab fragment
+            0 -> SubShiftListFragment.newInstance(PAST_TABS)  // Replace with your first tab fragment
+            1 -> SubShiftListFragment.newInstance(UPCOMING_TABS)  // Replace with your second tab fragment
             else -> Fragment()
         }
     }

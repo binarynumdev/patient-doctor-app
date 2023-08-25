@@ -77,7 +77,7 @@
     <string name="year">Year</string>
     <string name="day">Day</string>
     <string name="phone_number">Phone Number</string>
-    <string name="name_practise">Name Practise</string>
+    <string name="name_practise">Name Patient</string>
     <string name="sign_patient">Sign Patient</string>
     <string name="back">Back</string>
     <string name="yes">Yes</string>
@@ -164,4 +164,12 @@
     <string name="wrong_session">Wrong session, please try to attem login again.</string>
     <string name="address_from_patient_details">Copy from Patient Address</string>
     <string name="receipt_details">Receipt Details</string>
+
+    <string name="label_dark_mode">Dark mode</string>
+    <string name="label_light_mode">Light mode</string>
+
+    <string-array name="themes">
+        <item>@string/label_light_mode</item>
+        <item>@string/label_dark_mode</item>
+    </string-array>
 </resources>

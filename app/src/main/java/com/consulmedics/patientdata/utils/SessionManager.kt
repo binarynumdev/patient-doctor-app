@@ -11,6 +11,7 @@ object SessionManager {
     const val FIRST_NAME = "first_name"
     const val LAST_NAME = "last_name"
     const val PRIVATE_KEY = "private_key"
+    const val SELECTED_MENU_ITEM_LABEL = "selected_menu_item_label"
 
     fun savePrivateKey(context: Context, privateKey: String){
         saveString(context, PRIVATE_KEY, privateKey)
@@ -60,6 +61,13 @@ object SessionManager {
 
     }
 
+    fun saveSelectedMenuItemLabel(context: Context, label: String){
+        saveString(context, SELECTED_MENU_ITEM_LABEL, label)
+    }
+
+    fun getSelectedMenuItemLabel(context: Context): String?{
+        return getString(context, SELECTED_MENU_ITEM_LABEL)
+    }
     fun getString(context: Context, key: String): String? {
         val prefs: SharedPreferences =
             context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)

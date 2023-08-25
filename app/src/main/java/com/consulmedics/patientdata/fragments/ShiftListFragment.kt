@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,6 +21,8 @@ import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.ShiftViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import com.consulmedics.patientdata.data.api.ApiClient
+import com.consulmedics.patientdata.utils.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,6 +40,8 @@ private const val ARG_PARAM2 = "param2"
 class ShiftListFragment : Fragment() {
     private var _binding: FragmentShiftListBinding? = null
     lateinit var mainActivity: BaseActivity
+    private lateinit var past_text: String
+    private lateinit var upcoming_text: String
 
     private  val viewModel: ShiftViewModel by viewModels()
     val binding get() = _binding!!
@@ -54,26 +59,40 @@ class ShiftListFragment : Fragment() {
 //            layoutManager = LinearLayoutManager(requireContext())
 //            adapter = shiftAdapter
 //        }
+        Log.e("Here is ShiftListFragment View", "Okay")
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        past_text = getString(R.string.past_shifts)
+        upcoming_text = getString(R.string.upcoming_shifts)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("Here is ShiftListFragment View After", "Okay")
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
         val adapter = ShiftPageAdapter(childFragmentManager, lifecycle)
         viewPager.adapter = adapter
+//        val past_text by lazy { getString(R.string.past_shifts) }
+//        val upcoming_text by lazy { getString(R.string.upcoming_shifts) }
         TabLayoutMediator(tabLayout, viewPager){ tab, position ->
             tab.text = when(position){
-                0 -> getString(R.string.past_shifts)
-                1 -> getString(R.string.upcoming_shifts)
+//                0 -> getString(R.string.past_shifts)
+//                1 -> getString(R.string.upcoming_shifts)
+                0 -> past_text
+                1 -> upcoming_text
                 else -> ""
             }
         }.attach()
+
+
         viewModel.loadShiftResult.observe(viewLifecycleOwner) {
             when (it) {
                 is BaseResponse.Loading -> {
-                    mainActivity.showLoadingSpinner("Loading", "Please wait while load shift details")
+                    mainActivity.showLoadingSpinner("Loading", "Please wait while loading shift details")
                 }
 
                 is BaseResponse.Success -> {

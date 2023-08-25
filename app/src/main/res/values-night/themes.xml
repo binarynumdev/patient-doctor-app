@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.ConsulmedicsPatientData" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ConsulmedicsPatientData" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/default_background</item>
+        <item name="text_color">@color/default_text_color</item>
+        <item name="edit_text_background_color">@color/default_edit_text_background_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
@@ -12,5 +14,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="shiftPatientItemBackgroundColor">@color/shift_patient_item_background_color</item>
+        <item name="shiftPatientNameColor">@color/shift_patient_name_color</item>
+        <item name="sideBarIconColor">@color/side_bar_icon_color</item>
+    </style>
+    <style name="Theme.ConsulmedicsPatientData.AppBarOverlay">
+        <item name="android:background">@color/default_background</item>
+        <item name="android:layout_height">@dimen/appbar_height</item>
     </style>
 </resources>

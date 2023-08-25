@@ -15,7 +15,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="default_background">#E5E8EF</color>
+    <color name="default_background">#01050D</color>
 <!--    <color name="default_background_dark">#01050D</color>-->
     <color name="default_editbox_border">#E2E3E6</color>
     <color name="light_blue_400">#FF29B6F6</color>
@@ -33,16 +33,16 @@
     <color name="tealLight">#808F97</color>
     <color name="blueGray">#2D313D</color>
 
-    <color name="side_bar_icon_color">#1B1B1B</color>
+    <color name="side_bar_icon_color">#E3E3E3</color>
 
-    <color name="default_text_color">#000000</color>
-    <color name="default_edit_text_background_color">#FFFFFF</color>
+    <color name="default_text_color">#FFFFFF</color>
+    <color name="default_edit_text_background_color">#161819</color>
 
-    <color name="customSelectedTabTextColor">#000</color>
-    <color name="customUnSelectedTabTextColor">#666</color>
+    <color name="customSelectedTabTextColor">#FFF</color>
+    <color name="customUnSelectedTabTextColor">#999</color>
 
-    <color name="shift_patient_item_background_color">#FFF</color>
-    <color name="shift_patient_name_color">#000</color>
+    <color name="shift_patient_item_background_color">#333</color>
+    <color name="shift_patient_name_color">#FFF</color>
     <color name="shift_patient_date_color">#666</color>
     <color name="shift_patient_action_color">#666</color>
 </resources>
