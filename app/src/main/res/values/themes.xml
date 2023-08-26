@@ -17,6 +17,7 @@
         <item name="shiftPatientItemBackgroundColor">@color/shift_patient_item_background_color</item>
         <item name="shiftPatientNameColor">@color/shift_patient_name_color</item>
         <item name="sideBarIconColor">@color/side_bar_icon_color</item>
+        <item name="confirmBtnColor">@color/confirm_button_color</item>
     </style>
 
     <style name="CustomTimePickerStyle" parent="android:Widget.Material.TimePicker">

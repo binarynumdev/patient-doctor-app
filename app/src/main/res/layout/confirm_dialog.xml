@@ -34,22 +34,6 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_edit_text_red_border"
-            android:drawableLeft="@drawable/ic_close"
-            android:text="@string/no"
-            android:textColor="@color/app_blue"
-            app:backgroundTint="@null" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
             android:id="@+id/btnOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,6 +41,22 @@
             android:background="@drawable/bg_white_with_orange_border_radius"
             android:drawableRight="@drawable/ic_yes"
             android:text="@string/yes"
+            android:textColor="@color/app_blue"
+            app:backgroundTint="@null" />
+            
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edit_text_red_border"
+            android:drawableLeft="@drawable/ic_close"
+            android:text="@string/no"
             android:textColor="@color/app_blue"
             app:backgroundTint="@null" />
 

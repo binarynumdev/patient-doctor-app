@@ -59,9 +59,7 @@
                 android:buttonTint="@color/app_orange"
                 android:drawableLeft="@drawable/ic_close"
                 android:layoutDirection="rtl"
-                android:minHeight="
-
-                0dp"
+                android:minHeight="0dp"
                 android:paddingLeft="10dp"
                 android:text="@string/no"
                 android:textSize="@dimen/text_size_middle" />

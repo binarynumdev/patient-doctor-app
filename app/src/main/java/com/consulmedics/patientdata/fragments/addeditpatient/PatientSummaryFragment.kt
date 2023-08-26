@@ -45,8 +45,6 @@ class PatientSummaryFragment : BaseAddEditPatientFragment() {
         super.onCreate(savedInstanceState)
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
-
-
                 if(it.signature.isNotEmpty()){
                     val newBM:Bitmap = AppUtils.svgStringToBitmap(it.signature)
                     binding.imageSignView.setImageBitmap(newBM)

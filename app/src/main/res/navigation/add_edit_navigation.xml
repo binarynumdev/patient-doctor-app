@@ -71,4 +71,13 @@
             android:id="@+id/action_patientDoctorSignFragment_to_patientLogisticsDetailsFragment"
             app:destination="@id/patientLogisticsDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/printFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PrintFragment"
+        android:label="fragment_patient_print"
+        tools:layout="@layout/fragment_print" >
+        <action
+            android:id="@+id/action_patientDoctorSignFragment_to_printFragment"
+            app:destination="@id/printFragment" />
+    </fragment>
 </navigation>

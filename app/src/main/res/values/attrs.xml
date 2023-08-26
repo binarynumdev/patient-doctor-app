@@ -8,6 +8,8 @@
 
     <attr name="sideBarIconColor" format="color" />
 
+    <attr name="confirmBtnColor" format="color"/>
+
 <!--    <attr name="shift_patient_item_background" format="color"/>-->
 <!--    <attr name="shift_patient_name_color" format="color"/>-->
 <!--    <attr name="shift_patient_date_color" format="color"/>-->

@@ -45,4 +45,6 @@
     <color name="shift_patient_name_color">#000</color>
     <color name="shift_patient_date_color">#666</color>
     <color name="shift_patient_action_color">#666</color>
+
+    <color name="confirm_button_color">#279DD6</color>
 </resources>

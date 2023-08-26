@@ -72,6 +72,9 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             else if (destination.id == R.id.patientSummaryFragment){
                 tabIndex = 7
             }
+            else if (destination.id == R.id.printFragment) {
+                tabIndex = 8
+            }
             pageStepper.go(tabIndex)
             if(isLeftStepperInitialized)
                 binding.leftStepper.setCurrentIndex(tabIndex)
@@ -104,7 +107,9 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                 StepItem(getString(R.string.doctor_document)),
                 StepItem(getString(R.string.additional_details)),
                 StepItem(getString(R.string.receipts), getString(R.string.print_receipt)),
-                StepItem(getString(R.string.sign_doctor)))
+                StepItem(getString(R.string.sign_doctor)),
+                StepItem(getString(R.string.print))
+            )
             pageStepper.setCallback(this)
             pageStepper.setPageList(pageTitleList)
         }
@@ -144,7 +149,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                         onStepItemClicked(tabIndex - 1)
                 }
                 btnNext.setOnClickListener {
-                    if(tabIndex < 7)
+                    if(tabIndex < 8)
                         onStepItemClicked(tabIndex + 1)
                 }
             }
@@ -231,9 +236,12 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             else if (it == 7){
                 navController.navigate(R.id.patientSummaryFragment)
             }
+            else if (it == 8){
+                navController.navigate(R.id.printFragment)
+            }
         }
 
-        reloadPatientData()
+//        reloadPatientData()
     }
 
     fun reloadPatientData(){
@@ -251,9 +259,12 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             sharedViewModel.loadPatientFromCard(applicationContext)
         }
         else if (buttonString == getString(R.string.print_insurance)){
+            Log.e("PRINT_LABEL111", "PRINT_LABEL222")
+
             sharedViewModel.printInsurance()
         }
         else if (buttonString == getString(R.string.print_receipt)){
+            Log.e("23232", "PRINT_LABEL222")
             sharedViewModel.printReceipt()
         }
     }

@@ -277,23 +277,6 @@
                     android:paddingRight="@dimen/appbar_padding_top"
                     android:paddingBottom="@dimen/efab_ui_margin_xxs" />
 
-                <EditText
-                    android:id="@+id/editHouseNumber"
-                    style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/text_edit_height"
-                    android:layout_marginTop="@dimen/appbar_padding_top"
-                    android:layout_weight="1"
-                    android:background="?attr/edit_text_background_color"
-                    android:drawableLeft="@drawable/ic_home"
-                    android:ems="10"
-                    android:hint="@string/house_number"
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="@dimen/appbar_padding_top"
-                    android:paddingTop="@dimen/efab_ui_margin_xxs"
-                    android:paddingRight="@dimen/appbar_padding_top"
-                    android:paddingBottom="@dimen/efab_ui_margin_xxs" />
-
             </LinearLayout>
 
             <LinearLayout

@@ -28,7 +28,6 @@ class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -42,7 +41,6 @@ class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
             btnNext.setOnClickListener {
                 findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientReceiptFragment)
             }
-
 
             radioDemenzYes.setOnClickListener {
                 sharedViewModel.setDementia(true)
@@ -125,30 +123,65 @@ class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
-            binding.radioDemenzYes.isChecked = sharedViewModel.patientData.value?.dementia == true
+            if(sharedViewModel.patientData.value?.dementia == true) {
+                binding.radioDemenzYes.isChecked = true
+            } else {
+                binding.radioDemenzNo.isChecked = true
+            }
 
+            if(sharedViewModel.patientData.value?.geriatrics == true) {
+                binding.radioGeriatricsYes.isChecked = true
+            } else {
+                binding.radioGeriatricsNo.isChecked = true
+            }
 
-            binding.radioGeriatricsYes.isChecked = sharedViewModel.patientData.value?.geriatrics == true
+            if(sharedViewModel.patientData.value?.infant == true) {
+                binding.radioInfantYes.isChecked = true
+            } else {
+                binding.radioInfantNo.isChecked = true
+            }
 
-            binding.radioInfantYes.isChecked = sharedViewModel.patientData.value?.infant == true
+            if (sharedViewModel.patientData.value?.fractures == true) {
+                binding.radioFracturesYes.isChecked = true
+            } else {
+                binding.radioFracturesNo.isChecked = true
+            }
 
+            if (sharedViewModel.patientData.value?.severeHandInjury == true) {
+                binding.radioServerHeadYes.isChecked = true
+            } else {
+                binding.radioServerHeadNo.isChecked = true
+            }
 
-            binding.radioFracturesYes.isChecked = sharedViewModel.patientData.value?.fractures == true
+            if (sharedViewModel.patientData.value?.thrombosis == true) {
+                binding.radioThrombosisYes.isChecked = true
+            } else {
+                binding.radioThrombosisNo.isChecked = true
+            }
 
-            binding.radioServerHeadYes.isChecked = sharedViewModel.patientData.value?.severeHandInjury == true
+            if (sharedViewModel.patientData.value?.hypertension == true) {
+                binding.radioHypertensionYes.isChecked = true
+            } else {
+                binding.radioHypertensionNo.isChecked = true
+            }
 
-            binding.radioThrombosisYes.isChecked =  sharedViewModel.patientData.value?.thrombosis == true
+            if (sharedViewModel.patientData.value?.preHeartAttack == true) {
+                binding.radioPreHeartAttackYes.isChecked = true
+            } else {
+                binding.radioPreHeartAttackNo.isChecked = true
+            }
 
+            if (sharedViewModel.patientData.value?.pneumonia == true) {
+                binding.radioPneumoniaYes.isChecked = true
+            } else {
+                binding.radioPneumoniaNo.isChecked = true
+            }
 
-            binding.radioHypertensionYes.isChecked = sharedViewModel.patientData.value?.hypertension == true
-
-            binding.radioPreHeartAttackYes.isChecked = sharedViewModel.patientData.value?.preHeartAttack == true
-
-            binding.radioPneumoniaYes.isChecked = sharedViewModel.patientData.value?.pneumonia == true
-
-
-            binding.radioDivertikulitisYes.isChecked = sharedViewModel.patientData.value?.divertikulitis == true
-
+            if(sharedViewModel.patientData.value?.divertikulitis == true) {
+                binding.radioDivertikulitisYes.isChecked = true
+            } else {
+                binding.radioDivertikulitisNo.isChecked = true
+            }
         })
     }
 }

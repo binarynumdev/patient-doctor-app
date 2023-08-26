@@ -417,13 +417,14 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
     }
 
     fun printInsurance() {
+        Log.e("eeee", "ffff")
+
         printResult.value = BaseResponse.Loading()
         viewModelScope.launch {
             val result = patientRepository.generateInsurnacePDF(_patientData.value)
             if(result!= null){
-
                 printResult.value = BaseResponse.Success(PDFGenerateResponse(result))
-
+                Log.e("RESULT_SHARED", printResult.value.toString())
             }
         }
     }

@@ -58,6 +58,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPatientLogisticsDetailsBinding.inflate(inflater, container, false)
+
         binding.apply {
             editDateOfVisit.setOnClickListener {
                 var c = Calendar.getInstance()
@@ -124,10 +125,15 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 sharedViewModel.previousPatients.value?.also {
                     if(it.isNotEmpty()){
                         val prevPatient = it[0]
-                        sharedViewModel.viewModelScope.launch {
-                            sharedViewModel.setStartAddress(prevPatient.visitAddress)
-                        }
+                        if (prevPatient.visitAddress != null) {
+                            sharedViewModel.viewModelScope.launch {
+                                sharedViewModel.setStartAddress(prevPatient.visitAddress)
+                            }
+                        } else {
+                            sharedViewModel.viewModelScope.launch {
 
+                            }
+                        }
                     }
                 }
 //                binding.startAddressForm.formRoot.visibility = GONE
@@ -173,15 +179,27 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             }
             radioCurrentAddressSameYes.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(true)
-                addressFormLayout.visibility = GONE
                 sharedViewModel.previousPatients.value?.also {
+                    Log.e("Previous", it.toString())
                     if(it.isNotEmpty()){
+                        Log.e("Number of Patients", it.size.toString())
                         val prevPatient = it[0]
-                        sharedViewModel.viewModelScope.launch {
-                            sharedViewModel.setStartAddress(prevPatient.visitAddress)
-                            sharedViewModel.setVisitAddress(prevPatient.visitAddress)
-                        }
+                        Log.e("Street", prevPatient.street)
+                        Log.e("House Number", prevPatient.houseNumber)
+                        Log.e("Post Code", prevPatient.postCode)
+                        Log.e("City", prevPatient.city)
+                        Log.e("Visit Address", prevPatient.visitAddress.toString())
+                        if (prevPatient.visitAddress != null) {
+                            addressFormLayout.visibility = GONE
+                            sharedViewModel.viewModelScope.launch {
+                                sharedViewModel.setStartAddress(prevPatient.visitAddress)
+                                sharedViewModel.setVisitAddress(prevPatient.visitAddress)
+                            }
+                        } else {
+                            sharedViewModel.viewModelScope.launch {
 
+                            }
+                        }
                     }
                 }
             }
@@ -208,9 +226,9 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 editStreet.doAfterTextChanged {
                     sharedViewModel.visitAddress.value?.streetName = it.toString()
                 }
-                editHouseNumber.doAfterTextChanged {
-                    sharedViewModel.visitAddress.value?.streetNumber = it.toString()
-                }
+//                editHouseNumber.doAfterTextChanged {
+//                    sharedViewModel.visitAddress.value?.streetNumber = it.toString()
+//                }
                 editPostalCode.doAfterTextChanged {
                     sharedViewModel.visitAddress.value?.postCode = it.toString()
                 }
@@ -235,9 +253,9 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 editStreet.doAfterTextChanged {
                     sharedViewModel.startAddress.value?.streetName = it.toString()
                 }
-                editHouseNumber.doAfterTextChanged {
-                    sharedViewModel.startAddress.value?.streetNumber = it.toString()
-                }
+//                editHouseNumber.doAfterTextChanged {
+//                    sharedViewModel.startAddress.value?.streetNumber = it.toString()
+//                }
                 editPostalCode.doAfterTextChanged {
                     sharedViewModel.startAddress.value?.postCode = it.toString()
                 }
@@ -275,11 +293,11 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         binding.currentAddressForm.apply {
 
             editStreet.setText("")
-            editHouseNumber.setText("")
+//            editHouseNumber.setText("")
             editCity.setText("")
             editPostalCode.setText("")
             editStreet.isEnabled = true
-            editHouseNumber.isEnabled = true
+//            editHouseNumber.isEnabled = true
             editCity.isEnabled = true
             editPostalCode.isEnabled = true
         }
@@ -320,11 +338,11 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
     private fun showVisitAddressFromPatientData() {
         binding.currentAddressForm.apply {
             editStreet.setText(sharedViewModel.patientData.value?.street)
-            editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
+//            editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
             editCity.setText(sharedViewModel.patientData.value?.city)
             editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
             editStreet.isEnabled = false
-            editHouseNumber.isEnabled = false
+//            editHouseNumber.isEnabled = false
             editCity.isEnabled = false
             editPostalCode.isEnabled = false
         }
@@ -436,7 +454,13 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 binding.addressFormLayout.visibility = VISIBLE
             }
 
-            binding.radioCurrentPatientVisitThisShiftYes.isChecked = sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == true
+//            binding.radioCurrentPatientVisitThisShiftYes.isChecked = sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == true
+            if(sharedViewModel.patientData.value?.alreadyVisitedDuringThisShift == true) {
+                binding.radioCurrentPatientVisitThisShiftYes.isChecked = true
+            } else {
+                binding.radioCurrentPatientVisitThisShiftNo.isChecked = true
+            }
+
             if(it.distance > 0.00){
                 Log.e("DISTANCE", "${it.distance}")
                 binding.textDistance.text = "Total Distance: ${(it.distance/1000).toInt()}Km"
@@ -453,14 +477,14 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 binding.currentAddressForm.apply {
                     if(sharedViewModel.visitAddress.value?.latitute == 0.00 && sharedViewModel.visitAddress.value?.longitute == 0.00){
                         editStreet.isEnabled = true
-                        editHouseNumber.isEnabled = true
+//                        editHouseNumber.isEnabled = true
                         editCity.isEnabled = true
                         editPostalCode.isEnabled = true
                         btnConfirmMap.visibility = VISIBLE
                     }
                     else{
                         editStreet.isEnabled = false
-                        editHouseNumber.isEnabled = false
+//                        editHouseNumber.isEnabled = false
                         editCity.isEnabled = false
                         editPostalCode.isEnabled = false
                         btnConfirmMap.visibility = GONE
@@ -527,7 +551,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 
             if(address.latitute != 0.0 && address.longitute != 0.0){
                 editStreet.isEnabled = false
-                editHouseNumber.isEnabled = false
+//                editHouseNumber.isEnabled = false
                 editCity.isEnabled = false
                 editPostalCode.isEnabled = false
 //                binding.btnConfirmStartAddress.isEnabled = false
@@ -536,14 +560,14 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             }
             else{
                 editStreet.isEnabled = true
-                editHouseNumber.isEnabled = true
+//                editHouseNumber.isEnabled = true
                 editCity.isEnabled = true
                 editPostalCode.isEnabled = true
                 btnConfirmMap.visibility = VISIBLE
             }
             formRoot.visibility = VISIBLE
             editStreet.setText(address.streetName)
-            editHouseNumber.setText(address.streetNumber)
+//            editHouseNumber.setText(address.streetNumber)
             editCity.setText(address.city)
             editPostalCode.setText(address.postCode)
 
@@ -569,7 +593,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             Log.e(TAG_NAME, address.latitute.toString());
             if(sharedViewModel.patientData.value?.sincVisitAddress == true){
                 editStreet.isEnabled = false
-                editHouseNumber.isEnabled = false
+//                editHouseNumber.isEnabled = false
                 editCity.isEnabled = false
                 editPostalCode.isEnabled = false
                 if(address.latitute != 0.0 && address.longitute != 0.0){
@@ -581,20 +605,20 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             }
             else if(address.latitute != 0.0 && address.longitute != 0.0){
                 editStreet.isEnabled = false
-                editHouseNumber.isEnabled = false
+//                editHouseNumber.isEnabled = false
                 editCity.isEnabled = false
                 editPostalCode.isEnabled = false
                 this.btnConfirmMap.visibility = GONE
             }
             else{
                 editStreet.isEnabled = true
-                editHouseNumber.isEnabled = true
+//                editHouseNumber.isEnabled = true
                 editCity.isEnabled = true
                 editPostalCode.isEnabled = true
                 this.btnConfirmMap.visibility = VISIBLE
             }
             editStreet.setText(address.streetName)
-            editHouseNumber.setText(address.streetNumber)
+//            editHouseNumber.setText(address.streetNumber)
             editCity.setText(address.city)
             editPostalCode.setText(address.postCode)
 

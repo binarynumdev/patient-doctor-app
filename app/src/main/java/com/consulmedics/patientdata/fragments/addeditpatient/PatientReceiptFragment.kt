@@ -82,9 +82,9 @@ class PatientReceiptFragment : BaseAddEditPatientFragment() {
                 editStreet.doAfterTextChanged {
                     sharedViewModel.receiptAddress.value?.streetName = it.toString()
                 }
-                editHouseNumber.doAfterTextChanged {
-                    sharedViewModel.receiptAddress.value?.streetNumber = it.toString()
-                }
+//                editHouseNumber.doAfterTextChanged {
+//                    sharedViewModel.receiptAddress.value?.streetNumber = it.toString()
+//                }
                 editPostalCode.doAfterTextChanged {
                     sharedViewModel.receiptAddress.value?.postCode = it.toString()
                 }
@@ -92,7 +92,7 @@ class PatientReceiptFragment : BaseAddEditPatientFragment() {
                     sharedViewModel.setReceiptAddressFromPatientAddress()
                     editCity.setText(sharedViewModel.patientData.value?.city)
                     editStreet.setText(sharedViewModel.patientData.value?.street)
-                    editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
+//                    editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
                     editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
                 }
             }
@@ -148,7 +148,7 @@ class PatientReceiptFragment : BaseAddEditPatientFragment() {
             binding.addressForm.apply {
                 editCity.setText(it.city)
                 editStreet.setText(it.streetName)
-                editHouseNumber.setText(it.streetNumber)
+//                editHouseNumber.setText(it.streetNumber)
                 editPostalCode.setText(it.postCode)
             }
         })

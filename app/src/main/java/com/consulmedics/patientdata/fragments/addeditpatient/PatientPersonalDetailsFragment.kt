@@ -95,11 +95,11 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
                 if(sharedViewModel.patientData.value?.sincVisitAddress == true)
                     sharedViewModel.formatVisitLocation()
             }
-            editHouseNumber.doAfterTextChanged {
-                sharedViewModel.setHouseNumber(it.toString())
-                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
-                    sharedViewModel.formatVisitLocation()
-            }
+//            editHouseNumber.doAfterTextChanged {
+//                sharedViewModel.setHouseNumber(it.toString())
+//                if(sharedViewModel.patientData.value?.sincVisitAddress == true)
+//                    sharedViewModel.formatVisitLocation()
+//            }
             editCity.doAfterTextChanged {
                 sharedViewModel.setCity(it.toString())
                 if(sharedViewModel.patientData.value?.sincVisitAddress == true)
@@ -110,8 +110,6 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
                 if(sharedViewModel.patientData.value?.sincVisitAddress == true)
                     sharedViewModel.formatVisitLocation()
             }
-
-
 
             editPatientBirthDate.setOnClickListener {
                 var c = Calendar.getInstance()
@@ -269,7 +267,7 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
             binding.editStreet.setText(sharedViewModel.patientData.value?.street)
             binding.editCity.setText(sharedViewModel.patientData.value?.city)
             binding.editPostalCode.setText(sharedViewModel.patientData.value?.postCode)
-            binding.editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
+//            binding.editHouseNumber.setText(sharedViewModel.patientData.value?.houseNumber)
             binding.editPatientPhoneNumber.setText(sharedViewModel.patientData.value?.phoneNumber)
             binding.editPatientNamePractice.setText(sharedViewModel.patientData.value?.practiceName)
         })

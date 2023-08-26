@@ -474,6 +474,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                         stopLoading()
                     }
                     confirmationDialog.setPostiveClickListener {
+                        confirmationDialog.dismiss()
                         stopLoading()
                         showLoading("Just a seconds", "We are detecting your current location")
                         getLastLocation()
