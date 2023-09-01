@@ -78,7 +78,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             pageStepper.go(tabIndex)
             if(isLeftStepperInitialized)
                 binding.leftStepper.setCurrentIndex(tabIndex)
-            reloadPatientData()
+//            reloadPatientData()
         }
 
 
@@ -89,9 +89,13 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_add_edit_patient)
+        Log.e("OnCreated", "OnCreated")
         binding = ActivityAddEditPatientBinding.inflate(layoutInflater)
         patientMode = intent.getStringExtra(PATIENT_MODE)
         pageStepper = binding.MainStepper
+        var goTabIndex: Int = intent.getIntExtra("tab_index", -1)
+
+        setContentView(binding.root)
 
         if(patientMode == PHONE_CALL_MODE){
             pageTitleList = listOf<StepItem>(
@@ -113,24 +117,32 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             pageStepper.setCallback(this)
             pageStepper.setPageList(pageTitleList)
         }
-        pageStepper.go(0)
-        setContentView(binding.root)
+//
+        if(goTabIndex == -1){
+            goTabIndex = 0
+        }
+//
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_patient_flow) as NavHostFragment
         navController = navHostFragment.navController
         patient = intent.getSerializableExtra(PATIENT_DATA) as Patient
+        if(patient != null) {
+            sharedViewModel.setPatientData(patient!!)
+            pageStepper.setPatientData(patient!!)
+        }
         if(patientMode == PHONE_CALL_MODE){
             navController.setGraph(R.navigation.add_edit_navigation_phone_call, intent.extras)
         }
         else{
             navController.setGraph(R.navigation.add_edit_navigation, intent.extras)
+//            reloadPatientData()
         }
-
+//
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener (listener)
 
-        val leftStepperAdapter = LeftStepperAdapter(applicationContext, this)
+        val leftStepperAdapter: LeftStepperAdapter = LeftStepperAdapter(applicationContext, this)
         binding.apply {
             if(patientMode == PHONE_CALL_MODE){
                 btnBack.visibility = GONE
@@ -140,9 +152,14 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                 toggle = ActionBarDrawerToggle(this@AddEditPatientActivity, drawerLayout, R.string.patient_data, R.string.patient_data)
                 drawerLayout.addDrawerListener(toggle)
                 toggle.syncState()
-                leftStepper.initStepper(leftStepperAdapter)
+
+                binding.leftStepper.initStepper(leftStepperAdapter)
                 leftStepperAdapter.updateList(pageTitleList)
-                leftStepper.setCurrentIndex(0)
+                if(goTabIndex == -1){
+                    binding.leftStepper.setCurrentIndex(0)
+                } else{
+                    binding.leftStepper.setCurrentIndex(goTabIndex)
+                }
                 isLeftStepperInitialized = true
                 btnBack.setOnClickListener {
                     if(tabIndex > 0)
@@ -152,8 +169,8 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                     if(tabIndex < 8)
                         onStepItemClicked(tabIndex + 1)
                 }
+                onStepItemClicked(goTabIndex)
             }
-
 
             btnCancel.setOnClickListener {
 
@@ -181,16 +198,15 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                         confirmationDialog.dismiss()
                         finish()
                     }
-
-
                 }
                 confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
             }
 
         }
 
+//        onStepItemClicked(goTabIndex)
         supportActionBar?.hide()
-
+//        reloadPatientData()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -205,10 +221,10 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         Log.e(TAG_NAME, "Callback on the activity side")
         val drawer = binding.drawerLayout
         drawer.openDrawer(GravityCompat.START)
-
     }
 
     override fun onStepItemClicked(index: Int) {
+        Log.e("OnStepItemClicked", "OnStepItemClicked")
         pageStepper.go(index)
         binding.leftStepper.setCurrentIndex(index)
         index.also {
@@ -245,7 +261,6 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     }
 
     fun reloadPatientData(){
-
         sharedViewModel.patientData.observe(this) {
             Log.e(TAG_NAME, "UPDATED PATIENT DETAILS")
             pageStepper.setPatientData(it)

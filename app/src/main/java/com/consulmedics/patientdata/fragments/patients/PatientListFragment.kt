@@ -31,6 +31,7 @@ import com.consulmedics.patientdata.viewmodels.PatientViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.consulmedics.patientdata.components.MainStepper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +49,7 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
     private var _binding: FragmentPatientListBinding? = null
     lateinit var mainActivity: BaseActivity
     val binding get() = _binding!!
+    private lateinit var pageStepper: MainStepper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -121,11 +123,28 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
     override fun onPatientEditClick(patient: Patient) {
         Log.e(TAG_NAME, "Edit Event Handler")
 
+        var tabIndex: Int = -1
+        if (patient.firstName == "" || patient.lastName == "" || patient.birthDate == null || patient.gender == null || patient.street == "" || patient.postCode == "" || patient.city == "" || patient.phoneNumber == "" || patient.practiceName == "") {
+            tabIndex = 0
+        } else if (patient.insuranceName == "" || patient.insuranceStatus == "" || patient.insuranceNumber == "" || patient.patientID == "") {
+            tabIndex = 1
+        } else if(patient.signPatient == "") {
+            tabIndex = 2
+        } else if(patient.startVisitDate == null || patient.startVisitTime == "" || patient.visitAddress == null || patient.startPoint == "") {
+            tabIndex = 3
+        } else if(patient.diagnosis == "" || patient.healthStatus == "") {
+            tabIndex = 4
+        } else if(patient.medicals1 == "" || patient.medicals2 == "" || patient.medicals3 == "" || patient.receiptFirstName == "" || patient.receiptLastName == "" || patient.receiptAdditionalInfo == "" || patient.receiptAddress == null) {
+            tabIndex = 6
+        } else if(patient.signature == "") {
+            tabIndex = 7
+        }
         startActivity(Intent(requireContext(), AddEditPatientActivity::class.java).apply {
             if(patient.target.equals("call")){
                 putExtra(AppConstants.PATIENT_MODE, AppConstants.PHONE_CALL_MODE)
             }
             putExtra("patient_data", patient)
+            putExtra("tab_index", tabIndex)
         })
     }
 
