@@ -3,6 +3,8 @@ package com.consulmedics.patientdata.fragments.addeditpatient
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +68,7 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
         }
 
 
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,6 +108,43 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
                 if(sharedViewModel.patientData.value?.sincVisitAddress == true)
                     sharedViewModel.formatVisitLocation()
             }
+
+            editStreet.addTextChangedListener(object: TextWatcher{
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    // Not needed for this implementation
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(!s.isNullOrEmpty() && s[0].isLowerCase() && s.length == 1) {
+                        val capitalizedText = s.toString().capitalize()
+                        editStreet.setText(capitalizedText)
+                        editStreet.setSelection(capitalizedText.length)
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    // Not needed for this implementation
+                }
+            })
+
+            editCity.addTextChangedListener(object: TextWatcher{
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    // Not needed for this implementation
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(!s.isNullOrEmpty() && s[0].isLowerCase() && s.length == 1) {
+                        val capitalizedText = s.toString().capitalize()
+                        editCity.setText(capitalizedText)
+                        editCity.setSelection(capitalizedText.length)
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    // Not needed for this implementation
+                }
+            })
+
             editPostalCode.doAfterTextChanged {
                 sharedViewModel.setPostCode(it.toString())
                 if(sharedViewModel.patientData.value?.sincVisitAddress == true)

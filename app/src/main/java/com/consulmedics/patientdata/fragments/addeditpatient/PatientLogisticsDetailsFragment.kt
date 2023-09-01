@@ -4,6 +4,8 @@ import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -226,6 +228,42 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 editStreet.doAfterTextChanged {
                     sharedViewModel.visitAddress.value?.streetName = it.toString()
                 }
+
+                editStreet.addTextChangedListener(object: TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // Not needed for this implementation
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        if(!s.isNullOrEmpty() && s[0].isLowerCase() && s.length == 1) {
+                            val capitalizedText = s.toString().capitalize()
+                            editStreet.setText(capitalizedText)
+                            editStreet.setSelection(capitalizedText.length)
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // Not needed for this implementation
+                    }
+                })
+
+                editCity.addTextChangedListener(object: TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // Not needed for this implementation
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        if(!s.isNullOrEmpty() && s[0].isLowerCase() && s.length == 1) {
+                            val capitalizedText = s.toString().capitalize()
+                            editCity.setText(capitalizedText)
+                            editCity.setSelection(capitalizedText.length)
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // Not needed for this implementation
+                    }
+                })
 //                editHouseNumber.doAfterTextChanged {
 //                    sharedViewModel.visitAddress.value?.streetNumber = it.toString()
 //                }
