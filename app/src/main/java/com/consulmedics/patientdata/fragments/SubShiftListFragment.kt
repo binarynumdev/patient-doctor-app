@@ -128,13 +128,14 @@ class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
                 if(shiftOption?.equals(PAST_TABS) == true){
                     Log.e(TAG_NAME, "PAST TABS")
 
-                    viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
+                    viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
                         shiftAdapter.updateList(it)
                     })
                 }
                 else if (shiftOption?.equals(UPCOMING_TABS) == true){
                     Log.e(TAG_NAME, "UPCOMING TABS")
-                    viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
+
+                    viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
                         shiftAdapter.updateList(it)
                     })
                 }
