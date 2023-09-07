@@ -364,7 +364,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         return _patientData.value?.isValidDoctorDocument()
     }
 
-    fun setDementia(editValue: Boolean) {
+    fun setDementia(editValue: Boolean?) {
         _patientData.value?.dementia = editValue
     }
 

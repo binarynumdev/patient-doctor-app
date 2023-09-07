@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "0fe871369e231f232667d6c61cf99498",
+    "identityHash": "72dd4546d23beb52194fe400ab2984a2",
     "entities": [
       {
         "tableName": "Patient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `target` TEXT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` INTEGER NOT NULL, `alreadyVisitedDuringThisShift` INTEGER NOT NULL, `dementia` INTEGER NOT NULL, `geriatrics` INTEGER NOT NULL, `infant` INTEGER NOT NULL, `fractures` INTEGER NOT NULL, `severeHandInjury` INTEGER NOT NULL, `thrombosis` INTEGER NOT NULL, `hypertension` INTEGER NOT NULL, `preHeartAttack` INTEGER NOT NULL, `pneumonia` INTEGER NOT NULL, `divertikulitis` INTEGER NOT NULL, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `receiptFirstName` TEXT NOT NULL, `receiptLastName` TEXT NOT NULL, `receiptAdditionalInfo` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER, `receiptAddress` INTEGER, `distance` REAL NOT NULL, `sincVisitAddress` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `target` TEXT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` INTEGER NOT NULL, `alreadyVisitedDuringThisShift` INTEGER NOT NULL, `dementia` INTEGER, `geriatrics` INTEGER, `infant` INTEGER, `fractures` INTEGER, `severeHandInjury` INTEGER, `thrombosis` INTEGER, `hypertension` INTEGER, `preHeartAttack` INTEGER, `pneumonia` INTEGER, `divertikulitis` INTEGER, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `receiptFirstName` TEXT NOT NULL, `receiptLastName` TEXT NOT NULL, `receiptAdditionalInfo` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER, `receiptAddress` INTEGER, `distance` REAL NOT NULL, `sincVisitAddress` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -180,61 +180,61 @@
             "fieldPath": "dementia",
             "columnName": "dementia",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "geriatrics",
             "columnName": "geriatrics",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "infant",
             "columnName": "infant",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fractures",
             "columnName": "fractures",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "severeHandInjury",
             "columnName": "severeHandInjury",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "thrombosis",
             "columnName": "thrombosis",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "hypertension",
             "columnName": "hypertension",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "preHeartAttack",
             "columnName": "preHeartAttack",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "pneumonia",
             "columnName": "pneumonia",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "divertikulitis",
             "columnName": "divertikulitis",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "medicals1",
@@ -490,7 +490,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0fe871369e231f232667d6c61cf99498')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72dd4546d23beb52194fe400ab2984a2')"
     ]
   }
 }

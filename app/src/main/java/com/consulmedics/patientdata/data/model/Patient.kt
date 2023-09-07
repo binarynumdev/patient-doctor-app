@@ -51,16 +51,16 @@ data class Patient(
     var alreadyVisitedDuringThisShift:    Boolean  = false
 
 
-    var dementia:       Boolean  = false
-    var geriatrics:     Boolean  = false
-    var infant:         Boolean  = false
-    var fractures:      Boolean  = false
-    var severeHandInjury:   Boolean  = false
-    var thrombosis:     Boolean  = false
-    var hypertension:   Boolean  = false
-    var preHeartAttack: Boolean  = false
-    var pneumonia:      Boolean  = false
-    var divertikulitis: Boolean  = false
+    var dementia:       Boolean?  = null
+    var geriatrics:     Boolean?  = null
+    var infant:         Boolean?  = null
+    var fractures:      Boolean?  = null
+    var severeHandInjury:   Boolean?  = null
+    var thrombosis:     Boolean?  = null
+    var hypertension:   Boolean?  = null
+    var preHeartAttack: Boolean?  = null
+    var pneumonia:      Boolean?  = null
+    var divertikulitis: Boolean?  = null
 
     var medicals1:      String = ""
     var medicals2:      String = ""
