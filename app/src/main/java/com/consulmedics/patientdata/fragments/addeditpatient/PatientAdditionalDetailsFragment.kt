@@ -1,47 +1,33 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.drawToBitmap
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import com.consulmedics.patientdata.Converters
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientAdditionalDetailsBinding
 import com.consulmedics.patientdata.utils.AppConstants
-import com.consulmedics.patientdata.utils.AppConstants.NO_TEXT
-import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
-import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
-import com.github.gcacace.signaturepad.views.SignaturePad
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PatientAdditionalDetailsFragment : Fragment() {
+class PatientAdditionalDetailsFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientAdditionalDetailsBinding? = null
     val binding get() = _binding!!
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -56,86 +42,80 @@ class PatientAdditionalDetailsFragment : Fragment() {
                 findNavController().navigate(R.id.action_patientAdditionalDetailsFragment_to_patientReceiptFragment)
             }
 
-
             radioDemenzYes.setOnClickListener {
-                sharedViewModel.setDementia(YES_TEXT)
+                sharedViewModel.setDementia(true)
             }
             radioDemenzNo.setOnClickListener {
-                sharedViewModel.setDementia(NO_TEXT)
+                sharedViewModel.setDementia(false)
             }
 
             radioGeriatricsYes.setOnClickListener {
-                sharedViewModel.setGeriatrics(YES_TEXT)
+                sharedViewModel.setGeriatrics(true)
             }
             radioGeriatricsNo.setOnClickListener {
-                sharedViewModel.setGeriatrics(NO_TEXT)
+                sharedViewModel.setGeriatrics(false)
             }
 
             radioInfantYes.setOnClickListener {
-                sharedViewModel.setInfant(YES_TEXT)
+                sharedViewModel.setInfant(true)
             }
             radioInfantNo.setOnClickListener {
-                sharedViewModel.setInfant(NO_TEXT)
+                sharedViewModel.setInfant(false)
             }
 
             radioFracturesYes.setOnClickListener {
-                sharedViewModel.setFractures(YES_TEXT)
+                sharedViewModel.setFractures(true)
             }
             radioFracturesNo.setOnClickListener {
-                sharedViewModel.setFractures(NO_TEXT)
+                sharedViewModel.setFractures(false)
             }
 
             radioServerHeadYes.setOnClickListener {
-                sharedViewModel.setServeHead(YES_TEXT)
+                sharedViewModel.setServeHead(true)
             }
             radioServerHeadNo.setOnClickListener {
-                sharedViewModel.setServeHead(NO_TEXT)
+                sharedViewModel.setServeHead(false)
             }
 
             radioThrombosisYes.setOnClickListener {
-                sharedViewModel.setThrombosis(YES_TEXT)
+                sharedViewModel.setThrombosis(true)
             }
             radioThrombosisNo.setOnClickListener {
-                sharedViewModel.setThrombosis(NO_TEXT)
+                sharedViewModel.setThrombosis(false)
             }
 
             radioHypertensionYes.setOnClickListener {
-                sharedViewModel.setHypertension(YES_TEXT)
+                sharedViewModel.setHypertension(true)
             }
             radioHypertensionNo.setOnClickListener {
-                sharedViewModel.setHypertension(NO_TEXT)
+                sharedViewModel.setHypertension(false)
             }
 
             radioPreHeartAttackYes.setOnClickListener {
-                sharedViewModel.setPreHeartAttack(YES_TEXT)
+                sharedViewModel.setPreHeartAttack(true)
             }
             radioPreHeartAttackNo.setOnClickListener {
-                sharedViewModel.setPreHeartAttack(NO_TEXT)
+                sharedViewModel.setPreHeartAttack(false)
             }
 
             radioPneumoniaYes.setOnClickListener {
-                sharedViewModel.setPneumonia(YES_TEXT)
+                sharedViewModel.setPneumonia(true)
             }
             radioPneumoniaNo.setOnClickListener {
-                sharedViewModel.setPneumonia(NO_TEXT)
+                sharedViewModel.setPneumonia(false)
             }
 
             radioDivertikulitisYes.setOnClickListener {
-                sharedViewModel.setDivertikulistis(YES_TEXT)
+                sharedViewModel.setDivertikulistis(true)
             }
             radioDivertikulitisNo.setOnClickListener {
-                sharedViewModel.setDivertikulistis(NO_TEXT)
+                sharedViewModel.setDivertikulistis(false)
             }
 
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
             }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    sharedViewModel.savePatient(it1)
-                    activity?.finish()
-                }
-            }
+
         }
         return binding.root
     }
@@ -143,98 +123,106 @@ class PatientAdditionalDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.patientData.observe(viewLifecycleOwner, Observer {
-            Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Additional fragment")
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
-            }
-            else{
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
+//            sharedViewModel.patientData.value?.dementia?.let {
+//                if(it){
+//                    binding.radioDemenzYes.isChecked = true
+//                } else{
+//                    binding.radioDemenzNo.isChecked = true
+//                }
+//            } ?: run{
+//                binding.radioDemenzYes.isChecked = false
+//                binding.radioDemenzNo.isChecked = false
+//            }
+
+            when (sharedViewModel.patientData.value?.dementia) {
+                true-> binding.radioDemenzYes.isChecked = true
+                false -> binding.radioDemenzNo.isChecked = true
+                null -> {
+                    binding.radioDemenzYes.isChecked = false
+                    binding.radioDemenzNo.isChecked = false
+                }
             }
 
-
-
-
-            if(sharedViewModel.patientData.value?.dementia == YES_TEXT){
-                binding.radioDemenzYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.dementia == NO_TEXT){
-                binding.radioDemenzNo.isChecked = true
-            }
-
-
-
-            if(sharedViewModel.patientData.value?.geriatrics == YES_TEXT){
-                binding.radioGeriatricsYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.geriatrics == NO_TEXT){
-                binding.radioGeriatricsNo.isChecked = true
+            when (sharedViewModel.patientData.value?.geriatrics) {
+                true-> binding.radioGeriatricsYes.isChecked = true
+                false -> binding.radioGeriatricsNo.isChecked = true
+                null -> {
+                    binding.radioGeriatricsYes.isChecked = false
+                    binding.radioGeriatricsNo.isChecked = false
+                }
             }
 
-            if(sharedViewModel.patientData.value?.infant == YES_TEXT){
-                binding.radioInfantYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.infant == NO_TEXT){
-                binding.radioInfantNo.isChecked = true
-            }
-
-
-            if(sharedViewModel.patientData.value?.fractures == YES_TEXT){
-                binding.radioFracturesYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.fractures == NO_TEXT){
-                binding.radioFracturesNo.isChecked = true
+            when (sharedViewModel.patientData.value?.infant) {
+                true-> binding.radioInfantYes.isChecked = true
+                false -> binding.radioInfantNo.isChecked = true
+                null -> {
+                    binding.radioInfantYes.isChecked = false
+                    binding.radioInfantNo.isChecked = false
+                }
             }
 
-            if(sharedViewModel.patientData.value?.serverHandInjury == YES_TEXT){
-                binding.radioServerHeadYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.serverHandInjury == NO_TEXT){
-                binding.radioServerHeadNo.isChecked = true
-            }
-
-            if(sharedViewModel.patientData.value?.thrombosis == YES_TEXT){
-                binding.radioThrombosisYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.thrombosis == NO_TEXT){
-                binding.radioThrombosisNo.isChecked = true
+            when (sharedViewModel.patientData.value?.fractures) {
+                true-> binding.radioFracturesYes.isChecked = true
+                false -> binding.radioFracturesNo.isChecked = true
+                null -> {
+                    binding.radioFracturesYes.isChecked = false
+                    binding.radioFracturesNo.isChecked = false
+                }
             }
 
-
-            if(sharedViewModel.patientData.value?.hypertension == YES_TEXT){
-                binding.radioHypertensionYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.hypertension == NO_TEXT){
-                binding.radioHypertensionNo.isChecked = true
-            }
-
-            if(sharedViewModel.patientData.value?.preHeartAttack == YES_TEXT){
-                binding.radioPreHeartAttackYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.preHeartAttack == NO_TEXT){
-                binding.radioPreHeartAttackNo.isChecked = true
+            when (sharedViewModel.patientData.value?.severeHandInjury) {
+                true-> binding.radioServerHeadYes.isChecked = true
+                false -> binding.radioServerHeadNo.isChecked = true
+                null -> {
+                    binding.radioServerHeadYes.isChecked = false
+                    binding.radioServerHeadNo.isChecked = false
+                }
             }
 
-            if(sharedViewModel.patientData.value?.pneumonia == YES_TEXT){
-                binding.radioPneumoniaYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.pneumonia == NO_TEXT){
-                binding.radioPneumoniaNo.isChecked = true
-            }
-
-
-            if(sharedViewModel.patientData.value?.divertikulitis == YES_TEXT){
-                binding.radioDivertikulitisYes.isChecked = true
-            }
-            else if (sharedViewModel.patientData.value?.divertikulitis == NO_TEXT){
-                binding.radioDivertikulitisNo.isChecked = true
+            when (sharedViewModel.patientData.value?.thrombosis) {
+                true-> binding.radioThrombosisYes.isChecked = true
+                false -> binding.radioThrombosisNo.isChecked = true
+                null -> {
+                    binding.radioThrombosisYes.isChecked = false
+                    binding.radioThrombosisNo.isChecked = false
+                }
             }
 
+            when (sharedViewModel.patientData.value?.hypertension) {
+                true-> binding.radioHypertensionYes.isChecked = true
+                false -> binding.radioHypertensionNo.isChecked = true
+                null -> {
+                    binding.radioHypertensionYes.isChecked = false
+                    binding.radioHypertensionNo.isChecked = false
+                }
+            }
+
+            when (sharedViewModel.patientData.value?.preHeartAttack) {
+                true-> binding.radioPreHeartAttackYes.isChecked = true
+                false -> binding.radioPreHeartAttackNo.isChecked = true
+                null -> {
+                    binding.radioPreHeartAttackYes.isChecked = false
+                    binding.radioPreHeartAttackNo.isChecked = false
+                }
+            }
+
+            when (sharedViewModel.patientData.value?.pneumonia) {
+                true-> binding.radioPneumoniaYes.isChecked = true
+                false -> binding.radioPneumoniaNo.isChecked = true
+                null -> {
+                    binding.radioPneumoniaYes.isChecked = false
+                    binding.radioPneumoniaNo.isChecked = false
+                }
+            }
+
+            when (sharedViewModel.patientData.value?.divertikulitis) {
+                true-> binding.radioDivertikulitisYes.isChecked = true
+                false -> binding.radioDivertikulitisNo.isChecked = true
+                null -> {
+                    binding.radioDivertikulitisYes.isChecked = false
+                    binding.radioDivertikulitisNo.isChecked = false
+                }
+            }
         })
     }
 }

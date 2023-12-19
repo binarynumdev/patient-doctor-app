@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_edit_navigation"
-    app:startDestination="@id/patientPersonalDetailsFragment">
+    app:startDestination="@id/patientLogisticsDetailsFragment">
 
     <fragment
         android:id="@+id/patientPersonalDetailsFragment"
         android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientPersonalDetailsFragment"
         android:label="PatientPersonalDetailsFragment" >
         <action
-            android:id="@+id/action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment"
-            app:destination="@id/patientInsurranceDetailsFragment" />
+            android:id="@+id/action_patientPersonalDetailsFragment_to_patientAdditionalDetailsFragment"
+            app:destination="@id/patientAdditionalDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientInsurranceDetailsFragment"
         android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientInsurranceDetailsFragment"
         android:label="PatientInsurranceDetailsFragment" >
         <action
-            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientLogisticsDetailsFragment"
-            app:destination="@id/patientLogisticsDetailsFragment" />
+            android:id="@+id/action_patientInsurranceDetailsFragment_to_patientDoctorDocumentFragment"
+            app:destination="@id/patientDoctorDocumentFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientAdditionalDetailsFragment"
@@ -41,8 +41,8 @@
         android:label="fragment_patient_logistics_details"
         tools:layout="@layout/fragment_patient_logistics_details" >
         <action
-            android:id="@+id/action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment"
-            app:destination="@id/patientDoctorDocumentFragment" />
+            android:id="@+id/action_patientLogisticsDetailsFragment_to_patientInsurranceDetailsFragment2"
+            app:destination="@id/patientInsurranceDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientDoctorDocumentFragment"
@@ -50,8 +50,8 @@
         android:label="fragment_patient_doctor_document"
         tools:layout="@layout/fragment_patient_doctor_document" >
         <action
-            android:id="@+id/action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment"
-            app:destination="@id/patientAdditionalDetailsFragment" />
+            android:id="@+id/action_patientDoctorDocumentFragment_to_patientDoctorSignFragment"
+            app:destination="@id/patientDoctorSignFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientReceiptFragment"
@@ -61,5 +61,23 @@
         <action
             android:id="@+id/action_patientReceiptFragment_to_patientSummaryFragment"
             app:destination="@id/patientSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientDoctorSignFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PatientDoctorSignFragment"
+        android:label="fragment_patient_doctor_sign"
+        tools:layout="@layout/fragment_patient_doctor_sign" >
+        <action
+            android:id="@+id/action_patientDoctorSignFragment_to_patientPersonalDetailsFragment2"
+            app:destination="@id/patientPersonalDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/printFragment"
+        android:name="com.consulmedics.patientdata.fragments.addeditpatient.PrintFragment"
+        android:label="fragment_patient_print"
+        tools:layout="@layout/fragment_print" >
+        <action
+            android:id="@+id/action_patientDoctorSignFragment_to_printFragment"
+            app:destination="@id/printFragment" />
     </fragment>
 </navigation>

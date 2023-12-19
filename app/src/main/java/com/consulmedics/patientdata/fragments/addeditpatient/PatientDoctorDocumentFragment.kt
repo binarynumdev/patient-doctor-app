@@ -1,34 +1,31 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
+import android.R
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.ImageView
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.consulmedics.patientdata.MyApplication
-import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientDoctorDocumentBinding
-import com.consulmedics.patientdata.databinding.FragmentPatientLogisticsDetailsBinding
-import com.consulmedics.patientdata.utils.AppConstants
-import com.consulmedics.patientdata.utils.AppUtils
-import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
-import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlinx.coroutines.runBlocking
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
-class PatientDoctorDocumentFragment : Fragment() {
+class PatientDoctorDocumentFragment : BaseAddEditPatientFragment() {
     private var _binding: FragmentPatientDoctorDocumentBinding? = null
     val binding get() = _binding!!
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
-    }
+    private var capturedImageUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -46,20 +43,55 @@ class PatientDoctorDocumentFragment : Fragment() {
             editHealthStatus.doAfterTextChanged {
                 sharedViewModel.setHealthStatus(it.toString())
             }
-            btnPrev.setOnClickListener {
-                activity?.onBackPressed()
-            }
-            btnNext.setOnClickListener {
-                findNavController().navigate(R.id.action_patientDoctorDocumentFragment_to_patientAdditionalDetailsFragment)
-            }
-            btnSave.setOnClickListener {
-                sharedViewModel.patientData.value?.let { it1 ->
-                    sharedViewModel.savePatient(it1)
-                    activity?.finish()
-                }
+            takePhotoButton.setOnClickListener {
+                Log.e("This is for taking photos", "arrived")
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, 1888)
+
             }
         }
         return binding.root
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1888) {
+            if (data != null) {
+                val image = data.extras!!["data"] as Bitmap?
+                val savedImageUri = saveImageToFile(image)
+                val imageView = _binding?.photoView as ImageView
+                imageView.setImageBitmap(image)
+                capturedImageUri = savedImageUri
+                sharedViewModel.setPhotoUrl(capturedImageUri.toString())
+                Log.e("This is the captured image's url" , "${capturedImageUri}")
+            }
+        }
+    }
+
+    fun getCurrentTime(): String {
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        return currentDateTime.format(formatter)
+    }
+    private fun saveImageToFile(bitmap: Bitmap?): Uri? {
+        if (bitmap == null) {
+            return null
+        }
+
+        val imagesDir = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        var imageName = getCurrentTime() + "captured_image.jpg"
+        val imageFile = File(imagesDir, imageName)
+        try {
+            runBlocking {
+                FileOutputStream(imageFile).use { out ->
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    Log.e("This is the picture saved part", "arrived")
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return Uri.fromFile(imageFile)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,18 +99,13 @@ class PatientDoctorDocumentFragment : Fragment() {
         sharedViewModel.patientData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             binding.editDiagnosis.setText(sharedViewModel.patientData.value?.diagnosis)
             binding.editHealthStatus.setText(sharedViewModel.patientData.value?.healthStatus)
-
-            if(sharedViewModel.patientData.value?.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = sharedViewModel.patientData.value?.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} $day, ${month + 1}, $year")
-            }
-            else{
-                binding.textPatientInfo.setText("${sharedViewModel.patientData.value?.lastName} ${sharedViewModel.patientData.value?.firstName} ")
+            val fileUriString = sharedViewModel.patientData?.value?.photoUrl
+            val fileUri = Uri.parse(fileUriString)
+            if (fileUri != null) {
+                // Set the image to the ImageView using the file URI
+                binding.photoView.setImageURI(fileUri)
+            } else {
+                binding.photoView.setImageResource(R.drawable.ic_menu_gallery)
             }
         })
     }

@@ -3,9 +3,8 @@ package com.consulmedics.patientdata.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.consulmedics.patientdata.Converters
-import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.ActivityPatientDetailsBinding
-import com.consulmedics.patientdata.models.Patient
+import com.consulmedics.patientdata.data.model.Patient
 
 class PatientDetailsActivity : AppCompatActivity() {
     private var patient: Patient? = null
@@ -24,7 +23,7 @@ class PatientDetailsActivity : AppCompatActivity() {
             textInsuranceStatus.setText(patient?.insuranceStatus)
             textInsurnaceNumber.setText(patient?.insuranceNumber)
             val converters = Converters()
-            textDateOfVisitStart.setText(converters.dateToFormatedString(converters.stringToDate(patient?.startVisitDate)))
+            textDateOfVisitStart.setText(converters.dateToFormatedString(patient?.startVisitDate))
             textTimeOfVisitStart.setText(patient?.startVisitTime)
             textDiagnosis.setText(patient?.diagnosis)
             textHealthStatus.setText(patient?.healthStatus)

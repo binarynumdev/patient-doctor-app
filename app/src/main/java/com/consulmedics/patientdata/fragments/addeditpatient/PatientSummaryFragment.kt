@@ -1,19 +1,18 @@
 package com.consulmedics.patientdata.fragments.addeditpatient
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.caverock.androidsvg.SVG
-import com.consulmedics.patientdata.Converters
+import androidx.lifecycle.viewModelScope
 import com.consulmedics.patientdata.MyApplication
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.databinding.FragmentPatientSummaryBinding
@@ -22,6 +21,7 @@ import com.consulmedics.patientdata.utils.AppUtils
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModel
 import com.consulmedics.patientdata.viewmodels.AddEditPatientViewModelFactory
 import com.github.gcacace.signaturepad.views.SignaturePad
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,30 +36,15 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PatientSummaryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PatientSummaryFragment : Fragment() {
+class PatientSummaryFragment : BaseAddEditPatientFragment() {
 
     private var _binding: FragmentPatientSummaryBinding? = null
-    private val sharedViewModel: AddEditPatientViewModel by activityViewModels(){
-        AddEditPatientViewModelFactory(MyApplication.repository!!)
-    }
+
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel.patientData.observe(this, Observer {
             Log.e(AppConstants.TAG_NAME, "Shared Vide Model Data Changed in Summary Fragment")
-            if(it.birthDate != null){
-                val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                val cal = Calendar.getInstance()
-                cal.time = it.birthDate
-                val year = cal[Calendar.YEAR]
-                val month = cal[Calendar.MONTH]
-                val day = cal[Calendar.DAY_OF_MONTH]
-                binding.textPatientInfo.setText("${it.lastName} ${it.firstName} $day, ${month + 1}, $year")
-            }
-            else{
-                binding.textPatientInfo.setText("${it.lastName} ${it.firstName} ")
-            }
-
                 if(it.signature.isNotEmpty()){
                     val newBM:Bitmap = AppUtils.svgStringToBitmap(it.signature)
                     binding.imageSignView.setImageBitmap(newBM)
@@ -122,7 +107,11 @@ class PatientSummaryFragment : Fragment() {
         }
         binding.btnSave.setOnClickListener {
             sharedViewModel.patientData.value?.let { it1 ->
-                sharedViewModel.savePatient(it1)
+                it.isEnabled = false
+
+                sharedViewModel.viewModelScope.launch {
+                    sharedViewModel.savePatient(it1)
+                }
 //                activity?.finish()
             }
         }

@@ -1,125 +1,179 @@
 package com.consulmedics.patientdata.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.se.omapi.Session
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.viewpager.widget.ViewPager
-import com.consulmedics.patientdata.SCardExt
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.GravityCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.consulmedics.patientdata.*
 import com.consulmedics.patientdata.databinding.ActivityMainBinding
-import com.consulmedics.patientdata.models.Patient
-import com.consulmedics.patientdata.ui.main.MainPageAdapter
-import com.google.android.material.tabs.TabLayout
+import com.consulmedics.patientdata.data.model.Patient
+import com.consulmedics.patientdata.utils.AppConstants.PATIENT_DATA
+import com.consulmedics.patientdata.utils.AppConstants.PATIENT_MODE
+import com.consulmedics.patientdata.utils.AppConstants.PHONE_CALL_MODE
+import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
+import com.consulmedics.patientdata.utils.SessionManager
+import com.google.android.material.navigation.NavigationView
+import com.consulmedics.patientdata.data.api.ApiClient
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
-
-class MainActivity : BaseActivity() {
-
-
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
+class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedListener{
     private lateinit var binding: ActivityMainBinding
-
+    lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navController: NavController
     val scardLib = SCardExt()
+    private var isDay: Boolean = true
+    private var themePosition : Int? = null
+    private var arrayTheme : Array<String> ?= null
+
+    private var userPrefs : UserPreferenceRepository = MyApplication.instance.userPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
+
+        var api_token : String? = SessionManager.getString(this, "api_token")
+
+        ApiClient.setBearerToken(api_token!!)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = MainPageAdapter(this, supportFragmentManager)
+        initTheme()
 
-        val viewPager: ViewPager = binding.appBarMain.contentMain.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.appBarMain.tabs
-        tabs.setupWithViewPager(viewPager)
-        binding.appBarMain.fabCreateNewPatient.setOnClickListener{
-            startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
-                // you can add values(if any) to pass to the next class or avoid using `.apply`
-                putExtra("patient_data", Patient())
-            })
+        if(themePosition == 0) {
+            binding.appBarMain.btnSyncPatients.setImageResource(R.drawable.ic_day)
+        } else {
+            binding.appBarMain.btnSyncPatients.setImageResource(R.drawable.ic_night)
         }
-//        binding.appBarMain.fabReadCard.setOnClickListener { view ->
-//            run {
-//
-//                var status: Long = 0
-//                if(!scardLib.initialized){
-//                    status = scardLib.SCardEstablishContext(baseContext)
-//                    if(0L != status){
-//                        Log.e("ERROR", "Establish context error")
-//                    }
-//                    else{
-//                        status = scardLib.SCardListReaders(baseContext)
-//                    }
-//                }
-//                if(scardLib.initialized){
-//                    status = scardLib.SCardConnect()
-//                    if(0L == status){
-//                        var patientData = scardLib.getPatientData()
-//                        startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
-//                            // you can add values(if any) to pass to the next class or avoid using `.apply`
-//                            putExtra("patient_data", patientData)
-//                        })
-//                    }
-//                }
-//                else{
-//                    var patient: Patient = Patient()
-//                    var pdata: String = "<?xml version=\"1.0\" encoding=\"ISO-8859-15\" standalone=\"yes\"?><vsdp:UC_PersoenlicheVersichertendatenXML CDM_VERSION=\"5.2.0\" xmlns:vsdp=\"http://ws.gematik.de/fa/vsdm/vsd/v5.2\"><vsdp:Versicherter><vsdp:Versicherten_ID>T115774582</vsdp:Versicherten_ID><vsdp:Person><vsdp:Geburtsdatum>19800713</vsdp:Geburtsdatum><vsdp:Vorname>Claudia</vsdp:Vorname><vsdp:Nachname>Burdack</vsdp:Nachname><vsdp:Geschlecht>W</vsdp:Geschlecht><vsdp:StrassenAdresse><vsdp:Postleitzahl>01187</vsdp:Postleitzahl><vsdp:Ort>Dresden</vsdp:Ort><vsdp:Land><vsdp:Wohnsitzlaendercode>D</vsdp:Wohnsitzlaendercode></vsdp:Land><vsdp:Strasse>Bayreuther Str.</vsdp:Strasse><vsdp:Hausnummer>30</vsdp:Hausnummer></vsdp:StrassenAdresse></vsdp:Person></vsdp:Versicherter></vsdp:UC_PersoenlicheVersichertendatenXML>"
-//                    var vdata: String = "<?xml version=\"1.0\" encoding=\"ISO-8859-15\" standalone=\"yes\"?>\n" +
-//                            "<vsda:UC_AllgemeineVersicherungsdatenXML CDM_VERSION=\"5.2.0\"\n" +
-//                            "\txmlns:vsda=\"http://ws.gematik.de/fa/vsdm/vsd/v5.2\">\n" +
-//                            "\t<vsda:Versicherter>\n" +
-//                            "\t\t<vsda:Versicherungsschutz>\n" +
-//                            "\t\t\t<vsda:Beginn>20081002</vsda:Beginn>\n" +
-//                            "\t\t\t<vsda:Kostentraeger>\n" +
-//                            "\t\t\t\t<vsda:Kostentraegerkennung>104526376</vsda:Kostentraegerkennung>\n" +
-//                            "\t\t\t\t<vsda:Kostentraegerlaendercode>D</vsda:Kostentraegerlaendercode>\n" +
-//                            "\t\t\t\t<vsda:Name>VIACTIV Krankenkasse</vsda:Name>\n" +
-//                            "\t\t\t\t<vsda:AbrechnenderKostentraeger>\n" +
-//                            "\t\t\t\t\t<vsda:Kostentraegerkennung>104526376222</vsda:Kostentraegerkennung>\n" +
-//                            "\t\t\t\t\t<vsda:Kostentraegerlaendercode>D</vsda:Kostentraegerlaendercode>\n" +
-//                            "\t\t\t\t\t<vsda:Name>VIACTIV Krankenkasse222</vsda:Name>\n" +
-//                            "\t\t\t\t</vsda:AbrechnenderKostentraeger>\n" +
-//                            "\t\t\t</vsda:Kostentraeger>\n" +
-//                            "\t\t</vsda:Versicherungsschutz>\n" +
-//                            "\t\t<vsda:Zusatzinfos>\n" +
-//                            "\t\t\t<vsda:ZusatzinfosGKV>\n" +
-//                            "\t\t\t\t<vsda:Versichertenart>1</vsda:Versichertenart>\n" +
-//                            "\t\t\t\t<vsda:Zusatzinfos_Abrechnung_GKV>\n" +
-//                            "\t\t\t\t\t<vsda:WOP>98</vsda:WOP>\n" +
-//                            "\t\t\t\t</vsda:Zusatzinfos_Abrechnung_GKV>\n" +
-//                            "\t\t\t</vsda:ZusatzinfosGKV>\n" +
-//                            "\t\t</vsda:Zusatzinfos>\n" +
-//                            "\t</vsda:Versicherter>\n" +
-//                            "</vsda:UC_AllgemeineVersicherungsdatenXML>"
-//                    patient.loadFrom(pdata, vdata)
-//                    startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
-//                        // you can add values(if any) to pass to the next class or avoid using `.apply`
-//                        putExtra("patient_data", patient)
-//                    })
-//                }
-//
-//            }
-//        }
-//        val drawerLayout: DrawerLayout = binding.drawerLayout
-//        val navView: NavigationView = binding.navView
-//        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-//        appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-//            ), drawerLayout
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
+
+        binding.appBarMain.btnNewPatient.setOnClickListener{
+            showDropDownMenu()
+        }
+        binding.appBarMain.btnSyncPatients.setOnClickListener {
+
+            themePosition = when(themePosition) {
+                0 -> 1
+                else -> 0
+            }
+            if(themePosition == 0) {
+                Toast.makeText(this, "Day", Toast.LENGTH_SHORT).show()
+                binding.appBarMain.btnSyncPatients.setImageResource(R.drawable.ic_day)
+            } else {
+                Toast.makeText(this, "Night", Toast.LENGTH_SHORT).show()
+                binding.appBarMain.btnSyncPatients.setImageResource(R.drawable.ic_night)
+            }
+            setTheme()
+        }
+        var userFirstName = SessionManager.getFirstName(this)
+        var userLastName = SessionManager.getLastName(this)
+        binding.appBarMain.textUserName.text = "$userFirstName $userLastName"
+        toggle = ActionBarDrawerToggle(this@MainActivity, binding.appBarMain.drawerLayout, R.string.patient_data, R.string.patient_data)
+        binding.appBarMain.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        binding.appBarMain.drawerButton.setOnClickListener {
+            binding.appBarMain.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        binding.appBarMain.navView.setNavigationItemSelectedListener(this)
         val sttus = scardLib.USBRequestPermission(applicationContext)
         Log.e("USB_CONNECTION", sttus.toString())
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_patient_flow) as NavHostFragment
+        navController = navHostFragment.navController
+        navController.setGraph(R.navigation.nav_main_graph, intent.extras)
+
     }
 
+    private fun initTheme() {
+        arrayTheme = resources.getStringArray(R.array.themes)
+
+        themePosition = when(userPrefs.appTheme) {
+            Theme.LIGHT_MODE -> 0
+            Theme.DARK_MODE -> 1
+        }
+    }
+
+    private fun setTheme() {
+//        Toast.makeText(this, themePosition.toString(), Toast.LENGTH_SHORT).show()
+        userPrefs.updateTheme(
+            when(themePosition) {
+                0 -> Theme.LIGHT_MODE
+                else -> Theme.DARK_MODE
+            }
+        )
+    }
+
+    fun showDropDownMenu(){
+        val popupMenu = PopupMenu(this, binding.appBarMain.btnNewPatient)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.main, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener {
+            Log.e("showDropDownMenu", "arrived")
+            handleMenuItemClick(it)
+        }
+        popupMenu.show()
+    }
+      fun handleMenuItemClick(item: MenuItem): Boolean{
+
+        when(item.itemId){
+            R.id.action_new_patient ->{
+                startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
+                    // you can add values(if any) to pass to the next class or avoid using `.apply`
+                    putExtra(PATIENT_DATA, Patient())
+                })
+                return true
+            }
+            R.id.action_new_patient_called ->{
+                startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
+                    // you can add values(if any) to pass to the next class or avoid using `.apply`
+                    putExtra(PATIENT_MODE, PHONE_CALL_MODE)
+
+                    putExtra(PATIENT_DATA, Patient(target = "call"))
+                })
+                return true
+            }
+        }
+        return false
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        Log.e("DDD","DDD")
+        binding.appBarMain.drawerLayout.closeDrawer(GravityCompat.START)
+        when(item.itemId){
+            R.id.nav_shift ->{
+                SessionManager.saveSelectedMenuItemLabel(this, "shift_list")
+                Log.e("DDD", "EEE")
+                navController.navigate(R.id.shiftListFragment)
+            }
+            R.id.nav_patients ->{
+                Log.e("DDD", "AAA")
+                runBlocking() {
+                    delay(200)
+                }
+                SessionManager.saveSelectedMenuItemLabel(this, "patient_list")
+                navController.navigate(R.id.patientListFragment)
+            }
+        }
+        return true
     }
 }

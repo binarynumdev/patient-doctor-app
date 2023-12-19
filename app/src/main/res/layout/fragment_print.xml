@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_background"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+
+        <Button
+            android:id="@+id/btnPrintLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_orange_rounded_with_big_white_border"
+            android:text="@string/print_insurance"
+            app:backgroundTint="@null" />
+
+
+        <Button
+            android:id="@+id/btnPrintMedical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_orange_rounded_with_big_white_border"
+            android:text="@string/print_receipt"
+            app:backgroundTint="@null" />
+
+<!--    </LinearLayout>-->
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frameLayout3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="50dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="50dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/mainLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:background="@drawable/bg_blue_card"-->
+<!--            android:minWidth="500dp">-->
+
+<!--            <com.google.android.material.progressindicator.CircularProgressIndicator-->
+<!--                android:id="@+id/progress_bar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="500dp"-->
+<!--                android:progress="50"-->
+<!--                app:indicatorColor="#FEA500 "-->
+<!--                app:indicatorDirectionCircular="clockwise"-->
+<!--                app:indicatorInset="5dp"-->
+<!--                app:indicatorSize="90dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/linearLayout4"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:trackColor="#C7EAF8 "-->
+<!--                app:trackCornerRadius="5dp"-->
+<!--                app:trackThickness="7dp"-->
+<!--                tools:progress="25" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/stepCountTextView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="1/8"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="@dimen/text_size_big"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/progress_bar"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/progress_bar"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/progress_bar"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/progress_bar" />-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayout4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/patientDetailsTextView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/activity_vertical_margin"-->
+<!--                    android:text="Patient Details"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/text_size_extra" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/stepTitleTextView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Enter Patient Details"-->
+<!--                    android:textColor="#A1FFFFFF"-->
+<!--                    android:textSize="@dimen/text_size_middle" />-->
+<!--            </LinearLayout>-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </FrameLayout>-->
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/stepActionButtonFrame"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="-20dp"-->
+<!--        android:paddingLeft="50dp"-->
+<!--        android:paddingRight="50dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/frameLayout3"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/frameLayout3"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/frameLayout3">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnStepAction"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/bg_orange_rounded_with_big_white_border"-->
+<!--            android:text="Button"-->
+<!--            app:backgroundTint="@null" />-->
+<!--    </FrameLayout>-->
+
+</LinearLayout>

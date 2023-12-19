@@ -5,8 +5,8 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.consulmedics.patientdata.activities.MainActivity
 import com.consulmedics.patientdata.NoUserIdActivity
-import com.consulmedics.patientdata.PatientsDatabase
-import com.consulmedics.patientdata.ui.login.LoginActivity
+import com.consulmedics.patientdata.MyAppDatabase
+import com.consulmedics.patientdata.activities.LoginActivity
 import com.consulmedics.patientdata.utils.AppUtils
 
 class CheckUserThread(appContext: Context): Thread() {
@@ -21,7 +21,7 @@ class CheckUserThread(appContext: Context): Thread() {
             aContext.startActivity(i)
         }
         else{
-            val patientDB by lazy { PatientsDatabase.getDatabase(aContext).patientDao() }
+            val patientDB by lazy { MyAppDatabase.getDatabase(aContext).patientDao() }
             val patientCount: Int = patientDB.getList().count()
             if(patientCount == 0){
                 val i = Intent(aContext, LoginActivity::class.java)

@@ -3,8 +3,12 @@ package com.consulmedics.patientdata.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Environment
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.caverock.androidsvg.SVG
@@ -12,6 +16,9 @@ import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.utils.AppConstants.CERT_FILE_PATH
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import java.io.*
+import java.lang.Math.abs
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AppUtils {
     companion object {
@@ -63,11 +70,34 @@ class AppUtils {
             svg.renderToCanvas(bmcanvas)
             return newBM
         }
-
+        fun hideKeyboard(view: View) {
+            val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
         fun mmToPt(mm: Float): Float{
             return  mm / 25.4F * 72
         }
-
+        fun isOnline(context: Context): Boolean {
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (connectivityManager != null) {
+                val capabilities =
+                    connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                        return true
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                        return true
+                    }
+                }
+            }
+            return false
+        }
         fun validateMaxLineMaxLetterForEditText(editTextField: EditText, text: CharSequence?, context: Context) {
             if (text != null) {
                 val stringList = text.split('\n')
@@ -89,5 +119,17 @@ class AppUtils {
                 }
             }
         }
+        fun calculateTimeDiffInHours(startDate: String, endDate: String): Long {
+            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val startDateTime = format.parse(startDate)
+            val endDateTime = format.parse(endDate)
+
+            val differenceInMillis = abs(endDateTime.time - startDateTime.time)
+            val differenceInHours = differenceInMillis / (1000 * 60 * 60)
+
+            return differenceInHours
+        }
+
     }
+
 }

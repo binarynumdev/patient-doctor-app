@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/formRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/appbar_padding_top"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editStreet"
+            style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_edit_height"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edit_text"
+            android:drawableLeft="@drawable/ic_street"
+            android:ems="10"
+            android:hint="@string/street"
+            android:inputType="textPersonName"
+            android:paddingLeft="@dimen/appbar_padding_top"
+            android:paddingTop="@dimen/efab_ui_margin_xxs"
+            android:paddingRight="@dimen/appbar_padding_top"
+            android:paddingBottom="@dimen/efab_ui_margin_xxs"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/appbar_padding_top"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editPostalCode"
+            style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_edit_height"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edit_text"
+            android:drawableLeft="@drawable/ic_flag"
+            android:ems="10"
+            android:hint="@string/post_code"
+            android:inputType="textPersonName"
+            android:paddingLeft="@dimen/appbar_padding_top"
+            android:paddingTop="@dimen/efab_ui_margin_xxs"
+            android:paddingRight="@dimen/appbar_padding_top"
+            android:paddingBottom="@dimen/efab_ui_margin_xxs"
+            android:textSize="@dimen/text_size_normal" />
+
+        <EditText
+            android:id="@+id/editCity"
+            style="@style/Widget.AppCompat.EditText.ConsulMedicsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_edit_height"
+            android:layout_marginTop="@dimen/appbar_padding_top"
+            android:layout_weight="1"
+            android:background="@drawable/bg_edit_text"
+            android:drawableLeft="@drawable/ic_apartment"
+            android:ems="10"
+            android:hint="@string/city"
+            android:inputType="textPersonName"
+            android:paddingLeft="@dimen/appbar_padding_top"
+            android:paddingTop="@dimen/efab_ui_margin_xxs"
+            android:paddingRight="@dimen/appbar_padding_top"
+            android:paddingBottom="@dimen/efab_ui_margin_xxs"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnConfirmMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_blue_radius_rectangle"
+            android:text="Confirm Map" />
+    </LinearLayout>
+</LinearLayout>

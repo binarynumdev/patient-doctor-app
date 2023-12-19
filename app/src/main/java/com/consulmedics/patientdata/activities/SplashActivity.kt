@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.consulmedics.patientdata.R
+import com.consulmedics.patientdata.UsbConnectionService
+import com.consulmedics.patientdata.data.api.ApiClient
 import com.consulmedics.patientdata.utils.AppConstants.PERMISSION_REQUEST_CODE
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
-import com.consulmedics.patientdata.threads.CheckUserThread
+import com.consulmedics.patientdata.utils.SessionManager
 
 
 class SplashActivity : AppCompatActivity() {
@@ -27,13 +29,18 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val permissionResult:Boolean = checkRWPermissions()
+
+        Log.e("DDDD", "START SERVICE---")
+        Intent(applicationContext, UsbConnectionService::class.java).also {
+            Log.e("DDDD", "START SERVICE")
+            startService(it)
+        }
         if(!permissionResult){
             requestPermission()
         }
         else{
-            readUserCertificate()
+            readUserInfomation()
         }
-
     }
     private fun checkRWPermissions(): Boolean {
         return if (SDK_INT >= Build.VERSION_CODES.R) {
@@ -72,12 +79,13 @@ class SplashActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> if (grantResults.size > 0) {
                 Log.e(TAG_NAME, grantResults.toString())
                 val IS_PERMISSION_GRANTED = grantResults[0] == PackageManager.PERMISSION_GRANTED
                 if (IS_PERMISSION_GRANTED) {
-                    readUserCertificate()
+                    readUserInfomation()
                 } else {
                     Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT)
                         .show()
@@ -91,7 +99,7 @@ class SplashActivity : AppCompatActivity() {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (SDK_INT >= Build.VERSION_CODES.R) {
                 if (Environment.isExternalStorageManager()) {
-                    readUserCertificate()
+                    readUserInfomation()
                 } else {
                     Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT)
                         .show()
@@ -99,8 +107,23 @@ class SplashActivity : AppCompatActivity() {
             }
         }
     }
-    fun readUserCertificate(){
-        val thread: CheckUserThread = CheckUserThread(applicationContext)
-        thread.start()
+    fun readUserInfomation(){
+//        val thread: CheckUserThread = CheckUserThread(applicationContext)
+//        thread.start()
+        val token = SessionManager.getToken(this)
+        val doctorID = SessionManager.getDoctorID(this);
+        Log.e(TAG_NAME, "Doctor ID:${doctorID}")
+        if (!token.isNullOrBlank()) {
+//            ApiClient.setBearerToken(token)
+            val i = Intent(this, MainActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+        }
+        else{
+            val i = Intent(this, LoginActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+        }
+
     }
 }

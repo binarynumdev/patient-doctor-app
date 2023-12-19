@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_orange">#FFFFA500</color>
+    <color name="app_orange_200">#E8BB6A</color>
+    <color name="app_orange_500">#F1B23F</color>
+    <color name="app_orange_700">#FAA812</color>
+    <color name="app_blue">#00ABFF</color>
+    <color name="app_blue_200">#C4EBFF</color>
+    <color name="app_blue_500">#279DD6</color>
+    <color name="app_blue_700">#1FA0DF</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="default_background">#01050D</color>
+<!--    <color name="default_background_dark">#01050D</color>-->
+    <color name="default_editbox_border">#E2E3E6</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
+    <color name="app_inactive">#D9E1EC</color>
+    <color name="teal">#008577</color>
+    <color name="aquaDeep">#00574B</color>
+    <color name="amaranth">#D81B60</color>
+    <color name="darkMineShaft">#222222</color>
+    <color name="codGray">#111111</color>
+    <color name="mineShaft">#303030</color>
+    <color name="doveGray">#646464</color>
+    <color name="tealLight">#808F97</color>
+    <color name="blueGray">#2D313D</color>
+
+    <color name="side_bar_icon_color">#E3E3E3</color>
+
+    <color name="default_text_color">#FFFFFF</color>
+    <color name="default_edit_text_background_color">#161819</color>
+
+    <color name="customSelectedTabTextColor">#FFF</color>
+    <color name="customUnSelectedTabTextColor">#999</color>
+
+    <color name="shift_patient_item_background_color">#333</color>
+    <color name="shift_patient_name_color">#FFF</color>
+    <color name="shift_patient_date_color">#666</color>
+    <color name="shift_patient_action_color">#666</color>
+
+    <color name="confirm_button_color">#279DD6</color>
+</resources>
