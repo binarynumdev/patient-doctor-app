@@ -29,7 +29,7 @@
     <color name="darkMineShaft">#222222</color>
     <color name="codGray">#111111</color>
     <color name="mineShaft">#303030</color>
-    <color name="doveGray">#646464</color>
+    <color name="doveGray">#575555</color>
     <color name="tealLight">#808F97</color>
     <color name="blueGray">#2D313D</color>
 
@@ -39,7 +39,7 @@
     <color name="default_edit_text_background_color">#FFFFFF</color>
 
     <color name="customSelectedTabTextColor">#000</color>
-    <color name="customUnSelectedTabTextColor">#666</color>
+    <color name="customUnSelectedTabTextColor">#656363</color>
 
     <color name="shift_patient_item_background_color">#FFF</color>
     <color name="shift_patient_name_color">#000</color>

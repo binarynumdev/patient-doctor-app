@@ -345,9 +345,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                         targetAddress!!.longitute = location.longitude
                         addMarker(location)
                         stopLoading()
-//                        findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
-//                        findViewById<TextView>(R.id.lonTextView).text = location.longitude.toString()
-                    }
+                       }
                 }
             } else {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
@@ -451,6 +449,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -461,29 +461,29 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             if(targetAddress!!.latitute == 0.00 && targetAddress!!.longitute == 0.00){
 
                 if(targetAddress!!.city.isEmpty() && targetAddress!!.postCode.isEmpty() && targetAddress!!.streetName.isEmpty() && targetAddress!!.streetNumber.isEmpty()){
-                    val confirmationDialog = ConfirmationDialog("Detect your location?", "Do you want to detect your current location?")
-                    confirmationDialog.setNegativeClickListener {
-                        mMarker = mMap.addMarker(
-                            MarkerOptions()
-                                .position(LatLng(51.035482, 13.7046237))
-                                .title("Pickup Your Hotel")
-                        )
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
-                        viewModel.getAddressFromLatLng(51.035482, 13.7046237, apiKey)
-                        confirmationDialog.dismiss()
-                        stopLoading()
-                    }
-                    confirmationDialog.setPostiveClickListener {
-                        confirmationDialog.dismiss()
-                        stopLoading()
+          //          val confirmationDialog = ConfirmationDialog("Detect your locatiozn?", "Do you want to detect your current location?")
+//                    confirmationDialog.setNegativeClickListener {
+//                        mMarker = mMap.addMarker(
+//                            MarkerOptions()
+//                                .position(LatLng(51.035482, 13.7046237))
+//                                .title("Pickup Your Hotel")
+//                        )
+//                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(51.035482, 13.7046237), 13f))
+//                        viewModel.getAddressFromLatLng(31.035482, 13.7046237, apiKey)
+//                        confirmationDialog.dismiss()
+//                        stopLoading()
+//                    }
+//                    confirmationDialog.setPostiveClickListener {
+//                        confirmationDialog.dismiss()
+//                        stopLoading()
                         showLoading("Just a seconds", "We are detecting your current location")
                         getLastLocation()
-                    }
-                    confirmationDialog.isCancelable = false
-                    confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
+//                    }
+//                    confirmationDialog.isCancelable = false
+//                    confirmationDialog.show(supportFragmentManager, "ConfirmationDialog")
                 }
                 else{
-//                    binding.editSearchAddress.setText("${targetAddress!!.streetName} ${targetAddress!!.streetNumber}, ${targetAddress!!.postCode} ${targetAddress!!.city}")
+                    binding.editSearchAddress.setText("${targetAddress!!.streetName} ${targetAddress!!.streetNumber}, ${targetAddress!!.postCode} ${targetAddress!!.city}")
                     viewModel.getAddressFromString("${targetAddress!!.streetName} ${targetAddress!!.streetNumber}, ${targetAddress!!.postCode} ${targetAddress!!.city}", apiKey)
                 }
             }

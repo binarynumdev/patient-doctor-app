@@ -32,6 +32,7 @@
                 android:padding="@dimen/default_margin_4"
                 android:textSize="@dimen/text_size_middle"
                 map:layout_constraintEnd_toEndOf="parent"
+                map:layout_constraintHorizontal_bias="0.0"
                 map:layout_constraintStart_toStartOf="parent"
                 map:layout_constraintTop_toTopOf="parent" />
 
@@ -79,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/appbar_padding"
-                android:background="?attr/confirmBtnColor"
+                android:backgroundTint="@color/quantum_lightblue700"
                 android:text="@string/confirm"
                 map:layout_constraintEnd_toEndOf="@+id/editSearchAddress"
                 map:layout_constraintTop_toBottomOf="@+id/editSearchAddress" />
@@ -93,8 +94,10 @@
         android:layout_height="match_parent"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintHorizontal_bias="0.0"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
+        map:layout_constraintVertical_bias="0.0"
         tools:context=".activities.MapsActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

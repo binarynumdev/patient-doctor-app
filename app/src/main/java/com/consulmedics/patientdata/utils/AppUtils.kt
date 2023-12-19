@@ -7,6 +7,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Environment
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.caverock.androidsvg.SVG
@@ -68,7 +70,10 @@ class AppUtils {
             svg.renderToCanvas(bmcanvas)
             return newBM
         }
-
+        fun hideKeyboard(view: View) {
+            val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
         fun mmToPt(mm: Float): Float{
             return  mm / 25.4F * 72
         }

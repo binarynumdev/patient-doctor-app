@@ -190,6 +190,10 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
         _patientData.value?.healthStatus = editValue
     }
 
+    fun setPhotoUrl(editValue: String) {
+        _patientData.value?.photoUrl = editValue
+    }
+
     fun setDateOfExam(editValue: String){
         _patientData.value?.dateofExam = editValue
     }
@@ -267,6 +271,7 @@ class AddEditPatientViewModel(private val patientRepository: PatientRepository, 
                     addressRepository.update(receiptAddress.value!!)
                 }
             }
+
         }
 
 

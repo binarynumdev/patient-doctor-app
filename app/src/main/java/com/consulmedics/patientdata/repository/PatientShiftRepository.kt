@@ -8,6 +8,8 @@ import com.consulmedics.patientdata.data.api.methods.LoadShiftApi
 import com.consulmedics.patientdata.data.api.methods.UploadShiftApi
 import com.consulmedics.patientdata.data.api.request.UploadShiftRequest
 import com.consulmedics.patientdata.data.api.response.LoadShiftApiResponse
+import com.consulmedics.patientdata.data.api.response.UploadShiftApiResponse
+import com.consulmedics.patientdata.data.model.Patient
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.SessionManager.getDoctorID
@@ -22,13 +24,13 @@ class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
                 if(it?.isNotEmpty() == true){
                     Log.e(TAG_NAME, "Doctor ID: ${it}")
                     patientShift.doctorID = it.toInt()
-                }
 
+                }
             }
             this.insertOrUpdate(patientShift)
         }
     }
-    suspend fun insertOrUpdate(patientShift: PatientShift) {
+    fun insertOrUpdate(patientShift: PatientShift) {
         patientShiftDao.insertOrUpdate(patientShift)
     }
 
@@ -46,7 +48,6 @@ class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
         if(mContext != null){
             Log.e(TAG_NAME, "LOAD PATIENT SHIFTS")
             return patientShiftDao.getPastShifts( getDoctorID(mContext))
-
         }
         else{
             return patientShiftDao.getAll()
@@ -57,11 +58,19 @@ class PatientShiftRepository(private val patientShiftDao: PatientShiftDao) {
 //    val upcomingShiftList: LiveData<List<PatientShift>> = patientShiftDao.getUpcoming(getDoctorID(mContext))
     val allPatients: LiveData<List<PatientShift>> = patientShiftDao.getAll()
 
-    suspend fun uploadShiftDetail(loginRequest: UploadShiftRequest): Response<String>?{
+    suspend fun uploadShiftDetail(loginRequest: UploadShiftRequest): Response<UploadShiftApiResponse>? {
+        Log.e(TAG_NAME, "TRACK POINT 1")
         return UploadShiftApi.getApi()?.upload(loginRequest)
     }
 
     fun delete(patientShift: PatientShift){
         patientShiftDao.delete(patientShift)
+    }
+
+    fun updatePatientShift(patientShift: PatientShift){
+        patientShiftDao.updatePatientShift(patientShift)
+    }
+    fun updatedShiftList(mContext: Context?): LiveData<List<PatientShift>> {
+            return patientShiftDao.getUploadedAll()
     }
 }

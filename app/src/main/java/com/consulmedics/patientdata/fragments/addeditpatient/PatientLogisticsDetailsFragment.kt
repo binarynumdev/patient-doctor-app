@@ -3,6 +3,7 @@ package com.consulmedics.patientdata.fragments.addeditpatient
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -37,6 +38,7 @@ import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.YES_TEXT
 import com.consulmedics.patientdata.utils.AppUtils.Companion.isOnline
 import com.consulmedics.patientdata.viewmodels.PatientViewModel
+import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -142,36 +144,37 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             }
             radioStartPointIsHotel.setOnClickListener {
                 sharedViewModel.setStartPoint(HOTEL_TEXT)
-
                     if(hotelList.count() == 0){
-                        if(isOnline(requireContext())) {
-                            showCreateHotelModal()
-                        }
-                        else{
-                            showStartPointAddressForm(Address())
-                        }
+                        showChooseHotelModal()
+//                        if(isOnline(requireContext())) {
+//                            showCreateHotelModal()
+//                        }
+//                        else{
+//                            showStartPointAddressForm(Address())
+//                        }
                     }
                     else{
                         showChooseHotelModal()
                     }
-
-
             }
             radioCurrentAddressSameNo.setOnClickListener {
                 sharedViewModel.setCurrentAddressSame(false)
                 addressFormLayout.visibility = VISIBLE
-                val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
+                val radioOptions = arrayOf("Get current GPS-location","Fill from patient address", "Choose new address from map", "Fill address manually")
                 val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, false)
                 bottomSheet.setOnItemClickListener {
                     bottomSheet.dismiss()
                     when(it){
-                        0 ->{
-                            importAddressFromPatientData()
+                        0 -> {
+                            getCurrentLocation(false)
                         }
                         1 ->{
-                            showNewAddressMapScreen()
+                            importAddressFromPatientData()
                         }
                         2 ->{
+                            showNewAddressMapScreen()
+                        }
+                        3 ->{
                             fillVisitAddressManually()
                         }
                     }
@@ -212,7 +215,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                 sharedViewModel.setCurrentPatientAlreadyVisited(false)
             }
             btnContinue.setOnClickListener {
-                findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientDoctorDocumentFragment)
+                findNavController().navigate(R.id.action_patientLogisticsDetailsFragment_to_patientInsurranceDetailsFragment2)
             }
             btnBack.setOnClickListener {
                 activity?.onBackPressed()
@@ -302,7 +305,28 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
                     importAddressFromPatientData()
                 }
                 btnVisitAddressFromMap.setOnClickListener {
-                    showNewAddressMapScreen()
+                    addressFormLayout.visibility = VISIBLE
+                    val radioOptions = arrayOf("Get current GPS-location","Fill from patient address", "Choose new address from map", "Fill address manually")
+                    val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, false)
+                    Log.e("This is the From map radio button", "arrived")
+                    bottomSheet.setOnItemClickListener {
+                        bottomSheet.dismiss()
+                        when(it){
+                            0 -> {
+                                getCurrentLocation(false)
+                            }
+                            1 ->{
+                                importAddressFromPatientData()
+                            }
+                            2 ->{
+                                showNewAddressMapScreen()
+                            }
+                            3 ->{
+                                fillVisitAddressManually()
+                            }
+                        }
+                    }
+                    activity?.supportFragmentManager?.let { it1 -> bottomSheet.show(it1, "SelectBottomSheet") }
                 }
                 btnFillVIsitAddressManually.setOnClickListener {
                     fillVisitAddressManually()
@@ -331,11 +355,9 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         binding.currentAddressForm.apply {
 
             editStreet.setText("")
-//            editHouseNumber.setText("")
             editCity.setText("")
             editPostalCode.setText("")
             editStreet.isEnabled = true
-//            editHouseNumber.isEnabled = true
             editCity.isEnabled = true
             editPostalCode.isEnabled = true
         }
@@ -387,16 +409,78 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
     }
 
 
+
+
+
+
+    private fun getCurrentLocation(flag : Boolean) {
+        val fusedLocationClient = activity?.let { LocationServices.getFusedLocationProviderClient(it) }
+    Log.e("This is the getCurrentLocation function", "arrived")
+        try {
+                fusedLocationClient!!.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        Log.e("This is the current location", "${latitude} ${longitude}")
+                        getAddressFromLatLngVisiteAddress(latitude, longitude,flag)
+                    } else {
+                        // Location is null, handle accordingly
+                    }
+                }
+        } catch (e: SecurityException) {
+            // Handle security exception if location permissions are not granted
+        }
+    }
+
+
+
+
+
+
+    fun getAddressFromLatLngVisiteAddress(latitude: Double, longitude: Double, flag :Boolean): Address? {
+        var tempAddress : Address? = null
+        val geocoder = Geocoder(context, Locale.getDefault())
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        if (addresses.isNotEmpty()) {
+            tempAddress = Address()
+            val address = addresses[0]
+            tempAddress?.streetName = address.thoroughfare
+            tempAddress?.postCode = address.postalCode
+            tempAddress?.city = address.locality
+            tempAddress?.longitute = longitude
+            tempAddress?.latitute = longitude
+            Log.e("1",address.getAddressLine(0) )
+            Log.e("2", address.adminArea)
+            Log.e("3", address.locality) // city
+            Log.e("4", address.featureName) // house number
+            Log.e("5", address.postalCode)
+            Log.e("6", address.thoroughfare)
+            if (tempAddress != null && flag == false) {
+                showCurrentAddressForm(tempAddress)
+            }
+            else if(tempAddress != null && flag == true) {
+                setStartPointAddress(tempAddress)
+            }
+        }
+        return tempAddress
+    }
+
+
+
+
     fun showChooseHotelModal(){
-        val radioOptions = arrayOf("Fill from patient address", "Choose new address from map", "Fill address manually")
+        val radioOptions = arrayOf("")
         val bottomSheet = SelectBottomSheetDialogFragment(radioOptions, true, "Select an item")
-        val dialogAddressList = ArrayList(hotelList)
+        val dialogAddressList = ArrayList<Address>()
+        dialogAddressList.add(Address(10))
         if(isOnline(requireContext())){
             dialogAddressList.add(Address())
         }
 
         dialogAddressList.add(Address(-99))
+        hotelList.forEach { e -> dialogAddressList.add(e)}
         val adapter = AddressDialogAdapter(requireContext(), dialogAddressList)
+
         adapter.setOnItemClickListener {
             bottomSheet.dismiss()
             val address = dialogAddressList.get(it)
@@ -405,6 +489,9 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
             }
             else if (address.uid == -99){
                 setStartPointAddress(Address())
+            }else if (address.uid == 10) {
+                getCurrentLocation(true)
+
             }
             else{
                 setStartPointAddress(address)
@@ -414,7 +501,6 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         activity?.supportFragmentManager?.let { it1 ->
             bottomSheet.show(it1, "SelectBottomSheet")
         }
-
     }
     fun showNewAddressMapScreen(){
         Log.e(TAG_NAME, "SHOW CREATE HOTEL MODAL")
@@ -445,7 +531,6 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         else{
             Toast.makeText(requireContext(), "Sorry! You are offline now. Please try again later.", Toast.LENGTH_LONG).show();
         }
-
     }
     fun showCreateHotelModal(){
         if(isOnline(requireContext())){
@@ -580,9 +665,9 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
     private fun setStartPointAddress(address: Address){
         sharedViewModel.viewModelScope.launch {
 //            sharedViewModel.setStartAddress(address.uid)
-            sharedViewModel.setStartAddress(address)
+//            sharedViewModel.setStartAddress(address)
         }
-//        showStartPointAddressForm(address)
+        showStartPointAddressForm(address)
     }
     private fun showStartPointAddressForm(address: Address) {
         binding.startAddressForm.apply {
@@ -624,7 +709,7 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
         }
 //        showCurrentAddressForm(address)
     }
-    private fun showCurrentAddressForm(address: Address){
+    fun showCurrentAddressForm(address: Address){
         binding.currentAddressForm.apply {
             formRoot.visibility = VISIBLE
             Log.e(TAG_NAME, address.longitute.toString());
@@ -659,8 +744,6 @@ class PatientLogisticsDetailsFragment : BaseAddEditPatientFragment() {
 //            editHouseNumber.setText(address.streetNumber)
             editCity.setText(address.city)
             editPostalCode.setText(address.postCode)
-
-
         }
     }
 }

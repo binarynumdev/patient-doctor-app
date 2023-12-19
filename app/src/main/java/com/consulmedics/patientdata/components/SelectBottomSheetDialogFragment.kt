@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.view.isInvisible
 import com.consulmedics.patientdata.R
 import com.consulmedics.patientdata.adapters.AddressDialogAdapter
 import com.consulmedics.patientdata.databinding.FragmentSelectBottomSheetDialogListDialogItemBinding
@@ -49,7 +50,6 @@ class SelectBottomSheetDialogFragment(radioOptions: Array<String>, isCustomAdapt
         _binding =
             FragmentSelectBottomSheetDialogListDialogBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,8 +65,9 @@ class SelectBottomSheetDialogFragment(radioOptions: Array<String>, isCustomAdapt
         if(modalTitle != ""){
             binding.dialogTitle.text = modalTitle
         }
-
-
+        binding.btnCancel.setOnClickListener {
+            this.dismiss()
+        }
     }
     fun setAdapter(arrayAdapter:  RecyclerView.Adapter<*>){
         listAdapter = arrayAdapter

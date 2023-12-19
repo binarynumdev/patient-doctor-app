@@ -209,7 +209,7 @@ class PatientPersonalDetailsFragment : BaseAddEditPatientFragment() {
             }
             btnContinue.setOnClickListener {
                 if(canSave()){
-                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientInsurranceDetailsFragment)
+                    findNavController().navigate(R.id.action_patientPersonalDetailsFragment_to_patientAdditionalDetailsFragment)
                 }
                 else{
                     Toast.makeText(requireContext(), R.string.error_empty_phone_number, Toast.LENGTH_SHORT).show()

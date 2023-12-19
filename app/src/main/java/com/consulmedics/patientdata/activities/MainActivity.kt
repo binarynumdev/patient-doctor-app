@@ -5,9 +5,11 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.se.omapi.Session
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
@@ -25,10 +27,10 @@ import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.SessionManager
 import com.google.android.material.navigation.NavigationView
 import com.consulmedics.patientdata.data.api.ApiClient
-import com.consulmedics.patientdata.fragments.ShiftListFragment
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedListener{
-
     private lateinit var binding: ActivityMainBinding
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navController: NavController
@@ -122,12 +124,13 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
         val inflater: MenuInflater = popupMenu.menuInflater
         inflater.inflate(R.menu.main, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener {
+            Log.e("showDropDownMenu", "arrived")
             handleMenuItemClick(it)
         }
         popupMenu.show()
-
     }
-    private fun handleMenuItemClick(item: MenuItem): Boolean{
+      fun handleMenuItemClick(item: MenuItem): Boolean{
+
         when(item.itemId){
             R.id.action_new_patient ->{
                 startActivity(Intent(this, AddEditPatientActivity::class.java).apply {
@@ -163,6 +166,10 @@ class MainActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedLis
                 navController.navigate(R.id.shiftListFragment)
             }
             R.id.nav_patients ->{
+                Log.e("DDD", "AAA")
+                runBlocking() {
+                    delay(200)
+                }
                 SessionManager.saveSelectedMenuItemLabel(this, "patient_list")
                 navController.navigate(R.id.patientListFragment)
             }

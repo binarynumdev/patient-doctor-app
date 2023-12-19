@@ -45,18 +45,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.968" />
 
-            <ImageButton
-                android:id="@+id/btnSyncPatients"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_orange_circle"
-                android:padding="@dimen/default_margin_12"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_upload" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -66,11 +54,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/textShiftBiddingName"
@@ -133,17 +122,48 @@
             android:text="@string/confirm_shift_completed"
             android:textSize="@dimen/text_size_normal" />
 
-        <Button
-            android:id="@+id/btnSave"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/bg_white_with_blue_border_radius"
-            android:drawableRight="@drawable/ic_arrow_next_blue"
-            android:padding="10dp"
-            android:text="@string/save"
-            android:textColor="@color/app_blue"
-            app:backgroundTint="@null" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp">
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="196dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_blue_border_radius"
+                android:drawableRight="@drawable/ic_arrow_next_blue"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:text="@string/save"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnSaveUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_with_blue_border_radius"
+                android:drawableRight="@drawable/ic_arrow_next_blue"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:text="@string/saveUp"
+                android:textColor="@color/app_blue"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

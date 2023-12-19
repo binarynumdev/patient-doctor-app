@@ -67,6 +67,7 @@
     <string name="cancel">Cancel</string>
     <string name="additional_details">Additional Address Details</string>
     <string name="save">Save</string>
+    <string name="saveUp">Save and Upload</string>
     <string name="patient_data">Patient Data</string>
     <string name="patient_data_from_phone">Patient Data Called</string>
     <string name="logistic_data">Logistics Data</string>
@@ -112,6 +113,8 @@
     <string name="edit_max_letters_error">Max length is 100 character is allowed.</string>
     <string name="no_gender">No Gender</string>
     <string name="no_birthdate">No Birth Date</string>
+    <string name="no_visitedate">No Visite Date</string>
+    <string name="no_visitetime">No Visite Time</string>
     <string name="no_patient_id">No Patient ID</string>
     <string name="no_address">No Address</string>
     <string name="no_full_name">No Patient Name</string>
@@ -146,7 +149,7 @@
         <item>Dec</item>
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="confirm">Confirm</string>
+    <string name="confirm">Use this address</string>
     <string name="type_address">Please type address what you looking for.</string>
     <string name="action_new_patient">New Patient</string>
     <string name="action_new_patient_called">New Patient Called</string>
@@ -173,4 +176,8 @@
         <item>@string/label_light_mode</item>
         <item>@string/label_dark_mode</item>
     </string-array>
+    <string name="title_activity_maps2">MapsActivity2</string>
+    <string name="take_a_photo">Take a Photo</string>
+    <string name="take_photo">Take a Photo</string>
+    <string name="uploaded_shift">uploaded shifts</string>
 </resources>

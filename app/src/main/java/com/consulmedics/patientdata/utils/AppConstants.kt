@@ -8,6 +8,7 @@ object AppConstants {
     const val CERT_FILE_FOLDER: String = "/Consulmedics"
     const val CERT_FILE_NAME: String = "userinfo.cert"
     const val DISPLAY_DATE_FORMAT: String = "dd.MM.yyyy"
+    const val DISPLAY_TIME_FORMAT: String = "HH:MM"
     const val PREV_PATIENT_TEXT : String = "PrevPatient"
     const val HOTEL_TEXT: String = "Hotel"
     const val YES_TEXT:String =  "Y"
@@ -34,7 +35,7 @@ object AppConstants {
 
     const val UPCOMING_TABS: String = "upcoming"
     const val PAST_TABS: String = "past"
-
+    const val UPLOADED_TABS: String = "uploading"
     const val PATIENT_SHIFT_DATA: String = "patient_shift_data"
 
 }

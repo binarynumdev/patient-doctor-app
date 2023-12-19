@@ -50,13 +50,12 @@ class PatientAdapter(
                 else{
                     textFullName.setText(mContext.getString(R.string.no_full_name))
                 }
-
-                if("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}" != "   "){
-                    textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
-                }
-                else{
-                    textFullAddress.setText(mContext.getString(R.string.no_address))
-                }
+//                if("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}" != "   "){
+//                    textFullAddress.setText("${currentPatient.street} ${currentPatient.houseNumber} ${currentPatient.city} ${currentPatient.postCode}")
+//                }
+//                else{
+//                    textFullAddress.setText(mContext.getString(R.string.no_address))
+//                }
 
                 if(currentPatient.patientID?.isNotEmpty() == true){
                     textPatientID.setText(currentPatient.patientID)
@@ -66,18 +65,27 @@ class PatientAdapter(
                 }
 
 
-                if(currentPatient.birthDate != null){
-                    val birthDateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
-                    textBirthDate.setText(birthDateFormat.format(currentPatient.birthDate))
+                if(currentPatient.startVisitDate != null){
+                    val DateFormat = SimpleDateFormat(AppConstants.DISPLAY_DATE_FORMAT)
+                    textBirthDate.setText(DateFormat.format(currentPatient.startVisitDate))
                 }
                 else{
-                    textBirthDate.setText(mContext.getString(R.string.no_birthdate))
+                    textBirthDate.setText(mContext.getString(R.string.no_visitedate))
                 }
+
+                if(currentPatient.startVisitTime != null){
+                    textVisiteTime.setText(currentPatient.startVisitTime)
+                }
+                else{
+                    textVisiteTime.setText(mContext.getString(R.string.no_visitetime))
+                }
+
+
                 if(currentPatient.target.equals("call")){
                     textGender.setText( "Phone"  )
                     imageGender.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone))
-                    textFullAddress.setText(currentPatient.phoneNumber)
-                    imageLocation.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone_number))
+//                    textFullAddress.setText(currentPatient.phoneNumber)
+//                    imageLocation.setImageDrawable(mContext.getDrawable(R.drawable.ic_phone_number))
                     textPatientID.visibility = GONE
                     divider.visibility = GONE
                 }
@@ -105,7 +113,6 @@ class PatientAdapter(
                 btnRemovePatient.setOnClickListener {
                     patientItemOnClickInterface.onPatientRemoveClick(currentPatient)
                 }
-
                 patientItem.setOnClickListener {
                     patientItemOnClickInterface.onPatientItemClick(currentPatient)
                 }

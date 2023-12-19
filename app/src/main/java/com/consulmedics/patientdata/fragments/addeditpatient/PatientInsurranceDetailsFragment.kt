@@ -70,7 +70,7 @@ class PatientInsurranceDetailsFragment : BaseAddEditPatientFragment() {
             }
 
             btnContinue.setOnClickListener {
-                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientDoctorSignFragment)
+                findNavController().navigate(R.id.action_patientInsurranceDetailsFragment_to_patientDoctorDocumentFragment)
 
             }
             btnBack.setOnClickListener {

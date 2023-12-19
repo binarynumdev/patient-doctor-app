@@ -1,9 +1,16 @@
 package com.consulmedics.patientdata.activities
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.Space
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -38,6 +45,9 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
     private lateinit var navController: NavController
     private var pageTitleList: List <StepItem> = listOf ()
     private var isLeftStepperInitialized = false
+    private  var nextButton : Button? = null
+    private  var backButton : Button? = null
+    private var spaceBitWeenButton : Space? = null
     var tabIndex: Int = 0
     private val sharedViewModel: AddEditPatientViewModel by viewModels<AddEditPatientViewModel>(){
         AddEditPatientViewModelFactory(MyApplication.patientRepository!!, MyApplication.hotelRepository!!, MyApplication.addressRepository!!)
@@ -48,19 +58,19 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
 
         }
         else{
-            if(destination.id == R.id.patientPersonalDetailsFragment){
+            if(destination.id == R.id.patientLogisticsDetailsFragment){
                 tabIndex = 0
             }
             else if (destination.id == R.id.patientInsurranceDetailsFragment){
                 tabIndex = 1
             }
-            else if (destination.id == R.id.patientDoctorSignFragment){
+            else if (destination.id == R.id.patientDoctorDocumentFragment){
                 tabIndex = 2
             }
-            else if (destination.id == R.id.patientLogisticsDetailsFragment){
+            else if (destination.id == R.id.patientDoctorSignFragment){
                 tabIndex = 3
             }
-            else if (destination.id == R.id.patientDoctorDocumentFragment){
+            else if (destination.id == R.id.patientPersonalDetailsFragment){
                 tabIndex = 4
             }
             else if (destination.id == R.id.patientAdditionalDetailsFragment){
@@ -80,9 +90,6 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                 binding.leftStepper.setCurrentIndex(tabIndex)
 //            reloadPatientData()
         }
-
-
-
     }
     lateinit var toggle: ActionBarDrawerToggle
 
@@ -104,11 +111,11 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         }
         else{
             pageTitleList = listOf<StepItem>(
-                StepItem(getString(R.string.patient_data), getString(R.string.read_card)),
-                StepItem(getString(R.string.insurrance_details), getString(R.string.print_insurance)),
-                StepItem(getString(R.string.patient_sign)),
                 StepItem(getString(R.string.logistic_data)),
+                StepItem(getString(R.string.insurrance_details), getString(R.string.print_insurance)),
                 StepItem(getString(R.string.doctor_document)),
+                StepItem(getString(R.string.patient_sign)),
+                StepItem(getString(R.string.patient_data), getString(R.string.read_card)),
                 StepItem(getString(R.string.additional_details)),
                 StepItem(getString(R.string.receipts), getString(R.string.print_receipt)),
                 StepItem(getString(R.string.sign_doctor)),
@@ -134,7 +141,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
             navController.setGraph(R.navigation.add_edit_navigation_phone_call, intent.extras)
         }
         else{
-            navController.setGraph(R.navigation.add_edit_navigation, intent.extras)
+           navController.setGraph(R.navigation.add_edit_navigation, intent.extras)
 //            reloadPatientData()
         }
 //
@@ -144,6 +151,7 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
 
         val leftStepperAdapter: LeftStepperAdapter = LeftStepperAdapter(applicationContext, this)
         binding.apply {
+            setButton(btnBack , btnNext, spaceBitween)
             if(patientMode == PHONE_CALL_MODE){
                 btnBack.visibility = GONE
                 btnNext.visibility = GONE
@@ -171,8 +179,9 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
                 }
                 onStepItemClicked(goTabIndex)
             }
-
+            Log.e("tabIndex", "${tabIndex}")
             btnCancel.setOnClickListener {
+
 
                 val confirmationDialog = ConfirmationDialog("Are you sure?", "You will lose all data what you did if you confirm yes.")
                 confirmationDialog.setNegativeClickListener {
@@ -208,6 +217,12 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
         supportActionBar?.hide()
 //        reloadPatientData()
     }
+    fun setButton (back : Button, next : Button, space : Space) {
+        backButton = back
+        nextButton = next
+        spaceBitWeenButton = space
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -225,23 +240,33 @@ class AddEditPatientActivity : BaseActivity() , StepperCallback{
 
     override fun onStepItemClicked(index: Int) {
         Log.e("OnStepItemClicked", "OnStepItemClicked")
+        if(index == 0) {
+            backButton!!.visibility = INVISIBLE
+        }else {
+            backButton?.visibility = VISIBLE
+        }
+        if(index == 8) {
+            nextButton!!.visibility = INVISIBLE
+        }else {
+            nextButton?.visibility = VISIBLE
+        }
         pageStepper.go(index)
         binding.leftStepper.setCurrentIndex(index)
         index.also {
             if(it == 0){
-                navController.navigate(R.id.patientPersonalDetailsFragment)
+                navController.navigate(R.id.patientLogisticsDetailsFragment)
             }
             else if (it == 1){
                 navController.navigate(R.id.patientInsurranceDetailsFragment)
             }
             else if(it == 2){
-                navController.navigate(R.id.patientDoctorSignFragment)
+                navController.navigate(R.id.patientDoctorDocumentFragment)
             }
             else if (it == 3){
-                navController.navigate(R.id.patientLogisticsDetailsFragment)
+                navController.navigate(R.id.patientDoctorSignFragment)
             }
             else if (it == 4){
-                navController.navigate(R.id.patientDoctorDocumentFragment)
+                navController.navigate(R.id.patientPersonalDetailsFragment)
             }
             else if (it == 5){
                 navController.navigate(R.id.patientAdditionalDetailsFragment)

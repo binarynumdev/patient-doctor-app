@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.consulmedics.patientdata.R
-import com.consulmedics.patientdata.activities.AddEditPatientActivity
 import com.consulmedics.patientdata.activities.BaseActivity
 import com.consulmedics.patientdata.activities.EditPatientShiftActivity
 import com.consulmedics.patientdata.adapters.ShiftAdapter
@@ -20,11 +19,11 @@ import com.consulmedics.patientdata.adapters.ShiftItemClickInterface
 import com.consulmedics.patientdata.data.api.response.BaseResponse
 import com.consulmedics.patientdata.data.model.PatientShift
 import com.consulmedics.patientdata.databinding.FragmentSubShiftListBinding
-import com.consulmedics.patientdata.utils.AppConstants
 import com.consulmedics.patientdata.utils.AppConstants.PAST_TABS
 import com.consulmedics.patientdata.utils.AppConstants.PATIENT_SHIFT_DATA
 import com.consulmedics.patientdata.utils.AppConstants.TAG_NAME
 import com.consulmedics.patientdata.utils.AppConstants.UPCOMING_TABS
+import com.consulmedics.patientdata.utils.AppConstants.UPLOADED_TABS
 import com.consulmedics.patientdata.viewmodels.ShiftViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +66,7 @@ class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSubShiftListBinding.inflate(inflater, container, false)
+
         binding.listShifts.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = shiftAdapter
@@ -128,17 +128,25 @@ class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
                 if(shiftOption?.equals(PAST_TABS) == true){
                     Log.e(TAG_NAME, "PAST TABS")
 
-                    viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
-                        shiftAdapter.updateList(it)
+                    viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
+                        shiftAdapter.updateList(it, false)
                     })
                 }
                 else if (shiftOption?.equals(UPCOMING_TABS) == true){
                     Log.e(TAG_NAME, "UPCOMING TABS")
 
-                    viewModel.pastShiftList.observe(viewLifecycleOwner, Observer{
-                        shiftAdapter.updateList(it)
+                    viewModel.upcomingShiftList.observe(viewLifecycleOwner, Observer{
+                        shiftAdapter.updateList(it, false)
                     })
                 }
+                else if(shiftOption?.equals(UPLOADED_TABS) == true){
+
+                    viewModel.upLoadedShiftList.observe(viewLifecycleOwner, Observer{
+                        shiftAdapter.updateList(it, true)
+                    })
+                }
+
+
             }
 
             if (view != null) {
@@ -150,6 +158,7 @@ class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
 
                         is BaseResponse.Success -> {
                             mainActivity.hideLoadingSpinner()
+                            Toast.makeText(context, "Upload Success", Toast.LENGTH_LONG).show()
                         }
                         is BaseResponse.SessionError ->{
                             Log.e(TAG_NAME, "REDIRECT TO LOGOUT")
@@ -160,6 +169,7 @@ class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
                         is BaseResponse.Error -> {
                             Log.e(TAG_NAME, "API ERROR :${it.msg}")
                             mainActivity.hideLoadingSpinner()
+                            Toast.makeText(context, "Upload Failed", Toast.LENGTH_LONG).show()
                         }
                         else -> {
                             mainActivity.hideLoadingSpinner()
@@ -170,14 +180,16 @@ class SubShiftListFragment() : Fragment(), ShiftItemClickInterface {
         }
     }
 
-    override fun onShiftEditClick(patient: PatientShift) {
+    override fun onShiftEditClick(
+        patient: PatientShift
+    ) {
         startActivity(Intent(requireContext(), EditPatientShiftActivity::class.java).apply {
             putExtra(PATIENT_SHIFT_DATA, patient)
         })
     }
 
     override fun onShiftUploadClick(currentShift: PatientShift) {
+        Log.e("Upload Button Clicked!", "Clicked")
         viewModel.uploadShift(currentShift)
     }
-
 }

@@ -1,5 +1,6 @@
 package com.consulmedics.patientdata.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -73,7 +74,7 @@ class UploadPatientActivity : BaseActivity() {
             CoroutineScope(Dispatchers.Main).launch {
 
                 viewModel.pastShiftList.observe(this@UploadPatientActivity, Observer{
-                    shiftAdapter.updateList(it)
+                    shiftAdapter.updateList(it, false)
                 })
 
             }

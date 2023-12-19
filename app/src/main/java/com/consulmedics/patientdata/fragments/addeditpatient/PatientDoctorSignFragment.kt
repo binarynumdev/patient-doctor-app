@@ -86,7 +86,7 @@ class PatientDoctorSignFragment : BaseAddEditPatientFragment() {
                     Toast.makeText(requireContext(), R.string.error_no_patient_sign, Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    findNavController().navigate(R.id.action_patientDoctorSignFragment_to_patientLogisticsDetailsFragment)
+                    findNavController().navigate(R.id.action_patientDoctorSignFragment_to_patientPersonalDetailsFragment2)
                 }
             }
 

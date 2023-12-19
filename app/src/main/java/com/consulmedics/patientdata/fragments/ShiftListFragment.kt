@@ -42,6 +42,8 @@ class ShiftListFragment : Fragment() {
     lateinit var mainActivity: BaseActivity
     private lateinit var past_text: String
     private lateinit var upcoming_text: String
+    private lateinit var uploaded_text: String
+
 
     private  val viewModel: ShiftViewModel by viewModels()
     val binding get() = _binding!!
@@ -55,19 +57,15 @@ class ShiftListFragment : Fragment() {
     ): View? {
         _binding = FragmentShiftListBinding.inflate(inflater, container, false)
         mainActivity = requireActivity() as BaseActivity
-//        binding.listShifts.apply {
-//            layoutManager = LinearLayoutManager(requireContext())
-//            adapter = shiftAdapter
-//        }
         Log.e("Here is ShiftListFragment View", "Okay")
         return binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         past_text = getString(R.string.past_shifts)
         upcoming_text = getString(R.string.upcoming_shifts)
+        uploaded_text = getString(R.string.uploaded_shift)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,14 +74,11 @@ class ShiftListFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val adapter = ShiftPageAdapter(childFragmentManager, lifecycle)
         viewPager.adapter = adapter
-//        val past_text by lazy { getString(R.string.past_shifts) }
-//        val upcoming_text by lazy { getString(R.string.upcoming_shifts) }
         TabLayoutMediator(tabLayout, viewPager){ tab, position ->
             tab.text = when(position){
-//                0 -> getString(R.string.past_shifts)
-//                1 -> getString(R.string.upcoming_shifts)
                 0 -> past_text
                 1 -> upcoming_text
+                2 -> uploaded_text
                 else -> ""
             }
         }.attach()

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "72dd4546d23beb52194fe400ab2984a2",
+    "identityHash": "94482924d83ed51e0c33f2abfa2ff188",
     "entities": [
       {
         "tableName": "Patient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `target` TEXT, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` INTEGER NOT NULL, `alreadyVisitedDuringThisShift` INTEGER NOT NULL, `dementia` INTEGER, `geriatrics` INTEGER, `infant` INTEGER, `fractures` INTEGER, `severeHandInjury` INTEGER, `thrombosis` INTEGER, `hypertension` INTEGER, `preHeartAttack` INTEGER, `pneumonia` INTEGER, `divertikulitis` INTEGER, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `receiptFirstName` TEXT NOT NULL, `receiptLastName` TEXT NOT NULL, `receiptAdditionalInfo` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER, `receiptAddress` INTEGER, `distance` REAL NOT NULL, `sincVisitAddress` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `target` TEXT, `isUpdated` INTEGER NOT NULL, `patientID` TEXT, `firstName` TEXT NOT NULL, `lastName` TEXT NOT NULL, `birthDate` TEXT, `street` TEXT NOT NULL, `city` TEXT NOT NULL, `postCode` TEXT NOT NULL, `gender` TEXT NOT NULL, `houseNumber` TEXT NOT NULL, `insuranceNumber` TEXT NOT NULL, `insuranceName` TEXT NOT NULL, `insuranceStatus` TEXT NOT NULL, `dateofExam` TEXT NOT NULL, `timeOfExam` TEXT NOT NULL, `killometers` TEXT NOT NULL, `diagnosis` TEXT NOT NULL, `healthStatus` TEXT NOT NULL, `signature` TEXT NOT NULL, `photoUrl` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `practiceName` TEXT NOT NULL, `signPatient` TEXT NOT NULL, `startVisitDate` TEXT, `startVisitTime` TEXT NOT NULL, `startPoint` TEXT NOT NULL, `sameAddAsPrev` INTEGER NOT NULL, `alreadyVisitedDuringThisShift` INTEGER NOT NULL, `dementia` INTEGER, `geriatrics` INTEGER, `infant` INTEGER, `fractures` INTEGER, `severeHandInjury` INTEGER, `thrombosis` INTEGER, `hypertension` INTEGER, `preHeartAttack` INTEGER, `pneumonia` INTEGER, `divertikulitis` INTEGER, `medicals1` TEXT NOT NULL, `medicals2` TEXT NOT NULL, `medicals3` TEXT NOT NULL, `receiptFirstName` TEXT NOT NULL, `receiptLastName` TEXT NOT NULL, `receiptAdditionalInfo` TEXT NOT NULL, `startAddress` INTEGER, `visitAddress` INTEGER, `receiptAddress` INTEGER, `distance` REAL NOT NULL, `sincVisitAddress` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -19,6 +19,12 @@
             "columnName": "target",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "isUpdated",
+            "columnName": "isUpdated",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "patientID",
@@ -125,6 +131,12 @@
           {
             "fieldPath": "signature",
             "columnName": "signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "photoUrl",
+            "columnName": "photoUrl",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -414,7 +426,7 @@
       },
       {
         "tableName": "patient_shift",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, `serviceType` INTEGER NOT NULL, `nameBidding` TEXT NOT NULL, `additionalRemuneration` INTEGER NOT NULL, `abNumber` INTEGER NOT NULL, `bonusPayment` INTEGER NOT NULL, `doctorNote` TEXT NOT NULL, `doctorID` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT, `startDate` TEXT NOT NULL, `endDate` TEXT NOT NULL, `serviceType` INTEGER NOT NULL, `nameBidding` TEXT NOT NULL, `additionalRemuneration` INTEGER NOT NULL, `abNumber` INTEGER NOT NULL, `bonusPayment` INTEGER NOT NULL, `doctorNote` TEXT NOT NULL, `doctorID` INTEGER NOT NULL, `isUploaded` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -475,6 +487,12 @@
             "columnName": "doctorID",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "isUploaded",
+            "columnName": "isUploaded",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -490,7 +508,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72dd4546d23beb52194fe400ab2984a2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '94482924d83ed51e0c33f2abfa2ff188')"
     ]
   }
 }

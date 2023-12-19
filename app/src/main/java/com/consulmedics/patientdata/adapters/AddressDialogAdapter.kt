@@ -1,6 +1,7 @@
 package com.consulmedics.patientdata.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,13 +33,15 @@ class AddressDialogAdapter(context: Context, private val items: List<Address>) :
 
     // Bind the data to the views
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
         val currentAddress: Address = items.get(position)
         if(currentAddress.uid == null){
             holder.textAddressView.setText("Choose new address")
         }
         else if (currentAddress.uid == -99){
             holder.textAddressView.setText("Fill address form manually")
+        }
+        else if( currentAddress.uid == 10) {
+            holder.textAddressView.setText("Get current GPS-location")
         }
         else{
             holder.textAddressView.setText("${currentAddress.streetName}, ${currentAddress.streetNumber} ${currentAddress.city} ${currentAddress.postCode}")

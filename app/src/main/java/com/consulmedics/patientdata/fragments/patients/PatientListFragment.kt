@@ -32,6 +32,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.consulmedics.patientdata.components.MainStepper
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CountDownLatch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,27 +71,44 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
             adapter = patientAdapter
 
         }
-        CoroutineScope(Dispatchers.Main).launch {
-            viewModel.allPatients.observe(viewLifecycleOwner, Observer {
+//        CoroutineScope(Dispatchers.Main).launch {
+//            viewModel.allPatients.observe(viewLifecycleOwner, Observer {
+//                mainActivity.showLoadingSpinner("Loading", "Please wait while loading patients.")
+//                Thread(Runnable {
+//                    // Do background task
+//                    it.forEach {
+//                        it.decryptFields()
+//                    }
+//
+//
+//                    // Update UI on the main thread
+//                    val handler = Handler(Looper.getMainLooper())
+//                    handler.post {
+//                        patientAdapter.updateList(it)
+//                        mainActivity.hideLoadingSpinner()
+//                    }
+//                }).start()
+//            })
+//        }
+            CoroutineScope(Dispatchers.Main).launch {
                 mainActivity.showLoadingSpinner("Loading", "Please wait while loading patients.")
-                Thread(Runnable {
-                    // Do background task
-                    it.forEach {
-                        it.decryptFields()
+                viewModel.allPatients.observe(viewLifecycleOwner, Observer {patients->
+                    val latch = CountDownLatch(patients.size)
+                    patients.forEach { temp ->
+                        Thread(Runnable {
+                            try {
+                                temp.decryptFields()
+                                Log.e("each item decrypted", "arrived $temp")
+                            } finally {
+                                latch.countDown()
+                            }
+                        }).start()
                     }
-
-
-                    // Update UI on the main thread
-                    val handler = Handler(Looper.getMainLooper())
-                    handler.post {
-                        patientAdapter.updateList(it)
-                        mainActivity.hideLoadingSpinner()
-                    }
-                }).start()
-
-
-            })
-        }
+                    latch.await()
+                    patientAdapter.updateList(patients)
+                    mainActivity.hideLoadingSpinner()
+                })
+            }
 
     }
 
@@ -124,21 +144,23 @@ class PatientListFragment : Fragment(), PatientItemClickInterface {
         Log.e(TAG_NAME, "Edit Event Handler")
 
         var tabIndex: Int = -1
-        if (patient.firstName == "" || patient.lastName == "" || patient.birthDate == null || patient.gender == null || patient.street == "" || patient.postCode == "" || patient.city == "" || patient.phoneNumber == "" || patient.practiceName == "") {
+        Log.e("data ", "${patient.startVisitDate}, ${patient.startVisitTime}, ${patient.visitAddress}, ${patient.startPoint} ,${patient.gender}")
+        if(patient.startVisitDate == null || patient.startVisitTime == "" || patient.visitAddress == null || patient.startPoint == "") {
             tabIndex = 0
         } else if (patient.insuranceName == "" || patient.insuranceStatus == "" || patient.insuranceNumber == "" || patient.patientID == "") {
             tabIndex = 1
-        } else if(patient.signPatient == "") {
-            tabIndex = 2
-        } else if(patient.startVisitDate == null || patient.startVisitTime == "" || patient.visitAddress == null || patient.startPoint == "") {
-            tabIndex = 3
         } else if(patient.diagnosis == "" || patient.healthStatus == "") {
+            tabIndex = 2
+        } else if(patient.signPatient == "") {
+            tabIndex = 3
+        } else if (patient.firstName == "" || patient.lastName == "" || patient.birthDate == null || patient.gender == "" || patient.street == "" || patient.postCode == "" || patient.city == "" || patient.phoneNumber == "" || patient.practiceName == "") {
             tabIndex = 4
         } else if(patient.medicals1 == "" || patient.medicals2 == "" || patient.medicals3 == "" || patient.receiptFirstName == "" || patient.receiptLastName == "" || patient.receiptAdditionalInfo == "" || patient.receiptAddress == null) {
             tabIndex = 6
         } else if(patient.signature == "") {
             tabIndex = 7
         }
+        Log.e(TAG_NAME, "${tabIndex}")
         startActivity(Intent(requireContext(), AddEditPatientActivity::class.java).apply {
             if(patient.target.equals("call")){
                 putExtra(AppConstants.PATIENT_MODE, AppConstants.PHONE_CALL_MODE)

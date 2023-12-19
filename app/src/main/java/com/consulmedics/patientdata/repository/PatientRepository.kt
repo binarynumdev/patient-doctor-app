@@ -33,6 +33,7 @@ class PatientRepository(private val patientDao: PatientDao)  {
     // on below line we are creating an insert method
     // for adding the note to our database.
     suspend fun insert(patient: Patient) {
+        Log.e("INSERT", "${patient.photoUrl}")
         patientDao.insertAll(patient)
     }
 
@@ -45,6 +46,7 @@ class PatientRepository(private val patientDao: PatientDao)  {
     // on below line we are creating a update method for
     // updating our note from database.
     suspend fun update(patient: Patient){
+        Log.e("Update", "${patient.photoUrl}")
         patientDao.updatePatient(patient)
     }
 
@@ -262,6 +264,11 @@ class PatientRepository(private val patientDao: PatientDao)  {
     fun getPatientsByShift(currentShift: PatientShift) : List<Patient>{
         Log.e(TAG_NAME, "Start Date: ${currentShift.startDate}, End Date: ${currentShift.endDate}")
         return patientDao.getPatientsByShift(currentShift.startDate, currentShift.endDate)
+    }
+
+    fun updatePatientsByShift(currentShift: PatientShift){
+        Log.e(TAG_NAME, "Start Date: ${currentShift.startDate}, End Date: ${currentShift.endDate}")
+        patientDao.updateSelectedData(currentShift.startDate, currentShift.endDate)
     }
 
 

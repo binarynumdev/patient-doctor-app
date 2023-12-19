@@ -47,7 +47,7 @@ class LeftStepperAdapter(
         }
         else{
             holder.itemBinding.rootLayout.background = mContext.resources.getDrawable(R.drawable.bg_default_circular)
-            holder.itemBinding.stepTitle.setTextColor(mContext.resources.getColor(R.color.black))
+            holder.itemBinding.stepTitle.setTextColor(mContext.resources.getColor(R.color.white))
             holder.itemBinding.stepDescription.setTextColor(mContext.resources.getColor(R.color.gray_400))
         }
         holder.itemBinding.stepTitle.text = "Step ${position + 1}"
