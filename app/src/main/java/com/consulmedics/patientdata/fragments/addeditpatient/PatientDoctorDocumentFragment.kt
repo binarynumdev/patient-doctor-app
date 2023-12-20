@@ -3,6 +3,10 @@ package com.consulmedics.patientdata.fragments.addeditpatient
 import android.R
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -77,21 +81,56 @@ class PatientDoctorDocumentFragment : BaseAddEditPatientFragment() {
             return null
         }
 
+        // Convert the bitmap to grayscale
+        val grayscaleBitmap = toGrayscale(bitmap)
+
+        // Get the directory for saving pictures in the external storage
         val imagesDir = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        var imageName = getCurrentTime() + "captured_image.jpg"
+
+        // Generate a unique image name based on the current time
+        var imageName = getCurrentTime() + "captured_image.png"
+
+        // Create a File object representing the destination file for the image
         val imageFile = File(imagesDir, imageName)
+
         try {
+            // Use runBlocking to perform blocking I/O operations (e.g., file writing) in a coroutine
             runBlocking {
+                // Open a FileOutputStream for the image file
                 FileOutputStream(imageFile).use { out ->
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    // Compress the grayscale bitmap and write it to the FileOutputStream
+                    grayscaleBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
                     Log.e("This is the picture saved part", "arrived")
                 }
             }
         } catch (e: IOException) {
+            // Handle IOException, typically by printing the stack trace
             e.printStackTrace()
             return null
         }
+
+        // Return the URI of the saved image file
         return Uri.fromFile(imageFile)
+    }
+
+    // Function to convert a color bitmap to grayscale
+    private fun toGrayscale(src: Bitmap): Bitmap {
+        val width = src.width
+        val height = src.height
+
+        val grayBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(grayBitmap)
+        val paint = Paint()
+
+        val colorMatrix = ColorMatrix()
+        colorMatrix.setSaturation(0f) // Set saturation to 0 for grayscale
+
+        val colorMatrixFilter = ColorMatrixColorFilter(colorMatrix)
+        paint.colorFilter = colorMatrixFilter
+
+        canvas.drawBitmap(src, 0f, 0f, paint)
+
+        return grayBitmap
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
